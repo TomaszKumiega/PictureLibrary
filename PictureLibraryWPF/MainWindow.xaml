@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PictureLibraryWPF"
         mc:Ignorable="d"
         Title="PictureLibrary" Height="600" Width="1000" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -23,5 +23,10 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
+
+        <!--Title Bar-->
+        <Rectangle x:Name="RectangleTitleBarBackground" Fill="#202225" Grid.ColumnSpan="5"/>
+        <TextBlock x:Name="TextBlockTitleBar" Text="Picture Library" FontFamily="Segoe UI" FontSize="18" Foreground="#949597" VerticalAlignment="Bottom" />
     </Grid>
+
 </Window>
