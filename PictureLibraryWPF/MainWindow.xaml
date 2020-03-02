@@ -55,6 +55,8 @@
             </Image>
         </Button>
 
+        <!--Title Bar Shadow-->
+        <Rectangle x:Name="RectangleTitleBarShadow" Fill="#161719" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" />
     </Grid>
 
 </Window>
