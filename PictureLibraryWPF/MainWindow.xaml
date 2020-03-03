@@ -66,6 +66,9 @@
         
         <!--Information Panel Background-->
         <Rectangle x:Name="RectangleInformationPanelShadow" Fill="#37393f" Grid.Column="0" Grid.Row="4" Grid.RowSpan="3"/>
+
+        <!--Main Panel Background-->
+        <Rectangle x:Name="RectangleMainPanelBackground" Fill="#3b3f45" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="5" Grid.RowSpan="8"/>
     </Grid>
 
 </Window>
