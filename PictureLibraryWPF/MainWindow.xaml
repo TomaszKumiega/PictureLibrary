@@ -64,6 +64,8 @@
         <!--Menu Shadow-->
         <Rectangle x:Name="RectangleTopBarShadow" Fill="#292b2f" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5"/>
         
+        <!--Information Panel Background-->
+        <Rectangle x:Name="RectangleInformationPanelShadow" Fill="#37393f" Grid.Column="0" Grid.Row="4" Grid.RowSpan="3"/>
     </Grid>
 
 </Window>
