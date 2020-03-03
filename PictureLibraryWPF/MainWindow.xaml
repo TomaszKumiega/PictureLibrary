@@ -60,6 +60,10 @@
 
         <!--Menu Background-->
         <Rectangle x:Name="RectangleTopBarBackground" Fill="#37393f" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5"/>
+        
+        <!--Menu Shadow-->
+        <Rectangle x:Name="RectangleTopBarShadow" Fill="#292b2f" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5"/>
+        
     </Grid>
 
 </Window>
