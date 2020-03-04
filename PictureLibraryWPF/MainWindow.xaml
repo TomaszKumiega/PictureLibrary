@@ -16,6 +16,8 @@
 
         <SolidColorBrush x:Key="SelectedBorderBrush" Color="#524f78" />
 
+        <SolidColorBrush x:Key="SeethroughForegroundBrush" Color="#cdcdcd" Opacity="0.4" />
+
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -98,6 +100,28 @@
             </TabItem>
         </TabControl>
             
+        <!--Search bar-->
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="130"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderThickness="1,1,1,1" Grid.Column="1" BorderBrush="{StaticResource SeethroughForegroundBrush}">
+                <DockPanel  HorizontalAlignment="Right">
+                    <Image DockPanel.Dock="Left">
+                        <Image.Source>
+                            <BitmapImage UriSource="/Icons/SearchIcon.png"/>
+                        </Image.Source>
+                    </Image>
+                    <TextBox Text="Search.." FontSize="12" HorizontalAlignment="Stretch" Width="110"  Background="Transparent" Foreground="{StaticResource SeethroughForegroundBrush}" BorderThickness="0,0,0,0"/>
+                </DockPanel>
+            </Border>
+        </Grid>
         
         <!--Title Bar Buttons Grid-->
         <Grid Grid.Row="0" Grid.Column="1">
