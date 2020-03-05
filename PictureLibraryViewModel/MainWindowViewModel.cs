@@ -9,7 +9,7 @@ using PictureLibraryViewModel.Commands;
 
 namespace PictureLibraryViewModel
 {
-    public class MainWindowViewModel 
+    public class MainWindowViewModel : IMainWindowViewModel
     {
         public ICommand CloseButtonCommand { get; private set; }
 
