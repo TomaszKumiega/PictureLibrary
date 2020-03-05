@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,17 @@ namespace PictureLibraryViewModel
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
+            var additionalBuilder = new ContainerBuilder(); // additional builder required to inject a container
 
             builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>();
+            builder.RegisterType<CloseButtonCommand>().AsSelf();
 
-            return builder.Build();
+            var container = builder.Build();
+
+            additionalBuilder.RegisterInstance<IContainer>(container);
+            additionalBuilder.Update(container);
+
+            return container;
         }
     }
 }
