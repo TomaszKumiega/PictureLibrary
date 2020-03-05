@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PictureLibraryViewModel
@@ -14,6 +15,11 @@ namespace PictureLibraryViewModel
         public MainWindowViewModel(ICommand ButtonCommand)
         {
             this.ButtonCommand = ButtonCommand;
+        }
+
+        public void Close()
+        {
+            Application.Current.Shutdown();
         }
     }
 }
