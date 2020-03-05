@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using PictureLibraryViewModel.Commands;
 
 namespace PictureLibraryViewModel
 {
@@ -12,9 +13,9 @@ namespace PictureLibraryViewModel
     {
         public ICommand ButtonCommand { get; private set; }
 
-        public MainWindowViewModel(ICommand ButtonCommand)
+        public MainWindowViewModel()
         {
-            this.ButtonCommand = ButtonCommand;
+            this.ButtonCommand = new CloseButtonCommand(this);
         }
 
         public void Close()
