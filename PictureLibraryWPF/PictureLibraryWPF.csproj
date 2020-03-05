@@ -102,5 +102,11 @@
   <ItemGroup>
     <Resource Include="Icons\SearchIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PictureLibraryViewModel\PictureLibraryViewModel.csproj">
+      <Project>{294afccd-e5d3-4045-b944-be2e908ad6f1}</Project>
+      <Name>PictureLibraryViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

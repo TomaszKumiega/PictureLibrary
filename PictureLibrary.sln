@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.28917.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibraryWPF", "PictureLibraryWPF\PictureLibraryWPF.csproj", "{45103DE6-9774-4F0F-9D12-D680C7A20988}"
+	ProjectSection(ProjectDependencies) = postProject
+		{294AFCCD-E5D3-4045-B944-BE2E908AD6F1} = {294AFCCD-E5D3-4045-B944-BE2E908AD6F1}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibraryViewModel", "PictureLibraryViewModel\PictureLibraryViewModel.csproj", "{294AFCCD-E5D3-4045-B944-BE2E908AD6F1}"
 EndProject

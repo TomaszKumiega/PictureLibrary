@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PictureLibraryViewModel;
 
 namespace PictureLibraryWPF
 {
@@ -23,6 +24,7 @@ namespace PictureLibraryWPF
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new PictureLibraryViewModel.MainWindowViewModel();
         }
     }
 }
