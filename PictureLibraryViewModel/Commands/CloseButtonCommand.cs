@@ -26,7 +26,7 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            return viewModel.CanClose;
+            return true;
         }
 
         public void Execute(object parameter)
