@@ -11,11 +11,11 @@ namespace PictureLibraryViewModel
 {
     public class MainWindowViewModel 
     {
-        public ICommand ButtonCommand { get; private set; }
+        public ICommand CloseButtonCommand { get; private set; }
 
         public MainWindowViewModel()
         {
-            this.ButtonCommand = new CloseButtonCommand(this);
+            this.CloseButtonCommand = new CloseButtonCommand(this);
         }
 
         public void Close()
