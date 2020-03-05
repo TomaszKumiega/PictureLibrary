@@ -24,7 +24,6 @@ namespace PictureLibraryWPF
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new PictureLibraryViewModel.MainWindowViewModel();
         }
     }
 }

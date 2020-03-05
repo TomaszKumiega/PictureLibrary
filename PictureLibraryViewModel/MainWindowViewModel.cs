@@ -13,9 +13,9 @@ namespace PictureLibraryViewModel
     {
         public ICommand CloseButtonCommand { get; private set; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(ICommandFactory factory)
         {
-            this.CloseButtonCommand = new CloseButtonCommand(this);
+            this.CloseButtonCommand = factory.GetCloseButtonCommand(this);
         }
 
         public void Close()
