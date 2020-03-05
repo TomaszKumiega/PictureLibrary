@@ -9,9 +9,9 @@ namespace PictureLibraryViewModel.Commands
 {
     public class CloseButtonCommand : ICommand
     {
-        private MainWindowViewModel viewModel;
+        private IMainWindowViewModel viewModel;
 
-        public CloseButtonCommand(MainWindowViewModel viewModel)
+        public CloseButtonCommand(IMainWindowViewModel viewModel)
         {
             this.viewModel = viewModel;
         }
