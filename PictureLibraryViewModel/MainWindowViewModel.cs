@@ -9,8 +9,11 @@ namespace PictureLibraryViewModel
 {
     public class MainWindowViewModel 
     {
-        public MainWindowViewModel()
+        public ICommand ButtonCommand { get; private set; }
+
+        public MainWindowViewModel(ICommand ButtonCommand)
         {
+            this.ButtonCommand = ButtonCommand;
         }
     }
 }
