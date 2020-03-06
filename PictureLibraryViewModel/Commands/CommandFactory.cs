@@ -24,5 +24,10 @@ namespace PictureLibraryViewModel.Commands
         {
             return new MaximizeButtonCommand(viewModel);
         }
+
+        public ICommand GetMinimizeButtonCommand(IMainWindowViewModel viewModel)
+        {
+            return new MinimizeButtonCommand(viewModel);
+        }
     }
 }
