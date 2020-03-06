@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 
 namespace PictureLibraryViewModel
 {
@@ -6,6 +7,11 @@ namespace PictureLibraryViewModel
     {
         ICommand CloseButtonCommand { get; }
 
+        ICommand MaximizeButtonCommand { get; }
+        WindowState WindowState { get; set; }
+
         void Close();
+
+        void Maximize();
     }
 }

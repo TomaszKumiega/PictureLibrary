@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PictureLibraryWPF"
         mc:Ignorable="d"
-        Title="PictureLibrary" Height="600" Width="1000" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
+        Title="PictureLibrary" Height="600" Width="1000" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip"
+        WindowState="{Binding WindowState, Mode=TwoWay}">
 
     <Window.Resources>
         <SolidColorBrush x:Key="BrightBrush" Color="#777b79"/>
@@ -145,7 +146,7 @@
             </Button>
 
             <!--Maximize Button-->
-            <Button x:Name="ButtonMaximize" Grid.Column="2" Grid.Row="1" Background="#202225" BorderThickness="0">
+            <Button x:Name="ButtonMaximize" Grid.Column="2" Grid.Row="1" Background="#202225" BorderThickness="0" Command="{Binding MaximizeButtonCommand}">
                 <Image x:Name="ButtonMaximizeIcon">
                     <Image.Source>
                         <BitmapImage UriSource="/Icons/MaximizeIcon.png"/>
