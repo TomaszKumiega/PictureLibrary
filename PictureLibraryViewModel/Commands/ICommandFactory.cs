@@ -12,5 +12,7 @@ namespace PictureLibraryViewModel.Commands
     {
         ICommand GetCloseButtonCommand(IMainWindowViewModel viewModel);
 
+        ICommand GetMaximizeButtonCommand(IMainWindowViewModel viewModel);
+
     }
 }
