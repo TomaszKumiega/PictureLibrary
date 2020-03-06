@@ -14,12 +14,15 @@ namespace PictureLibraryViewModel
     {
         public ICommand CloseButtonCommand { get; private set; }
         public ICommand MaximizeButtonCommand { get; private set; }
+        public ICommand MinimizeButtonCommand { get; private set; }
 
         private WindowState _windowState;
+
         public MainWindowViewModel(ICommandFactory factory)
         {
             this.CloseButtonCommand = factory.GetCloseButtonCommand(this);
             this.MaximizeButtonCommand = factory.GetMaximizeButtonCommand(this);
+            this.MinimizeButtonCommand = factory.GetMinimizeButtonCommand(this);
         }
 
         public WindowState WindowState
@@ -49,6 +52,11 @@ namespace PictureLibraryViewModel
         {
             
             WindowState = (WindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal);
+        }
+
+        public void Minimize()
+        {
+            WindowState = WindowState.Minimized;
         }
     }
 }
