@@ -29,7 +29,7 @@ namespace PictureLibraryViewModel.Commands
 
         public void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            ViewModel.Minimize();
         }
         #endregion
     }
