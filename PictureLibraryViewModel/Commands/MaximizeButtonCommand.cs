@@ -16,6 +16,7 @@ namespace PictureLibraryViewModel.Commands
             ViewModel = viewModel;
         }
 
+        #region ICommand members
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
@@ -31,5 +32,6 @@ namespace PictureLibraryViewModel.Commands
         {
             ViewModel.Maximize();
         }
+        #endregion
     }
 }
