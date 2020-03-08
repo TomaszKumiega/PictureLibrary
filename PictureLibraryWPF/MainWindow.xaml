@@ -69,7 +69,7 @@
         </Grid.RowDefinitions>
 
         <!--Title Bar-->
-        <Rectangle x:Name="RectangleTitleBarBackground" Fill="#202225" Grid.ColumnSpan="5"/>
+        <Rectangle x:Name="RectangleTitleBarBackground" Fill="#202225" Grid.ColumnSpan="5" MouseDown="RectangleTitleBarBackground_MouseDown"/>
         <TextBlock x:Name="TextBlockTitleBar" Text="Picture Library" FontFamily="Segoe UI" FontSize="18" Foreground="#949597" VerticalAlignment="Bottom" />
 
         <!--Title Bar Shadow-->
