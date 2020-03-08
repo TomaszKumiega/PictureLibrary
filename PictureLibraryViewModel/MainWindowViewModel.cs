@@ -12,6 +12,7 @@ namespace PictureLibraryViewModel
 {
     public class MainWindowViewModel : IMainWindowViewModel, INotifyPropertyChanged
     {
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
         public ICommand CloseButtonCommand { get; private set; }
         public ICommand MaximizeButtonCommand { get; private set; }
         public ICommand MinimizeButtonCommand { get; private set; }
