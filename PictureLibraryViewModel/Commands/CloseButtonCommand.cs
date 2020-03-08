@@ -9,7 +9,7 @@ namespace PictureLibraryViewModel.Commands
 {
     public class CloseButtonCommand : ICommand
     {
-        private IMainWindowViewModel viewModel;
+        private IMainWindowViewModel _viewModel;
 
         /// <summary>
         /// Initializes new instance of <see cref="CloseButtonCommand"/> class.
@@ -17,11 +17,10 @@ namespace PictureLibraryViewModel.Commands
         /// <param name="viewModel"></param>
         public CloseButtonCommand(IMainWindowViewModel viewModel)
         {
-            this.viewModel = viewModel;
+            _viewModel = viewModel;
         }
 
         #region ICommand Members
-
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
@@ -35,9 +34,8 @@ namespace PictureLibraryViewModel.Commands
 
         public void Execute(object parameter)
         {
-            viewModel.Close();
+            _viewModel.Close();
         }
-
         #endregion
     }
 }

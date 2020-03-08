@@ -12,12 +12,7 @@ namespace PictureLibraryViewModel.Commands
     /// <inheritdoc cref="ICommandFactory"/>
     /// </summary>
     public class CommandFactory : ICommandFactory
-    {
-        public CommandFactory()
-        {
-
-        }
-
+    { 
         public ICommand GetCloseButtonCommand(IMainWindowViewModel viewModel)
         {
             return new CloseButtonCommand(viewModel);

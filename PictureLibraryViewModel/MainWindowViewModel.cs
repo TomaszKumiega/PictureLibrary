@@ -15,12 +15,13 @@ namespace PictureLibraryViewModel
     /// </summary>
     public class MainWindowViewModel : IMainWindowViewModel, INotifyPropertyChanged
     {
+
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private WindowState _windowState;
+
         public ICommand CloseButtonCommand { get; private set; }
         public ICommand MaximizeButtonCommand { get; private set; }
         public ICommand MinimizeButtonCommand { get; private set; }
-
-        private WindowState _windowState;
 
         /// <summary>
         /// Initializes new instance of <see cref="MainWindowViewModel"/> class.
@@ -35,7 +36,11 @@ namespace PictureLibraryViewModel
       
         public WindowState WindowState
         {
-            get { return _windowState; }
+            get 
+            {
+                return _windowState; 
+            }
+
             set
             {
                 _windowState = value;
@@ -45,6 +50,7 @@ namespace PictureLibraryViewModel
 
         #region INotifyPropertyChanged members
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void OnPropertyChanged(string propertyName)
         {
             var handler = PropertyChanged;
@@ -60,7 +66,6 @@ namespace PictureLibraryViewModel
 
         public void Maximize()
         {
-            
             WindowState = (WindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal);
         }
 

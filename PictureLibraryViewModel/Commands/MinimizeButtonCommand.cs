@@ -9,7 +9,7 @@ namespace PictureLibraryViewModel.Commands
 {
     public class MinimizeButtonCommand : ICommand
     {
-        private IMainWindowViewModel ViewModel { get; }
+        private IMainWindowViewModel _viewModel;
 
         /// <summary>
         /// Initializes new instance of <see cref="MinimizeButtonCommand"/> class.
@@ -17,7 +17,7 @@ namespace PictureLibraryViewModel.Commands
         /// <param name="viewModel"></param>
         public MinimizeButtonCommand(IMainWindowViewModel viewModel)
         {
-            ViewModel = viewModel;
+            _viewModel = viewModel;
         }
 
         #region ICommand members
@@ -34,7 +34,7 @@ namespace PictureLibraryViewModel.Commands
 
         public void Execute(object parameter)
         {
-            ViewModel.Minimize();
+            _viewModel.Minimize();
         }
         #endregion
     }

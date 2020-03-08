@@ -9,7 +9,7 @@ namespace PictureLibraryViewModel.Commands
 {
     public class MaximizeButtonCommand : ICommand
     {
-        private IMainWindowViewModel ViewModel { get; }
+        private IMainWindowViewModel _viewModel;
 
         /// <summary>
         /// Initializes new instance of <see cref="MaximizeButtonCommand"/> class.
@@ -17,7 +17,7 @@ namespace PictureLibraryViewModel.Commands
         /// <param name="viewModel"></param>
         public MaximizeButtonCommand(IMainWindowViewModel viewModel)
         {
-            ViewModel = viewModel;
+            _viewModel = viewModel;
         }
 
         #region ICommand members
@@ -34,7 +34,7 @@ namespace PictureLibraryViewModel.Commands
 
         public void Execute(object parameter)
         {
-            ViewModel.Maximize();
+            _viewModel.Maximize();
         }
         #endregion
     }
