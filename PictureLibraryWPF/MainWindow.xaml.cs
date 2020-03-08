@@ -26,6 +26,11 @@ namespace PictureLibraryWPF
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Allows to drag window with a mouse with its left button down.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RectangleTitleBarBackground_MouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();

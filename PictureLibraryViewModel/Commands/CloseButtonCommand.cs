@@ -11,6 +11,10 @@ namespace PictureLibraryViewModel.Commands
     {
         private IMainWindowViewModel viewModel;
 
+        /// <summary>
+        /// Initializes new instance of <see cref="CloseButtonCommand"/> class.
+        /// </summary>
+        /// <param name="viewModel"></param>
         public CloseButtonCommand(IMainWindowViewModel viewModel)
         {
             this.viewModel = viewModel;

@@ -10,6 +10,9 @@ using PictureLibraryViewModel.Commands;
 
 namespace PictureLibraryViewModel
 {
+    /// <summary>
+    /// <inheritdoc cref="IMainWindowViewModel"/>
+    /// </summary>
     public class MainWindowViewModel : IMainWindowViewModel, INotifyPropertyChanged
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
@@ -19,13 +22,17 @@ namespace PictureLibraryViewModel
 
         private WindowState _windowState;
 
+        /// <summary>
+        /// Initializes new instance of <see cref="MainWindowViewModel"/> class.
+        /// </summary>
+        /// <param name="factory"></param>
         public MainWindowViewModel(ICommandFactory factory)
         {
             this.CloseButtonCommand = factory.GetCloseButtonCommand(this);
             this.MaximizeButtonCommand = factory.GetMaximizeButtonCommand(this);
             this.MinimizeButtonCommand = factory.GetMinimizeButtonCommand(this);
         }
-
+      
         public WindowState WindowState
         {
             get { return _windowState; }
@@ -36,6 +43,7 @@ namespace PictureLibraryViewModel
             }
         }
 
+        #region INotifyPropertyChanged members
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -43,6 +51,7 @@ namespace PictureLibraryViewModel
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
 
         public void Close()
         {

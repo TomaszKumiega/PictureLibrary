@@ -9,8 +9,14 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel
 {
+    /// <summary>
+    /// Configurates autofac dependency injection container.
+    /// </summary>
     public static class ContainerConfig
     {
+        /// <summary>
+        /// Creates dependency injection container.
+        /// </summary>
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();

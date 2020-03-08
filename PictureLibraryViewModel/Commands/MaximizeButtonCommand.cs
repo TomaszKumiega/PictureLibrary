@@ -11,6 +11,10 @@ namespace PictureLibraryViewModel.Commands
     {
         private IMainWindowViewModel ViewModel { get; }
 
+        /// <summary>
+        /// Initializes new instance of <see cref="MaximizeButtonCommand"/> class.
+        /// </summary>
+        /// <param name="viewModel"></param>
         public MaximizeButtonCommand(IMainWindowViewModel viewModel)
         {
             ViewModel = viewModel;
