@@ -15,13 +15,12 @@
         </Grid.RowDefinitions>
 
         <!--Files-->
-        <WrapPanel x:Name="FilesWrapPanel" Background="#3b3f45">
-            <WrapPanel.Resources>
-                <Style TargetType="{x:Type Image}">
-                    <Setter Property="Margin" Value="5"/>
-                </Style>
-            </WrapPanel.Resources>
-            
-        </WrapPanel>
+        <ListBox>
+            <ListBox.Template>
+                <ControlTemplate>
+                    <WrapPanel IsItemsHost="True" Background="#3b3f45"/>
+                </ControlTemplate>
+            </ListBox.Template>
+        </ListBox>
     </Grid>
 </UserControl>
