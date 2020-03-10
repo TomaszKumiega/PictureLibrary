@@ -13,12 +13,5 @@ namespace PictureLibraryViewModel.Commands
     /// </summary>
     public interface ICommandFactory
     {
-        /// <summary>
-        /// Creates new instance of <see cref="CloseButtonCommand"/> class.
-        /// </summary>
-        /// <param name="viewModel"></param>
-        /// <returns></returns>
-        ICommand GetCloseButtonCommand(IMainWindowViewModel viewModel);
-
     }
 }

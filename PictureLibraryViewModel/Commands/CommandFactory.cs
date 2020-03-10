@@ -13,9 +13,5 @@ namespace PictureLibraryViewModel.Commands
     /// </summary>
     public class CommandFactory : ICommandFactory
     { 
-        public ICommand GetCloseButtonCommand(IMainWindowViewModel viewModel)
-        {
-            return new CloseButtonCommand(viewModel);
-        }
     }
 }

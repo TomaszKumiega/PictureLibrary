@@ -21,7 +21,6 @@ namespace PictureLibraryViewModel
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>();
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();
 
             return builder.Build();

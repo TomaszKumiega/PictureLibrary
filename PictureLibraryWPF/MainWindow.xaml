@@ -137,7 +137,7 @@
             </Grid.RowDefinitions>
 
             <!--Close Button-->
-            <Button x:Name="ButtonClose" Grid.Column="3" Grid.Row="0" Background="#202225" BorderThickness="0" Command="{Binding CloseButtonCommand}">
+            <Button x:Name="ButtonClose" Grid.Column="3" Grid.Row="0" Background="#202225" BorderThickness="0" Click="Close">
                 <Image x:Name="ButtonCloseIcon">
                     <Image.Source>
                         <BitmapImage UriSource="/Icons/CloseIcon.png"/>

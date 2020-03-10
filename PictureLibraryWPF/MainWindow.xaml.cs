@@ -53,5 +53,15 @@ namespace PictureLibraryWPF
         {
             WindowState = (WindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal);
         }
+
+        /// <summary>
+        /// Shuts down the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Close(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
