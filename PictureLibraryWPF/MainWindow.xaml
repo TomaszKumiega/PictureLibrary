@@ -155,7 +155,7 @@
             </Button>
 
             <!--Minimize Button-->
-            <Button x:Name="ButtonMinimize" Grid.Column="1" Grid.Row="0" Background="#202225" BorderThickness="0" Command="{Binding MinimizeButtonCommand}">
+            <Button x:Name="ButtonMinimize" Grid.Column="1" Grid.Row="0" Background="#202225" BorderThickness="0" Click="Minimize">
                 <Image x:Name="ButtonMinimizeIcon">
                     <Image.Source>
                         <BitmapImage UriSource="/Icons/MinimizeIcon.png"/>

@@ -35,5 +35,13 @@ namespace PictureLibraryWPF
         {
             DragMove();
         }
+
+        /// <summary>
+        /// Minimizes the window.
+        /// </summary>
+        private void Minimize(object sender, EventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
     }
 }
