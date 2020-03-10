@@ -20,7 +20,6 @@ namespace PictureLibraryViewModel
         private WindowState _windowState;
 
         public ICommand CloseButtonCommand { get; private set; }
-        public ICommand MaximizeButtonCommand { get; private set; }
 
         /// <summary>
         /// Initializes new instance of <see cref="MainWindowViewModel"/> class.
@@ -60,11 +59,6 @@ namespace PictureLibraryViewModel
         public void Close()
         {
             Application.Current.Shutdown();
-        }
-
-        public void Maximize()
-        {
-            WindowState = (WindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal);
         }
     }
 }

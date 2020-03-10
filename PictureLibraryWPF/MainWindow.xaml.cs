@@ -43,5 +43,15 @@ namespace PictureLibraryWPF
         {
             WindowState = WindowState.Minimized;
         }
+
+        /// <summary>
+        /// Maximizes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Maximize(object sender, EventArgs e)
+        {
+            WindowState = (WindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal);
+        }
     }
 }

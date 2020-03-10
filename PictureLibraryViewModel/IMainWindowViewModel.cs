@@ -12,10 +12,6 @@ namespace PictureLibraryViewModel
         /// Delegates action from close button.
         /// </summary>
         ICommand CloseButtonCommand { get; }
-        /// <summary>
-        /// Delegates action from maximize button.
-        /// </summary>
-        ICommand MaximizeButtonCommand { get; }
 
         /// <summary>
         /// <inheritdoc cref="Window.WindowState"/>
@@ -28,10 +24,6 @@ namespace PictureLibraryViewModel
         void Close();
         /// <summary>
         /// Maximizes a window.
-        /// </summary>
-        void Maximize();
-        /// <summary>
-        /// Minimizes a window.
         /// </summary>
     }
 }

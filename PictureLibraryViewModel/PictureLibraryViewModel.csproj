@@ -56,7 +56,6 @@
     <Compile Include="Commands\CloseButtonCommand.cs" />
     <Compile Include="Commands\CommandFactory.cs" />
     <Compile Include="Commands\ICommandFactory.cs" />
-    <Compile Include="Commands\MaximizeButtonCommand.cs" />
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="IMainWindowViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />

@@ -17,10 +17,5 @@ namespace PictureLibraryViewModel.Commands
         {
             return new CloseButtonCommand(viewModel);
         }
-
-        public ICommand GetMaximizeButtonCommand(IMainWindowViewModel viewModel)
-        {
-            return new MaximizeButtonCommand(viewModel);
-        }
     }
 }

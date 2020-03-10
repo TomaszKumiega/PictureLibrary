@@ -20,19 +20,5 @@ namespace PictureLibraryViewModel.Commands
         /// <returns></returns>
         ICommand GetCloseButtonCommand(IMainWindowViewModel viewModel);
 
-        /// <summary>
-        /// Creates new instance of <see cref="MaximizeButtonCommand"/> class.
-        /// </summary>
-        /// <param name="viewModel"></param>
-        /// <returns></returns>
-        ICommand GetMaximizeButtonCommand(IMainWindowViewModel viewModel);
-
-        /// <summary>
-        /// Creates new instance of <see cref="MinimizeButtonCommand"/> class.
-        /// </summary>
-        /// <param name="viewModel"></param>
-        /// <returns></returns>
-        ICommand GetMinimizeButtonCommand(IMainWindowViewModel viewModel);
-
     }
 }
