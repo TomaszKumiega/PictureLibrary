@@ -28,7 +28,6 @@ namespace PictureLibraryViewModel
         public MainWindowViewModel(ICommandFactory factory)
         {
             this.CloseButtonCommand = factory.GetCloseButtonCommand(this);
-            this.MaximizeButtonCommand = factory.GetMaximizeButtonCommand(this);
         }
       
         public WindowState WindowState
