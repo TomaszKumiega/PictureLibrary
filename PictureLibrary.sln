@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibraryWPF", "Pictur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibraryViewModel", "PictureLibraryViewModel\PictureLibraryViewModel.csproj", "{294AFCCD-E5D3-4045-B944-BE2E908AD6F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibraryModel", "PictureLibraryModel\PictureLibraryModel.csproj", "{37A7E85E-7699-4E91-9E89-FE52A5A787D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{294AFCCD-E5D3-4045-B944-BE2E908AD6F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{294AFCCD-E5D3-4045-B944-BE2E908AD6F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{294AFCCD-E5D3-4045-B944-BE2E908AD6F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37A7E85E-7699-4E91-9E89-FE52A5A787D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37A7E85E-7699-4E91-9E89-FE52A5A787D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37A7E85E-7699-4E91-9E89-FE52A5A787D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37A7E85E-7699-4E91-9E89-FE52A5A787D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
