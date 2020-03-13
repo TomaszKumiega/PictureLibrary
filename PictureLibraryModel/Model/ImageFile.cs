@@ -8,16 +8,19 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Model
 {
-    public class Image
+    public class ImageFile
     {
-        public string Path { get; set; }
-        public Bitmap BitMap { get; set; }
         public FileInfo FileInfo { get; set; }
         
-        public Image()
+        public ImageFile()
         {
 
         }
 
+        public ImageFile(string path)
+        {
+            if (File.Exists(path)) FileInfo = new FileInfo(path);
+            else throw new Exception("File not found");
+        }
     }
 }
