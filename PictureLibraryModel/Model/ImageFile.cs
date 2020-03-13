@@ -12,6 +12,7 @@ namespace PictureLibraryModel.Model
     {
         public FileInfo FileInfo { get; set; }
         public string Path { get; set; }
+        public Icon Icon { get; set; }
 
         public ImageFile()
         {
@@ -24,6 +25,7 @@ namespace PictureLibraryModel.Model
             {
                 Path = path;
                 FileInfo = new FileInfo(path);
+                Icon = Icon.ExtractAssociatedIcon(path);
             }
             else throw new Exception("File not found");
         }
