@@ -27,5 +27,10 @@ namespace PictureLibraryModel.Model
             }
             else throw new Exception("File not found");
         }
+
+        public Image GetImage()
+        {
+            return Image.FromFile(Path);
+        }
     }
 }
