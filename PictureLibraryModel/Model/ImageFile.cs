@@ -21,13 +21,26 @@ namespace PictureLibraryModel.Model
 
         public ImageFile(string path)
         {
-            if (File.Exists(path))
+            if (File.Exists(path) && (IsFileAnImage(path)==true))
             {
                 Path = path;
                 FileInfo = new FileInfo(path);
                 Icon = Icon.ExtractAssociatedIcon(path);
             }
             else throw new Exception("File not found");
+        }
+
+        private static bool IsFileAnImage(string path)
+        {
+            string[] supportedExtensions = { ".jpg", ".jpeg", ".jpe", ".png", ".jfif", ".bmp", ".tif", ".tiff", ".gif" };
+            bool pathEndsWithSupportedExtension = false;
+            
+            foreach(string t in supportedExtensions)
+            {
+                if (path.EndsWith(t)) pathEndsWithSupportedExtension = true;
+            }
+
+            return pathEndsWithSupportedExtension;
         }
 
         public Image GetImage()
