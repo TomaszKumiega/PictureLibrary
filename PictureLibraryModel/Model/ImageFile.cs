@@ -11,7 +11,8 @@ namespace PictureLibraryModel.Model
     public class ImageFile
     {
         public FileInfo FileInfo { get; set; }
-        
+        public string Path { get; set; }
+
         public ImageFile()
         {
 
@@ -19,7 +20,11 @@ namespace PictureLibraryModel.Model
 
         public ImageFile(string path)
         {
-            if (File.Exists(path)) FileInfo = new FileInfo(path);
+            if (File.Exists(path))
+            {
+                Path = path;
+                FileInfo = new FileInfo(path);
+            }
             else throw new Exception("File not found");
         }
     }
