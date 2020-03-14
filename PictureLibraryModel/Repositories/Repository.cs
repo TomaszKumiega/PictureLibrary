@@ -23,7 +23,7 @@ namespace PictureLibraryModel.Repositories
 
         public void AddRange(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            context.Set<T>().AddRange(entities);
         }
 
         public T Get(int id)
