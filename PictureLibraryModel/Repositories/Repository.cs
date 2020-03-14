@@ -18,7 +18,7 @@ namespace PictureLibraryModel.Repositories
 
         public void Add(T entity)
         {
-            throw new NotImplementedException();
+            context.Set<T>().Add(entity);
         }
 
         public void AddRange(IEnumerable<T> entities)
