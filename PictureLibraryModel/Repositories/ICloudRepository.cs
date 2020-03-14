@@ -8,13 +8,13 @@ namespace PictureLibraryModel.Repositories
 {
     public interface ICloudRepository<T> where T : class
     {
-        T GetFromCloud(int id);
-        IEnumerable<T> GetAllFromCloud();
+        T Get(int id);
+        IEnumerable<T> GetAll();
 
-        void AddToCloud(T entity);
-        void AddRangeToCloud(IEnumerable<T> entities);
+        void Add(T entity);
+        void AddRange(IEnumerable<T> entities);
 
-        void RemoveFromCloud(T entity);
-        void RemoveRangeFromCloud(IEnumerable<T> entities);
+        void Remove(T entity);
+        void RemoveRange(IEnumerable<T> entities);
     }
 }
