@@ -43,7 +43,7 @@ namespace PictureLibraryModel.Repositories
 
         public void RemoveRange(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            context.Set<T>().RemoveRange(entities);
         }
     }
 }
