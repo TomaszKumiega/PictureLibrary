@@ -33,7 +33,7 @@ namespace PictureLibraryModel.Repositories
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return context.Set<T>().ToList();
         }
 
         public void Remove(T entity)
