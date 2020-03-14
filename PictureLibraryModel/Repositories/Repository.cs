@@ -9,41 +9,51 @@ namespace PictureLibraryModel.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly DbContext context;
+        protected readonly List<T> listOfItems;
 
-        public Repository(DbContext context)
+        public Repository(List<T> list)
         {
-            this.context = context;
+            this.listOfItems = list;
         }
 
         public void Add(T entity)
         {
-            context.Set<T>().Add(entity);
+            listOfItems.Add(entity);
         }
 
         public void AddRange(IEnumerable<T> entities)
         {
-            context.Set<T>().AddRange(entities);
+            listOfItems.AddRange(entities);
         }
 
         public T Get(int id)
         {
-            return context.Set<T>().Find(id);
+            if (listOfItems.Count > id && id >= 0)
+            {
+                return listOfItems[id];
+            }
+            else 
+            {
+                return null;
+            }
         }
 
         public IEnumerable<T> GetAll()
         {
-            return context.Set<T>().ToList();
+            return listOfItems;
         }
 
         public void Remove(T entity)
         {
-            context.Set<T>().Remove(entity);
+            listOfItems.Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<T> entities)
         {
-            context.Set<T>().RemoveRange(entities);
+            foreach(T t in entities)
+            {
+                listOfItems.Remove(t);
+            }
         }
     }
 }
