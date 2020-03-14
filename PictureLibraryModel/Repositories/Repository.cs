@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,13 @@ namespace PictureLibraryModel.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
+        protected readonly DbContext context;
+
+        public Repository(DbContext context)
+        {
+            this.context = context;
+        }
+
         public void Add(T entity)
         {
             throw new NotImplementedException();
