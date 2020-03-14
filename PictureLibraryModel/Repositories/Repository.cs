@@ -28,7 +28,7 @@ namespace PictureLibraryModel.Repositories
 
         public T Get(int id)
         {
-            throw new NotImplementedException();
+            return context.Set<T>().Find(id);
         }
 
         public IEnumerable<T> GetAll()
