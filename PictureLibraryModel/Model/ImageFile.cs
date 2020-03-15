@@ -13,6 +13,7 @@ namespace PictureLibraryModel.Model
         public FileInfo FileInfo { get; set; }
         public string Path { get; set; }
         public Icon Icon { get; set; }
+        public List<string> Albums { get; set; }
 
         public ImageFile()
         {
