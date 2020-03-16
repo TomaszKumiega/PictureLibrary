@@ -5,9 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PictureLibraryWPF"
         mc:Ignorable="d"
-        Title="PictureLibrary" Height="600" Width="1000" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip"
-        WindowState="{Binding WindowState, Mode=TwoWay}">
-
+        Title="PictureLibrary" Height="600" Width="1000" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
     <Window.Resources>
         <SolidColorBrush x:Key="BrightBrush" Color="#777b79"/>
 
@@ -100,7 +98,7 @@
             <TabItem Header="View" Foreground="#cdcdcd" Visibility="Hidden">
             </TabItem>
         </TabControl>
-            
+
         <!--Search bar-->
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -123,7 +121,7 @@
                 </DockPanel>
             </Border>
         </Grid>
-        
+
         <!--Title Bar Buttons Grid-->
         <Grid Grid.Row="0" Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -164,5 +162,4 @@
             </Button>
         </Grid>
     </Grid>
-
 </Window>

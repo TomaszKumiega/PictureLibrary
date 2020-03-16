@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using PictureLibraryViewModel;
 
 namespace PictureLibraryWPF
 {
@@ -21,10 +20,12 @@ namespace PictureLibraryWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
         }
+
 
         /// <summary>
         /// Allows to drag window with a mouse with its left button down.

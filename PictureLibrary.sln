@@ -3,14 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28917.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibraryWPF", "PictureLibraryWPF\PictureLibraryWPF.csproj", "{45103DE6-9774-4F0F-9D12-D680C7A20988}"
-	ProjectSection(ProjectDependencies) = postProject
-		{294AFCCD-E5D3-4045-B944-BE2E908AD6F1} = {294AFCCD-E5D3-4045-B944-BE2E908AD6F1}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibraryViewModel", "PictureLibraryViewModel\PictureLibraryViewModel.csproj", "{294AFCCD-E5D3-4045-B944-BE2E908AD6F1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibraryModel", "PictureLibraryModel\PictureLibraryModel.csproj", "{37A7E85E-7699-4E91-9E89-FE52A5A787D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibraryWPF", "PictureLibraryWPF\PictureLibraryWPF.csproj", "{97FB9B6C-8D5C-4B36-9E87-B2D9BE8362BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{45103DE6-9774-4F0F-9D12-D680C7A20988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45103DE6-9774-4F0F-9D12-D680C7A20988}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45103DE6-9774-4F0F-9D12-D680C7A20988}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45103DE6-9774-4F0F-9D12-D680C7A20988}.Release|Any CPU.Build.0 = Release|Any CPU
 		{294AFCCD-E5D3-4045-B944-BE2E908AD6F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{294AFCCD-E5D3-4045-B944-BE2E908AD6F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{294AFCCD-E5D3-4045-B944-BE2E908AD6F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -30,6 +23,10 @@ Global
 		{37A7E85E-7699-4E91-9E89-FE52A5A787D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37A7E85E-7699-4E91-9E89-FE52A5A787D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37A7E85E-7699-4E91-9E89-FE52A5A787D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97FB9B6C-8D5C-4B36-9E87-B2D9BE8362BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97FB9B6C-8D5C-4B36-9E87-B2D9BE8362BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97FB9B6C-8D5C-4B36-9E87-B2D9BE8362BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97FB9B6C-8D5C-4B36-9E87-B2D9BE8362BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
