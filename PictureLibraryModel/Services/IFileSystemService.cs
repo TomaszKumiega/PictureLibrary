@@ -30,16 +30,12 @@ namespace PictureLibraryModel.Services
         /// <summary>
         /// Copies file to the specified destination
         /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="destinationPath"></param>
-        void CopyFile(string filePath, string destinationPath);
+        void CopyFile(string filePath, string destinationPath, bool overwrite);
 
         /// <summary>
         /// Moves file to the specified destination 
         /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="destinationPath"></param>
-        void MoveFile(string filePath, string destinationPath);
+        void MoveFile(string filePath, string destinationPath, bool overwrite);
 
         /// <summary>
         /// Permanently removes file 
