@@ -45,9 +45,9 @@ namespace PictureLibraryModel.Services
         void MoveFile(string filePath, string destinationPath, bool overwrite);
 
         /// <summary>
-        /// Permanently removes file 
+        /// Deletes specified file 
         /// </summary>
         /// <param name="filePath"></param>
-        void RemoveFile(string filePath);
+        void DeleteFile(string filePath);
     }
 }

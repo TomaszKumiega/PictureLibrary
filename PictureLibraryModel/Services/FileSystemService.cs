@@ -69,9 +69,9 @@ namespace PictureLibraryModel.Services
             File.Move(filePath, destinationPath, overwrite);        
         }
 
-        public void RemoveFile(string filePath)
+        public void DeleteFile(string filePath)
         {
-            throw new NotImplementedException();
+            File.Delete(filePath);
         }
     }
 }
