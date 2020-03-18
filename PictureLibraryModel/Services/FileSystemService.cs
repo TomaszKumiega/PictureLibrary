@@ -66,7 +66,7 @@ namespace PictureLibraryModel.Services
 
         public void MoveFile(string filePath, string destinationPath, bool overwrite)
         {
-            throw new NotImplementedException();
+            File.Move(filePath, destinationPath, overwrite);        
         }
 
         public void RemoveFile(string filePath)
