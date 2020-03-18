@@ -31,7 +31,7 @@ namespace PictureLibraryModel.Model
             else throw new Exception("File not found");
         }
 
-        private static bool IsFileAnImage(string path)
+        public static bool IsFileAnImage(string path)
         {
             string[] supportedExtensions = { ".jpg", ".jpeg", ".jpe", ".png", ".jfif", ".bmp", ".tif", ".tiff", ".gif" };
             bool pathEndsWithSupportedExtension = false;
