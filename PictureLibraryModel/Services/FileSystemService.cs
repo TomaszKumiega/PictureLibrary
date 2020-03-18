@@ -10,8 +10,6 @@ namespace PictureLibraryModel.Services
     public class FileSystemService : IFileSystemService
     {
 
-        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
-
         public FileSystemService()
         {
 
