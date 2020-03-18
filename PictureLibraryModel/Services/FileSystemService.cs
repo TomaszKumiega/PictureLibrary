@@ -18,9 +18,9 @@ namespace PictureLibraryModel.Services
             CurrentPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
         }
 
-        public void CopyFile(string filePath, string destinationPath)
+        public void CopyFile(string sourceFilePath, string destinationFilePath, bool overwrite) 
         {
-            throw new NotImplementedException();
+            File.Copy(sourceFilePath, destinationFilePath,overwrite);
         }
 
         public List<string> GetAllCatalogsPathsList()
