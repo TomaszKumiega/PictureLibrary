@@ -23,6 +23,12 @@ namespace PictureLibraryModel.Services
         List<string> GetAllDirectories(SearchOption option);
 
         /// <summary>
+        /// Provides a list of directories in specified directory 
+        /// </summary>
+        /// <returns></returns>
+        List<string> GetAllDirectories(string topDirectory, SearchOption option);
+
+        /// <summary>
         /// Provides a list of image files in current directory
         /// </summary>
         /// <returns></returns>

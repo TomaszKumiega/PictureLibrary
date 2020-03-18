@@ -30,6 +30,19 @@ namespace PictureLibraryModel.Services
             return directories.ToList<string>();
         }
 
+        public List<string> GetAllDirectories(string topDirectory, SearchOption option)
+        {
+            if (Directory.Exists(topDirectory))
+            {
+                var directories = Directory.GetDirectories(topDirectory, "*", option);
+                return directories.ToList<string>();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public List<ImageFile> GetAllImageFiles()
         {
             throw new NotImplementedException();
