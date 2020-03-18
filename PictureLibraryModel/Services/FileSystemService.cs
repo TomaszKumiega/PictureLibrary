@@ -45,7 +45,23 @@ namespace PictureLibraryModel.Services
 
         public List<ImageFile> GetAllImageFiles()
         {
-            throw new NotImplementedException();
+            var files = Directory.GetFiles(CurrentDirectory, "*");
+            var listOfFiles = files.ToList<string>();
+            var listOfImageFiles = new List<ImageFile>();
+
+            foreach(var t in listOfFiles)
+            {
+                if (!ImageFile.IsFileAnImage(t))
+                {
+                    listOfFiles.Remove(t);
+                }
+                else
+                {
+                    listOfImageFiles.Add(new ImageFile(t));
+                }
+            }
+
+            return listOfImageFiles;
         }
 
         public void MoveFile(string filePath, string destinationPath, bool overwrite)
