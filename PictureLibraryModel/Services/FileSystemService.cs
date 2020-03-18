@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace PictureLibraryModel.Services
 {
@@ -25,7 +26,8 @@ namespace PictureLibraryModel.Services
 
         public List<string> GetAllDirectories(SearchOption option)
         {
-            throw new NotImplementedException();
+            var directories = Directory.GetDirectories(CurrentPath, "*", option);
+            return directories.ToList<string>();
         }
 
         public List<ImageFile> GetAllImageFiles()
