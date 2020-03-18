@@ -17,7 +17,7 @@ namespace PictureLibraryModel.Services
         string CurrentPath { get; }
 
         /// <summary>
-        /// Provides a list of catalogs in current directory as well as subcatalogs
+        /// Provides a list of directories in current directory
         /// </summary>
         /// <returns></returns>
         List<string> GetAllDirectories(SearchOption option);
