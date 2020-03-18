@@ -1,6 +1,7 @@
 ﻿using PictureLibraryModel.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace PictureLibraryModel.Services
@@ -19,7 +20,7 @@ namespace PictureLibraryModel.Services
         /// Provides a list of catalogs in current directory as well as subcatalogs
         /// </summary>
         /// <returns></returns>
-        List<string> GetAllCatalogsPathsList();
+        List<string> GetAllDirectories(SearchOption option);
 
         /// <summary>
         /// Provides a list of image files in current directory

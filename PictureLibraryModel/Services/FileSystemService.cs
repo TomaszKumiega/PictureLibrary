@@ -23,7 +23,7 @@ namespace PictureLibraryModel.Services
             File.Copy(sourceFilePath, destinationFilePath,overwrite);
         }
 
-        public List<string> GetAllCatalogsPathsList()
+        public List<string> GetAllDirectories(SearchOption option)
         {
             throw new NotImplementedException();
         }
