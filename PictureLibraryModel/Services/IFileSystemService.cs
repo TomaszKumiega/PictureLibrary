@@ -11,16 +11,6 @@ namespace PictureLibraryModel.Services
     /// </summary>
     public interface IFileSystemService
     {
-        /// <summary>
-        /// Containes path of catalog, object is currently operating on
-        /// </summary>
-        string CurrentDirectory { get; }
-
-        /// <summary>
-        /// Provides a list of directories in current directory
-        /// </summary>
-        /// <returns></returns>
-        List<string> GetAllDirectories(SearchOption option);
 
         /// <summary>
         /// Provides a list of directories in specified directory 
@@ -32,7 +22,7 @@ namespace PictureLibraryModel.Services
         /// Provides a list of image files in current directory
         /// </summary>
         /// <returns></returns>
-        List<ImageFile> GetAllImageFiles();
+        List<ImageFile> GetAllImageFiles(string directory);
 
         /// <summary>
         /// Copies file to the specified destination
