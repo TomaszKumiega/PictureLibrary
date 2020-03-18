@@ -33,7 +33,7 @@ namespace PictureLibraryModel.Services
             throw new NotImplementedException();
         }
 
-        public void MoveFile(string filePath, string destinationPath)
+        public void MoveFile(string filePath, string destinationPath, bool overwrite)
         {
             throw new NotImplementedException();
         }
