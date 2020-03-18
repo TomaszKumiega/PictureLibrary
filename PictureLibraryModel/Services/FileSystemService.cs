@@ -12,11 +12,11 @@ namespace PictureLibraryModel.Services
 
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public string CurrentPath { get; }
+        public string CurrentDirectory { get; }
 
         public FileSystemService()
         {
-            CurrentPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
         }
 
         public void CopyFile(string sourceFilePath, string destinationFilePath, bool overwrite) 
@@ -26,7 +26,7 @@ namespace PictureLibraryModel.Services
 
         public List<string> GetAllDirectories(SearchOption option)
         {
-            var directories = Directory.GetDirectories(CurrentPath, "*", option);
+            var directories = Directory.GetDirectories(CurrentDirectory, "*", option);
             return directories.ToList<string>();
         }
 

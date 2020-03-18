@@ -14,7 +14,7 @@ namespace PictureLibraryModel.Services
         /// <summary>
         /// Containes path of catalog, object is currently operating on
         /// </summary>
-        string CurrentPath { get; }
+        string CurrentDirectory { get; }
 
         /// <summary>
         /// Provides a list of directories in current directory
