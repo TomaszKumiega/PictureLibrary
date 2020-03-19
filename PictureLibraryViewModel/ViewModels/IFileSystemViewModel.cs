@@ -9,7 +9,7 @@ namespace PictureLibraryViewModel.ViewModels
     {
         string CurrentDirectory { get; }
         List<string> Directories { get; }
-        
+        List<ImageFile> ImageFiles { get; }
         
 
 
