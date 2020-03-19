@@ -7,7 +7,9 @@ namespace PictureLibraryViewModel.ViewModels
 {
     public interface IFileSystemViewModel
     {
+        string CurrentDirectory { get; }
         List<string> Directories { get; }
+        
         
 
 
