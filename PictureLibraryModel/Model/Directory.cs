@@ -6,5 +6,6 @@ namespace PictureLibraryModel.Model
 {
     public class Directory
     {
+        public string FullPath { get; }
     }
 }
