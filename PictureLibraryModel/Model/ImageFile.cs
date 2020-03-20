@@ -11,7 +11,7 @@ namespace PictureLibraryModel.Model
     public class ImageFile
     {
         public FileInfo FileInfo { get; set; }
-        public string Path { get; set; }
+        public string FullPath { get; set; }
         public Icon Icon { get; set; }
         public List<string> Albums { get; set; }
 
@@ -24,7 +24,7 @@ namespace PictureLibraryModel.Model
         {
             if (File.Exists(path) && (IsFileAnImage(path)==true))
             {
-                Path = path;
+                FullPath = path;
                 FileInfo = new FileInfo(path);
                 Icon = Icon.ExtractAssociatedIcon(path);
             }
@@ -46,7 +46,7 @@ namespace PictureLibraryModel.Model
 
         public Image GetImage()
         {
-            return Image.FromFile(Path);
+            return Image.FromFile(FullPath);
         }
     }
 }
