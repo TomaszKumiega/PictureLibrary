@@ -9,5 +9,10 @@ namespace PictureLibraryModel.Model
         public string FullPath { get; }
         public string Name { get; }
 
+        public Directory(string fullPath, string name)
+        {
+            FullPath = fullPath;
+            Name = name;
+        }
     }
 }
