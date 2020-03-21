@@ -21,12 +21,18 @@ namespace PictureLibraryModel.Services
             File.Copy(sourceFilePath, destinationFilePath,overwrite);
         }
 
-        public List<string> GetAllDirectories(string topDirectory, SearchOption option)
+        public ObservableCollection<Model.Directory> GetAllDirectories(string topDirectory, SearchOption option)
         {
             if (System.IO.Directory.Exists(topDirectory))
             {
-                var directories = System.IO.Directory.GetDirectories(topDirectory, "*", option);
-                return directories.ToList<string>();
+                var fullPaths = System.IO.Directory.GetDirectories(topDirectory, "*", option);
+                ObservableCollection<Model.Directory> directories = new ObservableCollection<Model.Directory>();
+
+                foreach(var t in fullPaths)
+                {
+                    directories.Add(new Model.Directory(t, (new System.IO.DirectoryInfo(t)).Name));
+                }
+                return directories;
             }
             else
             {
