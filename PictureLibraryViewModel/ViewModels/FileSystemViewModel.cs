@@ -35,7 +35,7 @@ namespace PictureLibraryViewModel.ViewModels
                         t.Children.Add(i);
                     }
 
-                    if (t.Children.Count == 0) t.IsReady = false;
+                    if (t.Children.Count == 0) t.IsReady = false; // When drive has no children, item will be disabled in treeview
                 }
             }
         }
