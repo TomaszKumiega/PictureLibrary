@@ -11,5 +11,12 @@ namespace PictureLibraryModel.Model
         public bool IsReady { get; }
         public ObservableCollection<object> Children { get; }
 
+        public Drive(string name, bool isReady)
+        {
+            Name = name;
+            IsReady = isReady;
+            this.Children = new ObservableCollection<object>();
+        }
+
     }
 }
