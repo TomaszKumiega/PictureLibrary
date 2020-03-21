@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PictureLibraryViewModel.ViewModels;
+using PictureLibraryModel.Services;
 
 namespace PictureLibraryViewModel
 {
@@ -22,6 +24,8 @@ namespace PictureLibraryViewModel
             var builder = new ContainerBuilder();
 
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();
+            builder.RegisterType<FileSystemViewModel>().As<IFileSystemViewModel>();
+            builder.RegisterType<FileSystemService>().As<IFileSystemService>();
 
             return builder.Build();
         }
