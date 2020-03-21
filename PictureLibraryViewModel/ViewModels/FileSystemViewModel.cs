@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,5 +12,7 @@ namespace PictureLibraryViewModel.ViewModels
         public string CurrentDirectory { get; }
 
         public ObservableCollection<Drive> Drives { get; }
+
+        private IFileSystemService fileSystemService { get; }
     }
 }
