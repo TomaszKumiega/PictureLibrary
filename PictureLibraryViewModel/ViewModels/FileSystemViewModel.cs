@@ -14,5 +14,10 @@ namespace PictureLibraryViewModel.ViewModels
         public ObservableCollection<Drive> Drives { get; }
 
         private IFileSystemService FileSystemService { get; }
+
+        public FileSystemViewModel(IFileSystemService fileSystemService)
+        {
+            FileSystemService = fileSystemService;
+        }
     }
 }
