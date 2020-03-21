@@ -8,6 +8,7 @@
              xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls.Files"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200" >
+
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,19 +18,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TreeView x:Name="FilesTreeView" Margin="5" ItemsSource="{Binding Drives}">
+        <TreeView x:Name="FilesTreeView" Margin="5" ItemsSource="{Binding Drives}" Background="#37393f" >
             <TreeView.Resources>
                 <DataTemplate DataType="{x:Type src:ImageFile}">
-                    <TextBlock Text="{Binding FileInfo.Name}"/>
+                    <TextBlock Text="{Binding FileInfo.Name}" Foreground="#cdcdcd"/>
                 </DataTemplate>
 
                 <HierarchicalDataTemplate DataType="{x:Type src:Directory}" ItemsSource="{Binding Children}">
-                    <TextBlock Text="{Binding Name}"/>
+                    <TextBlock Text="{Binding Name}" Foreground="#cdcdcd"/>
                 </HierarchicalDataTemplate>
 
                 <HierarchicalDataTemplate DataType="{x:Type src:Drive}" ItemsSource="{Binding Children}">
                     <Grid>
-                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="{Binding Name}" Foreground="#cdcdcd"/>
                     </Grid>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
