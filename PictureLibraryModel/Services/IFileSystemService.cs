@@ -1,6 +1,7 @@
 ﻿using PictureLibraryModel.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 
@@ -23,6 +24,12 @@ namespace PictureLibraryModel.Services
         /// </summary>
         /// <returns></returns>
         List<ImageFile> GetAllImageFiles(string directory);
+
+        /// <summary>
+        /// Provides an observable collection of drives 
+        /// </summary>
+        /// <returns></returns>
+        ObservableCollection<Drive> GetDrives();
 
         /// <summary>
         /// Copies file to the specified destination

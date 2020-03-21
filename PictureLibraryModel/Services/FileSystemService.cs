@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace PictureLibraryModel.Services
 {
@@ -31,6 +32,19 @@ namespace PictureLibraryModel.Services
             {
                 return null;
             }
+        }
+
+        public ObservableCollection<Drive> GetDrives()
+        {
+            var drives = new ObservableCollection<Drive>();
+            drives.Add(new Drive("My Computer", true));
+
+            foreach(var driveInfo in System.IO.DriveInfo.GetDrives())
+            {
+                drives[0].Children.Add(new Drive(driveInfo.Name, driveInfo.IsReady));
+            }
+
+            return drives;
         }
 
         public List<ImageFile> GetAllImageFiles(string directory)
