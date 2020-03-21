@@ -38,7 +38,7 @@ namespace PictureLibraryModel.Services
                 }
                 catch (Exception e)
                 {
-                    
+                    _logger.Error(e, "Couldn't load directories from " + fullPaths);
                 }
 
                 ObservableCollection<Model.Directory> directories = new ObservableCollection<Model.Directory>();
