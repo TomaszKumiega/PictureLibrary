@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Autofac;
+using PictureLibraryWPF.CustomControls.Files;
 
 namespace PictureLibraryWPF
 {
@@ -23,7 +25,14 @@ namespace PictureLibraryWPF
 
         public MainWindow()
         {
+            var container = PictureLibraryViewModel.ContainerConfig.Configure();
+            var filesTree = container.Resolve<FilesTree>();
             InitializeComponent();
+            Grid.Children.Add(filesTree);
+            Grid.SetColumn(filesTree, 0);
+            Grid.SetRow(filesTree, 4);
+            filesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
+            filesTree.VerticalAlignment = VerticalAlignment.Stretch;
         }
 
 

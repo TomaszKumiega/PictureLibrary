@@ -52,7 +52,7 @@
     </Window.Resources>
 
 
-    <Grid>
+    <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
@@ -121,6 +121,8 @@
                 </DockPanel>
             </Border>
         </Grid>
+        
+
 
         <!--Title Bar Buttons Grid-->
         <Grid Grid.Row="0" Grid.Column="1">
