@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace PictureLibraryModel.Model
@@ -8,5 +9,7 @@ namespace PictureLibraryModel.Model
     {
         public string Name { get; }
         public bool IsReady { get; }
+        public ObservableCollection<object> Children { get; }
+
     }
 }
