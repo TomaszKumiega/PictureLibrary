@@ -23,14 +23,28 @@ namespace PictureLibraryModel.Services
 
         public ObservableCollection<Model.Directory> GetAllDirectories(string topDirectory, SearchOption option)
         {
+            //TODO fix implementation
+            //TODO async
+
             if (System.IO.Directory.Exists(topDirectory))
             {
-                var fullPaths = System.IO.Directory.GetDirectories(topDirectory, "*", option);
+                string[] fullPaths=null;
+
+                try
+                {
+                     fullPaths = System.IO.Directory.GetDirectories(topDirectory, "*", option);
+                }
+                catch (Exception e)
+                {
+                    
+                }
+
                 ObservableCollection<Model.Directory> directories = new ObservableCollection<Model.Directory>();
 
+                if(fullPaths!=null)
                 foreach(var t in fullPaths)
                 {
-                    directories.Add(new Model.Directory(t, (new System.IO.DirectoryInfo(t)).Name));
+                    directories.Add(new Model.Directory(t, (new System.IO.DirectoryInfo(t)).Name, new FileSystemService()));
                 }
                 return directories;
             }
