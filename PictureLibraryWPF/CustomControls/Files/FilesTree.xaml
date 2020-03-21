@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TreeView x:Name="FilesTreeView" Margin="5" ItemsSource="{Binding Drives}" Background="#37393f" >
+        <TreeView x:Name="FilesTreeView" Margin="5" ItemsSource="{Binding Drives}" Background="#37393f" BorderThickness="0">
             <TreeView.Resources>
                 <DataTemplate DataType="{x:Type src:ImageFile}">
                     <TextBlock Text="{Binding FileInfo.Name}" Foreground="#cdcdcd"/>
