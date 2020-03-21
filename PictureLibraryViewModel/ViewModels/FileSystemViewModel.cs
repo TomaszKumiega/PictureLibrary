@@ -11,13 +11,19 @@ namespace PictureLibraryViewModel.ViewModels
     {
         public string CurrentDirectory { get; }
 
-        public ObservableCollection<Drive> Drives { get; }
+        public ObservableCollection<Drive> Drives { get; private set; }
 
         private IFileSystemService FileSystemService { get; }
 
         public FileSystemViewModel(IFileSystemService fileSystemService)
         {
             FileSystemService = fileSystemService;
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            Drives = FileSystemService.GetDrives();
         }
     }
 }
