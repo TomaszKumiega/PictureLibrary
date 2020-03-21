@@ -24,7 +24,7 @@ namespace PictureLibraryModel.Services
             File.Copy(sourceFilePath, destinationFilePath,overwrite);
         }
 
-        public async Task<ObservableCollection<Model.Directory>> GetAllDirectories(string topDirectory, SearchOption option)
+        public ObservableCollection<Model.Directory> GetAllDirectories(string topDirectory, SearchOption option)
         {
 
             if (System.IO.Directory.Exists(topDirectory))
@@ -33,7 +33,7 @@ namespace PictureLibraryModel.Services
 
                 try
                 {
-                     fullPaths = await Task.Run(() => System.IO.Directory.GetDirectories(topDirectory, "*", option));
+                     fullPaths = System.IO.Directory.GetDirectories(topDirectory, "*", option);
                 }
                 catch (Exception e)
                 {

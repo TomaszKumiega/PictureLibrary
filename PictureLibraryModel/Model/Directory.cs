@@ -24,10 +24,10 @@ namespace PictureLibraryModel.Model
             Initialize();
         }
 
-        private void Initialize()
+        private async Task Initialize()
         {
             //TODO change to dynamic loading
-            ObservableCollection<Directory> directories = FileSystemService.GetAllDirectories(FullPath, System.IO.SearchOption.TopDirectoryOnly).Result;
+            ObservableCollection<Directory> directories = await Task.Run(() => FileSystemService.GetAllDirectories(FullPath, System.IO.SearchOption.TopDirectoryOnly));
 
             if (directories != null)
             {

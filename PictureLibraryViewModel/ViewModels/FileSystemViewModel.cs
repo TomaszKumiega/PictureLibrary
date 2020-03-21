@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModels
 {
@@ -21,12 +22,12 @@ namespace PictureLibraryViewModel.ViewModels
             Initialize();
         }
 
-        private void Initialize()
+        private async Task Initialize()
         {
             Drives = FileSystemService.GetDrives();
             foreach(Drive t in Drives[0].Children) // Drives[0] is MyComputer, Children items are the drives on the computer
             {
-                var directories = FileSystemService.GetAllDirectories(t.Name, System.IO.SearchOption.TopDirectoryOnly).Result;
+                var directories = await Task.Run(() => FileSystemService.GetAllDirectories(t.Name, System.IO.SearchOption.TopDirectoryOnly));
 
                 if (directories != null)
                 {
