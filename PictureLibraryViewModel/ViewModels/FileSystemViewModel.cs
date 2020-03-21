@@ -13,6 +13,6 @@ namespace PictureLibraryViewModel.ViewModels
 
         public ObservableCollection<Drive> Drives { get; }
 
-        private IFileSystemService fileSystemService { get; }
+        private IFileSystemService FileSystemService { get; }
     }
 }
