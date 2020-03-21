@@ -1,6 +1,7 @@
 ﻿using PictureLibraryModel.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace PictureLibraryViewModel.ViewModels
@@ -12,13 +13,9 @@ namespace PictureLibraryViewModel.ViewModels
         /// </summary>
         string CurrentDirectory { get; }
         /// <summary>
-        /// Contains a list of directories names
+        /// Containes drives from computers filesystem
         /// </summary>
-        List<string> Directories { get; }
-        /// <summary>
-        /// Contains a list of ImageFiles from current directory
-        /// </summary>
-        List<ImageFile> ImageFiles { get; }
+        ObservableCollection<Drive> Drives { get; }
        
     }
 }
