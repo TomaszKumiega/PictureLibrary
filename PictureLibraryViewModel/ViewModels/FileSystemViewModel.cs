@@ -8,8 +8,8 @@ namespace PictureLibraryViewModel.ViewModels
 {
     public class FileSystemViewModel : IFileSystemViewModel
     {
-        public string CurrentDirectory => throw new NotImplementedException();
+        public string CurrentDirectory { get; }
 
-        public ObservableCollection<Drive> Drives => throw new NotImplementedException();
+        public ObservableCollection<Drive> Drives { get; }
     }
 }
