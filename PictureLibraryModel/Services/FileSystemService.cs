@@ -22,9 +22,9 @@ namespace PictureLibraryModel.Services
 
         public List<string> GetAllDirectories(string topDirectory, SearchOption option)
         {
-            if (Directory.Exists(topDirectory))
+            if (System.IO.Directory.Exists(topDirectory))
             {
-                var directories = Directory.GetDirectories(topDirectory, "*", option);
+                var directories = System.IO.Directory.GetDirectories(topDirectory, "*", option);
                 return directories.ToList<string>();
             }
             else
@@ -35,7 +35,7 @@ namespace PictureLibraryModel.Services
 
         public List<ImageFile> GetAllImageFiles(string directory)
         {
-            var files = Directory.GetFiles(directory, "*");
+            var files = System.IO.Directory.GetFiles(directory, "*");
             var listOfFiles = files.ToList<string>();
             var listOfImageFiles = new List<ImageFile>();
 
