@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Services
 {
@@ -23,9 +24,8 @@ namespace PictureLibraryModel.Services
             File.Copy(sourceFilePath, destinationFilePath,overwrite);
         }
 
-        public ObservableCollection<Model.Directory> GetAllDirectories(string topDirectory, SearchOption option)
+        public async Task<ObservableCollection<Model.Directory>> GetAllDirectories(string topDirectory, SearchOption option)
         {
-            //TODO async
 
             if (System.IO.Directory.Exists(topDirectory))
             {
@@ -33,7 +33,7 @@ namespace PictureLibraryModel.Services
 
                 try
                 {
-                     fullPaths = System.IO.Directory.GetDirectories(topDirectory, "*", option);
+                     fullPaths = await Task.Run(() => System.IO.Directory.GetDirectories(topDirectory, "*", option));
                 }
                 catch (Exception e)
                 {
