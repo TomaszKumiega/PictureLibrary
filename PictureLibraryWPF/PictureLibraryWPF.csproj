@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Icons\CloseIcon.png" />
+    <None Remove="Icons\ComputerIcon.png" />
     <None Remove="Icons\MaximizeIcon.png" />
     <None Remove="Icons\MinimizeIcon.png" />
     <None Remove="Icons\SearchIcon.png" />
@@ -25,6 +26,9 @@
 
   <ItemGroup>
     <Resource Include="Icons\CloseIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\ComputerIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\MaximizeIcon.png">

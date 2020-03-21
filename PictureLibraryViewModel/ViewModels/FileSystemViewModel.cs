@@ -24,6 +24,20 @@ namespace PictureLibraryViewModel.ViewModels
         private void Initialize()
         {
             Drives = FileSystemService.GetDrives();
+            foreach(Drive t in Drives[0].Children) // Drives[0] is MyComputer, Children items are the drives on the computer
+            {
+                var directories = FileSystemService.GetAllDirectories(t.Name, System.IO.SearchOption.TopDirectoryOnly);
+
+                if (directories != null)
+                {
+                    foreach (var i in directories)
+                    {
+                        t.Children.Add(i);
+                    }
+
+                    if (t.Children.Count == 0) t.IsReady = false;
+                }
+            }
         }
     }
 }

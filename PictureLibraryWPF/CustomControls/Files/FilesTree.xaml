@@ -9,7 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200" >
 
-    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -18,7 +17,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TreeView x:Name="FilesTreeView" ItemsSource="{Binding Drives}" Background="#37393f" BorderThickness="0">
+        <TreeView x:Name="FilesTreeView" ItemsSource="{Binding Drives}" Background="#37393f" BorderThickness="0" >
             <TreeView.Resources>
                 <DataTemplate DataType="{x:Type src:ImageFile}">
                     <TextBlock Text="{Binding FileInfo.Name}" Foreground="#cdcdcd"/>
@@ -29,9 +28,11 @@
                 </HierarchicalDataTemplate>
 
                 <HierarchicalDataTemplate DataType="{x:Type src:Drive}" ItemsSource="{Binding Children}">
-                    <Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./Icons/ComputerIcon.png"/>
                         <TextBlock Text="{Binding Name}" Foreground="#cdcdcd"/>
-                    </Grid>
+                      
+                    </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
         </TreeView>

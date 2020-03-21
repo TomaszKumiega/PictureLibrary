@@ -8,8 +8,8 @@ namespace PictureLibraryModel.Model
     public class Drive
     {
         public string Name { get; }
-        public bool IsReady { get; }
-        public ObservableCollection<object> Children { get; }
+        public bool IsReady { get; set; }
+        public ObservableCollection<object> Children { get; set; }
 
         public Drive(string name, bool isReady)
         {
