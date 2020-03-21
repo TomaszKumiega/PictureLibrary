@@ -1,11 +1,14 @@
-﻿<UserControl x:Class="PictureLibraryWPF.CustomControls.Files.UserControl1"
+﻿<UserControl x:Class="PictureLibraryWPF.CustomControls.Files.FilesTree"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:src="clr-namespace:PictureLibraryModel.Model;assembly=PictureLibraryModel"
+             xmlns:vm="clr-namespace:PictureLibraryViewModel.ViewModels;assembly=PictureLibraryViewModel"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls.Files"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="200" DataContext="{Binding IFileSystemViewModel}">
+             d:DesignHeight="450" d:DesignWidth="200" >
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -14,6 +17,22 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TreeView x:Name="FilesTreeView" Margin="5" ItemsSource="{Binding Drives}"/>
+        <TreeView x:Name="FilesTreeView" Margin="5" ItemsSource="{Binding Drives}">
+            <TreeView.Resources>
+                <DataTemplate DataType="{x:Type src:ImageFile}">
+                    <TextBlock Text="{Binding FileInfo.Name}"/>
+                </DataTemplate>
+
+                <HierarchicalDataTemplate DataType="{x:Type src:Directory}" ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Name}"/>
+                </HierarchicalDataTemplate>
+
+                <HierarchicalDataTemplate DataType="{x:Type src:Drive}" ItemsSource="{Binding Children}">
+                    <Grid>
+                        <TextBlock Text="{Binding Name}"/>
+                    </Grid>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+        </TreeView>
     </Grid>
 </UserControl>
