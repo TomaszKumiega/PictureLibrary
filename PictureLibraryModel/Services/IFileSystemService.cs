@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Services
 {
@@ -17,7 +18,7 @@ namespace PictureLibraryModel.Services
         /// Provides a list of directories in specified directory 
         /// </summary>
         /// <returns></returns>
-        ObservableCollection<Model.Directory> GetAllDirectories(string topDirectory, SearchOption option);
+        Task<ObservableCollection<Model.Directory>> GetAllDirectories(string topDirectory, SearchOption option);
 
         /// <summary>
         /// Provides a list of image files in current directory
