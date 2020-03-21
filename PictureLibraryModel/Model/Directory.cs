@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Model
 {
@@ -26,7 +27,7 @@ namespace PictureLibraryModel.Model
         private void Initialize()
         {
             //TODO change to dynamic loading
-            var directories = FileSystemService.GetAllDirectories(FullPath, System.IO.SearchOption.TopDirectoryOnly);
+            ObservableCollection<Directory> directories = FileSystemService.GetAllDirectories(FullPath, System.IO.SearchOption.TopDirectoryOnly).Result;
 
             if (directories != null)
             {

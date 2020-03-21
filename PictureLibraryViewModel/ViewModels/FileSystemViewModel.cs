@@ -26,7 +26,7 @@ namespace PictureLibraryViewModel.ViewModels
             Drives = FileSystemService.GetDrives();
             foreach(Drive t in Drives[0].Children) // Drives[0] is MyComputer, Children items are the drives on the computer
             {
-                var directories = FileSystemService.GetAllDirectories(t.Name, System.IO.SearchOption.TopDirectoryOnly);
+                var directories = FileSystemService.GetAllDirectories(t.Name, System.IO.SearchOption.TopDirectoryOnly).Result;
 
                 if (directories != null)
                 {
