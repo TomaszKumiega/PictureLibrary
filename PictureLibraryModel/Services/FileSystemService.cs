@@ -46,7 +46,7 @@ namespace PictureLibraryModel.Services
                 {
                     foreach (var t in fullPaths)
                     {
-                        directories.Add(new Model.Directory(t, (new System.IO.DirectoryInfo(t)).Name, new FileSystemService()));
+                        directories.Add(new Model.Directory(t, (new System.IO.DirectoryInfo(t)).Name, this));
                     }
                 }
 
@@ -61,11 +61,11 @@ namespace PictureLibraryModel.Services
         public ObservableCollection<Drive> GetDrives()
         {
             var drives = new ObservableCollection<Drive>();
-            drives.Add(new Drive("My Computer", true));
+            drives.Add(new Drive("My Computer", true, new FileSystemService()));
 
             foreach(var driveInfo in System.IO.DriveInfo.GetDrives())
             {
-                drives[0].Children.Add(new Drive(driveInfo.Name, driveInfo.IsReady));
+                drives[0].Children.Add(new Drive(driveInfo.Name, driveInfo.IsReady, this));
             }
 
             return drives;

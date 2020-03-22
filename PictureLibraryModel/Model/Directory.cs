@@ -14,6 +14,7 @@ namespace PictureLibraryModel.Model
         public ObservableCollection<object> Children { get; }
         private IFileSystemService FileSystemService { get; }
         public bool IsReady { get; private set; }
+        private bool _isExpanded;
 
         public Directory(string fullPath, string name, IFileSystemService fileSystemService)
         {
@@ -21,24 +22,38 @@ namespace PictureLibraryModel.Model
             Name = name;
             FileSystemService = fileSystemService;
             this.Children = new ObservableCollection<object>();
-            Initialize();
         }
 
-        private async Task Initialize()
+        public bool IsExpanded
         {
-            //TODO change to dynamic loading
-            ObservableCollection<Directory> directories = await Task.Run(() => FileSystemService.GetAllDirectories(FullPath, System.IO.SearchOption.TopDirectoryOnly));
-
-            if (directories != null)
+            get
             {
-                foreach (var t in directories)
+                return _isExpanded;
+            }
+
+            set
+            {
+                _isExpanded = value;
+                LoadChildrenSubDirectories();
+            }
+        }
+
+        private async Task LoadChildrenSubDirectories()
+        {
+            foreach (Directory c in Children)
+            {
+                var directories = await Task.Run(() => FileSystemService.GetAllDirectories(c.FullPath, System.IO.SearchOption.TopDirectoryOnly));
+
+                if (directories != null)
                 {
-                    Children.Add(t);
+                    foreach (var t in directories)
+                    {
+                        c.Children.Add(t);
+                    }
                 }
 
-                if (Children.Count == 0) IsReady = false; // When drive has no children, item will be disabled in treeview
+                if (c.Children.Count == 0) IsReady = false; // When drive has no children, item will be disabled in treeview
             }
-            
         }
     }
 }

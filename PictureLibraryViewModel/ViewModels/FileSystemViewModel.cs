@@ -24,21 +24,7 @@ namespace PictureLibraryViewModel.ViewModels
 
         private async Task Initialize()
         {
-            Drives = FileSystemService.GetDrives();
-            foreach(Drive t in Drives[0].Children) // Drives[0] is MyComputer, Children items are the drives on the computer
-            {
-                var directories = await Task.Run(() => FileSystemService.GetAllDirectories(t.Name, System.IO.SearchOption.TopDirectoryOnly));
-
-                if (directories != null)
-                {
-                    foreach (var i in directories)
-                    {
-                        t.Children.Add(i);
-                    }
-
-                    if (t.Children.Count == 0) t.IsReady = false; // When drive has no children, item will be disabled in treeview
-                }
-            }
+            Drives = await Task.Run(() => FileSystemService.GetDrives());
         }
     }
 }
