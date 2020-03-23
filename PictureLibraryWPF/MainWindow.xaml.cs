@@ -25,6 +25,8 @@ namespace PictureLibraryWPF
 
         public MainWindow()
         {
+            // TODO move filestree initialization to diffrent method 
+            // TODO change color of filestree scrollbar
             var container = PictureLibraryViewModel.ContainerConfig.Configure();
             var filesTree = container.Resolve<FilesTree>();
             InitializeComponent();
@@ -33,6 +35,18 @@ namespace PictureLibraryWPF
             Grid.SetRow(filesTree, 4);
             filesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
             filesTree.VerticalAlignment = VerticalAlignment.Stretch;
+
+            // TODO move grid splitter initialization to diffrent method
+            var gridSplitter = new GridSplitter();
+            Grid.Children.Add(gridSplitter);
+            gridSplitter.HorizontalAlignment = HorizontalAlignment.Right;
+            gridSplitter.VerticalAlignment = VerticalAlignment.Stretch;
+            gridSplitter.ShowsPreview = true;
+            gridSplitter.Width = 5;
+            gridSplitter.Opacity = 0;
+
+            Grid.SetColumn(gridSplitter, 0);
+            Grid.SetRow(gridSplitter, 4);            
         }
 
 
@@ -72,6 +86,18 @@ namespace PictureLibraryWPF
         private void Close(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void GridSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            var gridSplitter = sender as GridSplitter;
+
+            if (gridSplitter != null)
+            {
+                ((DataGridCell)gridSplitter.Tag).Column.Width
+                    = ((DataGridCell)gridSplitter.Tag).Column.ActualWidth +
+                      e.HorizontalChange;
+            }
         }
     }
 }
