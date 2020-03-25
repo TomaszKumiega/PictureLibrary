@@ -22,31 +22,39 @@ namespace PictureLibraryWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private FilesTree FilesTree { get; set; }
+        private GridSplitter LeftPanelGridSplitter { get; set; }
         public MainWindow()
         {
-            // TODO move filestree initialization to diffrent method 
-            // TODO change color of filestree scrollbar
             var container = PictureLibraryViewModel.ContainerConfig.Configure();
-            var filesTree = container.Resolve<FilesTree>();
+            FilesTree = container.Resolve<FilesTree>();
+            LeftPanelGridSplitter = new GridSplitter();
+
             InitializeComponent();
-            Grid.Children.Add(filesTree);
-            Grid.SetColumn(filesTree, 0);
-            Grid.SetRow(filesTree, 4);
-            filesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
-            filesTree.VerticalAlignment = VerticalAlignment.Stretch;
+            InitializeControlsOnStartup();
+        }
 
-            // TODO move grid splitter initialization to diffrent method
-            var gridSplitter = new GridSplitter();
-            Grid.Children.Add(gridSplitter);
-            gridSplitter.HorizontalAlignment = HorizontalAlignment.Right;
-            gridSplitter.VerticalAlignment = VerticalAlignment.Stretch;
-            gridSplitter.ShowsPreview = true;
-            gridSplitter.Width = 5;
-            gridSplitter.Opacity = 0;
+        private void InitializeControlsOnStartup()
+        {
+            //TODO: change color of filestree scrollbar
+            #region FilesTree
+            Grid.Children.Add(FilesTree);         
+            FilesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
+            FilesTree.VerticalAlignment = VerticalAlignment.Stretch;
+            Grid.SetColumn(FilesTree, 0);
+            Grid.SetRow(FilesTree, 4);
+            #endregion
 
-            Grid.SetColumn(gridSplitter, 0);
-            Grid.SetRow(gridSplitter, 4);            
+            #region LeftPanelGridSplitter
+            Grid.Children.Add(LeftPanelGridSplitter);
+            LeftPanelGridSplitter.HorizontalAlignment = HorizontalAlignment.Right;
+            LeftPanelGridSplitter.VerticalAlignment = VerticalAlignment.Stretch;
+            LeftPanelGridSplitter.ShowsPreview = true;
+            LeftPanelGridSplitter.Width = 5;
+            LeftPanelGridSplitter.Opacity = 0;
+            Grid.SetColumn(LeftPanelGridSplitter, 0);
+            Grid.SetRow(LeftPanelGridSplitter, 4);
+            #endregion
         }
 
 
