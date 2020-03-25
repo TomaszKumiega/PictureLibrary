@@ -1,13 +1,7 @@
 ﻿using Autofac;
-using PictureLibraryViewModel.Commands;
-using Autofac.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PictureLibraryViewModel.ViewModels;
 using PictureLibraryModel.Services;
+using PictureLibraryViewModel.Commands;
+using PictureLibraryViewModel.ViewModels;
 using PictureLibraryWPF.CustomControls.Files;
 
 namespace PictureLibraryViewModel
