@@ -6,11 +6,13 @@ namespace PictureLibraryModel.Model
 {
     public class Drive
     {
+        private bool _isExpanded;
+        private IFileSystemService FileSystemService { get; }
+
         public string Name { get; }
         public bool IsReady { get; set; }
-        private bool _isExpanded;
         public ObservableCollection<object> Children { get; set; }
-        private IFileSystemService FileSystemService { get; }
+        
 
         public Drive(string name, bool isReady, IFileSystemService fileSystemService)
         {

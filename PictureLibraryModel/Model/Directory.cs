@@ -6,12 +6,14 @@ namespace PictureLibraryModel.Model
 {
     public class Directory
     {
+        private bool _isExpanded;
+        private IFileSystemService FileSystemService { get; }
+
         public string FullPath { get; }
         public string Name { get; }
-        public ObservableCollection<object> Children { get; }
-        private IFileSystemService FileSystemService { get; }
         public bool IsReady { get; private set; }
-        private bool _isExpanded;
+        public ObservableCollection<object> Children { get; }
+
 
         public Directory(string fullPath, string name, IFileSystemService fileSystemService)
         {

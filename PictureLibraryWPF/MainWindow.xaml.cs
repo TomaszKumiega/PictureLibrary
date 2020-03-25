@@ -14,6 +14,7 @@ namespace PictureLibraryWPF
     {
         private FilesTree FilesTree { get; set; }
         private GridSplitter LeftPanelGridSplitter { get; set; }
+
         public MainWindow()
         {
             var container = PictureLibraryViewModel.ContainerConfig.Configure();

@@ -7,11 +7,11 @@ namespace PictureLibraryViewModel.ViewModels
 {
     public class FileSystemViewModel : IFileSystemViewModel
     {
-        public string CurrentDirectory { get; }
+        private IFileSystemService FileSystemService { get; }
 
+        public string CurrentDirectory { get; }
         public ObservableCollection<Drive> Drives { get; private set; }
 
-        private IFileSystemService FileSystemService { get; }
 
         public FileSystemViewModel(IFileSystemService fileSystemService)
         {
