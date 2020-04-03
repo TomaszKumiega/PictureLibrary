@@ -20,10 +20,5 @@ namespace PictureLibraryModel.Services
         /// <returns></returns>
         List<Library> GetAllLibraries();
 
-        /// <summary>
-        /// Returns a Library instance with a matching name
-        /// </summary>
-        /// <returns></returns>
-        Library FindLibrary(string name);
     }
 }
