@@ -5,7 +5,7 @@ using PictureLibraryModel.Model;
 
 namespace PictureLibraryModel.Services
 {
-    public interface ILibrariesService
+    public interface ILibraryFileService
     {
         /// <summary>
         /// Creates library file in specified directory
