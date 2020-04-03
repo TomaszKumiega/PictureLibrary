@@ -20,5 +20,11 @@ namespace PictureLibraryModel.Services
         /// <returns></returns>
         List<Library> GetAllLibraries();
 
+        /// <summary>
+        /// Saves list of libraries 
+        /// </summary>
+        /// <param name="libraries"></param>
+        void SaveLibraries(List<Library> libraries);
+
     }
 }
