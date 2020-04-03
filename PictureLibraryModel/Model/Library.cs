@@ -6,6 +6,7 @@ namespace PictureLibraryModel.Model
 {
     public class Library
     {
+        public string FullPath { get; set; }
         public string Name { get; set; }
         public List<Album> Albums { get; set; }
     }
