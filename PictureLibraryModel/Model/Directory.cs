@@ -36,6 +36,20 @@ namespace PictureLibraryModel.Model
             this.Children = new ObservableCollection<object>();
         }
 
+        /// <summary>
+        /// Initializes new instance of <see cref="Directory"/> class. Children aren't loaded on runtime and are specified as argument in constructor.
+        /// Path of the directory is null.
+        /// </summary>
+        /// <param name="children">Specified children files and directories</param>
+        /// <param name="name">Name of the directory</param>
+        public Directory(ObservableCollection<object> children, string name)
+        {
+            FullPath = null;
+            FileSystemService = null;
+            Name = name;
+            this.Children = children;
+        }
+
         public bool IsExpanded
         {
             get
