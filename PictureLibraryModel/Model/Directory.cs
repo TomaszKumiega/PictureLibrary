@@ -12,7 +12,6 @@ namespace PictureLibraryModel.Model
 
         public string FullPath { get; }
         public string Name { get; }
-        public bool IsReady { get; private set; }
         public ObservableCollection<object> Children { get; }
 
 
@@ -64,8 +63,6 @@ namespace PictureLibraryModel.Model
                         c.Children.Add(t);
                     }
                 }
-
-                if (c.Children.Count == 0) IsReady = false; // When drive has no children, item will be disabled in treeview
             }
         }
     }
