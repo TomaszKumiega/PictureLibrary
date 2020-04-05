@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.Services;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Model
@@ -20,6 +21,19 @@ namespace PictureLibraryModel.Model
             FullPath = fullPath;
             Name = name;
             FileSystemService = fileSystemService;
+            this.Children = new ObservableCollection<object>();
+        }
+
+        /// <summary>
+        /// Initializes new instance of <see cref="Directory"/> class, children aren't loaded on runtime and are specified as argument in constructor
+        /// </summary>
+        /// <param name="fullPath"></param>
+        /// <param name="children"></param>
+        public Directory(string fullPath, ObservableCollection<object> children)
+        {
+            FullPath = fullPath;
+            Name = (new System.IO.DirectoryInfo(fullPath)).Name;
+            FileSystemService = null;
             this.Children = new ObservableCollection<object>();
         }
 
