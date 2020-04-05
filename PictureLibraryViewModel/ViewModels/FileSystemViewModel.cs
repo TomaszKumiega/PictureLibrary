@@ -8,6 +8,7 @@ namespace PictureLibraryViewModel.ViewModels
     public class FileSystemViewModel : IFileSystemViewModel
     {
         private IFileSystemService FileSystemService { get; }
+        private string _currentDirectoryPath;
 
         public string CurrentDirectoryPath { get; set; }
         public ObservableCollection<Drive> Drives { get; private set; }
@@ -17,6 +18,12 @@ namespace PictureLibraryViewModel.ViewModels
         {
             FileSystemService = fileSystemService;
             Initialize();
+        }
+
+        public string CurrentDirectoryPath
+        {
+            get { return _currentDirectoryPath; }
+            set { _currentDirectoryPath = value; }
         }
 
         private async Task Initialize()
