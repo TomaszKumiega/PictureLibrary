@@ -38,14 +38,28 @@ namespace PictureLibraryViewModel.ViewModels
 
         private void UpdateCurrentDirectory()
         {
-            var directories = FileSystemService.GetAllDirectories(CurrentDirectoryPath, System.IO.SearchOption.TopDirectoryOnly);
-            var imageFiles = FileSystemService.GetAllImageFiles(CurrentDirectoryPath);
-            ObservableCollection<object> children = new ObservableCollection<object>();
+            if (CurrentDirectoryPath != "My Computer")
+            {
+                var directories =
+                    FileSystemService.GetAllDirectories(CurrentDirectoryPath, System.IO.SearchOption.TopDirectoryOnly);
+                var imageFiles = FileSystemService.GetAllImageFiles(CurrentDirectoryPath);
+                ObservableCollection<object> children = new ObservableCollection<object>();
 
-            foreach (var t in directories) children.Add(t);
-            foreach (var t in imageFiles) children.Add(t);
+                foreach (var t in directories) children.Add(t);
+                foreach (var t in imageFiles) children.Add(t);
 
-            CurrentDirectory = new Directory(CurrentDirectoryPath, children);
+                CurrentDirectory = new Directory(CurrentDirectoryPath, children);
+            }
+            else
+            {
+                ObservableCollection<object> children = new ObservableCollection<object>();
+                foreach (var t in Drives[0].Children)
+                {
+                    children.Add(t);
+                }
+
+                CurrentDirectory = new Directory(children, "My Computer");
+            }
         }
     }
 }
