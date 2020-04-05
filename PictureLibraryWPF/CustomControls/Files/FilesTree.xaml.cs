@@ -24,9 +24,9 @@ namespace PictureLibraryWPF.CustomControls.Files
             try
             {
                 if (this.FilesTreeView.SelectedItem is Directory)
-                    viewModel.CurrentDirectory = (this.FilesTreeView.SelectedItem as Directory).FullPath;
+                    viewModel.CurrentDirectoryPath = (this.FilesTreeView.SelectedItem as Directory).FullPath;
                 else if (this.FilesTreeView.SelectedItem is Drive)
-                    viewModel.CurrentDirectory = (this.FilesTreeView.SelectedItem as Drive).FullPath;
+                    viewModel.CurrentDirectoryPath = (this.FilesTreeView.SelectedItem as Drive).FullPath;
             }
             catch 
             {

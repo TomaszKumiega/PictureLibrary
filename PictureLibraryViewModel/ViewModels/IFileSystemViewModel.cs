@@ -8,7 +8,7 @@ namespace PictureLibraryViewModel.ViewModels
         /// <summary>
         /// Contains a path of directory object is currently operating on
         /// </summary>
-        string CurrentDirectory { get; set; }
+        string CurrentDirectoryPath { get; set; }
         /// <summary>
         /// Containes drives from computers filesystem
         /// </summary>

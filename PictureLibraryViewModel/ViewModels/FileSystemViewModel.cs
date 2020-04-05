@@ -9,7 +9,7 @@ namespace PictureLibraryViewModel.ViewModels
     {
         private IFileSystemService FileSystemService { get; }
 
-        public string CurrentDirectory { get; set; }
+        public string CurrentDirectoryPath { get; set; }
         public ObservableCollection<Drive> Drives { get; private set; }
 
 
