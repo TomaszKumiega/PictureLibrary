@@ -10,6 +10,10 @@ namespace PictureLibraryViewModel.ViewModels
         /// </summary>
         string CurrentDirectoryPath { get; set; }
         /// <summary>
+        /// Currently displayed directory
+        /// </summary>
+        Directory CurrentDirectory { get; set; }
+        /// <summary>
         /// Containes drives from computers filesystem
         /// </summary>
         ObservableCollection<Drive> Drives { get; }
