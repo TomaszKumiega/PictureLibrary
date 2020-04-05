@@ -46,11 +46,11 @@ namespace PictureLibraryModel.Model
             set
             {
                 _isExpanded = value;
-                LoadChildrenSubDirectories();
+                LoadChildrenDirectories();
             }
         }
 
-        private async Task LoadChildrenSubDirectories()
+        private async Task LoadChildrenDirectories()
         {
             foreach (Directory c in Children)
             {
