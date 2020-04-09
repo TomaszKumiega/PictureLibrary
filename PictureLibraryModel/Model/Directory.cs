@@ -37,7 +37,7 @@ namespace PictureLibraryModel.Model
             Name = (new System.IO.DirectoryInfo(fullPath)).Name;
             FileSystemService = null;
             Icon = Image.FromFile("./Icons/FolderIcon.png");
-            this.Children = new ObservableCollection<object>();
+            this.Children = children;
         }
 
         /// <summary>
