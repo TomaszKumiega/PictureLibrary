@@ -7,7 +7,7 @@ namespace PictureLibraryModel.Model
 {
     public interface IFileSystemEntity
     {
-        Icon Icon { get; }
+        Image Icon { get; }
         string Name { get; }
         string FullPath { get; }
     }

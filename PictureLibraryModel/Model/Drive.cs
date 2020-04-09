@@ -1,6 +1,7 @@
 ﻿using PictureLibraryModel.Services;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Model
@@ -12,7 +13,7 @@ namespace PictureLibraryModel.Model
 
         public string Name { get; }
         public string FullPath { get; }
-        public Icon Icon { get; }
+        public Image Icon { get; }
         public ObservableCollection<object> Children { get; set; }
         
 
@@ -22,7 +23,8 @@ namespace PictureLibraryModel.Model
             FullPath = name;
             this.Children = new ObservableCollection<object>();
             this.FileSystemService = fileSystemService;
-            Icon = Icon.ExtractAssociatedIcon(FullPath);
+
+            Icon = Image.FromFile("./Icons/DiskIcon.png");
             Initialize();
         }
 

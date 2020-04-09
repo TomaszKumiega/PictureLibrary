@@ -13,7 +13,7 @@ namespace PictureLibraryModel.Model
 
         public string FullPath { get; }
         public string Name { get; }
-        public Icon Icon { get; }
+        public Image Icon { get; }
         public ObservableCollection<object> Children { get; }
 
 
@@ -22,7 +22,7 @@ namespace PictureLibraryModel.Model
             FullPath = fullPath;
             Name = name;
             FileSystemService = fileSystemService;
-            Icon = Icon.ExtractAssociatedIcon(FullPath);
+            Icon = Image.FromFile("./Icons/FolderIcon.png");
             this.Children = new ObservableCollection<object>();
         }
 
@@ -36,6 +36,7 @@ namespace PictureLibraryModel.Model
             FullPath = fullPath;
             Name = (new System.IO.DirectoryInfo(fullPath)).Name;
             FileSystemService = null;
+            Icon = Image.FromFile("./Icons/FolderIcon.png");
             this.Children = new ObservableCollection<object>();
         }
 
@@ -50,6 +51,7 @@ namespace PictureLibraryModel.Model
             FullPath = null;
             FileSystemService = null;
             Name = name;
+            Icon = Image.FromFile("./Icons/FolderIcon.png");
             this.Children = children;
         }
 
