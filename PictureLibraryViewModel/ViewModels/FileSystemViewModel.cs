@@ -1,17 +1,17 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Services;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModels
 {
-    public class FileSystemViewModel : IFileSystemViewModel
+    public class FileSystemViewModel : IFileSystemViewModel, INotifyPropertyChanged
     {
         private IFileSystemService FileSystemService { get; }
         private string _currentDirectoryPath;
+        private Directory _currentDirectory;
 
-
-        public Directory CurrentDirectory { get; set; }
         public ObservableCollection<Drive> Drives { get; private set; }
 
 
@@ -20,6 +20,25 @@ namespace PictureLibraryViewModel.ViewModels
             FileSystemService = fileSystemService;
             Initialize();
         }
+
+        #region INotifyPropertyChanged members
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        public Directory CurrentDirectory
+        {
+            get => _currentDirectory;
+            set
+            {
+                _currentDirectory = value;
+                OnPropertyChanged("CurrentDirectory");
+            }
+        }
+
 
         public string CurrentDirectoryPath
         {
