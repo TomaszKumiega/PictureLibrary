@@ -22,6 +22,7 @@ namespace PictureLibraryModel.Model
             FullPath = fullPath;
             Name = name;
             FileSystemService = fileSystemService;
+            Icon = Icon.ExtractAssociatedIcon(FullPath);
             this.Children = new ObservableCollection<object>();
         }
 
