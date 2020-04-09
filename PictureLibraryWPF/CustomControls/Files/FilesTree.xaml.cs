@@ -21,12 +21,10 @@ namespace PictureLibraryWPF.CustomControls.Files
         {
             var viewModel = DataContext as IFileSystemViewModel;
 
+            
             try
             {
-                if (this.FilesTreeView.SelectedItem is Directory)
-                    viewModel.CurrentDirectoryPath = (this.FilesTreeView.SelectedItem as Directory).FullPath;
-                else if (this.FilesTreeView.SelectedItem is Drive)
-                    viewModel.CurrentDirectoryPath = (this.FilesTreeView.SelectedItem as Drive).FullPath;
+                viewModel.CurrentDirectoryPath = (this.FilesTreeView.SelectedItem as IFileSystemEntity).FullPath;
             }
             catch 
             {
