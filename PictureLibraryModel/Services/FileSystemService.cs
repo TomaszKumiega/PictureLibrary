@@ -75,7 +75,7 @@ namespace PictureLibraryModel.Services
             var listOfFiles = files.ToList<string>();
             var listOfImageFiles = new List<ImageFile>();
 
-            foreach(var t in listOfFiles)
+            foreach(var t in listOfFiles.ToList())
             {
                 if (!ImageFile.IsFileAnImage(t))
                 {
