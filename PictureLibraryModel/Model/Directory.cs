@@ -1,17 +1,19 @@
 ﻿using PictureLibraryModel.Services;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Model
 {
-    public class Directory
+    public class Directory : IFileSystemEntity
     {
         private bool _isExpanded;
         private IFileSystemService FileSystemService { get; }
 
         public string FullPath { get; }
         public string Name { get; }
+        public Icon Icon { get; }
         public ObservableCollection<object> Children { get; }
 
 

@@ -5,9 +5,10 @@ using System.IO;
 
 namespace PictureLibraryModel.Model
 {
-    public class ImageFile
+    public class ImageFile : IFileSystemEntity
     {
         public FileInfo FileInfo { get; set; }
+        public string Name { get; }
         public string FullPath { get; set; }
         public Icon Icon { get; set; }
 
@@ -22,6 +23,7 @@ namespace PictureLibraryModel.Model
             {
                 FullPath = path;
                 FileInfo = new FileInfo(path);
+                Name = FileInfo.Name;
                 Icon = Icon.ExtractAssociatedIcon(path);
             }
             else throw new Exception("File not found");
