@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PictureLibraryViewModel.ViewModels;
 
 namespace PictureLibraryWPF.CustomControls.Files
 {
@@ -18,9 +19,10 @@ namespace PictureLibraryWPF.CustomControls.Files
     /// </summary>
     public partial class FilesView : UserControl
     {
-        public FilesView()
+        public FilesView(IFileSystemViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
     }
 }
