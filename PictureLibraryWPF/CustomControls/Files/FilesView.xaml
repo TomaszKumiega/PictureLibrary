@@ -28,8 +28,8 @@
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type src:IFileSystemEntity}">
                     <StackPanel>
-                        <Image Width="100" Height="100" Source="{Binding Icon}"/>
-                        <TextBlock Width="100" TextWrapping="Wrap" Text="{Binding Name}" Foreground="#cdcdcd"/>
+                        <Image Width="50" Height="50" Source="{Binding ImageSource}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <TextBlock Width="100" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center"  Text="{Binding Name}" Foreground="#cdcdcd"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate> 
