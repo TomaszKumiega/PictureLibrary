@@ -10,7 +10,7 @@ namespace PictureLibraryModel.Model
         public FileInfo FileInfo { get; set; }
         public string Name { get; }
         public string FullPath { get; set; }
-        public Image Icon { get; set; }
+        public string ImageSource { get; set; }
 
         public ImageFile()
         {
@@ -24,7 +24,7 @@ namespace PictureLibraryModel.Model
                 FullPath = path;
                 FileInfo = new FileInfo(path);
                 Name = FileInfo.Name;
-                Icon = System.Drawing.Icon.ExtractAssociatedIcon(path).ToBitmap();
+                ImageSource = path;
             }
             else throw new Exception("File not found");
         }

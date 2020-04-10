@@ -13,7 +13,7 @@ namespace PictureLibraryModel.Model
 
         public string Name { get; }
         public string FullPath { get; }
-        public Image Icon { get; }
+        public string ImageSource { get; }
         public ObservableCollection<object> Children { get; set; }
         
 
@@ -24,7 +24,7 @@ namespace PictureLibraryModel.Model
             this.Children = new ObservableCollection<object>();
             this.FileSystemService = fileSystemService;
 
-            Icon = Image.FromFile("./Icons/DiskIcon.png");
+            ImageSource = "pack://application:,,,/Icons/DiskIcon.png";
             Initialize();
         }
 
