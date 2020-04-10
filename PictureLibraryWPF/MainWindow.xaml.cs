@@ -14,12 +14,14 @@ namespace PictureLibraryWPF
     {
         private FilesTree FilesTree { get; set; }
         private GridSplitter LeftPanelGridSplitter { get; set; }
+        private FilesView FilesView { get; }
 
         public MainWindow()
         {
             var container = PictureLibraryViewModel.ContainerConfig.Configure();
             FilesTree = container.Resolve<FilesTree>();
             LeftPanelGridSplitter = new GridSplitter();
+            FilesView = container.Resolve<FilesView>();
 
             InitializeComponent();
             InitializeControlsOnStartup();
@@ -28,12 +30,22 @@ namespace PictureLibraryWPF
         private void InitializeControlsOnStartup()
         {
             //TODO: change color of filestree scrollbar
+            //TODO: fix formatting / add spaces after and before regions
             #region FilesTree
             Grid.Children.Add(FilesTree);         
             FilesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
             FilesTree.VerticalAlignment = VerticalAlignment.Stretch;
             Grid.SetColumn(FilesTree, 0);
             Grid.SetRow(FilesTree, 4);
+            #endregion
+
+            #region FilesView
+            Grid.Children.Add(FilesView);
+            FilesView.HorizontalAlignment = HorizontalAlignment.Stretch;
+            FilesView.VerticalAlignment = VerticalAlignment.Stretch;
+            Grid.SetColumn(FilesView, 2);
+            Grid.SetRow(FilesView, 4);
+
             #endregion
 
             #region LeftPanelGridSplitter
