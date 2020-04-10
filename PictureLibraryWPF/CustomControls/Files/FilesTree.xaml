@@ -19,13 +19,6 @@
 
         <TreeView x:Name="FilesTreeView" ItemsSource="{Binding Drives}" Background="#37393f" BorderThickness="0" SelectedItemChanged="FilesTreeView_OnSelectedItemChanged">
             <TreeView.Resources>
-                <DataTemplate DataType="{x:Type src:ImageFile}">
-                    <WrapPanel Orientation="Horizontal">
-                        <Image Width="25" Height="25" Source="{Binding ImageSource}"/>
-                        <TextBlock Text="{Binding FileInfo.Name}" Foreground="#cdcdcd"/>
-                    </WrapPanel>
-                </DataTemplate>
-
                 <HierarchicalDataTemplate DataType="{x:Type src:Directory}" ItemsSource="{Binding Children}">
                     <WrapPanel Orientation="Horizontal">
                         <Image Width="25" Height="25" Source="{Binding ImageSource}"/>
