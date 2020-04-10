@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.Model;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace PictureLibraryViewModel.ViewModels
 {
@@ -10,13 +11,12 @@ namespace PictureLibraryViewModel.ViewModels
         /// </summary>
         string CurrentDirectoryPath { get; set; }
         /// <summary>
-        /// Currently displayed directory
+        /// Currently displayed directory content
         /// </summary>
-        Directory CurrentDirectory { get; set; }
+        ObservableCollection<IFileSystemEntity> CurrentDirectoryContent { get; }
         /// <summary>
         /// Containes drives from computers filesystem
         /// </summary>
         ObservableCollection<Drive> Drives { get; }
-       
     }
 }

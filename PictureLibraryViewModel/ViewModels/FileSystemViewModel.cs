@@ -6,39 +6,20 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModels
 {
-    public class FileSystemViewModel : IFileSystemViewModel, INotifyPropertyChanged
+    public class FileSystemViewModel : IFileSystemViewModel
     {
         private IFileSystemService FileSystemService { get; }
         private string _currentDirectoryPath;
-        private Directory _currentDirectory;
 
         public ObservableCollection<Drive> Drives { get; private set; }
-
+        public ObservableCollection<IFileSystemEntity> CurrentDirectoryContent { get; }
 
         public FileSystemViewModel(IFileSystemService fileSystemService)
         {
             FileSystemService = fileSystemService;
+            CurrentDirectoryContent = new ObservableCollection<IFileSystemEntity>();
             Initialize();
         }
-
-        #region INotifyPropertyChanged members
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
-
-        public Directory CurrentDirectory
-        {
-            get => _currentDirectory;
-            set
-            {
-                _currentDirectory = value;
-                OnPropertyChanged("CurrentDirectory");
-            }
-        }
-
 
         public string CurrentDirectoryPath
         {
@@ -46,38 +27,37 @@ namespace PictureLibraryViewModel.ViewModels
             set
             {
                 _currentDirectoryPath = value;
-                UpdateCurrentDirectory();
+                UpdateCurrentDirectoryContent();
             }
         }
 
         private async Task Initialize()
         {
             Drives = await Task.Run(() => FileSystemService.GetDrives());
+            CurrentDirectoryPath = "My Computer";
+            UpdateCurrentDirectoryContent();
         }
 
-        private void UpdateCurrentDirectory()
+        private void UpdateCurrentDirectoryContent()
         {
+
+            CurrentDirectoryContent.Clear();
+
             if (CurrentDirectoryPath != "My Computer")
             {
                 var directories =
                     FileSystemService.GetAllDirectories(CurrentDirectoryPath, System.IO.SearchOption.TopDirectoryOnly);
                 var imageFiles = FileSystemService.GetAllImageFiles(CurrentDirectoryPath);
-                ObservableCollection<object> children = new ObservableCollection<object>();
 
-                foreach (var t in directories) children.Add(t);
-                foreach (var t in imageFiles) children.Add(t);
-
-                CurrentDirectory = new Directory(CurrentDirectoryPath, children);
+                foreach (var t in directories) CurrentDirectoryContent.Add(t);
+                foreach (var t in imageFiles) CurrentDirectoryContent.Add(t);
             }
             else
             {
-                ObservableCollection<object> children = new ObservableCollection<object>();
                 foreach (var t in Drives[0].Children)
                 {
-                    children.Add(t);
+                    CurrentDirectoryContent.Add(t as IFileSystemEntity);
                 }
-
-                CurrentDirectory = new Directory(children, "My Computer");
             }
         }
     }
