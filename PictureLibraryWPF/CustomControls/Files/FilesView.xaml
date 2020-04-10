@@ -10,24 +10,29 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
 
-        <ListBox x:Name="FilesList" Opacity="0" ItemsSource="{Binding CurrentDirectory}">
-            <ListBox.ItemsPanel>
+
+        <ListView Grid.Column="0" Grid.Row="0" x:Name="FilesList" Background="#3b3f45" BorderThickness="0" 
+                  ItemsSource="{Binding Path=CurrentDirectoryContent, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" Orientation="Horizontal"  />
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type src:IFileSystemEntity}">
-                    <Image Source="{Binding Icon}"/>
-                    <TextBlock Text="{Binding Name}" Foreground="#cdcdcd"/>
+                    <StackPanel>
+                        <Image Width="100" Height="100" Source="{Binding Icon}"/>
+                        <TextBlock Width="100" TextWrapping="Wrap" Text="{Binding Name}" Foreground="#cdcdcd"/>
+                    </StackPanel>
                 </DataTemplate>
-            </ListBox.ItemTemplate> 
-        </ListBox>
+            </ListView.ItemTemplate> 
+        </ListView>
     </Grid>
 </UserControl>
