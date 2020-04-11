@@ -17,7 +17,7 @@ namespace PictureLibraryModel.Model
         public ObservableCollection<object> Children { get; set; }
         
 
-        public Drive(string name, bool isReady, IFileSystemService fileSystemService)
+        public Drive(string name, IFileSystemService fileSystemService)
         {
             Name = name;
             FullPath = name;
