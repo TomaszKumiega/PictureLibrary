@@ -31,7 +31,7 @@ namespace PictureLibraryViewModel.ViewModels
             }
         }
 
-        private async Task Initialize()
+        public async Task Initialize()
         {
             Drives = await Task.Run(() => FileSystemService.GetDrives());
             CurrentDirectoryPath = "My Computer";
