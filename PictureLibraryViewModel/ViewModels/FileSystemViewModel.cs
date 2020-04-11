@@ -35,7 +35,7 @@ namespace PictureLibraryViewModel.ViewModels
         {
             Drives = await Task.Run(() => FileSystemService.GetDrives());
             CurrentDirectoryPath = "My Computer";
-            UpdateCurrentDirectoryContent();
+            await Task.Run(UpdateCurrentDirectoryContent);
         }
 
         private void UpdateCurrentDirectoryContent()
