@@ -18,7 +18,7 @@ namespace PictureLibraryViewModel.Tests
     public class FileSystemViewModel_Tests
     {
         [Fact]
-        public async Task DrivesGet_ShouldReturnListOfDrivesAfterConstruction()
+        public void DrivesGet_ShouldReturnListOfDrivesAfterConstruction()
         {
             var mock = new Mock<IFileSystemService>();
             mock.Setup(x => x.GetDrives())
