@@ -18,6 +18,7 @@ namespace PictureLibraryViewModel.ViewModels
         {
             FileSystemService = fileSystemService;
             CurrentDirectoryContent = new ObservableCollection<IFileSystemEntity>();
+            CurrentDirectoryPath = "My Computer";
             Initialize();
         }
 
@@ -34,7 +35,6 @@ namespace PictureLibraryViewModel.ViewModels
         public async Task Initialize()
         {
             Drives = await Task.Run(() => FileSystemService.GetDrives());
-            CurrentDirectoryPath = "My Computer";
             await Task.Run(UpdateCurrentDirectoryContent);
         }
 
