@@ -48,9 +48,8 @@ namespace PictureLibraryViewModel.ViewModels
                 var directories =
                     FileSystemService.GetAllDirectories(CurrentDirectoryPath, System.IO.SearchOption.TopDirectoryOnly);
                 var imageFiles = FileSystemService.GetAllImageFiles(CurrentDirectoryPath);
-
-                foreach (var t in directories) CurrentDirectoryContent.Add(t);
-                foreach (var t in imageFiles) CurrentDirectoryContent.Add(t);
+                if(directories!=null) foreach (var t in directories) CurrentDirectoryContent.Add(t);
+                if(imageFiles!=null) foreach (var t in imageFiles) CurrentDirectoryContent.Add(t);
             }
             else
             {

@@ -24,36 +24,39 @@ namespace PictureLibraryModel.Services
 
         public ObservableCollection<Model.Directory> GetAllDirectories(string topDirectory, SearchOption option)
         {
-
-            if (System.IO.Directory.Exists(topDirectory))
+            if (topDirectory != null)
             {
-                string[] fullPaths=null;
-
-                try
+                if (System.IO.Directory.Exists(topDirectory))
                 {
-                     fullPaths = System.IO.Directory.GetDirectories(topDirectory, "*", option);
-                }
-                catch (Exception e)
-                {
-                    _logger.Error(e, "Couldn't load directories from " + fullPaths);
-                }
+                    string[] fullPaths = null;
 
-                ObservableCollection<Model.Directory> directories = new ObservableCollection<Model.Directory>();
-
-                if (fullPaths != null)
-                {
-                    foreach (var t in fullPaths)
+                    try
                     {
-                        directories.Add(new Model.Directory(t, (new System.IO.DirectoryInfo(t)).Name, this));
+                        fullPaths = System.IO.Directory.GetDirectories(topDirectory, "*", option);
                     }
-                }
+                    catch (Exception e)
+                    {
+                        _logger.Error(e, "Couldn't load directories from " + fullPaths);
+                    }
 
-                return directories;
+                    ObservableCollection<Model.Directory> directories = new ObservableCollection<Model.Directory>();
+
+                    if (fullPaths != null)
+                    {
+                        foreach (var t in fullPaths)
+                        {
+                            directories.Add(new Model.Directory(t, (new System.IO.DirectoryInfo(t)).Name, this));
+                        }
+                    }
+
+                    return directories;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
-            {
-                return null;
-            }
+            else return null;
         }
 
         public ObservableCollection<Drive> GetDrives()
@@ -71,23 +74,33 @@ namespace PictureLibraryModel.Services
 
         public List<ImageFile> GetAllImageFiles(string directory)
         {
-            var files = System.IO.Directory.GetFiles(directory, "*");
-            var listOfFiles = files.ToList<string>();
-            var listOfImageFiles = new List<ImageFile>();
-
-            foreach(var t in listOfFiles.ToList())
+            if (directory != null)
             {
-                if (!ImageFile.IsFileAnImage(t))
+                if (System.IO.Directory.Exists(directory))
                 {
-                    listOfFiles.Remove(t);
+                    var files = System.IO.Directory.GetFiles(directory, "*");
+                    var listOfFiles = files.ToList<string>();
+                    var listOfImageFiles = new List<ImageFile>();
+
+                    foreach (var t in listOfFiles.ToList())
+                    {
+                        if (!ImageFile.IsFileAnImage(t))
+                        {
+                            listOfFiles.Remove(t);
+                        }
+                        else
+                        {
+                            listOfImageFiles.Add(new ImageFile(t));
+                        }
+                    }
+
+                    return listOfImageFiles;
                 }
-                else
-                {
-                    listOfImageFiles.Add(new ImageFile(t));
-                }
+
+                return null;
             }
 
-            return listOfImageFiles;
+            return null;
         }
 
         public void MoveFile(string filePath, string destinationPath, bool overwrite)
