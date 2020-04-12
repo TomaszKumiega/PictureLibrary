@@ -18,7 +18,7 @@ namespace PictureLibraryViewModel.ViewModels
         {
             FileSystemService = fileSystemService;
             CurrentDirectoryContent = new ObservableCollection<IFileSystemEntity>();
-            CurrentDirectoryPath = "My Computer";
+            _currentDirectoryPath = "My Computer";
             Initialize();
         }
 
