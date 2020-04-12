@@ -27,7 +27,7 @@ namespace PictureLibraryViewModel.Tests
             var fileSystemVM = new FileSystemViewModel(mock.Object);
             Task.WaitAll(fileSystemVM.Initialize());
 
-            Assert.True(fileSystemVM.Drives.Count == 5);
+            Assert.True(fileSystemVM.Drives.Count == 3);
         }
 
         [Fact]
@@ -44,18 +44,44 @@ namespace PictureLibraryViewModel.Tests
             Task.WaitAll(fileSystemVM.Initialize());
             fileSystemVM.CurrentDirectoryPath = currDirectoryPath;
 
+
             Assert.True(fileSystemVM.CurrentDirectoryContent.Count == 10);
+        }
+
+        [Fact]
+        public async Task CurrentDirectoryContentGet_ShouldReturnListOfDrives_WhenCurrentDirectoryPathEqualsMyComputer()
+        {
+            var mock = new Mock<IFileSystemService>();
+            mock.Setup(x => x.GetDrives())
+                .Returns(GetDrivesWithChildrenSample());
+
+            var fileSystemVM = new FileSystemViewModel(mock.Object);
+            Task.WaitAll(fileSystemVM.Initialize());
+            fileSystemVM.CurrentDirectoryPath = "My Computer";
+
+
+            Assert.True(fileSystemVM.CurrentDirectoryContent.Count == 3);
         }
 
         private ObservableCollection<Drive> GetDrivesSample()
         {
             var drives = new ObservableCollection<Drive>();
 
-            drives.Add(new Drive("Drive1", new FileSystemService()));
-            drives.Add(new Drive("Drive2", new FileSystemService()));
-            drives.Add(new Drive("Drive3", new FileSystemService()));
-            drives.Add(new Drive("Drive4", new FileSystemService()));
-            drives.Add(new Drive("Drive5", new FileSystemService()));
+            drives.Add(new Drive("Drive", new FileSystemService()));
+            drives.Add(new Drive("Drive", new FileSystemService()));
+            drives.Add(new Drive("Drive", new FileSystemService()));
+
+            return drives;
+        }
+
+        private ObservableCollection<Drive> GetDrivesWithChildrenSample()
+        {
+            var drives = new ObservableCollection<Drive>();
+
+            drives.Add(new Drive("Drive", new FileSystemService()));
+            drives[0].Children.Add(new Drive("Drive", new FileSystemService()));
+            drives[0].Children.Add(new Drive("Drive", new FileSystemService()));
+            drives[0].Children.Add(new Drive("Drive", new FileSystemService()));
 
             return drives;
         }
