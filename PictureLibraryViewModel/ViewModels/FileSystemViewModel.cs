@@ -53,9 +53,12 @@ namespace PictureLibraryViewModel.ViewModels
             }
             else
             {
-                foreach (var t in Drives[0].Children)
+                if (Drives != null)
                 {
-                    CurrentDirectoryContent.Add(t as IFileSystemEntity);
+                    foreach (var t in Drives[0].Children)
+                    {
+                        CurrentDirectoryContent.Add(t as IFileSystemEntity);
+                    }
                 }
             }
         }
