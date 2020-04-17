@@ -51,12 +51,10 @@ namespace PictureLibraryModel.Services
 
                     return directories;
                 }
-                else
-                {
-                    return null;
-                }
+                else throw new DirectoryNotFoundException("Directory: " + topDirectory + " not found");
+                
             }
-            else return null;
+            else throw new ArgumentNullException();
         }
 
         public ObservableCollection<Drive> GetDrives()
