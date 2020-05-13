@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Services;
+﻿using System;
+using PictureLibraryModel.Services;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
@@ -8,6 +9,8 @@ namespace PictureLibraryModel.Model
 {
     public class Drive : IFileSystemEntity
     {
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+
         private bool _isExpanded;
         private IFileSystemService FileSystemService { get; }
 
@@ -44,18 +47,26 @@ namespace PictureLibraryModel.Model
 
         private async Task Initialize()
         {
-
-
-            var directories = await Task.Run(() => FileSystemService.GetAllDirectories(Name, System.IO.SearchOption.TopDirectoryOnly));
-
-            if (directories != null)
+            try
             {
-                foreach (var t in directories)
+                var directories = await Task.Run(() =>
+                    FileSystemService.GetAllDirectories(Name, System.IO.SearchOption.TopDirectoryOnly));
+
+
+                if (directories != null)
                 {
-                    Children.Add(t);
+                    foreach (var t in directories)
+                    {
+                        Children.Add(t);
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                _logger.Debug(e.Message);
+            }
         }
+        
 
         private async Task LoadChildrenDirectories()
         {
