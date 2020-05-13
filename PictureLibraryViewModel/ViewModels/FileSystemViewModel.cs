@@ -2,6 +2,7 @@
 using PictureLibraryModel.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModels
@@ -40,6 +41,13 @@ namespace PictureLibraryViewModel.ViewModels
 
         private void UpdateCurrentDirectoryContent()
         {
+
+            if (!System.IO.Directory.Exists(CurrentDirectoryPath) && CurrentDirectoryPath != "My Computer")
+            {
+                _currentDirectoryPath = System.IO.Directory.GetParent(CurrentDirectoryPath).FullName;
+                return;
+            }
+            
 
             CurrentDirectoryContent.Clear();
 
