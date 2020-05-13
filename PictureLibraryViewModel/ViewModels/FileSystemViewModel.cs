@@ -19,7 +19,6 @@ namespace PictureLibraryViewModel.ViewModels
         {
             FileSystemService = fileSystemService;
             CurrentDirectoryContent = new ObservableCollection<IFileSystemEntity>();
-            _currentDirectoryPath = "My Computer";
             Initialize();
         }
 
@@ -36,13 +35,15 @@ namespace PictureLibraryViewModel.ViewModels
         public async Task Initialize()
         {
             Drives = await Task.Run(() => FileSystemService.GetDrives());
+            _currentDirectoryPath = Drives[0].Name;
             await Task.Run(UpdateCurrentDirectoryContent);
+            
         }
 
         private void UpdateCurrentDirectoryContent()
         {
 
-            if (!System.IO.Directory.Exists(CurrentDirectoryPath) && CurrentDirectoryPath != "My Computer")
+            if (!System.IO.Directory.Exists(CurrentDirectoryPath) && CurrentDirectoryPath != Drives[0].Name)
             {
                 _currentDirectoryPath = System.IO.Directory.GetParent(CurrentDirectoryPath).FullName;
                 return;
@@ -51,7 +52,7 @@ namespace PictureLibraryViewModel.ViewModels
 
             CurrentDirectoryContent.Clear();
 
-            if (CurrentDirectoryPath != "My Computer")
+            if (CurrentDirectoryPath != Drives[0].Name)
             {
                 var directories =
                     FileSystemService.GetAllDirectories(CurrentDirectoryPath, System.IO.SearchOption.TopDirectoryOnly);
