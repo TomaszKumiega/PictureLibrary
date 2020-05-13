@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Services;
 using PictureLibraryViewModel.ViewModels;
 
@@ -24,6 +25,12 @@ namespace PictureLibraryWPF.CustomControls.Files
         {
             InitializeComponent();
             DataContext = viewModel;
+        }
+
+        private void ItemMouseDoubleClick(object o, EventArgs args)
+        {
+            (DataContext as IFileSystemViewModel).CurrentDirectoryPath =
+                ((o as ListViewItem).Tag as string);
         }
     }
 }

@@ -7,6 +7,8 @@
              xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls.Files"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -22,7 +24,7 @@
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" Orientation="Horizontal"/>
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
@@ -32,7 +34,13 @@
                         <TextBlock Width="100" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center"  Text="{Binding Name}" Foreground="#cdcdcd"/>
                     </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate> 
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="MouseDoubleClick" Handler="ItemMouseDoubleClick"/>
+                    <Setter Property="Tag" Value="{Binding FullPath}"/>
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
     </Grid>
 </UserControl>
