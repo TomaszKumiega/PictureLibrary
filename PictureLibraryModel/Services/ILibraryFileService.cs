@@ -10,9 +10,7 @@ namespace PictureLibraryModel.Services
         /// <summary>
         /// Creates library file in specified directory
         /// </summary>
-        /// <param name="directoryPath"></param>
-        /// <param name="name"></param>
-        void CreateLibrary(string directoryPath, string name);
+       Library CreateLibrary(string name, string directory);
 
         /// <summary>
         /// Returns list of all picture libraries on a device
