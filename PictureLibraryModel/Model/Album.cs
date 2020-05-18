@@ -14,5 +14,11 @@ namespace PictureLibraryModel.Model
             Name = name;
             Images = new List<ImageFile>();
         }
+
+        public Album(string name, List<ImageFile> images)
+        {
+            Name = name;
+            Images = images;
+        }
     }
 }
