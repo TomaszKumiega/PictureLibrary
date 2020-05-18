@@ -23,7 +23,7 @@ namespace PictureLibraryModel.Model
             Albums = new List<Album>();
         }
 
-        private async Task InitializeAlbums()
+        private async Task InitializeAlbumsAsync()
         {
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.DtdProcessing = DtdProcessing.Parse;
