@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -16,19 +17,29 @@ namespace PictureLibraryModel.Model
         public string Name { get; }
         public List<Album> Albums { get; }
 
-        public Library(string fullPath, string name)
+        private Library()
+        {
+
+        }
+
+        private Library(string fullPath, string name, List<Album> albums)
         {
             FullPath = fullPath;
             Name = name;
-            Albums = new List<Album>();
+            Albums = albums;
         }
 
-        private async Task InitializeAlbumsAsync()
+        public static async Task<Library> LoadLibraryAsync(string fullPath)
         {
+            var albumsList = new List<Album>();
+            string libraryName = null;
+
+            if (!File.Exists(fullPath)) throw new FileNotFoundException(); 
+
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.DtdProcessing = DtdProcessing.Parse;
 
-            using (var reader = XmlReader.Create(FullPath, settings))
+            using (var reader = XmlReader.Create(fullPath, settings))
             {
                 while (await reader.ReadAsync())
                 {
@@ -59,11 +70,20 @@ namespace PictureLibraryModel.Model
 
                             } while (reader.ReadToNextSibling("image"));
 
-                            Albums.Add(new Album(albumName, imageList));
+                            albumsList.Add(new Album(albumName, imageList));
+                        }
+
+                        if (reader.Name == "Library")
+                        {
+                            var libraryElement = XNode.ReadFrom(reader) as XElement;
+
+                            libraryName = libraryElement.Attribute("name").Value;
                         }
                     }
                 }
             }
+
+            return new Library(fullPath, libraryName, albumsList);
         }
     }
 }
