@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace PictureLibraryModel.Services
 {
-    class LibraryFileService : ILibraryFileService
+    public class LibraryFileService : ILibraryFileService
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
