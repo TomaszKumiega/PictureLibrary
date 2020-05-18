@@ -6,7 +6,13 @@ namespace PictureLibraryModel.Model
 {
     public class Album
     {
-        public string Name { get; set; }
-        public List<ImageFile> Images { get; set; }
+        public string Name { get; }
+        public List<ImageFile> Images { get; }
+
+        public Album(string name)
+        {
+            Name = name;
+            Images = new List<ImageFile>();
+        }
     }
 }
