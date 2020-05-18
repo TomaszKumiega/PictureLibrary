@@ -8,11 +8,6 @@ namespace PictureLibraryModel.Model
         public string Name { get; }
         public List<Album> Albums { get; }
 
-        public Library()
-        {
-
-        }
-
         public Library(string fullPath, string name)
         {
             FullPath = fullPath;
