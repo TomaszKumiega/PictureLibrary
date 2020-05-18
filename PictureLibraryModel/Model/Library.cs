@@ -45,14 +45,14 @@ namespace PictureLibraryModel.Model
                 {
                     if (reader.NodeType == XmlNodeType.Element)
                     {
-                        if (reader.Name == "Album")
+                        if (reader.Name == "album")
                         {
                             var albumElement = XNode.ReadFrom(reader) as XElement;
 
                             var albumName = albumElement.Attribute("name").Value;
                             var imageList = new List<ImageFile>();
 
-                            reader.ReadToDescendant("Image");
+                            reader.ReadToDescendant("image");
 
                             do
                             {
@@ -73,7 +73,7 @@ namespace PictureLibraryModel.Model
                             albumsList.Add(new Album(albumName, imageList));
                         }
 
-                        if (reader.Name == "Library")
+                        if (reader.Name == "library")
                         {
                             var libraryElement = XNode.ReadFrom(reader) as XElement;
 
