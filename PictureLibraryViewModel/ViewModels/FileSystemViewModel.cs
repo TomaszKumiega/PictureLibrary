@@ -2,14 +2,17 @@
 using PictureLibraryModel.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
 
 namespace PictureLibraryViewModel.ViewModels
 {
     public class FileSystemViewModel : IFileSystemViewModel
     {
         private IFileSystemService FileSystemService { get; }
+        private string _previousDirectoryPath;
         private string _currentDirectoryPath;
         private readonly string homeDirectory = "home/";
 
@@ -38,19 +41,16 @@ namespace PictureLibraryViewModel.ViewModels
             Drives = await Task.Run(() => FileSystemService.GetDrives());
             _currentDirectoryPath = homeDirectory;
             await Task.Run(UpdateCurrentDirectoryContent);
-            
         }
 
         private void UpdateCurrentDirectoryContent()
         {
-
             if (!System.IO.Directory.Exists(CurrentDirectoryPath) && CurrentDirectoryPath != homeDirectory)
             {
-                _currentDirectoryPath = System.IO.Directory.GetParent(CurrentDirectoryPath).FullName;
-                return;
+                if(!_previousDirectoryPath.IsNullOrEmpty()) _currentDirectoryPath = System.IO.Directory.GetParent(CurrentDirectoryPath).FullName;
+                else throw new DirectoryNotFoundException("Directory " + CurrentDirectoryPath + " not found.");
             }
             
-
             CurrentDirectoryContent.Clear();
 
             if (CurrentDirectoryPath != homeDirectory)
