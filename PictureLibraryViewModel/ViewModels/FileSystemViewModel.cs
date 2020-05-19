@@ -31,6 +31,7 @@ namespace PictureLibraryViewModel.ViewModels
             get { return _currentDirectoryPath; }
             set
             {
+                _previousDirectoryPath = _currentDirectoryPath;
                 _currentDirectoryPath = value;
                 UpdateCurrentDirectoryContent();
             }
