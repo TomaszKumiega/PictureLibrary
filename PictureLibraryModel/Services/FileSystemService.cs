@@ -60,11 +60,10 @@ namespace PictureLibraryModel.Services
         public ObservableCollection<Drive> GetDrives()
         {
             var drives = new ObservableCollection<Drive>();
-            drives.Add(new Drive("My Computer", new FileSystemService()));
 
             foreach(var driveInfo in System.IO.DriveInfo.GetDrives())
             {
-                drives[0].Children.Add(new Drive(driveInfo.Name, this));
+                drives.Add(new Drive(driveInfo.Name, this));
             }
 
             return drives;

@@ -11,6 +11,7 @@ namespace PictureLibraryViewModel.ViewModels
     {
         private IFileSystemService FileSystemService { get; }
         private string _currentDirectoryPath;
+        private readonly string homeDirectory = "home/";
 
         public ObservableCollection<Drive> Drives { get; private set; }
         public ObservableCollection<IFileSystemEntity> CurrentDirectoryContent { get; }
@@ -35,7 +36,7 @@ namespace PictureLibraryViewModel.ViewModels
         public async Task Initialize()
         {
             Drives = await Task.Run(() => FileSystemService.GetDrives());
-            _currentDirectoryPath = Drives[0].Name;
+            _currentDirectoryPath = homeDirectory;
             await Task.Run(UpdateCurrentDirectoryContent);
             
         }
@@ -43,7 +44,7 @@ namespace PictureLibraryViewModel.ViewModels
         private void UpdateCurrentDirectoryContent()
         {
 
-            if (!System.IO.Directory.Exists(CurrentDirectoryPath) && CurrentDirectoryPath != Drives[0].Name)
+            if (!System.IO.Directory.Exists(CurrentDirectoryPath) && CurrentDirectoryPath != homeDirectory)
             {
                 _currentDirectoryPath = System.IO.Directory.GetParent(CurrentDirectoryPath).FullName;
                 return;
@@ -52,7 +53,7 @@ namespace PictureLibraryViewModel.ViewModels
 
             CurrentDirectoryContent.Clear();
 
-            if (CurrentDirectoryPath != Drives[0].Name)
+            if (CurrentDirectoryPath != homeDirectory)
             {
                 var directories =
                     FileSystemService.GetAllDirectories(CurrentDirectoryPath, System.IO.SearchOption.TopDirectoryOnly);
@@ -64,9 +65,9 @@ namespace PictureLibraryViewModel.ViewModels
             {
                 if (Drives != null)
                 {
-                    foreach (var t in Drives[0].Children)
+                    foreach (var t in Drives)
                     {
-                        CurrentDirectoryContent.Add(t as IFileSystemEntity);
+                        CurrentDirectoryContent.Add(t);
                     }
                 }
             }
