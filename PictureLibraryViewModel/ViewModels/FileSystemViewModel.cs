@@ -48,8 +48,14 @@ namespace PictureLibraryViewModel.ViewModels
         {
             if (!System.IO.Directory.Exists(CurrentDirectoryPath) && CurrentDirectoryPath != homeDirectory)
             {
-                if(!_previousDirectoryPath.IsNullOrEmpty()) _currentDirectoryPath = System.IO.Directory.GetParent(CurrentDirectoryPath).FullName;
-                else throw new DirectoryNotFoundException("Directory " + CurrentDirectoryPath + " not found.");
+                if (!_previousDirectoryPath.IsNullOrEmpty())
+                {
+                    //TODO: LIFO QUEUE FOR DIRECTORIES
+                    _currentDirectoryPath = _previousDirectoryPath;
+                    return;
+                }
+                
+                throw new DirectoryNotFoundException("Directory " + CurrentDirectoryPath + " not found.");
             }
             
             CurrentDirectoryContent.Clear();
