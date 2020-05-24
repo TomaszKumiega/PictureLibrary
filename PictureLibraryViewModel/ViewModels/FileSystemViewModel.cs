@@ -98,5 +98,15 @@ namespace PictureLibraryViewModel.ViewModels
             }
         }
 
+        public void PreviousDirectory()
+        {
+            var currentDirIndex = _directoriesHistory.IndexOf(_currentDirectoryPath);
+
+            if (currentDirIndex > 0)
+            {
+                _currentDirectoryPath = _directoriesHistory[currentDirIndex - 1];
+                UpdateCurrentDirectoryContent();
+            }
+        }
     }
 }
