@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Model;
+﻿using System.Collections.Generic;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -12,9 +13,9 @@ namespace PictureLibraryViewModel.ViewModels
     public class FileSystemViewModel : IFileSystemViewModel
     {
         private IFileSystemService FileSystemService { get; }
-        private string _previousDirectoryPath;
         private string _currentDirectoryPath;
-        private readonly string homeDirectory = "home/";
+        private readonly List<string> _directoriesHistory;
+        private readonly string _homeDirectory = "home/";
 
         public ObservableCollection<Drive> Drives { get; private set; }
         public ObservableCollection<IFileSystemEntity> CurrentDirectoryContent { get; }
@@ -22,6 +23,7 @@ namespace PictureLibraryViewModel.ViewModels
         public FileSystemViewModel(IFileSystemService fileSystemService)
         {
             FileSystemService = fileSystemService;
+            _directoriesHistory = new List<string>();
             CurrentDirectoryContent = new ObservableCollection<IFileSystemEntity>();
             Initialize();
         }
@@ -31,7 +33,17 @@ namespace PictureLibraryViewModel.ViewModels
             get { return _currentDirectoryPath; }
             set
             {
-                _previousDirectoryPath = _currentDirectoryPath;
+                var index = _directoriesHistory.IndexOf(_currentDirectoryPath);
+
+                if (index < _directoriesHistory.Count - 2 && index != -1 && value != _directoriesHistory[index + 1])
+                {
+                    _directoriesHistory.RemoveRange(index + 1, _directoriesHistory.Count - index - 2);
+                }
+                else
+                { 
+                    _directoriesHistory.Add(_currentDirectoryPath);
+                }
+
                 _currentDirectoryPath = value;
                 UpdateCurrentDirectoryContent();
             }
@@ -40,18 +52,23 @@ namespace PictureLibraryViewModel.ViewModels
         public async Task Initialize()
         {
             Drives = await Task.Run(() => FileSystemService.GetDrives());
-            _currentDirectoryPath = homeDirectory;
+            _currentDirectoryPath = _homeDirectory;
+            _directoriesHistory.Add(_homeDirectory);
             await Task.Run(UpdateCurrentDirectoryContent);
         }
 
         private void UpdateCurrentDirectoryContent()
         {
-            if (!System.IO.Directory.Exists(CurrentDirectoryPath) && CurrentDirectoryPath != homeDirectory)
+            if (!System.IO.Directory.Exists(CurrentDirectoryPath) && CurrentDirectoryPath != _homeDirectory)
             {
-                if (!_previousDirectoryPath.IsNullOrEmpty())
+                if (_directoriesHistory.Count>1)
                 {
-                    //TODO: LIFO QUEUE FOR DIRECTORIES
-                    _currentDirectoryPath = _previousDirectoryPath;
+                    var index = _directoriesHistory.IndexOf(_currentDirectoryPath);
+
+                    if (index > 0)
+                        _currentDirectoryPath = _directoriesHistory[index - 1];
+                    else throw new DirectoryNotFoundException("There is no directory to display.");
+
                     return;
                 }
                 
@@ -60,7 +77,7 @@ namespace PictureLibraryViewModel.ViewModels
             
             CurrentDirectoryContent.Clear();
 
-            if (CurrentDirectoryPath != homeDirectory)
+            if (CurrentDirectoryPath != _homeDirectory)
             {
                 var directories =
                     FileSystemService.GetAllDirectories(CurrentDirectoryPath, System.IO.SearchOption.TopDirectoryOnly);
