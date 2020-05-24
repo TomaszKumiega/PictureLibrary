@@ -33,17 +33,7 @@ namespace PictureLibraryViewModel.ViewModels
             get { return _currentDirectoryPath; }
             set
             {
-                var index = _directoriesHistory.IndexOf(_currentDirectoryPath);
-
-                if (index < _directoriesHistory.Count - 2 && index != -1 && value != _directoriesHistory[index + 1])
-                {
-                    _directoriesHistory.RemoveRange(index + 1, _directoriesHistory.Count - index - 2);
-                }
-                else
-                { 
-                    _directoriesHistory.Add(_currentDirectoryPath);
-                }
-
+                _directoriesHistory.Add(_currentDirectoryPath);
                 _currentDirectoryPath = value;
                 UpdateCurrentDirectoryContent();
             }
