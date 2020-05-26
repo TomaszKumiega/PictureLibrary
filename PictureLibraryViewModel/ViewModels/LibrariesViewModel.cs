@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModels
 {
@@ -18,6 +19,18 @@ namespace PictureLibraryViewModel.ViewModels
             _libraryFileService = libraryFileService;
             Libraries = new ObservableCollection<Library>();
             DisplayedEntities = new ObservableCollection<ILibraryEntity>();
+            Initialize();
+        }
+
+        private async Task Initialize()
+        {
+            var libraries = await _libraryFileService.GetAllLibraries();
+
+            foreach (var t in libraries)
+            {
+                Libraries.Add(t);
+                DisplayedEntities.Add(t);
+            }
         }
     }
 }

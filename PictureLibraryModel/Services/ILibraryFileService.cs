@@ -17,7 +17,7 @@ namespace PictureLibraryModel.Services
         /// Returns list of all picture libraries on a device
         /// </summary>
         /// <returns></returns>
-        List<Library> GetAllLibraries();
+        Task<List<Library>> GetAllLibraries();
 
         /// <summary>
         /// Saves list of libraries 

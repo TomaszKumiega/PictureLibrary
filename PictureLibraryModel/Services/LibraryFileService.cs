@@ -102,7 +102,7 @@ namespace PictureLibraryModel.Services
         }
 
 
-        public List<Library> GetAllLibraries()
+        public async Task<List<Library>> GetAllLibraries()
         {
             throw new NotImplementedException();
         }
