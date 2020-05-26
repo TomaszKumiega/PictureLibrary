@@ -5,7 +5,7 @@ using System.IO;
 
 namespace PictureLibraryModel.Model
 {
-    public class ImageFile : IFileSystemEntity
+    public class ImageFile : IFileSystemEntity, ILibraryEntity
     {
         public FileInfo FileInfo { get; set; }
         public string Name { get; }

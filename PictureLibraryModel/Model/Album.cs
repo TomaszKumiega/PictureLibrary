@@ -4,10 +4,12 @@ using System.Text;
 
 namespace PictureLibraryModel.Model
 {
-    public class Album
+    public class Album : ILibraryEntity
     {
         public string Name { get; }
         public List<ImageFile> Images { get; }
+
+        public string ImageSource => throw new NotImplementedException();
 
         public Album(string name)
         {
