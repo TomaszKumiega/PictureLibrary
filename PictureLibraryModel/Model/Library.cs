@@ -8,6 +8,7 @@ namespace PictureLibraryModel.Model
         public string Name { get; }
         public List<Album> Albums { get; }
 
+        //TODO: Add image source
         public string ImageSource => throw new System.NotImplementedException();
 
         public Library(string fullPath, string name)
