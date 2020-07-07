@@ -33,6 +33,7 @@ namespace PictureLibraryViewModel.ViewModels
             get { return _currentDirectoryPath; }
             set
             {
+                //TODO: Probably add removing elements from directories history 
                 _directoriesHistory.Add(_currentDirectoryPath);
                 _currentDirectoryPath = value;
                 UpdateCurrentDirectoryContent();
