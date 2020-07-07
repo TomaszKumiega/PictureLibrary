@@ -180,7 +180,7 @@ namespace PictureLibraryModel.Services
 
                     foreach (var i in a.Images)
                     {
-                        var imageElement = new XElement("image", new XAttribute("name", i.Name));
+                        var imageElement = new XElement("image", new XAttribute("path", i.FullPath));
 
                         albumElement.Add(imageElement);
                     }
