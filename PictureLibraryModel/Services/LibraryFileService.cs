@@ -80,7 +80,7 @@ namespace PictureLibraryModel.Services
 
             var fullPath = directory + '\\' + name + ".plib";
 
-            var libraryElement = new XElement("library");
+            var libraryElement = new XElement("library", new XAttribute("name", name));
 
             try
             {
@@ -165,9 +165,47 @@ namespace PictureLibraryModel.Services
             }
         }
 
-        public void SaveLibraries(List<Library> libraries)
+        public async Task SaveLibrariesAsync(List<Library> libraries)
         {
-            throw new NotImplementedException();
+            if(libraries==null) throw new ArgumentNullException();
+
+            XElement libraryElement;
+            foreach (var t in libraries)
+            {
+                libraryElement = new XElement("library", new XAttribute("name", t.Name));
+
+                foreach (var a in t.Albums)
+                {
+                    var albumElement = new XElement("album", new XAttribute("name", a));
+
+                    foreach (var i in a.Images)
+                    {
+                        var imageElement = new XElement("image", new XAttribute("name", i.Name));
+
+                        albumElement.Add(imageElement);
+                    }
+
+                    libraryElement.Add(albumElement);
+                }
+
+                try
+                {
+                    using (var stream = new FileStream(t.FullPath, FileMode.Create))
+                    {
+                        var streamWriter = new StreamWriter(stream);
+                        var xmlWriter = new XmlTextWriter(streamWriter);
+
+                        xmlWriter.Formatting = Formatting.Indented;
+                        xmlWriter.Indentation = 4;
+
+                        libraryElement.Save(xmlWriter);
+                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e, e.Message);
+                }
+            }
         }
     }
 }

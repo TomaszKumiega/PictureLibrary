@@ -24,7 +24,7 @@ namespace PictureLibraryModel.Services
         /// Saves list of libraries 
         /// </summary>
         /// <param name="libraries"></param>
-        void SaveLibraries(List<Library> libraries);
+        Task SaveLibrariesAsync(List<Library> libraries);
 
         /// <summary>
         /// Loads contains of specified library file 
