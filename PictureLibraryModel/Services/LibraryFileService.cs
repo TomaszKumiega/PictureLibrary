@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using Directory = PictureLibraryModel.Model.Directory;
 
 namespace PictureLibraryModel.Services
 {
@@ -105,7 +107,62 @@ namespace PictureLibraryModel.Services
 
         public async Task<ObservableCollection<Library>> GetAllLibrariesAsync()
         {
-            throw new NotImplementedException();
+            var files = new List<string>();
+            
+            foreach (var t in System.IO.DriveInfo.GetDrives())
+            {
+                files.AddRange(Task.Run(() => FindLibrariesInDirectory(t.RootDirectory.ToString())).Result);
+            }
+
+            var libraries = new ObservableCollection<Library>();
+
+            foreach (var t in files)
+            {
+                libraries.Add(LoadLibraryAsync(t).Result);
+            }
+
+            return libraries;
+        }
+
+        private IEnumerable<string> FindLibrariesInDirectory(string root)
+        {
+            Queue<string> pending = new Queue<string>();
+            pending.Enqueue(root);
+
+            while (pending.Count != 0)
+            {
+                var path = pending.Dequeue();
+                
+                List<string> items = null;
+
+                try
+                {
+                    items = System.IO.Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly)
+                        .Where(s => s.EndsWith("*.plib"))
+                        .ToList();
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    _logger.Debug(e, "Unauthorized access exception while looking for libraries");
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e,e.Message);
+                }
+
+                if(items !=null && items.Count !=0)
+                    foreach (var file in items)
+                        yield return file;
+                try
+                {
+                    items = System.IO.Directory.GetDirectories(path).ToList();
+                    foreach (var t in items) pending.Enqueue(t);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e, e.Message);
+                }
+            }
         }
 
         public void SaveLibraries(List<Library> libraries)
