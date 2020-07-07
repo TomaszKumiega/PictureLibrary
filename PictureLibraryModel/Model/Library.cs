@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace PictureLibraryModel.Model
 {
@@ -25,5 +27,28 @@ namespace PictureLibraryModel.Model
             Albums = albums;
         }
 
+        public void AddImage(List<string> albumNames, string path)
+        {
+            if(path==null) throw new ArgumentNullException();
+
+            var extension = Path.GetExtension(path);
+            var newPath = System.IO.Directory.GetParent(FullPath).FullName + '\\' + Guid.NewGuid() + extension;
+
+            System.IO.File.Copy(path, newPath);
+
+            var imageFile = new ImageFile(newPath);
+
+            foreach (var t in albumNames)
+            {
+                foreach (var album in Albums)
+                {
+                    if (t == album.Name)
+                    {
+                        album.Images.Add(imageFile);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
