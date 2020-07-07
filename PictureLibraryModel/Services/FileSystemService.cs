@@ -81,6 +81,7 @@ namespace PictureLibraryModel.Services
 
                     foreach (var t in listOfFiles.ToList())
                     {
+                        //TODO: insted of is file an image use linq query to search through files
                         if (!ImageFile.IsFileAnImage(t))
                         {
                             listOfFiles.Remove(t);
