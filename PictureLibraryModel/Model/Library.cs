@@ -55,5 +55,13 @@ namespace PictureLibraryModel.Model
                 }
             }
         }
+
+        public void AddAlbum(string albumName)
+        {
+            if(albumName==null) throw new ArgumentNullException();
+
+            var album = new Album(albumName);
+            Albums.Add(album);
+        }
     }
 }
