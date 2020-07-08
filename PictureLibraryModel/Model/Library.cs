@@ -13,6 +13,11 @@ namespace PictureLibraryModel.Model
         //TODO: Add image source
         public string ImageSource => throw new System.NotImplementedException();
 
+        public Library()
+        {
+            Albums = new List<Album>();
+        }
+
         public Library(string fullPath, string name)
         {
             FullPath = fullPath;
