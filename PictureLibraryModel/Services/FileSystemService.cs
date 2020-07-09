@@ -115,5 +115,10 @@ namespace PictureLibraryModel.Services
         {
             return System.IO.Directory.GetParent(path);
         }
+
+        public string? GetExtension(string path)
+        {
+           return Path.GetExtension(path);
+        }
     }
 }

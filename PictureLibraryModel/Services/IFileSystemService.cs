@@ -51,5 +51,12 @@ namespace PictureLibraryModel.Services
         /// <param name="path"></param>
         /// <returns></returns>
         DirectoryInfo GetParent(string path);
+
+        /// <summary>
+        /// Returns extension of a specified file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        string? GetExtension(string path); 
     }
 }
