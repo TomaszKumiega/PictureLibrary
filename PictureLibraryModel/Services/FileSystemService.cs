@@ -110,5 +110,10 @@ namespace PictureLibraryModel.Services
         {
             File.Delete(filePath);
         }
+
+        public DirectoryInfo GetParent(string path)
+        {
+            return System.IO.Directory.GetParent(path);
+        }
     }
 }
