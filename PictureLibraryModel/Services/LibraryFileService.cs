@@ -15,6 +15,12 @@ namespace PictureLibraryModel.Services
     public class LibraryFileService : ILibraryFileService
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly IFileSystemService _fileSystemService;
+
+        public LibraryFileService(IFileSystemService fileSystemService)
+        {
+            _fileSystemService = fileSystemService;
+        }
 
         public async Task<Library> LoadLibraryAsync(string fullPath)
         {
@@ -70,7 +76,7 @@ namespace PictureLibraryModel.Services
                 }
             }
 
-            return new Library(fullPath, libraryName, albumsList, new FileSystemService());
+            return new Library(fullPath, libraryName, albumsList, _fileSystemService);
         }
 
         public Library CreateLibrary(string name, string directory)
@@ -101,7 +107,7 @@ namespace PictureLibraryModel.Services
                 throw new Exception("Library already exists");
             }
 
-            return new Library(fullPath, name, new FileSystemService());
+            return new Library(fullPath, name, _fileSystemService);
         }
 
 
