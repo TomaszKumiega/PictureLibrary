@@ -70,7 +70,7 @@ namespace PictureLibraryModel.Services
                 }
             }
 
-            return new Library(fullPath, libraryName, albumsList);
+            return new Library(fullPath, libraryName, albumsList, new FileSystemService());
         }
 
         public Library CreateLibrary(string name, string directory)
@@ -101,7 +101,7 @@ namespace PictureLibraryModel.Services
                 throw new Exception("Library already exists");
             }
 
-            return new Library(fullPath, name);
+            return new Library(fullPath, name, new FileSystemService());
         }
 
 

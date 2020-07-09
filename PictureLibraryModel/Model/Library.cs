@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using PictureLibraryModel.Services;
 
 namespace PictureLibraryModel.Model
 {
     public class Library : ILibraryEntity
     {
+        private readonly IFileSystemService _fileSystemService;
         public string FullPath { get; }
         public string Name { get; }
         public List<Album> Albums { get; }
@@ -13,20 +15,23 @@ namespace PictureLibraryModel.Model
         //TODO: Add image source
         public string ImageSource => throw new System.NotImplementedException();
 
-        public Library()
+        public Library(IFileSystemService fileSystemService)
         {
+            _fileSystemService = fileSystemService;
             Albums = new List<Album>();
         }
 
-        public Library(string fullPath, string name)
+        public Library(string fullPath, string name, IFileSystemService fileSystemService)
         {
+            _fileSystemService = fileSystemService;
             FullPath = fullPath;
             Name = name;
             Albums = new List<Album>();
         }
 
-        public Library(string fullPath, string name, List<Album> albums)
+        public Library(string fullPath, string name, List<Album> albums, IFileSystemService fileSystemService)
         {
+            _fileSystemService = fileSystemService;
             FullPath = fullPath;
             Name = name;
             Albums = albums;
@@ -36,10 +41,10 @@ namespace PictureLibraryModel.Model
         {
             if(path==null) throw new ArgumentNullException();
 
-            var extension = Path.GetExtension(path);
-            var newPath = System.IO.Directory.GetParent(FullPath).FullName + '\\' + Guid.NewGuid() + extension;
+            var extension = _fileSystemService.GetExtension(path);
+            var newPath = _fileSystemService.GetParent(FullPath).FullName + '\\' + Guid.NewGuid() + extension;
 
-            System.IO.File.Copy(path, newPath);
+            _fileSystemService.CopyFile(path, newPath, false);
 
             var imageFile = new ImageFile(newPath);
 
