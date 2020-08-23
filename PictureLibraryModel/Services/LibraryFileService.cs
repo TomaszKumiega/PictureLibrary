@@ -12,6 +12,12 @@ namespace PictureLibraryModel.Services
     public class LibraryFileService : ILibraryFileService
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly IFileSystemService _fileSystem;
+
+        public LibraryFileService(IFileSystemService fileSystem)
+        {
+            _fileSystem = fileSystem;
+        }
 
         public async Task<Library> LoadLibraryAsync(string fullPath)
         {
@@ -102,9 +108,50 @@ namespace PictureLibraryModel.Services
         }
 
 
-        public async Task<List<Library>> GetAllLibraries()
+        public async Task<List<Library>> GetAllLibrariesAsync()
         {
-            throw new NotImplementedException();
+            var drives = _fileSystem.GetDrives();
+            var libraries = new List<Library>();
+            
+            foreach(var t in drives)
+            {
+                libraries.AddRange(Task.Run(() => FindLibraries(t)).Result);
+            }
+
+            return libraries;
+        }
+
+        public IEnumerable<Library> FindLibraries(IFileSystemEntity directory)
+        {
+            var files = new List<string>();
+            var libraries = new List<Library>();
+
+            foreach (var t in (directory as Model.Directory).Children)
+            {
+                if((t as IFileSystemEntity).Name.EndsWith(".plib"))
+                {
+                    files.Add((t as IFileSystemEntity).FullPath);
+                }
+            }
+
+            foreach(var t in files)
+            {
+                libraries.Add(new Library(t, Path.GetFileNameWithoutExtension(t)));
+            }
+
+            foreach(var t in libraries)
+            {
+                yield return t;
+            }
+
+            
+            foreach (Model.Directory t in (directory as Model.Directory).Children)
+            {
+                foreach(var i in FindLibraries(t))
+                {
+                    yield return i;
+                }
+            }
         }
 
         public void SaveLibraries(List<Library> libraries)
