@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PictureLibraryModel.Services;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,14 +7,19 @@ namespace PictureLibraryModel.Model
 {
     public class LibraryEntitiesFactory : ILibraryEntitiesFactory
     {
-        public Library GetLibrary(string fullPath, string name)
+        public Library GetLibrary(IFileSystemService fileSystemService)
         {
-            return new Library(fullPath, name);
+            return new Library(fileSystemService);
         }
 
-        public Library GetLibrary(string fullPath, string name, List<Album> albums)
+        public Library GetLibrary(string fullPath, string name, IFileSystemService fileSystemService)
         {
-            return new Library(fullPath, name, albums);
+            return new Library(fullPath, name, fileSystemService);
+        }
+
+        public Library GetLibrary(string fullPath, string name, List<Album> albums, IFileSystemService fileSystemService)
+        {
+            return new Library(fullPath, name, albums, fileSystemService);
         }
 
         public ImageFile GetImageFile(string path)

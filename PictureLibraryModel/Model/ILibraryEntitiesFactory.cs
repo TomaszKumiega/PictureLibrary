@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PictureLibraryModel.Services;
+using System.Collections.Generic;
 
 namespace PictureLibraryModel.Model
 {
@@ -8,7 +9,8 @@ namespace PictureLibraryModel.Model
         Album GetAlbum(string name, List<ImageFile> images);
         ImageFile GetImageFile();
         ImageFile GetImageFile(string path);
-        Library GetLibrary(string fullPath, string name);
-        Library GetLibrary(string fullPath, string name, List<Album> albums);
+        Library GetLibrary(IFileSystemService fileSystemService);
+        Library GetLibrary(string fullPath, string name, List<Album> albums, IFileSystemService fileSystemService);
+        Library GetLibrary(string fullPath, string name, IFileSystemService fileSystemService);
     }
 }
