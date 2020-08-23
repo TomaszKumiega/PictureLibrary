@@ -7,6 +7,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
+using System;
 
 namespace PictureLibraryViewModel.ViewModels
 {
@@ -71,11 +72,18 @@ namespace PictureLibraryViewModel.ViewModels
 
             if (CurrentDirectoryPath != _homeDirectory)
             {
-                var directories =
-                    FileSystemService.GetAllDirectories(CurrentDirectoryPath, System.IO.SearchOption.TopDirectoryOnly);
-                var imageFiles = FileSystemService.GetAllImageFiles(CurrentDirectoryPath);
-                if(directories!=null) foreach (var t in directories) CurrentDirectoryContent.Add(t);
-                if(imageFiles!=null) foreach (var t in imageFiles) CurrentDirectoryContent.Add(t);
+                try
+                {
+                    var directories =
+                        FileSystemService.GetAllDirectories(CurrentDirectoryPath, System.IO.SearchOption.TopDirectoryOnly);
+                    var imageFiles = FileSystemService.GetAllImageFiles(CurrentDirectoryPath);
+                    if (directories != null) foreach (var t in directories) CurrentDirectoryContent.Add(t);
+                    if (imageFiles != null) foreach (var t in imageFiles) CurrentDirectoryContent.Add(t);
+                }
+                catch(Exception e)
+                {
+                    _logger.Debug(e.Message, e);
+                }
             }
             else
             {
