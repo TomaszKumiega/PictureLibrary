@@ -84,6 +84,7 @@ namespace PictureLibraryModel.Services
 
                     foreach (var t in listOfFiles.ToList())
                     {
+                        //TODO: insted of is file an image use linq query to search through files
                         if (!ImageFile.IsFileAnImage(t))
                         {
                             listOfFiles.Remove(t);
@@ -111,6 +112,16 @@ namespace PictureLibraryModel.Services
         public void DeleteFile(string filePath)
         {
             File.Delete(filePath);
+        }
+
+        public DirectoryInfo GetParent(string path)
+        {
+            return System.IO.Directory.GetParent(path);
+        }
+
+        public string? GetExtension(string path)
+        {
+           return Path.GetExtension(path);
         }
     }
 }

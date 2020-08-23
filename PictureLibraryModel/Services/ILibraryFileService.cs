@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using PictureLibraryModel.Model;
@@ -17,13 +18,13 @@ namespace PictureLibraryModel.Services
         /// Returns list of all picture libraries on a device
         /// </summary>
         /// <returns></returns>
-        Task<List<Library>> GetAllLibrariesAsync();
+        Task<ObservableCollection<Library>> GetAllLibrariesAsync();
 
         /// <summary>
         /// Saves list of libraries 
         /// </summary>
         /// <param name="libraries"></param>
-        void SaveLibraries(List<Library> libraries);
+        Task SaveLibrariesAsync(List<Library> libraries);
 
         /// <summary>
         /// Loads contains of specified library file 

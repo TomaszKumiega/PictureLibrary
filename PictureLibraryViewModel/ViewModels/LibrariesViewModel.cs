@@ -11,7 +11,7 @@ namespace PictureLibraryViewModel.ViewModels
     public class LibrariesViewModel : ILibrariesViewModel
     {
         private ILibraryFileService _libraryFileService;
-        public ObservableCollection<Library> Libraries { get; }
+        public ObservableCollection<Library> Libraries { get; private set; }
         public ObservableCollection<ILibraryEntity> DisplayedEntities { get; }
 
         public LibrariesViewModel(ILibraryFileService libraryFileService)
@@ -19,18 +19,12 @@ namespace PictureLibraryViewModel.ViewModels
             _libraryFileService = libraryFileService;
             Libraries = new ObservableCollection<Library>();
             DisplayedEntities = new ObservableCollection<ILibraryEntity>();
-            Initialize();
+            InitializeLibraries();
         }
 
-        private async Task Initialize()
+        public async Task InitializeLibraries()
         {
-            var libraries = await _libraryFileService.GetAllLibraries();
-
-            foreach (var t in libraries)
-            {
-                Libraries.Add(t);
-                DisplayedEntities.Add(t);
-            }
+            Libraries = await _libraryFileService.GetAllLibrariesAsync();
         }
     }
 }

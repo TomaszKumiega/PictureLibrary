@@ -1,22 +1,25 @@
 ﻿using PictureLibraryModel.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using Directory = PictureLibraryModel.Model.Directory;
 
 namespace PictureLibraryModel.Services
 {
     public class LibraryFileService : ILibraryFileService
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
-        private readonly IFileSystemService _fileSystem;
+        private readonly IFileSystemService _fileSystemService;
 
-        public LibraryFileService(IFileSystemService fileSystem)
+        public LibraryFileService(IFileSystemService fileSystemService)
         {
-            _fileSystem = fileSystem;
+            _fileSystemService = fileSystemService;
         }
 
         public async Task<Library> LoadLibraryAsync(string fullPath)
@@ -73,7 +76,7 @@ namespace PictureLibraryModel.Services
                 }
             }
 
-            return new Library(fullPath, libraryName, albumsList);
+            return new Library(fullPath, libraryName, albumsList, _fileSystemService);
         }
 
         public Library CreateLibrary(string name, string directory)
@@ -83,7 +86,7 @@ namespace PictureLibraryModel.Services
 
             var fullPath = directory + '\\' + name + ".plib";
 
-            var libraryElement = new XElement("library");
+            var libraryElement = new XElement("library", new XAttribute("name", name));
 
             try
             {
@@ -104,59 +107,111 @@ namespace PictureLibraryModel.Services
                 throw new Exception("Library already exists");
             }
 
-            return new Library(fullPath, name);
+            return new Library(fullPath, name, _fileSystemService);
         }
 
 
-        public async Task<List<Library>> GetAllLibrariesAsync()
+        public async Task<ObservableCollection<Library>> GetAllLibrariesAsync()
         {
-            var drives = _fileSystem.GetDrives();
-            var libraries = new List<Library>();
+            var files = new List<string>();
             
-            foreach(var t in drives)
+            foreach (var t in System.IO.DriveInfo.GetDrives())
             {
-                libraries.AddRange(Task.Run(() => FindLibraries(t)).Result);
+                files.AddRange(Task.Run(() => FindLibrariesInDirectory(t.RootDirectory.ToString())).Result);
+            }
+
+            var libraries = new ObservableCollection<Library>();
+
+            foreach (var t in files)
+            {
+                libraries.Add(LoadLibraryAsync(t).Result);
             }
 
             return libraries;
         }
 
-        public IEnumerable<Library> FindLibraries(IFileSystemEntity directory)
+        private IEnumerable<string> FindLibrariesInDirectory(string root)
         {
-            var files = new List<string>();
-            var libraries = new List<Library>();
+            Queue<string> pending = new Queue<string>();
+            pending.Enqueue(root);
 
-            foreach (var t in (directory as Model.Directory).Children)
+            while (pending.Count != 0)
             {
-                if((t as IFileSystemEntity).Name.EndsWith(".plib"))
+                var path = pending.Dequeue();
+                
+                List<string> items = null;
+
+                try
                 {
-                    files.Add((t as IFileSystemEntity).FullPath);
+                    items = System.IO.Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly)
+                        .Where(s => s.EndsWith("*.plib"))
+                        .ToList();
                 }
-            }
-
-            foreach(var t in files)
-            {
-                libraries.Add(new Library(t, Path.GetFileNameWithoutExtension(t)));
-            }
-
-            foreach(var t in libraries)
-            {
-                yield return t;
-            }
-
-            
-            foreach (Model.Directory t in (directory as Model.Directory).Children)
-            {
-                foreach(var i in FindLibraries(t))
+                catch (UnauthorizedAccessException e)
                 {
-                    yield return i;
+                    _logger.Debug(e, "Unauthorized access exception while looking for libraries");
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e,e.Message);
+                }
+
+                if(items !=null && items.Count !=0)
+                    foreach (var file in items)
+                        yield return file;
+                try
+                {
+                    items = System.IO.Directory.GetDirectories(path).ToList();
+                    foreach (var t in items) pending.Enqueue(t);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e, e.Message);
                 }
             }
         }
 
-        public void SaveLibraries(List<Library> libraries)
+        public async Task SaveLibrariesAsync(List<Library> libraries)
         {
-            throw new NotImplementedException();
+            if(libraries==null) throw new ArgumentNullException();
+
+            XElement libraryElement;
+            foreach (var t in libraries)
+            {
+                libraryElement = new XElement("library", new XAttribute("name", t.Name));
+
+                foreach (var a in t.Albums)
+                {
+                    var albumElement = new XElement("album", new XAttribute("name", a));
+
+                    foreach (var i in a.Images)
+                    {
+                        var imageElement = new XElement("image", new XAttribute("path", i.FullPath));
+
+                        albumElement.Add(imageElement);
+                    }
+
+                    libraryElement.Add(albumElement);
+                }
+
+                try
+                {
+                    using (var stream = new FileStream(t.FullPath, FileMode.Create))
+                    {
+                        var streamWriter = new StreamWriter(stream);
+                        var xmlWriter = new XmlTextWriter(streamWriter);
+
+                        xmlWriter.Formatting = Formatting.Indented;
+                        xmlWriter.Indentation = 4;
+
+                        libraryElement.Save(xmlWriter);
+                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e, e.Message);
+                }
+            }
         }
     }
 }

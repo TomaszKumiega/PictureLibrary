@@ -44,5 +44,19 @@ namespace PictureLibraryModel.Services
         /// </summary>
         /// <param name="filePath"></param>
         void DeleteFile(string filePath);
+
+        /// <summary>
+        /// Provides DirectoryInfo of the specified file's parent
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        DirectoryInfo GetParent(string path);
+
+        /// <summary>
+        /// Returns extension of a specified file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        string? GetExtension(string path); 
     }
 }
