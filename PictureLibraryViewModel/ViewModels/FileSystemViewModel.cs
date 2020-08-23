@@ -12,6 +12,8 @@ namespace PictureLibraryViewModel.ViewModels
 {
     public class FileSystemViewModel : IFileSystemViewModel
     {
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+
         private IFileSystemService FileSystemService { get; }
         private string _currentDirectoryPath;
         private readonly List<string> _directoriesHistory;
