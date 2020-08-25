@@ -3,7 +3,7 @@ using PictureLibraryModel.Services;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModels;
 using PictureLibraryWPF.CustomControls.Files;
-
+using PictureLibraryModel.Model;
 namespace PictureLibraryViewModel
 {
     /// <summary>
@@ -24,6 +24,8 @@ namespace PictureLibraryViewModel
             builder.RegisterType<LibraryFileService>().As<ILibraryFileService>();
             builder.RegisterType<FilesTree>().AsSelf();
             builder.RegisterType<FilesView>().AsSelf();
+            builder.RegisterType<FileSystemEntitiesFactory>().As<IFileSystemEntitiesFactory>();
+            builder.RegisterType<LibraryEntitiesFactory>().As<ILibraryEntitiesFactory>();
 
             return builder.Build();
         }
