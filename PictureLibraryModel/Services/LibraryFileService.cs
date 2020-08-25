@@ -16,10 +16,11 @@ namespace PictureLibraryModel.Services
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly IFileSystemService _fileSystemService;
-
-        public LibraryFileService(IFileSystemService fileSystemService)
+        private readonly ILibraryEntitiesFactory _libraryEntitiesFactory;
+        public LibraryFileService(IFileSystemService fileSystemService, ILibraryEntitiesFactory libraryEntitiesFactory)
         {
             _fileSystemService = fileSystemService;
+            _libraryEntitiesFactory = libraryEntitiesFactory;
         }
 
         public async Task<Library> LoadLibraryAsync(string fullPath)
@@ -53,7 +54,7 @@ namespace PictureLibraryModel.Services
 
                                 try
                                 {
-                                    var image = new ImageFile(imageElement.Attribute("path").Value);
+                                    var image = _libraryEntitiesFactory.GetImageFile(imageElement.Attribute("path").Value);
                                     imageList.Add(image);
                                 }
                                 catch (Exception e)
@@ -63,7 +64,7 @@ namespace PictureLibraryModel.Services
 
                             } while (reader.ReadToNextSibling("image"));
 
-                            albumsList.Add(new Album(albumName, imageList));
+                            albumsList.Add(_libraryEntitiesFactory.GetAlbum(albumName, imageList));
                         }
 
                         if (reader.Name == "library")
@@ -76,7 +77,7 @@ namespace PictureLibraryModel.Services
                 }
             }
 
-            return new Library(fullPath, libraryName, albumsList, _fileSystemService);
+            return _libraryEntitiesFactory.GetLibrary(fullPath, libraryName, albumsList, _fileSystemService);
         }
 
         public Library CreateLibrary(string name, string directory)
@@ -107,7 +108,7 @@ namespace PictureLibraryModel.Services
                 throw new Exception("Library already exists");
             }
 
-            return new Library(fullPath, name, _fileSystemService);
+            return _libraryEntitiesFactory.GetLibrary(fullPath, name, _fileSystemService);
         }
 
 
