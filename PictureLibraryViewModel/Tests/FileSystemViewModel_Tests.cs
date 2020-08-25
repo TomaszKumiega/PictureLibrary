@@ -67,9 +67,9 @@ namespace PictureLibraryViewModel.Tests
         {
             var drives = new ObservableCollection<Drive>();
 
-            drives.Add(new Drive("Drive", new FileSystemService()));
-            drives.Add(new Drive("Drive", new FileSystemService()));
-            drives.Add(new Drive("Drive", new FileSystemService()));
+            drives.Add(new Drive("Drive", new FileSystemService(new FileSystemEntitiesFactory())));
+            drives.Add(new Drive("Drive", new FileSystemService(new FileSystemEntitiesFactory())));
+            drives.Add(new Drive("Drive", new FileSystemService(new FileSystemEntitiesFactory())));
 
             return drives;
         }
@@ -78,10 +78,10 @@ namespace PictureLibraryViewModel.Tests
         {
             var drives = new ObservableCollection<Drive>();
 
-            drives.Add(new Drive("Drive", new FileSystemService()));
-            drives[0].Children.Add(new Drive("Drive", new FileSystemService()));
-            drives[0].Children.Add(new Drive("Drive", new FileSystemService()));
-            drives[0].Children.Add(new Drive("Drive", new FileSystemService()));
+            drives.Add(new Drive("Drive", new FileSystemService(new FileSystemEntitiesFactory())));
+            drives[0].Children.Add(new Drive("Drive", new FileSystemService(new FileSystemEntitiesFactory())));
+            drives[0].Children.Add(new Drive("Drive", new FileSystemService(new FileSystemEntitiesFactory())));
+            drives[0].Children.Add(new Drive("Drive", new FileSystemService(new FileSystemEntitiesFactory())));
 
             return drives;
         }

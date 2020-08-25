@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Services;
 using Xunit;
 
@@ -13,7 +14,7 @@ namespace PictureLibraryModel.Tests
         [Fact]
         public void CopyFile_ShouldThrowArgumentNullExceptionWhenSourceFilePathIsNull()
         {
-            var fileSystemService = new FileSystemService();
+            var fileSystemService = new FileSystemService(new FileSystemEntitiesFactory());
 
             Assert.Throws<ArgumentNullException>(() => fileSystemService.CopyFile(null, "", false));
         }
@@ -21,7 +22,7 @@ namespace PictureLibraryModel.Tests
         [Fact]
         public void CopyFile_ShouldThrowArgumentNullExceptionWhenDestinationFilePathIsNull()
         {
-            var fileSystemService = new FileSystemService();
+            var fileSystemService = new FileSystemService(new FileSystemEntitiesFactory());
 
             Assert.Throws<ArgumentNullException>(() => fileSystemService.CopyFile("file.jpg", null, false));
         }
@@ -29,7 +30,7 @@ namespace PictureLibraryModel.Tests
         [Fact]
         public void CopyFile_ShouldThrowArgumentExceptionWhenSourceFilePathIsEmpty()
         {
-            var fileSystemService = new FileSystemService();
+            var fileSystemService = new FileSystemService(new FileSystemEntitiesFactory());
 
             Assert.Throws<ArgumentException>(() => fileSystemService.CopyFile("", "/destination", false));
         }
@@ -37,7 +38,7 @@ namespace PictureLibraryModel.Tests
         [Fact]
         public void CopyFile_ShouldThrowArgumentExceptionWhenDestinationFilePathIsEmpty()
         {
-            var fileSystemService = new FileSystemService();
+            var fileSystemService = new FileSystemService(new FileSystemEntitiesFactory());
 
             Assert.Throws<ArgumentException>(() => fileSystemService.CopyFile("file.png", "", false));
         }
@@ -45,7 +46,7 @@ namespace PictureLibraryModel.Tests
         [Fact]
         public void CopyFile_ShouldThrowArgumentExceptionWhenSourceFilePathIsWhitespace()
         {
-            var fileSystemService = new FileSystemService();
+            var fileSystemService = new FileSystemService(new FileSystemEntitiesFactory());
 
             Assert.Throws<ArgumentException>(() => fileSystemService.CopyFile(" ", "/destination", false));
         }
@@ -53,7 +54,7 @@ namespace PictureLibraryModel.Tests
         [Fact]
         public void CopyFile_ShouldThrowArgumentExceptionWhenDestinationFilePathIsWhitespace()
         {
-            var fileSystemService = new FileSystemService();
+            var fileSystemService = new FileSystemService(new FileSystemEntitiesFactory());
 
             Assert.Throws<ArgumentException>(() => fileSystemService.CopyFile("file.jpg", " ", false));
         }

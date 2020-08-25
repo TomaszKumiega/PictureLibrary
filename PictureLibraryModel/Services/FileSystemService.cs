@@ -11,10 +11,11 @@ namespace PictureLibraryModel.Services
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
+        private readonly IFileSystemEntitiesFactory _fileSystemEntitiesFactory;
 
-        public FileSystemService()
+        public FileSystemService(IFileSystemEntitiesFactory fileSystemEntitiesFactory)
         {
-
+            _fileSystemEntitiesFactory = fileSystemEntitiesFactory;
         }
 
         public void CopyFile(string sourceFilePath, string destinationFilePath, bool overwrite) 
@@ -45,7 +46,7 @@ namespace PictureLibraryModel.Services
                     {
                         foreach (var t in fullPaths)
                         {
-                            directories.Add(new Model.Directory(t, (new System.IO.DirectoryInfo(t)).Name, this));
+                            directories.Add(_fileSystemEntitiesFactory.GetDirectory(t, (new System.IO.DirectoryInfo(t)).Name, this));
                         }
                     }
 
@@ -65,7 +66,7 @@ namespace PictureLibraryModel.Services
             {
                 if (System.IO.Directory.Exists(driveInfo.Name))
                 {
-                    drives.Add(new Drive(driveInfo.Name, this));
+                    drives.Add(_fileSystemEntitiesFactory.GetDrive(driveInfo.Name, this));
                 }
             }
 
@@ -91,7 +92,7 @@ namespace PictureLibraryModel.Services
                         }
                         else
                         {
-                            listOfImageFiles.Add(new ImageFile(t));
+                            listOfImageFiles.Add(_fileSystemEntitiesFactory.GetImageFile(t));
                         }
                     }
 
