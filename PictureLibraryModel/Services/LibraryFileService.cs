@@ -23,17 +23,17 @@ namespace PictureLibraryModel.Services
             _libraryEntitiesFactory = libraryEntitiesFactory;
         }
 
-        public async Task<Library> LoadLibraryAsync(string fullPath)
+        public async Task<Library> LoadLibraryAsync(FileStream fileStream)
         {
             var albumsList = new List<Album>();
             string libraryName = null;
 
-            if (!File.Exists(fullPath)) throw new FileNotFoundException();
+            if (fileStream.Length==0) throw new ArgumentException("Given stream is empty");
 
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.DtdProcessing = DtdProcessing.Parse;
 
-            using (var reader = XmlReader.Create(fullPath, settings))
+            using (var reader = XmlReader.Create(fileStream, settings))
             {
                 while (await reader.ReadAsync())
                 {
@@ -77,23 +77,19 @@ namespace PictureLibraryModel.Services
                 }
             }
 
-            return _libraryEntitiesFactory.GetLibrary(fullPath, libraryName, albumsList, _fileSystemService);
+            return _libraryEntitiesFactory.GetLibrary(fileStream.Name, libraryName, albumsList, _fileSystemService);
         }
 
-        public Library CreateLibrary(string name, string directory)
+        public Library CreateLibrary(string libraryName, FileStream fileStream)
         {
-            if (!System.IO.Directory.Exists(directory)) throw new DirectoryNotFoundException();
-            if (name == null || directory == null) throw new ArgumentNullException();
+            if (fileStream==null) throw new ArgumentNullException();
 
-            var fullPath = directory + '\\' + name + ".plib";
-
-            var libraryElement = new XElement("library", new XAttribute("name", name));
+            var libraryElement = new XElement("library", new XAttribute("name", libraryName));
 
             try
             {
-                using (var stream = new FileStream(fullPath, FileMode.CreateNew))
+                using (var streamWriter = new StreamWriter(fileStream))
                 {
-                    var streamWriter = new StreamWriter(stream);
                     var xmlWriter = new XmlTextWriter(streamWriter);
 
                     xmlWriter.Formatting = Formatting.Indented;
@@ -108,7 +104,7 @@ namespace PictureLibraryModel.Services
                 throw new Exception("Library already exists");
             }
 
-            return _libraryEntitiesFactory.GetLibrary(fullPath, name, _fileSystemService);
+            return _libraryEntitiesFactory.GetLibrary(fileStream.Name, libraryName, _fileSystemService);
         }
 
 
@@ -125,7 +121,8 @@ namespace PictureLibraryModel.Services
 
             foreach (var t in files)
             {
-                libraries.Add(LoadLibraryAsync(t).Result);
+                var fileStream = new FileStream(t, FileMode.Open);
+                libraries.Add(LoadLibraryAsync(fileStream).Result);
             }
 
             return libraries;

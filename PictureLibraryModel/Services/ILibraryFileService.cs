@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using PictureLibraryModel.Model;
@@ -12,7 +13,7 @@ namespace PictureLibraryModel.Services
         /// <summary>
         /// Creates library file in specified directory
         /// </summary>
-       Library CreateLibrary(string name, string directory);
+       Library CreateLibrary(string libraryName, FileStream fileStream);
 
         /// <summary>
         /// Returns list of all picture libraries on a device
@@ -31,7 +32,7 @@ namespace PictureLibraryModel.Services
         /// </summary>
         /// <param name="fullPath"></param>
         /// <returns>Object of <see cref="Library"></see> class/></returns>
-        Task<Library> LoadLibraryAsync(string fullPath);
+        Task<Library> LoadLibraryAsync(FileStream fileStream);
 
     }
 }
