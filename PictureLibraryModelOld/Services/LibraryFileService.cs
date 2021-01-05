@@ -21,6 +21,7 @@ namespace PictureLibraryModel.Services
         {
             _fileSystemService = fileSystemService;
             _libraryEntitiesFactory = libraryEntitiesFactory;
+
         }
 
         public async Task<Library> LoadLibraryAsync(FileStream fileStream)
