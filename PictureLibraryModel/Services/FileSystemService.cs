@@ -6,21 +6,27 @@ using System.Text;
 
 namespace PictureLibraryModel.Services
 {
-    public interface IFileSystemService
+    public abstract class FileSystemService
     {
         /// <summary>
         /// Finds all files matching the search pattern from all drives
         /// </summary>
         /// <param name="searchPattern"></param>
         /// <returns></returns>
-        List<string> FindFiles(string searchPattern, string directory);
+        public List<string> FindFiles(string searchPattern, string directory)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Creates a file and returns FileStream
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        FileStream CreateFile(string filePath);
+        public FileStream CreateFile(string filePath)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Creates a file and writes all bytes to it. Returns path to the file.
@@ -28,47 +34,68 @@ namespace PictureLibraryModel.Services
         /// <param name="filePath"></param>
         /// <param name="file"></param>
         /// <returns>Path of the file</returns>
-        string AddFile(string filePath, byte[] file);
+        public string AddFile(string filePath, byte[] file)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Deletes specified file 
         /// </summary>
         /// <param name="filePath"></param>
-        void DeleteFile(string filePath);
+        public void DeleteFile(string filePath)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Returns a FileStream of a file
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        FileStream OpenFile(string path, FileMode mode);
+        public FileStream OpenFile(string path, FileMode mode)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Returns contents of a file as byte array
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        byte[] GetFile(string path);
+        public byte[] GetFile(string path)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Renames the file
         /// </summary>
         /// <param name="file"></param>
         /// <param name="newName"></param>
-        void RenameFile(string file, string newName);
+        public void RenameFile(string file, string newName)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Provides file info of specified file
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        FileInfo GetFileInfo(string path);
+        public FileInfo GetFileInfo(string path)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Extracts icon from a specified file
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        Icon ExtractAssociatedIcon(string path);
+        public Icon ExtractAssociatedIcon(string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
