@@ -8,12 +8,12 @@ namespace PictureLibraryModel.Model
 {
     public class Directory : IFileSystemEntity
     {
-        private FileSystemService FileSystemService { get; set; }
+        protected FileSystemService FileSystemService { get; set; }
 
         public string FullPath { get; set; }
         public string Name { get; set; }
-        public string IconSource { get; }
-        public ObservableCollection<Directory> SubDirectories { get; }
+        public string IconSource { get; protected set; }
+        public ObservableCollection<Directory> SubDirectories { get; protected set; }
 
         public Directory(string path, string name, FileSystemService fileSystemService)
         {
@@ -22,10 +22,10 @@ namespace PictureLibraryModel.Model
             FileSystemService = fileSystemService;
             IconSource = "pack://application:,,,/Icons/FolderIcon.png";
             SubDirectories = new ObservableCollection<Directory>();
-            LoadChildren();
+            LoadSubDirectories();
         }
 
-        private void LoadChildren()
+        protected void LoadSubDirectories()
         {
             SubDirectories.Clear();
 
