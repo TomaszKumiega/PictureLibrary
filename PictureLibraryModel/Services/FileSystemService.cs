@@ -99,7 +99,7 @@ namespace PictureLibraryModel.Services
         /// <returns></returns>
         public Icon ExtractAssociatedIcon(string path)
         {
-            throw new NotImplementedException();
+            return Icon.ExtractAssociatedIcon(path);
         }
 
         public IEnumerable<Directory> GetDirectories(string topDirectory, SearchOption option)
