@@ -4,10 +4,14 @@ using System.IO;
 using System.Drawing;
 using System.Text;
 
+using Directory = PictureLibraryModel.Model.Directory;
+
 namespace PictureLibraryModel.Services
 {
     public abstract class FileSystemService
     {
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Finds all files matching the search pattern from all drives
         /// </summary>
@@ -96,6 +100,41 @@ namespace PictureLibraryModel.Services
         public Icon ExtractAssociatedIcon(string path)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Directory> GetDirectories(string topDirectory, SearchOption option)
+        {
+            if (topDirectory != null)
+            {
+                if (System.IO.Directory.Exists(topDirectory))
+                {
+                    string[] fullPaths = null;
+
+                    try
+                    {
+                        fullPaths = System.IO.Directory.GetDirectories(topDirectory, "*", option);
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.Error(e, "Couldn't load directories from " + fullPaths);
+                    }
+
+                    var directories = new List<Directory>();
+
+                    if (fullPaths != null)
+                    {
+                        foreach (var t in fullPaths)
+                        {
+                            directories.Add(new Directory(t, (new System.IO.DirectoryInfo(t)).Name, this));
+                        }
+                    }
+
+                    return directories;
+                }
+                else throw new DirectoryNotFoundException("Directory: " + topDirectory + " not found");
+
+            }
+            else throw new ArgumentNullException();
         }
     }
 }
