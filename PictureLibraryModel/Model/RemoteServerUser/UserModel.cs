@@ -5,7 +5,10 @@ using System.Text;
 
 namespace PictureLibraryModel.Model.RemoteServerUser
 {
-    public class RegisterUserModel
+    /// <summary>
+    /// User model used for registration and updating
+    /// </summary>
+    public class UserModel
     {
         [Required]
         public string Username { get; set; }
@@ -14,12 +17,12 @@ namespace PictureLibraryModel.Model.RemoteServerUser
         [Required]
         public string Email { get; set; }
 
-        public RegisterUserModel()
+        public UserModel()
         {
 
         }
 
-        public RegisterUserModel(string username, string password, string email)
+        public UserModel(string username, string password, string email)
         {
             Username = username;
             Password = password;
