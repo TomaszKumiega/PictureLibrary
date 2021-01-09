@@ -12,7 +12,7 @@ namespace PictureLibraryModel.Model
 
         public string FullPath { get; set; }
         public string Name { get; set; }
-        public string IconSource { get; protected set; }
+        public Bitmap Icon { get; protected set; }
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
 
         public Directory(string path, string name, FileSystemService fileSystemService)
@@ -20,7 +20,7 @@ namespace PictureLibraryModel.Model
             FullPath = path;
             Name = name;
             FileSystemService = fileSystemService;
-            IconSource = "pack://application:,,,/Icons/FolderIcon.png";
+            Icon = new Bitmap("Icons/FolderIcon.png");
             SubDirectories = new ObservableCollection<Directory>();
             LoadSubDirectories();
         }
@@ -34,6 +34,14 @@ namespace PictureLibraryModel.Model
             foreach (var t in directories)
             {
                 SubDirectories.Add(t);
+            }
+        }
+
+        ~Directory()
+        {
+            if(Icon!=null)
+            {
+                Icon.Dispose();
             }
         }
     }

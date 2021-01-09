@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace PictureLibraryModel.Model
 {
-    public abstract class ImageFile
+    public abstract class ImageFile : IFileSystemEntity
     {
         public string Name { get; set; }
         public string Extension { get; set; }
@@ -15,6 +16,8 @@ namespace PictureLibraryModel.Model
         public DateTime LastWriteTime { get; set; }
         public long Size { get; set; }
         public List<Tag> Tags { get; set; }
+
+        public Bitmap Icon { get; }
 
         public ImageFile()
         {
@@ -32,6 +35,15 @@ namespace PictureLibraryModel.Model
             LastWriteTime = lastWriteTime;
             Size = size;
             Tags = tags;
+            Icon = new Bitmap(FullPath);
+        }
+
+        ~ImageFile()
+        {
+            if(Icon!=null)
+            {
+                Icon.Dispose();
+            }
         }
     }
 }

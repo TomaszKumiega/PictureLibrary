@@ -13,7 +13,15 @@ namespace PictureLibraryModel.Model
 
         public Drive(string path, string name, FileSystemService fileSystemService) : base(path, name, fileSystemService)
         {
-            IconSource = "pack://application:,,,/Icons/DiskIcon.png";
+
+        }
+
+        ~Drive()
+        {
+            if(Icon != null)
+            {
+                Icon.Dispose();
+            }
         }
     }
 }
