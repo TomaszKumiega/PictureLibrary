@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PictureLibraryModel.Model
 {
-    public class ImageFile
+    public abstract class ImageFile
     {
         public string Name { get; set; }
         public string Extension { get; set; }
