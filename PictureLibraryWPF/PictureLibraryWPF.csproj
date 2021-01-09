@@ -23,6 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PictureLibraryViewModel\PictureLibraryViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Icons\CloseIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
