@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Drawing;
 using System.Text;
+using NLog;
 
 using Directory = PictureLibraryModel.Model.Directory;
 using PictureLibraryModel.Model;
@@ -11,7 +12,7 @@ namespace PictureLibraryModel.Services
 {
     public abstract class FileSystemService
     {
-        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public IEnumerable<Directory> GetDirectories(string topDirectory, SearchOption option)
         {
