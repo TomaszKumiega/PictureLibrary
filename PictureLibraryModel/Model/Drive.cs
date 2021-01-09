@@ -13,7 +13,7 @@ namespace PictureLibraryModel.Model
 
         public Drive(string path, string name, FileSystemService fileSystemService) : base(path, name, fileSystemService)
         {
-
+            Icon = new Bitmap("Icons/DiskIcon.png");
         }
 
         ~Drive()
