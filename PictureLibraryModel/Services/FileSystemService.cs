@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Text;
 
 using Directory = PictureLibraryModel.Model.Directory;
+using PictureLibraryModel.Model;
 
 namespace PictureLibraryModel.Services
 {
@@ -47,5 +48,7 @@ namespace PictureLibraryModel.Services
 
             return directories;
         }
+
+        public abstract IEnumerable<IFileSystemEntity> GetRootDirectories();
     }
 }
