@@ -9,7 +9,7 @@ namespace PictureLibraryModel.Model
         public string Name { get; set; }
         public string Extension { get; set; }
         public string FullPath { get; set; }
-        public string LibrarySource { get; set; }
+        public string LibraryFullPath { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime LastAccessTime { get; set; }
         public DateTime LastWriteTime { get; set; }
@@ -26,7 +26,7 @@ namespace PictureLibraryModel.Model
             Name = name;
             Extension = extension;
             FullPath = source;
-            LibrarySource = librarysource;
+            LibraryFullPath = librarysource;
             CreationTime = creationTime;
             LastAccessTime = lastAccessTime;
             LastWriteTime = lastWriteTime;
