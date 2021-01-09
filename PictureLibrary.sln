@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.28917.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibraryWPF", "PictureLibraryWPF\PictureLibraryWPF.csproj", "{97FB9B6C-8D5C-4B36-9E87-B2D9BE8362BB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibraryViewModel", "PictureLibraryViewModel\PictureLibraryViewModel.csproj", "{CA756CF3-3EDF-4CC1-A05F-614890F9A002}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibraryModel", "PictureLibraryModel\PictureLibraryModel.csproj", "{A9231CC0-7AC2-4BB3-8DCC-40427B004E9B}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{97FB9B6C-8D5C-4B36-9E87-B2D9BE8362BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97FB9B6C-8D5C-4B36-9E87-B2D9BE8362BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97FB9B6C-8D5C-4B36-9E87-B2D9BE8362BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA756CF3-3EDF-4CC1-A05F-614890F9A002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA756CF3-3EDF-4CC1-A05F-614890F9A002}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA756CF3-3EDF-4CC1-A05F-614890F9A002}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA756CF3-3EDF-4CC1-A05F-614890F9A002}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A9231CC0-7AC2-4BB3-8DCC-40427B004E9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A9231CC0-7AC2-4BB3-8DCC-40427B004E9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9231CC0-7AC2-4BB3-8DCC-40427B004E9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
