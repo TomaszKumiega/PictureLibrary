@@ -30,5 +30,10 @@ namespace PictureLibraryViewModel.ViewModel
         {
             CopiedFile = SelectedFile;
         }
+
+        public void PasteFile()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
