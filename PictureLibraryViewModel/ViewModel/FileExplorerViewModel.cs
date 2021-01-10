@@ -13,6 +13,8 @@ namespace PictureLibraryViewModel.ViewModel
         public ObservableCollection<IFileSystemEntity> DirectoryTree { get; private set; }
         public ObservableCollection<IFileSystemEntity> CurrentDirectoryFiles { get; private set; }
         public string CurrentDirectoryPath { get; set; }
+        public IFileSystemEntity SelectedFile { get; set; }
+        public IFileSystemEntity SelectedNode { get; set; }
 
         public FileExplorerViewModel(FileSystemService fileSystemService)
         {
