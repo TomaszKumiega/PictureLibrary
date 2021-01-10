@@ -8,7 +8,7 @@ namespace PictureLibraryModel.Model
 {
     public abstract class Directory : IFileSystemEntity
     {
-        protected FileSystemService FileSystemService { get; set; }
+        protected IFileProvider FileProvider { get; set; }
 
         public string FullPath { get; set; }
         public string Name { get; set; }
@@ -16,11 +16,11 @@ namespace PictureLibraryModel.Model
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
         public Origin Origin { get; set; }
 
-        public Directory(string path, string name, FileSystemService fileSystemService, Origin origin)
+        public Directory(string path, string name, IFileProvider fileProvider, Origin origin)
         {
             FullPath = path;
             Name = name;
-            FileSystemService = fileSystemService;
+            FileProvider = fileProvider;
             Origin = origin;
             Icon = new Bitmap("Icons/FolderIcon.png");
             SubDirectories = new ObservableCollection<Directory>();
@@ -31,7 +31,7 @@ namespace PictureLibraryModel.Model
         {
             SubDirectories.Clear();
 
-            var directories = FileSystemService.GetDirectories(FullPath, SearchOption.TopDirectoryOnly);
+            var directories = FileProvider.GetDirectories(FullPath, SearchOption.TopDirectoryOnly);
 
             foreach (var t in directories)
             {

@@ -10,7 +10,7 @@ using PictureLibraryModel.Model;
 
 namespace PictureLibraryModel.Services
 {
-    public abstract class FileSystemService
+    public abstract class FileSystemService : IFileProvider
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -39,7 +39,7 @@ namespace PictureLibraryModel.Services
             {
                 foreach (var t in fullPaths)
                 {
-                    directories.Add(new Directory(t, (new System.IO.DirectoryInfo(t)).Name, this, Origin.Local));
+                    directories.Add(new Folder(t, (new System.IO.DirectoryInfo(t)).Name, this, Origin.Local));
                 }
             }
             else
@@ -50,6 +50,6 @@ namespace PictureLibraryModel.Services
             return directories;
         }
 
-        public abstract IEnumerable<IFileSystemEntity> GetRootDirectories();
+        public abstract IEnumerable<Directory> GetRootDirectories();
     }
 }

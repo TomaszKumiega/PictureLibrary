@@ -3,14 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Directory = PictureLibraryModel.Model.Directory;
 
 namespace PictureLibraryModel.Services
 {
     public class WindowsFileSystemService : FileSystemService
     {
-        public override IEnumerable<IFileSystemEntity> GetRootDirectories()
+        public override IEnumerable<Directory> GetRootDirectories()
         {
-            var rootDirectories = new List<IFileSystemEntity>();
+            var rootDirectories = new List<Directory>();
 
             foreach(var driveinfo in DriveInfo.GetDrives())
             {
