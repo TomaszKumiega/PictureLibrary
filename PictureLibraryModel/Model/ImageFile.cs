@@ -17,27 +17,8 @@ namespace PictureLibraryModel.Model
         public long Size { get; set; }
         public List<Tag> Tags { get; set; }
 
-        public Bitmap Icon { get; }
-        public Origin Origin { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public ImageFile()
-        {
-
-        }
-
-        public ImageFile(string name, string extension, string source, string librarysource, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, long size, List<Tag> tags)
-        {
-            Name = name;
-            Extension = extension;
-            FullPath = source;
-            LibraryFullPath = librarysource;
-            CreationTime = creationTime;
-            LastAccessTime = lastAccessTime;
-            LastWriteTime = lastWriteTime;
-            Size = size;
-            Tags = tags;
-            Icon = new Bitmap(FullPath);
-        }
+        public Bitmap Icon { get; set; }
+        public Origin Origin { get; set; }
 
         ~ImageFile()
         {
