@@ -12,7 +12,7 @@ namespace PictureLibraryViewModel.ViewModel
     public class FileExplorerViewModel : IFileExplorerViewModel
     {
         private FileSystemService _fileSystemService;
-        private IExplorableElement CopiedFile { get; set; }
+        public IExplorableElement CopiedFile { get; private set; }
         public ObservableCollection<IFileSystemEntity> DirectoryTree { get; private set; }
         public ObservableCollection<IFileSystemEntity> CurrentDirectoryFiles { get; private set; }
         public string CurrentDirectoryPath { get; set; }
