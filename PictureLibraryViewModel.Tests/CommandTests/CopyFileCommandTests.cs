@@ -36,5 +36,21 @@ namespace PictureLibraryViewModel.Tests
 
             Assert.False(copyFileCommand.CanExecute(new object()));
         }
+
+        [Fact]
+        public void Execute_ShouldTriggerCopyFileMethod()
+        {
+            bool methodWasCalled = false;
+
+            var viewModelMock = new Mock<IExplorerViewModel>();
+            viewModelMock.Setup(x => x.CopyFile())
+                .Callback(() => { methodWasCalled = true; });
+
+            var copyFileCommand = new CopyFileCommand(viewModelMock.Object);
+
+            copyFileCommand.Execute(new object());
+
+            Assert.True(methodWasCalled);
+        }
     }
 }

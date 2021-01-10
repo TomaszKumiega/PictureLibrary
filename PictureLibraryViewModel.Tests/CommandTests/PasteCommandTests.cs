@@ -38,5 +38,21 @@ namespace PictureLibraryViewModel.Tests.CommandTests
 
             Assert.False(pasteCommand.CanExecute(new object()));
         }
+
+        [Fact]
+        public void Execute_ShouldTriggerPasteFileMethod()
+        {
+            bool methodWasCalled = false;
+
+            var viewModelMock = new Mock<IExplorerViewModel>();
+            viewModelMock.Setup(x => x.PasteFile())
+                .Callback(() => { methodWasCalled = true; });
+
+            var copyFileCommand = new PasteCommand(viewModelMock.Object);
+
+            copyFileCommand.Execute(new object());
+
+            Assert.True(methodWasCalled);
+        }
     }
 }
