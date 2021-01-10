@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Dotnet clean
-      run: dotnet clean ./PictureLibraryModel/PictureLibraryModel.sln --configuration Release && dotnet nuget locals all --clear
+      run: dotnet clean ./PictureLibrary/PictureLibrary.sln --configuration Release && dotnet nuget locals all --clear
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
