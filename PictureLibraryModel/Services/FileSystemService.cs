@@ -33,7 +33,7 @@ namespace PictureLibraryModel.Services
                 _logger.Error(e, "Couldn't load directories from " + topDirectory);
             }
 
-            var directories = new List<Directory>();
+            var directories = new List<Folder>();
 
             if (fullPaths != null)
             {
