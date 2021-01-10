@@ -9,9 +9,9 @@ namespace PictureLibraryViewModel.Commands
     public class CopyFileCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private IFileExplorerViewModel _viewModel;
+        private IExplorerViewModel _viewModel;
 
-        public CopyFileCommand(IFileExplorerViewModel viewModel)
+        public CopyFileCommand(IExplorerViewModel viewModel)
         {
             _viewModel = viewModel;
         }

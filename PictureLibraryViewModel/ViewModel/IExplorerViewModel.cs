@@ -3,6 +3,7 @@ using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel
 {
@@ -10,7 +11,7 @@ namespace PictureLibraryViewModel.ViewModel
     {
         IExplorableElement SelectedFile { get; set; }
         IExplorableElement SelectedNode { get; set; }
-        CopyFileCommand CopyFileCommand { get; set; }
+        ICommand CopyFileCommand { get; set; }
         void CopyFile();
     }
 }

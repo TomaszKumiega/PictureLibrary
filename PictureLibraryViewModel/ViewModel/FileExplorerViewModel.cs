@@ -16,14 +16,14 @@ namespace PictureLibraryViewModel.ViewModel
         public ObservableCollection<IFileSystemEntity> DirectoryTree { get; private set; }
         public ObservableCollection<IFileSystemEntity> CurrentDirectoryFiles { get; private set; }
         public string CurrentDirectoryPath { get; set; }
-        public CopyFileCommand CopyFileCommand { get; set; }
+        public ICommand CopyFileCommand { get; set; }
         public IExplorableElement SelectedFile { get; set; }
         public IExplorableElement SelectedNode { get; set; }
 
-        public FileExplorerViewModel(FileSystemService fileSystemService, CopyFileCommand copyFileCommand)
+        public FileExplorerViewModel(FileSystemService fileSystemService, ICommandFactory commandFactory)
         {
             _fileSystemService = fileSystemService;
-            CopyFileCommand = copyFileCommand;
+            CopyFileCommand = commandFactory.GetCopyFileCommand(this);
         }
 
         public void CopyFile()
