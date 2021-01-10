@@ -18,10 +18,7 @@ namespace PictureLibraryModel.Model
 
         ~Drive()
         {
-            if(Icon != null)
-            {
-                Icon.Dispose();
-            }
+            Icon?.Dispose();
         }
     }
 }

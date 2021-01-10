@@ -40,10 +40,7 @@ namespace PictureLibraryModel.Model
 
         ~ImageFile()
         {
-            if(Icon!=null)
-            {
-                Icon.Dispose();
-            }
+            Icon?.Dispose();
         }
     }
 }

@@ -39,10 +39,7 @@ namespace PictureLibraryModel.Model
 
         ~Directory()
         {
-            if(Icon!=null)
-            {
-                Icon.Dispose();
-            }
+            Icon?.Dispose();
         }
     }
 }
