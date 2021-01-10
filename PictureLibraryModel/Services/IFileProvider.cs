@@ -7,7 +7,7 @@ namespace PictureLibraryModel.Services
 {
     public interface IFileProvider
     {
-        IEnumerable<Directory> GetDirectories(string topDirectory, SearchOption option);
+        IEnumerable<Folder> GetSubFolders(string topDirectory, SearchOption option);
         IEnumerable<Directory> GetRootDirectories();
     }
 }

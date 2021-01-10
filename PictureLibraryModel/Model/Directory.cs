@@ -31,7 +31,7 @@ namespace PictureLibraryModel.Model
         {
             SubDirectories.Clear();
 
-            var directories = FileProvider.GetDirectories(FullPath, SearchOption.TopDirectoryOnly);
+            var directories = FileProvider.GetSubFolders(FullPath, SearchOption.TopDirectoryOnly);
 
             foreach (var t in directories)
             {

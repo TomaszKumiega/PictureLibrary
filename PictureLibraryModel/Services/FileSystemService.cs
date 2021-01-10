@@ -14,7 +14,7 @@ namespace PictureLibraryModel.Services
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public IEnumerable<Directory> GetDirectories(string topDirectory, SearchOption option)
+        public IEnumerable<Folder> GetSubFolders(string topDirectory, SearchOption option)
         {
             if (topDirectory == null) throw new ArgumentNullException();
 
