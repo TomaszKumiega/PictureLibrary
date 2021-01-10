@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Model
 {
-    public class Directory : IFileSystemEntity
+    public abstract class Directory : IFileSystemEntity
     {
         protected FileSystemService FileSystemService { get; set; }
 
