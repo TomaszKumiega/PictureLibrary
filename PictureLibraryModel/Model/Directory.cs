@@ -14,6 +14,7 @@ namespace PictureLibraryModel.Model
         public string Name { get; set; }
         public Bitmap Icon { get; protected set; }
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
+        public Origin Origin { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         public Directory(string path, string name, FileSystemService fileSystemService)
         {

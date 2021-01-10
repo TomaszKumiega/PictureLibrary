@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PictureLibraryModel.Model
 {
-    public class Library
+    public class Library : IExplorableElement
     {
         public string FullPath { get; set; }
         public string Name { get; set; }
@@ -12,6 +12,7 @@ namespace PictureLibraryModel.Model
         public List<Tag> Tags { get; set; }
         public List<ImageFile> Images { get; set; }
         public List<Guid> Owners { get; set; }
+        public Origin Origin { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public Library()
         {

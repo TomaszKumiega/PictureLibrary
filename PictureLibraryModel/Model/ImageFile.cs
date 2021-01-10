@@ -18,6 +18,7 @@ namespace PictureLibraryModel.Model
         public List<Tag> Tags { get; set; }
 
         public Bitmap Icon { get; }
+        public Origin Origin { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public ImageFile()
         {

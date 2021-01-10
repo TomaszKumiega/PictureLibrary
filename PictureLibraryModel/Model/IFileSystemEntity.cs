@@ -5,10 +5,8 @@ using System.Text;
 
 namespace PictureLibraryModel.Model
 {
-    public interface IFileSystemEntity
+    public interface IFileSystemEntity : IExplorableElement
     {
         Bitmap Icon { get; }
-        string Name { get; set; }
-        string FullPath { get; set; }
     }
 }
