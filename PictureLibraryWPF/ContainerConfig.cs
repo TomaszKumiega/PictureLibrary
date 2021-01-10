@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using PictureLibraryModel.Services;
 using PictureLibraryViewModel.Commands;
-using PictureLibraryViewModel.ViewModels;
+using PictureLibraryViewModel.ViewModel;
 using PictureLibraryWPF.CustomControls.Files;
 using PictureLibraryModel.Model;
 namespace PictureLibraryViewModel
@@ -19,13 +19,12 @@ namespace PictureLibraryViewModel
             var builder = new ContainerBuilder();
 
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();
-            builder.RegisterType<FileSystemViewModel>().As<IFileSystemViewModel>().SingleInstance();
-            builder.RegisterType<FileSystemService>().As<IFileSystemService>();
-            builder.RegisterType<LibraryFileService>().As<ILibraryFileService>();
             builder.RegisterType<FilesTree>().AsSelf();
             builder.RegisterType<FilesView>().AsSelf();
-            builder.RegisterType<FileSystemEntitiesFactory>().As<IFileSystemEntitiesFactory>();
-            builder.RegisterType<LibraryEntitiesFactory>().As<ILibraryEntitiesFactory>();
+            builder.RegisterType<WindowsFileSystemService>().As<FileSystemService>();
+            builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
+            builder.RegisterType<CommandFactory>().As<ICommandFactory>();
+
 
             return builder.Build();
         }

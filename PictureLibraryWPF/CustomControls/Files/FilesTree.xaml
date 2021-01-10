@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:src="clr-namespace:PictureLibraryModel.Model;assembly=PictureLibraryModel"
-             xmlns:vm="clr-namespace:PictureLibraryViewModel.ViewModels;assembly=PictureLibraryViewModel"
+             xmlns:vm="clr-namespace:PictureLibraryViewModel.ViewModel;assembly=PictureLibraryViewModel"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls.Files"
              mc:Ignorable="d" 
