@@ -16,7 +16,7 @@ namespace PictureLibraryModel.Services
             {
                 if(System.IO.Directory.Exists(driveinfo.Name))
                 {
-                    rootDirectories.Add(new Drive(driveinfo.Name, driveinfo.Name, this));
+                    rootDirectories.Add(new Drive(driveinfo.Name, driveinfo.Name, this, Origin.Local));
                 }
             }
 

@@ -39,7 +39,7 @@ namespace PictureLibraryModel.Services
             {
                 foreach (var t in fullPaths)
                 {
-                    directories.Add(new Directory(t, (new System.IO.DirectoryInfo(t)).Name, this));
+                    directories.Add(new Directory(t, (new System.IO.DirectoryInfo(t)).Name, this, Origin.Local));
                 }
             }
             else
