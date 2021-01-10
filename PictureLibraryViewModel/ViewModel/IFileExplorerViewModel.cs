@@ -16,6 +16,7 @@ namespace PictureLibraryViewModel.ViewModel
         /// Node selected on directory tree
         /// </summary>
         IFileSystemEntity SelectedNode { get; set; }
-        
+
+        void CopyFile();
     }
 }

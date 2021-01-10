@@ -21,5 +21,10 @@ namespace PictureLibraryViewModel.ViewModel
         {
             _fileSystemService = fileSystemService;
         }
+
+        public void CopyFile()
+        {
+            CopiedFile = SelectedFile;
+        }
     }
 }
