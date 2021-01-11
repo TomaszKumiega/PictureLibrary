@@ -55,11 +55,11 @@ namespace PictureLibraryModel.Services
             
             if(entity is Folder)
             {
-                CopyDirectory(entity.FullPath, destinationPath);
+                CopyDirectory(entity.FullPath, destinationPath + entity.Name);
             }
             else if(entity is ImageFile)
             {
-                File.Copy(entity.FullPath, destinationPath);
+                File.Copy(entity.FullPath, destinationPath + entity.Name);
             }
         }
 
