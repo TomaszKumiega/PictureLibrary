@@ -54,7 +54,16 @@ namespace PictureLibraryViewModel.ViewModel
 
         public void PasteFile()
         {
-            throw new NotImplementedException();
+            if(CopiedFile != null)
+            {
+                _fileSystemService.Copy(CopiedFile as IFileSystemEntity, CurrentDirectoryPath);
+                CopiedFile = null;
+            }
+            else if(CutFile != null)
+            {
+                _fileSystemService.Move(CutFile as IFileSystemEntity, CurrentDirectoryPath);
+                CutFile = null;
+            }
         }
     }
 }
