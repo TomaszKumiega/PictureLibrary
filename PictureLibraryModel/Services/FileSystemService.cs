@@ -63,6 +63,18 @@ namespace PictureLibraryModel.Services
             }
         }
 
+        public void Move(IFileSystemEntity entity, string destinationPath)
+        {
+            if(entity is Folder)
+            {
+                System.IO.Directory.Move(entity.FullPath, destinationPath);
+            }
+            else if(entity is ImageFile)
+            {
+                File.Move(entity.FullPath, destinationPath);
+            }
+        }
+
         public abstract IEnumerable<Directory> GetRootDirectories();
 
         private void CopyDirectory(string sourcePath, string destinationPath)
