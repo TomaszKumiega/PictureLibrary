@@ -50,6 +50,38 @@ namespace PictureLibraryModel.Services
             return directories;
         }
 
+        public void Copy(IFileSystemEntity entity, string destinationPath)
+        {
+            
+            if(entity is Folder)
+            {
+                CopyDirectory(entity.FullPath, destinationPath);
+            }
+            else if(entity is ImageFile)
+            {
+                File.Copy(entity.FullPath, destinationPath);
+            }
+        }
+
         public abstract IEnumerable<Directory> GetRootDirectories();
+
+        private void CopyDirectory(string sourcePath, string destinationPath)
+        {
+            System.IO.Directory.CreateDirectory(destinationPath);
+
+            var sourceDirectoryInfo = new DirectoryInfo(sourcePath);
+            var destinationDirectoryInfo = new DirectoryInfo(destinationPath);
+
+            foreach (FileInfo i in sourceDirectoryInfo.GetFiles())
+            {
+                i.CopyTo(destinationPath, true);
+            }
+
+            foreach(DirectoryInfo d in sourceDirectoryInfo.GetDirectories())
+            {
+                var subDirectory = destinationDirectoryInfo.CreateSubdirectory(d.Name);
+                CopyDirectory(d.FullName, subDirectory.FullName);
+            }
+        }
     }
 }
