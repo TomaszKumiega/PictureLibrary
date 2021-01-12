@@ -16,6 +16,11 @@ namespace PictureLibraryModel.Model
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
         public Origin Origin { get; set; }
 
+        public Directory()
+        {
+
+        }
+
         public Directory(string path, string name, IFileProvider fileProvider, Origin origin)
         {
             FullPath = path;
