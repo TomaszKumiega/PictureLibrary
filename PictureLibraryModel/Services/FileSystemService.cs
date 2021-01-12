@@ -4,6 +4,7 @@ using System.IO;
 using System.Drawing;
 using System.Text;
 using NLog;
+using System.Linq;
 
 using Directory = PictureLibraryModel.Model.Directory;
 using PictureLibraryModel.Model;
@@ -52,7 +53,8 @@ namespace PictureLibraryModel.Services
 
         public void Copy(IFileSystemEntity entity, string destinationPath)
         {
-            if (entity == null) throw new ArgumentNullException();
+            if (entity == null) throw new ArgumentNullException("Entity");
+            if (destinationPath == null) throw new ArgumentNullException("destinationPath");
             
             if(entity is Folder)
             {
