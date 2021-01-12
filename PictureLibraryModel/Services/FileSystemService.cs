@@ -70,6 +70,8 @@ namespace PictureLibraryModel.Services
 
         public void Move(IFileSystemEntity entity, string destinationPath)
         {
+            if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
+
             if(entity is Folder)
             {
                 System.IO.Directory.Move(entity.FullPath, destinationPath + entity.Name);
