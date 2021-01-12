@@ -84,6 +84,8 @@ namespace PictureLibraryModel.Services
 
         private void CopyDirectory(string sourcePath, string destinationPath)
         {
+            if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
+
             System.IO.Directory.CreateDirectory(destinationPath);
 
             var sourceDirectoryInfo = new DirectoryInfo(sourcePath);
@@ -91,7 +93,7 @@ namespace PictureLibraryModel.Services
 
             foreach (FileInfo i in sourceDirectoryInfo.GetFiles())
             {
-                i.CopyTo(destinationPath, true);
+                i.CopyTo(destinationPath + i.Name, true);
             }
 
             foreach(DirectoryInfo d in sourceDirectoryInfo.GetDirectories())
