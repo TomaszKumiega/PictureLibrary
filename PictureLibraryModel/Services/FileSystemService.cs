@@ -52,6 +52,7 @@ namespace PictureLibraryModel.Services
 
         public void Copy(IFileSystemEntity entity, string destinationPath)
         {
+            if (entity == null) throw new ArgumentNullException();
             
             if(entity is Folder)
             {
