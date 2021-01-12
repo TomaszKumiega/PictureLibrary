@@ -228,8 +228,6 @@ namespace PictureLibraryModel.Tests.ServicesTests
         [Fact]
         public void Move_ShouldMoveImageFile()
         {
-            CleanupFiles();
-
             var fileName = "testImage.jpg";
             var sourceDirectory = "Tests/Folder1/";
             var destinationDirectory = "Tests/Folder2/";
