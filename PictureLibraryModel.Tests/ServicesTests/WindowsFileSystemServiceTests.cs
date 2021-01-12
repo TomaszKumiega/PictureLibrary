@@ -82,6 +82,22 @@ namespace PictureLibraryModel.Tests.ServicesTests
             CleanupFiles();
         }
 
+        [Fact]
+        public void Copy_ShouldThrowArgumentNullException_WhenEntityIsNull()
+        {
+            var destinationDirectory = "Tests/Folder2/";
+
+            Directory.CreateDirectory(destinationDirectory);
+
+            Folder folder = null;
+
+            var service = new WindowsFileSystemService();
+
+            Assert.Throws<ArgumentNullException>(() => service.Copy(folder, destinationDirectory));
+
+            CleanupFiles();
+        }
+
         ~WindowsFileSystemServiceTests()
         {
             CleanupFiles();
