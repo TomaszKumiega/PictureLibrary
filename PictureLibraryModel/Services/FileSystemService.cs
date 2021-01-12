@@ -70,6 +70,7 @@ namespace PictureLibraryModel.Services
 
         public void Move(IFileSystemEntity entity, string destinationPath)
         {
+            if (entity == null) throw new ArgumentNullException("entity");
             if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
 
             if(entity is Folder)
