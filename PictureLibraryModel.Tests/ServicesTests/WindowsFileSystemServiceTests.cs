@@ -401,6 +401,27 @@ namespace PictureLibraryModel.Tests.ServicesTests
             CleanupFiles();
         }
 
+        [Fact]
+        public void Move_ShouldThrowArgumentException_WhenDestinationPathIsEmpty()
+        {
+            var fileName = "testFile.jpg";
+            var sourceDirectory = "Tests\\Folder1\\";
+            var destinationDirectory = "";
+
+            var imageFile =
+                new ImageFile()
+                {
+                    Name = fileName,
+                    FullPath = sourceDirectory + fileName
+                };
+
+            var service = new WindowsFileSystemService();
+
+            Assert.Throws<ArgumentException>(() => service.Move(imageFile, destinationDirectory));
+
+            CleanupFiles();
+        }
+
         #endregion
 
         ~WindowsFileSystemServiceTests()
