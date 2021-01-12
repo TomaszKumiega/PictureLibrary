@@ -72,11 +72,11 @@ namespace PictureLibraryModel.Services
         {
             if(entity is Folder)
             {
-                System.IO.Directory.Move(entity.FullPath, destinationPath);
+                System.IO.Directory.Move(entity.FullPath, destinationPath + entity.Name);
             }
             else if(entity is ImageFile)
             {
-                File.Move(entity.FullPath, destinationPath);
+                File.Move(entity.FullPath, destinationPath + entity.Name);
             }
         }
 
