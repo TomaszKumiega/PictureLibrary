@@ -442,6 +442,31 @@ namespace PictureLibraryModel.Tests.ServicesTests
 
             CleanupFiles();
         }
+
+        [Fact]
+        public void Move_ShouldThrowDirectoryNotFoundException_WhenDestinationDirectoryDoesntExist()
+        {
+            var fileName = "testFile.jpg";
+            var sourceDirectory = "Tests\\Folder1\\";
+            var destinationDirectory = "Tests\\Folder2\\";
+
+            Directory.CreateDirectory(sourceDirectory);
+            var filestream = File.Create(sourceDirectory + fileName);
+            filestream.Close();
+
+            var imageFile =
+                new ImageFile()
+                {
+                    Name = fileName,
+                    FullPath = sourceDirectory + fileName
+                };
+
+            var service = new WindowsFileSystemService();
+
+            Assert.Throws<DirectoryNotFoundException>(() => service.Move(imageFile, destinationDirectory));
+
+            CleanupFiles();
+        }
         #endregion
 
         ~WindowsFileSystemServiceTests()
