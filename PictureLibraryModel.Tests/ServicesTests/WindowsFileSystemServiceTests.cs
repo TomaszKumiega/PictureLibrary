@@ -13,11 +13,17 @@ namespace PictureLibraryModel.Tests.ServicesTests
 {
     public class WindowsFileSystemServiceTests
     {
+
+        public WindowsFileSystemServiceTests()
+        {
+            CleanupFiles();
+        }
+
         private void CleanupFiles()
         {
             try
             {
-                Directory.Delete("Tests/");
+                Directory.Delete("Tests/", true);
             }
             catch
             {
@@ -140,6 +146,29 @@ namespace PictureLibraryModel.Tests.ServicesTests
             var service = new WindowsFileSystemService();
 
             Assert.Throws<ArgumentException>(() => service.Copy(folder, destinationDirectory));
+
+            CleanupFiles();
+        }
+
+        [Fact]
+        public void Copy_ShouldThrowDirectoryNotFoundException_WhenDestinationDirectoryDoesntExist()
+        {
+            var folderName = "Folder";
+            var sourceDirectory = "Tests/Folder1";
+            var destinationDirectory = "Tests/Folder2";
+
+            Directory.CreateDirectory(sourceDirectory + folderName);
+
+            var folder =
+                new Folder()
+                {
+                    Name = folderName,
+                    FullPath = sourceDirectory + folderName
+                };
+
+            var service = new WindowsFileSystemService();
+
+            Assert.Throws<DirectoryNotFoundException>(() => service.Copy(folder, destinationDirectory));
 
             CleanupFiles();
         }
