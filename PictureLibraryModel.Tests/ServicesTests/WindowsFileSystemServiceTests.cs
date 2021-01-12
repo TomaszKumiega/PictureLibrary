@@ -196,6 +196,29 @@ namespace PictureLibraryModel.Tests.ServicesTests
         }
 
         [Fact]
+        public void Copy_ShouldThrowArgumentException_WhenDestinationPathIsWhiteSpace()
+        {
+            var folderName = "Folder";
+            var sourceDirectory = "Tests/Folder1";
+            var destinationDirectory = "    ";
+
+            Directory.CreateDirectory(sourceDirectory + folderName);
+
+            var folder =
+                new Folder()
+                {
+                    Name = folderName,
+                    FullPath = sourceDirectory + folderName
+                };
+
+            var service = new WindowsFileSystemService();
+
+            Assert.Throws<ArgumentException>(() => service.Copy(folder, destinationDirectory));
+
+            CleanupFiles();
+        }
+
+        [Fact]
         public void Copy_ShouldThrowDirectoryNotFoundException_WhenDestinationDirectoryDoesntExist()
         {
             var folderName = "Folder";
