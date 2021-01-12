@@ -253,6 +253,32 @@ namespace PictureLibraryModel.Tests.ServicesTests
             CleanupFiles();
         }
 
+        [Fact]
+        public void Move_ShouldMoveAnEmptyFolder()
+        {
+            var folderName = "Folder";
+            var sourceDirectory = "Tests/Folder1/";
+            var destinationDirectory = "Tests/Folder2/";
+
+            Directory.CreateDirectory(sourceDirectory + folderName);
+            Directory.CreateDirectory(destinationDirectory);
+
+            var folder =
+                new Folder()
+                {
+                    Name = folderName,
+                    FullPath = sourceDirectory + folderName
+                };
+
+            var service = new WindowsFileSystemService();
+
+            service.Move(folder, destinationDirectory);
+
+            Assert.True(Directory.Exists(destinationDirectory + folderName));
+
+            CleanupFiles();
+        }
+
         #endregion
 
         ~WindowsFileSystemServiceTests()
