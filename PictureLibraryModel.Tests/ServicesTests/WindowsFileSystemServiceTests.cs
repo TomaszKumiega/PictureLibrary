@@ -36,35 +36,34 @@ namespace PictureLibraryModel.Tests.ServicesTests
         public void Copy_ShouldCopyAnEntity_WhenEntityIsAnImageFile()
         {
             var fileName = "testimage.jpg";
-            var fileSourceDirectory = "Tests/Folder1/";
+            var sourceDirectory = "Tests/Folder1/";
             var destinationPath = "Tests/Folder2/";
 
-            Directory.CreateDirectory(fileSourceDirectory);
+            Directory.CreateDirectory(sourceDirectory);
             Directory.CreateDirectory(destinationPath);
-            var fileStream = File.Create(fileSourceDirectory + fileName);
+            var fileStream = File.Create(sourceDirectory + fileName);
             fileStream.Close();
 
             var imageFile =
                 new ImageFile()
                 {
                     Name = fileName,
-                    Extension = ".jpg",
-                    FullPath = fileSourceDirectory + fileName
+                    FullPath = sourceDirectory + fileName
                 };
 
             var service = new WindowsFileSystemService();
 
             service.Copy(imageFile, destinationPath);
 
-            Assert.True(File.Exists(destinationPath + fileName));
+            Assert.True(File.Exists(sourceDirectory + fileName) && File.Exists(destinationPath + fileName));
 
             CleanupFiles();
         }
 
         [Fact]
-        public void Copy_ShouldCopyAnEntity_WhenEntityIsAFolder()
+        public void Copy_ShouldCopyAnEmptyFolder()
         {
-            var folderName = "Folder";
+            var folderName = "Folder/";
             var sourceDirectory = "Tests/Folder1/";
             var destinationDirectory = "Tests/Folder2/";
 
@@ -84,7 +83,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
 
             service.Copy(folder, destinationDirectory);
 
-            Assert.True(Directory.Exists(destinationDirectory + folderName));
+            Assert.True(Directory.Exists(sourceDirectory + folderName) && Directory.Exists(destinationDirectory + folderName));
 
             CleanupFiles();
         }
