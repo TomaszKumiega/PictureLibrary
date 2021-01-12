@@ -31,6 +31,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
             }
         }
 
+        #region Copy Tests
         [Fact]
         public void Copy_ShouldCopyAnEntity_WhenEntityIsAnImageFile()
         {
@@ -221,6 +222,40 @@ namespace PictureLibraryModel.Tests.ServicesTests
 
             CleanupFiles();
         }
+        #endregion
+
+        #region Move Tests
+        [Fact]
+        public void Move_ShouldMoveImageFile()
+        {
+            CleanupFiles();
+
+            var fileName = "testImage.jpg";
+            var sourceDirectory = "Tests/Folder1/";
+            var destinationDirectory = "Tests/Folder2/";
+
+            Directory.CreateDirectory(sourceDirectory);
+            Directory.CreateDirectory(destinationDirectory);
+            var fileStream = File.Create(sourceDirectory + fileName);
+            fileStream.Close();
+
+            var imageFile =
+                new ImageFile()
+                {
+                    Name = fileName,
+                    FullPath = sourceDirectory + fileName
+                };
+
+            var service = new WindowsFileSystemService();
+
+            service.Move(imageFile, destinationDirectory);
+
+            Assert.True(File.Exists(destinationDirectory + fileName));
+
+            CleanupFiles();
+        }
+
+        #endregion
 
         ~WindowsFileSystemServiceTests()
         {
