@@ -57,8 +57,9 @@ namespace PictureLibraryModel.Services
             if (destinationPath == null) throw new ArgumentNullException("destinationPath");
             if (destinationPath.Trim() == String.Empty) throw new ArgumentException("destinationPath");
             if (!System.IO.Directory.Exists(destinationPath)) throw new DirectoryNotFoundException(destinationPath);
-            
-            if(entity is Folder)
+            if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
+
+            if (entity is Folder)
             {
                 CopyDirectory(entity.FullPath, destinationPath + entity.Name);
             }
