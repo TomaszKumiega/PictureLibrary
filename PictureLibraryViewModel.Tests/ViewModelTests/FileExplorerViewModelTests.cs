@@ -4,6 +4,7 @@ using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel;
 using System;
 using Xunit;
+using Moq;
 
 namespace PictureLibraryViewModel.Tests
 {
@@ -12,7 +13,10 @@ namespace PictureLibraryViewModel.Tests
         [Fact]
         public void CopyFile_ShouldAssignSelectedFileToCopiedFile_WhenSelectedFileIsNotNull()
         {
-            var viewModel = new FileExplorerViewModel(new WindowsFileSystemService(), new CommandFactory());
+            var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
+            var commandFactoryMock = new Mock<ICommandFactory>();
+
+            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object);
 
             var imageFile = new ImageFile();
             viewModel.SelectedFile = imageFile;
