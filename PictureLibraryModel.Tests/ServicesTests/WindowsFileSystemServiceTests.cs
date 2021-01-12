@@ -89,6 +89,51 @@ namespace PictureLibraryModel.Tests.ServicesTests
         }
 
         [Fact]
+        public void Copy_ShouldCopyFolderWithItsContents()
+        {
+            var folderName = "Folder/";
+            var sourceDirectory = "Tests/Folder1/";
+            var destinationDirectory = "Tests/Folder2/";
+            var file1 = "testFile1.jpg";
+            var file2 = "testFile2.jpg";
+            var subFolder = "subFolder/";
+            var file3 = "testFile3.jpg";
+
+            Directory.CreateDirectory(sourceDirectory + folderName);
+            Directory.CreateDirectory(destinationDirectory);
+            Directory.CreateDirectory(sourceDirectory + folderName + subFolder);
+
+            var filePath1 = folderName + file1;
+            var filePath2 = folderName + file2;
+            var filePath3 = folderName + subFolder + file3;
+
+            var fileStream = File.Create(sourceDirectory + filePath1);
+            fileStream.Close();
+            fileStream = File.Create(sourceDirectory + filePath2);
+            fileStream.Close();
+            fileStream = File.Create(sourceDirectory + filePath3);
+            fileStream.Close();
+
+            var folder =
+                new Folder()
+                {
+                    Name = folderName,
+                    FullPath = sourceDirectory + folderName
+                };
+
+            var service = new WindowsFileSystemService();
+
+            service.Copy(folder, destinationDirectory);
+
+            var condition = File.Exists(sourceDirectory + filePath1) && File.Exists(sourceDirectory + filePath2) && File.Exists(sourceDirectory + filePath3) &&
+                File.Exists(destinationDirectory + filePath1) && File.Exists(destinationDirectory + filePath2) && File.Exists(destinationDirectory + filePath3);
+            
+            Assert.True(condition);
+
+            CleanupFiles();
+        }
+
+        [Fact]
         public void Copy_ShouldThrowArgumentNullException_WhenEntityIsNull()
         {
             var destinationDirectory = "Tests/Folder2/";
