@@ -5,6 +5,7 @@ using Xunit;
 using System.IO;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Services;
+using Moq;
 
 using Directory = System.IO.Directory;
 
@@ -49,6 +50,34 @@ namespace PictureLibraryModel.Tests.ServicesTests
             service.Copy(imageFile, destinationPath);
 
             Assert.True(File.Exists(destinationPath + fileName));
+
+            CleanupFiles();
+        }
+
+        [Fact]
+        public void Copy_ShouldCopyAnEntity_WhenEntityIsAFolder()
+        {
+            var folderName = "Folder";
+            var sourceDirectory = "Tests/Folder1/";
+            var destinationDirectory = "Tests/Folder2/";
+
+            Directory.CreateDirectory(sourceDirectory);
+            Directory.CreateDirectory(destinationDirectory);
+            var fileStream = Directory.CreateDirectory(sourceDirectory + folderName);
+
+            var folder =
+                new Folder()
+                {
+                    FullPath = sourceDirectory + folderName,
+                    Name = folderName,
+                };
+
+
+            var service = new WindowsFileSystemService();
+
+            service.Copy(folder, destinationDirectory);
+
+            Assert.True(Directory.Exists(destinationDirectory + folderName));
 
             CleanupFiles();
         }
