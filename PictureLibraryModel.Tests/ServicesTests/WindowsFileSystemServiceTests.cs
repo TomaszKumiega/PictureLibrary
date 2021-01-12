@@ -408,6 +408,10 @@ namespace PictureLibraryModel.Tests.ServicesTests
             var sourceDirectory = "Tests\\Folder1\\";
             var destinationDirectory = "";
 
+            Directory.CreateDirectory(sourceDirectory);
+            var filestream = File.Create(sourceDirectory + fileName);
+            filestream.Close();
+
             var imageFile =
                 new ImageFile()
                 {
@@ -428,6 +432,10 @@ namespace PictureLibraryModel.Tests.ServicesTests
             var fileName = "testFile.jpg";
             var sourceDirectory = "Tests\\Folder1\\";
             var destinationDirectory = "    ";
+
+            Directory.CreateDirectory(sourceDirectory);
+            var filestream = File.Create(sourceDirectory + fileName);
+            filestream.Close();
 
             var imageFile =
                 new ImageFile()
