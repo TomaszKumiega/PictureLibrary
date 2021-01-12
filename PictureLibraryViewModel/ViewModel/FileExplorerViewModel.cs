@@ -12,6 +12,8 @@ namespace PictureLibraryViewModel.ViewModel
     public class FileExplorerViewModel : IFileExplorerViewModel
     {
         private FileSystemService _fileSystemService;
+        private IExplorableElement _cutFile;
+        private IExplorableElement _copiedFile;
 
         public ObservableCollection<IFileSystemEntity> DirectoryTree { get; private set; }
         public ObservableCollection<IFileSystemEntity> CurrentDirectoryFiles { get; private set; }
@@ -28,22 +30,22 @@ namespace PictureLibraryViewModel.ViewModel
 
         public IExplorableElement CutFile
         {
-            get => CutFile;
+            get => _cutFile;
 
             private set
             {
-                CopiedFile = null;
-                CutFile = value;
+                _cutFile = value;
+                _copiedFile = null;
             }
         }
 
         public IExplorableElement CopiedFile
         {
-            get => CopiedFile;
+            get => _copiedFile;
             private set
             {
-                CutFile = null;
-                CopiedFile = value;
+                _copiedFile = value;
+                _cutFile = null;
             }
         }
 
