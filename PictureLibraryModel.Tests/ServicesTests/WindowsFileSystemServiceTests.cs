@@ -173,6 +173,31 @@ namespace PictureLibraryModel.Tests.ServicesTests
             CleanupFiles();
         }
 
+        [Fact]
+        public void Copy_ShouldThrowFileNotFoundException_WhenFileDoesntExist()
+        {
+            var fileName = "testFile.jpg";
+            var sourceDirectory = "Tests/Folder1";
+            var destinationDirectory = "Tests/Folder2";
+
+            Directory.CreateDirectory(sourceDirectory);
+            Directory.CreateDirectory(destinationDirectory);
+
+            var imageFile =
+                new ImageFile()
+                {
+                    Name = fileName,
+                    FullPath = sourceDirectory + fileName,
+                    Extension = ".jpg"
+                };
+
+            var service = new WindowsFileSystemService();
+
+            Assert.Throws<FileNotFoundException>(() => service.Copy(imageFile, destinationDirectory));
+
+            CleanupFiles();
+        }
+
         ~WindowsFileSystemServiceTests()
         {
             CleanupFiles();
