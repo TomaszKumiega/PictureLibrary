@@ -56,6 +56,7 @@ namespace PictureLibraryModel.Services
             if (entity == null) throw new ArgumentNullException("Entity");
             if (destinationPath == null) throw new ArgumentNullException("destinationPath");
             if (destinationPath.Trim() == String.Empty) throw new ArgumentException("destinationPath");
+            if (!System.IO.Directory.Exists(destinationPath)) throw new DirectoryNotFoundException(destinationPath);
             
             if(entity is Folder)
             {
