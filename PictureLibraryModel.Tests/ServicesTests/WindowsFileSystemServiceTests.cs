@@ -8,6 +8,7 @@ using PictureLibraryModel.Services;
 using Moq;
 
 using Directory = System.IO.Directory;
+using System.Linq;
 
 namespace PictureLibraryModel.Tests.ServicesTests
 {
@@ -543,6 +544,59 @@ namespace PictureLibraryModel.Tests.ServicesTests
             var service = new WindowsFileSystemService();
 
             Assert.Throws<DirectoryNotFoundException>(() => service.Move(folder, destinationDirectory));
+
+            CleanupFiles();
+        }
+        #endregion
+
+        #region GetSubFolders Tests
+
+        private List<Folder> SetupSubFolders(string parentDirectoryPath)
+        {
+            var subFolders = new List<Folder>();
+
+            string subFolderName;
+
+            for(int i=0; i<4; i++)
+            {
+                subFolderName = "Folder" + i.ToString();
+                Directory.CreateDirectory(parentDirectoryPath + subFolderName);
+
+                var folder =
+                    new Folder
+                    {
+                        Name = subFolderName,
+                        FullPath = parentDirectoryPath + subFolderName
+                    };  
+
+                subFolders.Add(folder);
+            }
+
+            return subFolders;
+        }
+
+        [Fact]
+        public void GetSubFolders_ShouldReturnSubFolders()
+        {
+            var parentDirectoryPath = "Tests\\Directory\\";
+            var expectedFolders = SetupSubFolders(parentDirectoryPath);
+
+            var service = new WindowsFileSystemService();
+
+            var actualFolders = service.GetSubFolders(parentDirectoryPath, SearchOption.TopDirectoryOnly);
+
+            bool foldersAreTheSame = true;
+
+            foreach(var t in actualFolders)
+            {
+                if(expectedFolders.Find(x => x.Name == t.Name && x.FullPath == t.FullPath)==null)
+                {
+                    foldersAreTheSame = false;
+                    break;
+                }
+            }
+
+            Assert.True(foldersAreTheSame);
 
             CleanupFiles();
         }
