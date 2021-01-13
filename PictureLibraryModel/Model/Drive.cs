@@ -13,7 +13,19 @@ namespace PictureLibraryModel.Model
 
         public Drive(string path, string name, IFileProvider fileProvider, Origin origin) : base(path, name, fileProvider, origin)
         {
-            Icon = new Bitmap("Icons/DiskIcon.png");
+            InitializeIcon();
+        }
+
+        private void InitializeIcon()
+        {
+            try
+            {
+                Icon = new Bitmap("Icons/DiskIcon.png");
+            }
+            catch(Exception e)
+            {
+                _logger.Error(e, "Couldn't load disk icon");
+            }
         }
 
         ~Drive()

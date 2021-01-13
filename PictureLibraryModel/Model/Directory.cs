@@ -1,4 +1,6 @@
-﻿using PictureLibraryModel.Services;
+﻿using NLog;
+using PictureLibraryModel.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
@@ -8,6 +10,7 @@ namespace PictureLibraryModel.Model
 {
     public abstract class Directory : IFileSystemEntity
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         protected IFileProvider FileProvider { get; set; }
 
         public string FullPath { get; set; }
@@ -27,9 +30,21 @@ namespace PictureLibraryModel.Model
             Name = name;
             FileProvider = fileProvider;
             Origin = origin;
-            Icon = new Bitmap("Icons/FolderIcon.png");
             SubDirectories = new ObservableCollection<Directory>();
+            InitializeIcon();
             LoadSubDirectories();
+        }
+
+        private void InitializeIcon()
+        {
+            try
+            {
+                Icon = new Bitmap("Icons/FolderIcon.png");
+            }
+            catch(Exception e)
+            {
+                _logger.Error(e, "Couldn't load the folder icon");
+            }
         }
 
         protected void LoadSubDirectories()
