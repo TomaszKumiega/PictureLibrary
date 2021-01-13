@@ -630,6 +630,16 @@ namespace PictureLibraryModel.Tests.ServicesTests
 
             Assert.Throws<ArgumentException>(() => service.GetSubFolders(topDirectory, SearchOption.TopDirectoryOnly));
         }
+
+        [Fact]
+        public void GetSubFolders_ShouldThrowDirectoryNotFoundException_WhenTopDirectoryDoesntExist()
+        {
+            var topDirectory = "Tests\\Directory\\";
+
+            var service = new WindowsFileSystemService();
+
+            Assert.Throws<DirectoryNotFoundException>(() => service.GetSubFolders(topDirectory, SearchOption.TopDirectoryOnly));
+        }
         #endregion
 
         ~WindowsFileSystemServiceTests()
