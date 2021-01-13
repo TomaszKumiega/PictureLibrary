@@ -600,6 +600,16 @@ namespace PictureLibraryModel.Tests.ServicesTests
 
             CleanupFiles();
         }
+
+        [Fact]
+        public void GetSubFolders_ShouldThrowArgumentNullException_WhenTopDirectoryIsNull()
+        {
+            string topDirectory = null;
+
+            var service = new WindowsFileSystemService();
+
+            Assert.Throws<ArgumentNullException>(() => service.GetSubFolders(topDirectory, SearchOption.TopDirectoryOnly));
+        }
         #endregion
 
         ~WindowsFileSystemServiceTests()
