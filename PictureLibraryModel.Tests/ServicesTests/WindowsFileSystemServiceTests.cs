@@ -620,6 +620,16 @@ namespace PictureLibraryModel.Tests.ServicesTests
 
             Assert.Throws<ArgumentException>(() => service.GetSubFolders(topDirectory, SearchOption.TopDirectoryOnly));
         }
+
+        [Fact]
+        public void GetSubFolders_ShouldThrowArgumentException_WhenTopDirectoryIsWhiteSpace()
+        {
+            var topDirectory = "   ";
+
+            var service = new WindowsFileSystemService();
+
+            Assert.Throws<ArgumentException>(() => service.GetSubFolders(topDirectory, SearchOption.TopDirectoryOnly));
+        }
         #endregion
 
         ~WindowsFileSystemServiceTests()
