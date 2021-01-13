@@ -18,8 +18,7 @@ namespace PictureLibraryModel.Services
         public IEnumerable<Folder> GetSubFolders(string topDirectory, SearchOption option)
         {
             if (topDirectory == null) throw new ArgumentNullException();
-
-
+            if (topDirectory.Trim() == String.Empty) throw new ArgumentException();
             if (!System.IO.Directory.Exists(topDirectory)) throw new DirectoryNotFoundException("Directory: " + topDirectory + " not found");
 
 
