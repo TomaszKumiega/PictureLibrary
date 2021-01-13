@@ -18,7 +18,7 @@ namespace PictureLibraryViewModel.ViewModel
         public ObservableCollection<IFileSystemEntity> DirectoryTree { get; private set; }
         public ObservableCollection<IFileSystemEntity> CurrentDirectoryFiles { get; private set; }
         public string CurrentDirectoryPath { get; set; }
-        public ICommand CopyFileCommand { get; set; }
+        public ICommand CopyFileCommand { get; }
         public IExplorableElement SelectedFile { get; set; }
         public IExplorableElement SelectedNode { get; set; }
 
