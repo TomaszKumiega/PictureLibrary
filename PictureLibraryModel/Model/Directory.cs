@@ -59,8 +59,6 @@ namespace PictureLibraryModel.Model
             {
                 if (IsExpanded) await Expand();
                 else Collapse();
-                
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SubDirectories"));
             }
         }
 
