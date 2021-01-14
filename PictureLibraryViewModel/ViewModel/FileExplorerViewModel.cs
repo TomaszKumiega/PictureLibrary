@@ -20,6 +20,7 @@ namespace PictureLibraryViewModel.ViewModel
         public ICommand CopyFileCommand { get; }
         public ICommand PasteCommand { get; }
         public ICommand CutCommand { get; }
+        public ICommand CopyPathCommand { get; }
         public IExplorableElement SelectedFile { get; set; }
         public IExplorableElement SelectedNode { get; set; }
         public IClipboardService Clipboard { get; }
@@ -31,6 +32,7 @@ namespace PictureLibraryViewModel.ViewModel
             CopyFileCommand = commandFactory.GetCopyCommand(this);
             PasteCommand = commandFactory.GetPasteCommand(this);
             CutCommand = commandFactory.GetCutCommand(this);
+            CopyPathCommand = commandFactory.GetCopyPathCommand(this);
         }
 
         public void Copy()
