@@ -33,6 +33,19 @@ namespace PictureLibraryViewModel.ViewModel
             PasteCommand = commandFactory.GetPasteCommand(this);
             CutCommand = commandFactory.GetCutCommand(this);
             CopyPathCommand = commandFactory.GetCopyPathCommand(this);
+
+            InitializeDirectoryTree();
+        }
+
+        private void InitializeDirectoryTree()
+        {
+            var rootDirectories = _fileSystemService.GetRootDirectories();
+            
+            foreach(var t in rootDirectories)
+            {
+                t.LoadSubDirectories();
+                DirectoryTree.Add(t);
+            }
         }
 
         public void Copy()
