@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryViewModel.Commands;
 using System;
@@ -12,8 +13,7 @@ namespace PictureLibraryViewModel.ViewModel
     public class FileExplorerViewModel : IFileExplorerViewModel
     {
         private FileSystemService _fileSystemService;
-        private IExplorableElement _cutFile;
-        private IExplorableElement _copiedFile;
+        private IClipboardService _clipboard;
 
         public ObservableCollection<IFileSystemEntity> DirectoryTree { get; private set; }
         public ObservableCollection<IFileSystemEntity> CurrentDirectoryFiles { get; private set; }
@@ -23,56 +23,35 @@ namespace PictureLibraryViewModel.ViewModel
         public IExplorableElement SelectedFile { get; set; }
         public IExplorableElement SelectedNode { get; set; }
 
-        public FileExplorerViewModel(FileSystemService fileSystemService, ICommandFactory commandFactory)
+        public FileExplorerViewModel(FileSystemService fileSystemService, ICommandFactory commandFactory, IClipboardService clipboard)
         {
             _fileSystemService = fileSystemService;
+            _clipboard = clipboard;
             CopyFileCommand = commandFactory.GetCopyCommand(this);
             PasteCommand = commandFactory.GetPasteCommand(this);
         }
 
-        public IExplorableElement CutFile
-        {
-            get => _cutFile;
-
-            set
-            {
-                _cutFile = value;
-                _copiedFile = null;
-            }
-        }
-
-        public IExplorableElement CopiedFile
-        {
-            get => _copiedFile;
-
-            set
-            {
-                _copiedFile = value;
-                _cutFile = null;
-            }
-        }
-
         public void Copy()
         {
-            CopiedFile = SelectedFile;
+            _clipboard.CopiedElement = SelectedFile;
         }
 
         public void Cut()
         {
-            CutFile = SelectedFile;
+            _clipboard.CutElement = SelectedFile;
         }
 
         public void Paste()
         {
-            if(CopiedFile != null)
+            if(_clipboard.CopiedElement != null)
             {
-                _fileSystemService.Copy(CopiedFile as IFileSystemEntity, CurrentDirectoryPath);
-                CopiedFile = null;
+                _fileSystemService.Copy(_clipboard.CopiedElement as IFileSystemEntity, CurrentDirectoryPath);
+                _clipboard.CopiedElement = null;
             }
-            else if(CutFile != null)
+            else if(_clipboard.CutElement != null)
             {
-                _fileSystemService.Move(CutFile as IFileSystemEntity, CurrentDirectoryPath);
-                CutFile = null;
+                _fileSystemService.Move(_clipboard.CutElement as IFileSystemEntity, CurrentDirectoryPath);
+                _clipboard.CutElement = null;
             }
         }
     }
