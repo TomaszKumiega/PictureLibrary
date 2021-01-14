@@ -5,6 +5,7 @@ using PictureLibraryViewModel.ViewModel;
 using System;
 using Xunit;
 using Moq;
+using PictureLibraryModel.Services.Clipboard;
 
 namespace PictureLibraryViewModel.Tests
 {
@@ -15,29 +16,32 @@ namespace PictureLibraryViewModel.Tests
         {
             var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
             var commandFactoryMock = new Mock<ICommandFactory>();
-
-            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object);
-
+            var clipboardMock = new Mock<IClipboardService>();
             var imageFile = new ImageFile();
+
+            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object, clipboardMock.Object);
+
             viewModel.SelectedFile = imageFile;
             viewModel.Copy();
 
-            Assert.True(viewModel.CopiedFile.Equals(imageFile));
+            clipboardMock.VerifySet(x => x.CopiedElement = imageFile);
         }
+
 
         [Fact]
         public void Cut_ShouldAssignSelectedFileToCutFile_WhenSelectedFileIsNotNull()
         {
             var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
             var commandFactoryMock = new Mock<ICommandFactory>();
-
-            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object);
-
+            var clipboardMock = new Mock<IClipboardService>();
             var imageFile = new ImageFile();
+
+            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object, clipboardMock.Object);
+
             viewModel.SelectedFile = imageFile;
             viewModel.Cut();
 
-            Assert.True(viewModel.CutFile.Equals(imageFile));
+            clipboardMock.VerifySet(x => x.CutElement = imageFile);
         }
 
         [Fact]
@@ -45,21 +49,26 @@ namespace PictureLibraryViewModel.Tests
         {
             var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
             var commandFactoryMock = new Mock<ICommandFactory>();
+            var clipboardMock = new Mock<IClipboardService>();
+
             var imageFile =
                 new ImageFile()
                 {
                     Name = "testFile.jpg",
                     FullPath = "Tests\\Directory\\testFile.jpg"
                 };
+
             var destination = "Tests\\Directory2\\";
             bool copyMethodWasCalled = false;
+
+            clipboardMock.Setup(x => x.CopiedElement)
+                .Returns(imageFile);
 
             windowsFileSystemMock.Setup(x => x.Copy(imageFile, destination))
                 .Callback(() => { copyMethodWasCalled = true; });
 
-            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object);
+            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object, clipboardMock.Object);
 
-            viewModel.CopiedFile = imageFile;
             viewModel.CurrentDirectoryPath = destination;
 
             viewModel.Paste();
@@ -72,21 +81,26 @@ namespace PictureLibraryViewModel.Tests
         {
             var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
             var commandFactoryMock = new Mock<ICommandFactory>();
+            var clipboardMock = new Mock<IClipboardService>();
+
             var imageFile =
                 new ImageFile()
                 {
                     Name = "testFile.jpg",
                     FullPath = "Tests\\Directory\\testFile.jpg"
                 };
+
             var destination = "Tests\\Directory2\\";
             bool moveMethodWasCalled = false;
+
+            clipboardMock.Setup(x => x.CutElement)
+                .Returns(imageFile);
 
             windowsFileSystemMock.Setup(x => x.Move(imageFile, destination))
                 .Callback(() => { moveMethodWasCalled = true; });
 
-            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object);
+            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object, clipboardMock.Object);
 
-            viewModel.CutFile = imageFile;
             viewModel.CurrentDirectoryPath = destination;
 
             viewModel.Paste();
@@ -94,5 +108,6 @@ namespace PictureLibraryViewModel.Tests
             Assert.True(moveMethodWasCalled);
 
         }
+
     }
 }
