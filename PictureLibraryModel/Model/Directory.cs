@@ -12,6 +12,7 @@ namespace PictureLibraryModel.Model
     public abstract class Directory : IFileSystemEntity, INotifyPropertyChanged
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private bool _isExpanded;
 
         protected IFileProvider FileProvider { get; set; }
 
@@ -36,6 +37,17 @@ namespace PictureLibraryModel.Model
             Origin = origin;
             SubDirectories = new ObservableCollection<Directory>();
             InitializeIcon();
+        }
+
+        public bool IsExpanded
+        {
+            get => _isExpanded;
+            
+            set
+            {
+                _isExpanded = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsExpanded"));
+            }
         }
 
         public virtual void Expand()
