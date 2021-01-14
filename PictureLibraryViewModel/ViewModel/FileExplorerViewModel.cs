@@ -41,6 +41,8 @@ namespace PictureLibraryViewModel.ViewModel
 
         private void InitializeDirectoryTree()
         {
+            DirectoryTree = new ObservableCollection<IFileSystemEntity>();
+
             var rootDirectories = _fileSystemService.GetRootDirectories();
             
             foreach(var t in rootDirectories)
@@ -52,7 +54,9 @@ namespace PictureLibraryViewModel.ViewModel
 
         private void InitializeCurrentDirectoryFiles()
         {
-            foreach(var t in DirectoryTree)
+            CurrentDirectoryFiles = new ObservableCollection<IFileSystemEntity>();
+
+            foreach (var t in DirectoryTree)
             {
                 CurrentDirectoryFiles.Add(t);
             }
