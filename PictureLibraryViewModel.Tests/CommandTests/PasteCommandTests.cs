@@ -40,7 +40,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         }
 
         [Fact]
-        public void Execute_ShouldTriggerPasteFileMethod()
+        public void Execute_ShouldTriggerPasteMethod()
         {
             bool methodWasCalled = false;
 
@@ -48,9 +48,9 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             viewModelMock.Setup(x => x.Paste())
                 .Callback(() => { methodWasCalled = true; });
 
-            var copyFileCommand = new PasteCommand(viewModelMock.Object);
+            var pasteCommand = new PasteCommand(viewModelMock.Object);
 
-            copyFileCommand.Execute(new object());
+            pasteCommand.Execute(new object());
 
             Assert.True(methodWasCalled);
         }
