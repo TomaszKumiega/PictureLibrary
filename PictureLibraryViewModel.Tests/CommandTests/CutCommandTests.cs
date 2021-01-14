@@ -31,12 +31,28 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             ImageFile imageFile = null;
 
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.CopiedFile)
+            viewModelMock.Setup(x => x.SelectedFile)
                 .Returns(imageFile);
 
             var cutCommand = new CutCommand(viewModelMock.Object);
 
             Assert.False(cutCommand.CanExecute(new object()));
+        }
+
+        [Fact]
+        public void Execute_ShouldCallCutMethod()
+        {
+            bool methodWasCalled = false;
+
+            var viewModelMock = new Mock<IExplorerViewModel>();
+            viewModelMock.Setup(x => x.Cut())
+                .Callback(() => { methodWasCalled = true; });
+
+            var cutCommand = new CutCommand(viewModelMock.Object);
+
+            cutCommand.Execute(new object());
+
+            Assert.True(methodWasCalled);
         }
     }
 }
