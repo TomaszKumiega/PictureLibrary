@@ -18,7 +18,7 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            throw new NotImplementedException();
+            return _viewModel.SelectedFile != null;
         }
 
         public void Execute(object parameter)
