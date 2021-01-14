@@ -17,5 +17,10 @@ namespace PictureLibraryViewModel.Commands
         {
             return new PasteCommand(viewModel);
         }
+
+        public ICommand GetCutCommand(IExplorerViewModel viewModel)
+        {
+            return new CutCommand(viewModel);
+        }
     }
 }
