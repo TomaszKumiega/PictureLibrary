@@ -26,6 +26,21 @@ namespace PictureLibraryViewModel.Tests
         }
 
         [Fact]
+        public void Cut_ShouldAssignSelectedFileToCutFile_WhenSelectedFileIsNotNull()
+        {
+            var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
+            var commandFactoryMock = new Mock<ICommandFactory>();
+
+            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object);
+
+            var imageFile = new ImageFile();
+            viewModel.SelectedFile = imageFile;
+            viewModel.Cut();
+
+            Assert.True(viewModel.CutFile.Equals(imageFile));
+        }
+
+        [Fact]
         public void PastFile_ShouldCallCopyMethod_WhenCopiedFileIsInitialized()
         {
             var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
