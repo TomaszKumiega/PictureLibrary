@@ -19,6 +19,5 @@ namespace PictureLibraryViewModel.ViewModel
         void Copy();
         void Cut();
         void Paste();
-        void CopyPath();
     }
 }

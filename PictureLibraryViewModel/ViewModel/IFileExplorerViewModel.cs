@@ -9,5 +9,7 @@ namespace PictureLibraryViewModel.ViewModel
         ObservableCollection<IFileSystemEntity> CurrentDirectoryFiles { get; }
         string CurrentDirectoryPath { get; set; }
         ObservableCollection<IFileSystemEntity> DirectoryTree { get; }
+        
+        void CopyPath();
     }
 }
