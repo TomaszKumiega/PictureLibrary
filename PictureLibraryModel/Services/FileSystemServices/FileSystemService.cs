@@ -17,20 +17,15 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public virtual IEnumerable<Folder> GetSubFolders(string topDirectory, SearchOption option)
         {
-            if (topDirectory == null) throw new ArgumentNullException();
-            if (topDirectory.Trim() == String.Empty) throw new ArgumentException();
-            if (!System.IO.Directory.Exists(topDirectory)) throw new DirectoryNotFoundException("Directory: " + topDirectory + " not found");
-
-
             string[] fullPaths = null;
 
             try
             {
                 fullPaths = System.IO.Directory.GetDirectories(topDirectory, "*", option);
             }
-            catch (Exception e)
+            catch(UnauthorizedAccessException e)
             {
-                _logger.Error(e, "Couldn't load directories from " + topDirectory);
+                _logger.Debug(e, e.Message);
             }
 
             var directories = new List<Folder>();
