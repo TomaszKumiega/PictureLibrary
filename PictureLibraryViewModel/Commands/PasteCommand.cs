@@ -18,7 +18,7 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-           return  _viewModel.CopiedFile != null;
+           return  _viewModel.Clipboard.CopiedElement != null || _viewModel.Clipboard.CutElement != null;
         }
 
         public void Execute(object parameter)
