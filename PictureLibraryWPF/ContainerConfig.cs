@@ -4,6 +4,8 @@ using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel;
 using PictureLibraryWPF.CustomControls.Files;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Services.Clipboard;
+
 namespace PictureLibraryViewModel
 {
     /// <summary>
@@ -24,6 +26,7 @@ namespace PictureLibraryViewModel
             builder.RegisterType<WindowsFileSystemService>().As<FileSystemService>();
             builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();
+            builder.RegisterType<PCClipboardService>().As<IClipboardService>();
 
 
             return builder.Build();
