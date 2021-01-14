@@ -109,5 +109,28 @@ namespace PictureLibraryViewModel.Tests
 
         }
 
+        [Fact]
+        public void CopyPath_ShouldAddFullPathOfSelectedFileToSystemClipboard_WhenSelectedFileIsNotNull()
+        {
+            var clipboardMock = new Mock<IClipboardService>();
+            var commandFactoryMock = new Mock<ICommandFactory>();
+            var windowsFileSystemMock = new Mock<FileSystemService>();
+
+            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object, clipboardMock.Object);
+
+            var imageFile =
+                new ImageFile()
+                {
+                    Name = "testFile.jpg",
+                    FullPath = "Tests\\Directory\\testFile.jpg"
+                };
+
+            viewModel.SelectedFile = imageFile;
+
+            viewModel.CopyPath();
+
+            clipboardMock.VerifySet(x => x.SystemClipboard = imageFile.FullPath);
+        }
+
     }
 }
