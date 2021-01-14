@@ -51,5 +51,33 @@ namespace PictureLibraryViewModel.Tests
 
             Assert.True(copyMethodWasCalled);
         }
+
+        [Fact]
+        public void PastFile_ShouldCallMoveMethod_WhenCutFileIsInitialized()
+        {
+            var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
+            var commandFactoryMock = new Mock<ICommandFactory>();
+            var imageFile =
+                new ImageFile()
+                {
+                    Name = "testFile.jpg",
+                    FullPath = "Tests\\Directory\\testFile.jpg"
+                };
+            var destination = "Tests\\Directory2\\";
+            bool moveMethodWasCalled = false;
+
+            windowsFileSystemMock.Setup(x => x.Move(imageFile, destination))
+                .Callback(() => { moveMethodWasCalled = true; });
+
+            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object);
+
+            viewModel.CutFile = imageFile;
+            viewModel.CurrentDirectoryPath = destination;
+
+            viewModel.PasteFile();
+
+            Assert.True(moveMethodWasCalled);
+
+        }
     }
 }
