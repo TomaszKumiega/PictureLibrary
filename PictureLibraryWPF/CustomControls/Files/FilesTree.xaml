@@ -19,7 +19,7 @@
 
         <TreeView x:Name="FilesTreeView" ItemsSource="{Binding DirectoryTree}" Background="#37393f" BorderThickness="0" SelectedItemChanged="FilesTreeView_OnSelectedItemChanged">
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type src:Directory}" ItemsSource="{Binding SubDirectories}">
+                <HierarchicalDataTemplate DataType="{x:Type src:Directory}" ItemsSource="{Binding SubDirectories}" Expander.Expanded="{Binding Expand}" Expander.Collapsed="{Binding Collapse}">
                     <WrapPanel Orientation="Horizontal">
                         <Image Width="25" Height="25" Source="{Binding ImageSource}"/>
                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="#cdcdcd"/>
