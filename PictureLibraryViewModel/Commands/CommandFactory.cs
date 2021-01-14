@@ -22,5 +22,10 @@ namespace PictureLibraryViewModel.Commands
         {
             return new CutCommand(viewModel);
         }
+
+        public ICommand GetCopyPathCommand(IFileExplorerViewModel viewModel)
+        {
+            return new CopyPathCommand(viewModel);
+        }
     }
 }
