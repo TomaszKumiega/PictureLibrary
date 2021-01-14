@@ -54,5 +54,10 @@ namespace PictureLibraryViewModel.ViewModel
                 Clipboard.CutElement = null;
             }
         }
+
+        public void CopyPath()
+        {
+            Clipboard.SystemClipboard = SelectedFile.FullPath;
+        }
     }
 }

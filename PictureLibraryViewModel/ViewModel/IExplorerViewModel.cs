@@ -15,9 +15,10 @@ namespace PictureLibraryViewModel.ViewModel
         ICommand CopyFileCommand { get; }
         ICommand PasteCommand { get; }
         IClipboardService Clipboard { get; }
-
+        
         void Copy();
         void Cut();
         void Paste();
+        void CopyPath();
     }
 }
