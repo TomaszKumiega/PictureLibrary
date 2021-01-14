@@ -32,7 +32,7 @@ namespace PictureLibraryViewModel.ViewModel
         {
             get => _cutFile;
 
-            private set
+            set
             {
                 _cutFile = value;
                 _copiedFile = null;
@@ -42,7 +42,8 @@ namespace PictureLibraryViewModel.ViewModel
         public IExplorableElement CopiedFile
         {
             get => _copiedFile;
-            private set
+
+            set
             {
                 _copiedFile = value;
                 _cutFile = null;
