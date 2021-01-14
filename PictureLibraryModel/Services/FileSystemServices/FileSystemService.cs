@@ -42,10 +42,6 @@ namespace PictureLibraryModel.Services.FileSystemServices
                     directories.Add(new Folder(t, (new System.IO.DirectoryInfo(t)).Name, this, Origin.Local));
                 }
             }
-            else
-            {
-                throw new Exception("Failed getting directories");
-            }
 
             return directories;
         }
