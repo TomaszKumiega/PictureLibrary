@@ -50,19 +50,19 @@ namespace PictureLibraryModel.Model
             }
         }
 
-        public virtual void Expand()
+        public virtual async Task Expand()
         {
             foreach(var t in SubDirectories)
             {
-                t.LoadSubDirectories();
+               await Task.Run(() => t.LoadSubDirectories());
             }
         }
 
-        public virtual void Collapse()
+        public virtual async Task Collapse()
         {
             foreach(var t in SubDirectories)
             {
-                t.SubDirectories.Clear();
+                await Task.Run(() => t.SubDirectories.Clear());
             }
         }
 
