@@ -17,7 +17,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             var imageFileMock = new Mock<ImageFile>();
 
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.CopiedFile)
+            viewModelMock.Setup(x => x.Clipboard.CopiedElement)
                 .Returns(imageFileMock.Object);
 
             var pasteCommand = new PasteCommand(viewModelMock.Object);
@@ -31,7 +31,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             ImageFile imageFile = null;
 
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.CopiedFile)
+            viewModelMock.Setup(x => x.Clipboard.CopiedElement)
                 .Returns(imageFile);
 
             var pasteCommand = new PasteCommand(viewModelMock.Object);
