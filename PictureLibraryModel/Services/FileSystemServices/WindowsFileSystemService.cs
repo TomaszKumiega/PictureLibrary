@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using Directory = PictureLibraryModel.Model.Directory;
 
-namespace PictureLibraryModel.Services
+namespace PictureLibraryModel.Services.FileSystemServices
 {
     public class WindowsFileSystemService : FileSystemService
     {

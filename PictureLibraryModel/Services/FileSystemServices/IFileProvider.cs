@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Directory = PictureLibraryModel.Model.Directory;
 
-namespace PictureLibraryModel.Services
+namespace PictureLibraryModel.Services.FileSystemServices
 {
     public interface IFileProvider
     {

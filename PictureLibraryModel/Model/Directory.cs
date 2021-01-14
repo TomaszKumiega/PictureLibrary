@@ -1,5 +1,5 @@
 ﻿using NLog;
-using PictureLibraryModel.Services;
+using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.ObjectModel;
 using System.Drawing;

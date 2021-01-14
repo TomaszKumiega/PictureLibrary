@@ -9,7 +9,7 @@ using System.Linq;
 using Directory = PictureLibraryModel.Model.Directory;
 using PictureLibraryModel.Model;
 
-namespace PictureLibraryModel.Services
+namespace PictureLibraryModel.Services.FileSystemServices
 {
     public abstract class FileSystemService : IFileProvider
     {

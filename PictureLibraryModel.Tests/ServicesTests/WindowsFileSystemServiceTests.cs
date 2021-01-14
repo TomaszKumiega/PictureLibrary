@@ -4,7 +4,7 @@ using System.Text;
 using Xunit;
 using System.IO;
 using PictureLibraryModel.Model;
-using PictureLibraryModel.Services;
+using PictureLibraryModel.Services.FileSystemServices;
 using Moq;
 
 using Directory = System.IO.Directory;

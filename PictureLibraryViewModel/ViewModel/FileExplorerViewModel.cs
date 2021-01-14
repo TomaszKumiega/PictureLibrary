@@ -1,5 +1,5 @@
 ﻿using PictureLibraryModel.Model;
-using PictureLibraryModel.Services;
+using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;

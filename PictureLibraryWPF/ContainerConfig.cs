@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using PictureLibraryModel.Services;
+using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel;
 using PictureLibraryWPF.CustomControls.Files;
