@@ -42,6 +42,14 @@ namespace PictureLibraryModel.Model
             }
         }
 
+        public virtual void Collapse()
+        {
+            foreach(var t in SubDirectories)
+            {
+                t.SubDirectories.Clear();
+            }
+        }
+
         private void InitializeIcon()
         {
             try
