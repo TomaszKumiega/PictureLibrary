@@ -17,27 +17,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TreeView x:Name="FilesTreeView" ItemsSource="{Binding Drives}" Background="#37393f" BorderThickness="0" SelectedItemChanged="FilesTreeView_OnSelectedItemChanged">
+        <TreeView x:Name="FilesTreeView" ItemsSource="{Binding DirectoryTree}" Background="#37393f" BorderThickness="0" SelectedItemChanged="FilesTreeView_OnSelectedItemChanged">
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type src:Directory}" ItemsSource="{Binding Children}">
-                    <WrapPanel Orientation="Horizontal">
-                        <Image Width="25" Height="25" Source="{Binding ImageSource}"/>
-                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="#cdcdcd"/>
-                    </WrapPanel>
-                </HierarchicalDataTemplate>
-
-                <HierarchicalDataTemplate DataType="{x:Type src:Drive}" ItemsSource="{Binding Children}">
+                <HierarchicalDataTemplate DataType="{x:Type src:Directory}" ItemsSource="{Binding SubDirectories}">
                     <WrapPanel Orientation="Horizontal">
                         <Image Width="25" Height="25" Source="{Binding ImageSource}"/>
                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="#cdcdcd"/>
                     </WrapPanel>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="TreeViewItem">
-                    <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
-                </Style>
-            </TreeView.ItemContainerStyle>
         </TreeView>
     </Grid>
 </UserControl>
