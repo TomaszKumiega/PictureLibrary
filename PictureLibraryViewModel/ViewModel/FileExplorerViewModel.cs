@@ -55,6 +55,11 @@ namespace PictureLibraryViewModel.ViewModel
             CopiedFile = SelectedFile;
         }
 
+        public void Cut()
+        {
+            CutFile = SelectedFile;
+        }
+
         public void PasteFile()
         {
             if(CopiedFile != null)

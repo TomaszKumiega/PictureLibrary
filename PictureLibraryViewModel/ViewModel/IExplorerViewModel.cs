@@ -15,6 +15,7 @@ namespace PictureLibraryViewModel.ViewModel
         IExplorableElement CopiedFile { get; set; }
         IExplorableElement CutFile { get; set; }
         void CopyFile();
+        void Cut();
         void PasteFile();
     }
 }
