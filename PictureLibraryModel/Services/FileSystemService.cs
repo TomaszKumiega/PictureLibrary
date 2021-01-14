@@ -15,7 +15,7 @@ namespace PictureLibraryModel.Services
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public IEnumerable<Folder> GetSubFolders(string topDirectory, SearchOption option)
+        public virtual IEnumerable<Folder> GetSubFolders(string topDirectory, SearchOption option)
         {
             if (topDirectory == null) throw new ArgumentNullException();
             if (topDirectory.Trim() == String.Empty) throw new ArgumentException();
@@ -50,7 +50,7 @@ namespace PictureLibraryModel.Services
             return directories;
         }
 
-        public void Copy(IFileSystemEntity entity, string destinationPath)
+        public virtual void Copy(IFileSystemEntity entity, string destinationPath)
         {
             if (entity == null) throw new ArgumentNullException("Entity");
             if (destinationPath == null) throw new ArgumentNullException("destinationPath");
@@ -68,7 +68,7 @@ namespace PictureLibraryModel.Services
             }
         }
 
-        public void Move(IFileSystemEntity entity, string destinationPath)
+        public virtual void Move(IFileSystemEntity entity, string destinationPath)
         {
             if (entity == null) throw new ArgumentNullException("entity");
             if (destinationPath == null) throw new ArgumentNullException("destinationPath");
