@@ -62,7 +62,7 @@ namespace PictureLibraryModel.Model
             }
         }
 
-        protected void LoadSubDirectories()
+        public virtual void LoadSubDirectories()
         {
             SubDirectories.Clear();
 
