@@ -24,5 +24,19 @@ namespace PictureLibraryViewModel.Tests.CommandTests
 
             Assert.True(cutCommand.CanExecute(new object()));
         }
+
+        [Fact]
+        public void CanExecute_ShouldReturnFalse_WhenSelectedFileIsNull()
+        {
+            ImageFile imageFile = null;
+
+            var viewModelMock = new Mock<IExplorerViewModel>();
+            viewModelMock.Setup(x => x.CopiedFile)
+                .Returns(imageFile);
+
+            var cutCommand = new CutCommand(viewModelMock.Object);
+
+            Assert.False(cutCommand.CanExecute(new object()));
+        }
     }
 }
