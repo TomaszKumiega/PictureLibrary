@@ -29,12 +29,14 @@ namespace PictureLibraryViewModel.ViewModel
         {
             _fileSystemService = fileSystemService;
             Clipboard = clipboard;
+
             CopyFileCommand = commandFactory.GetCopyCommand(this);
             PasteCommand = commandFactory.GetPasteCommand(this);
             CutCommand = commandFactory.GetCutCommand(this);
             CopyPathCommand = commandFactory.GetCopyPathCommand(this);
 
             InitializeDirectoryTree();
+            InitializeCurrentDirectoryFiles();
         }
 
         private void InitializeDirectoryTree()
@@ -45,6 +47,14 @@ namespace PictureLibraryViewModel.ViewModel
             {
                 t.LoadSubDirectories();
                 DirectoryTree.Add(t);
+            }
+        }
+
+        private void InitializeCurrentDirectoryFiles()
+        {
+            foreach(var t in DirectoryTree)
+            {
+                CurrentDirectoryFiles.Add(t);
             }
         }
 
