@@ -7,7 +7,7 @@ using PictureLibraryViewModel.ViewModel;
 using PictureLibraryModel.Model;
 using PictureLibraryViewModel.Commands;
 
-namespace PictureLibraryViewModel.Tests
+namespace PictureLibraryViewModel.Tests.CommandTests
 {
     public class CopyCommandTests
     {
