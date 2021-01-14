@@ -19,6 +19,7 @@ namespace PictureLibraryViewModel.ViewModel
         public ObservableCollection<IFileSystemEntity> CurrentDirectoryFiles { get; private set; }
         public string CurrentDirectoryPath { get; set; }
         public ICommand CopyFileCommand { get; }
+        public ICommand PasteCommand { get; }
         public IExplorableElement SelectedFile { get; set; }
         public IExplorableElement SelectedNode { get; set; }
 
@@ -26,6 +27,7 @@ namespace PictureLibraryViewModel.ViewModel
         {
             _fileSystemService = fileSystemService;
             CopyFileCommand = commandFactory.GetCopyFileCommand(this);
+            PasteCommand = commandFactory.GetPasteCommand(this);
         }
 
         public IExplorableElement CutFile
