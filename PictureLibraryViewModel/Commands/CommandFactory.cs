@@ -12,5 +12,10 @@ namespace PictureLibraryViewModel.Commands
         {
             return new CopyFileCommand(viewModel);
         }
+
+        public ICommand GetPasteCommand(IExplorerViewModel viewModel)
+        {
+            return new PasteCommand(viewModel);
+        }
     }
 }
