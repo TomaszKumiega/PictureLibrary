@@ -8,9 +8,9 @@ namespace PictureLibraryViewModel.Commands
 {
     public class CommandFactory : ICommandFactory
     {
-        public ICommand GetCopyFileCommand(IExplorerViewModel viewModel)
+        public ICommand GetCopyCommand(IExplorerViewModel viewModel)
         {
-            return new CopyFileCommand(viewModel);
+            return new CopyCommand(viewModel);
         }
 
         public ICommand GetPasteCommand(IExplorerViewModel viewModel)

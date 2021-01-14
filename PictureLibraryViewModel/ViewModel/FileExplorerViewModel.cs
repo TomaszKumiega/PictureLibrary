@@ -26,7 +26,7 @@ namespace PictureLibraryViewModel.ViewModel
         public FileExplorerViewModel(FileSystemService fileSystemService, ICommandFactory commandFactory)
         {
             _fileSystemService = fileSystemService;
-            CopyFileCommand = commandFactory.GetCopyFileCommand(this);
+            CopyFileCommand = commandFactory.GetCopyCommand(this);
             PasteCommand = commandFactory.GetPasteCommand(this);
         }
 

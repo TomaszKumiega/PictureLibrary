@@ -8,7 +8,7 @@ namespace PictureLibraryViewModel.Commands
 {
     public interface ICommandFactory
     {
-        ICommand GetCopyFileCommand(IExplorerViewModel viewModel);
+        ICommand GetCopyCommand(IExplorerViewModel viewModel);
         ICommand GetPasteCommand(IExplorerViewModel viewModel);
     }
 }

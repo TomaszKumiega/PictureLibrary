@@ -6,12 +6,12 @@ using System.Windows.Input;
 
 namespace PictureLibraryViewModel.Commands
 {
-    public class CopyFileCommand : ICommand
+    public class CopyCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
         private IExplorerViewModel _viewModel;
 
-        public CopyFileCommand(IExplorerViewModel viewModel)
+        public CopyCommand(IExplorerViewModel viewModel)
         {
             _viewModel = viewModel;
         }

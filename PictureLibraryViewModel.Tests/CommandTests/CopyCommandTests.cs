@@ -9,7 +9,7 @@ using PictureLibraryViewModel.Commands;
 
 namespace PictureLibraryViewModel.Tests
 {
-    public class CopyFileCommandTests
+    public class CopyCommandTests
     {
         [Fact]
         public void CanExecute_ShouldReturnTrue_WhenSelectedFileIsInitialized()
@@ -19,7 +19,7 @@ namespace PictureLibraryViewModel.Tests
             viewModel.Setup(x => x.SelectedFile)
                 .Returns(imageFile.Object);
 
-            var copyFileCommand = new CopyFileCommand(viewModel.Object);
+            var copyFileCommand = new CopyCommand(viewModel.Object);
 
             Assert.True(copyFileCommand.CanExecute(new object()));
         }
@@ -32,7 +32,7 @@ namespace PictureLibraryViewModel.Tests
             viewModel.Setup(x => x.SelectedFile)
                 .Returns(file);
 
-            var copyFileCommand = new CopyFileCommand(viewModel.Object);
+            var copyFileCommand = new CopyCommand(viewModel.Object);
 
             Assert.False(copyFileCommand.CanExecute(new object()));
         }
@@ -46,7 +46,7 @@ namespace PictureLibraryViewModel.Tests
             viewModelMock.Setup(x => x.Copy())
                 .Callback(() => { methodWasCalled = true; });
 
-            var copyFileCommand = new CopyFileCommand(viewModelMock.Object);
+            var copyFileCommand = new CopyCommand(viewModelMock.Object);
 
             copyFileCommand.Execute(new object());
 
