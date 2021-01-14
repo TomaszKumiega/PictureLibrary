@@ -11,7 +11,7 @@ namespace PictureLibraryViewModel.Tests
     public class FileExplorerViewModelTests
     {
         [Fact]
-        public void CopyFile_ShouldAssignSelectedFileToCopiedFile_WhenSelectedFileIsNotNull()
+        public void Copy_ShouldAssignSelectedFileToCopiedFile_WhenSelectedFileIsNotNull()
         {
             var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
             var commandFactoryMock = new Mock<ICommandFactory>();
@@ -20,7 +20,7 @@ namespace PictureLibraryViewModel.Tests
 
             var imageFile = new ImageFile();
             viewModel.SelectedFile = imageFile;
-            viewModel.CopyFile();
+            viewModel.Copy();
 
             Assert.True(viewModel.CopiedFile.Equals(imageFile));
         }
@@ -41,7 +41,7 @@ namespace PictureLibraryViewModel.Tests
         }
 
         [Fact]
-        public void PastFile_ShouldCallCopyMethod_WhenCopiedFileIsInitialized()
+        public void Paste_ShouldCallCopyMethod_WhenCopiedFileIsInitialized()
         {
             var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
             var commandFactoryMock = new Mock<ICommandFactory>();
@@ -62,13 +62,13 @@ namespace PictureLibraryViewModel.Tests
             viewModel.CopiedFile = imageFile;
             viewModel.CurrentDirectoryPath = destination;
 
-            viewModel.PasteFile();
+            viewModel.Paste();
 
             Assert.True(copyMethodWasCalled);
         }
 
         [Fact]
-        public void PastFile_ShouldCallMoveMethod_WhenCutFileIsInitialized()
+        public void Paste_ShouldCallMoveMethod_WhenCutFileIsInitialized()
         {
             var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
             var commandFactoryMock = new Mock<ICommandFactory>();
@@ -89,7 +89,7 @@ namespace PictureLibraryViewModel.Tests
             viewModel.CutFile = imageFile;
             viewModel.CurrentDirectoryPath = destination;
 
-            viewModel.PasteFile();
+            viewModel.Paste();
 
             Assert.True(moveMethodWasCalled);
 

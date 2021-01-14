@@ -50,7 +50,7 @@ namespace PictureLibraryViewModel.ViewModel
             }
         }
 
-        public void CopyFile()
+        public void Copy()
         {
             CopiedFile = SelectedFile;
         }
@@ -60,7 +60,7 @@ namespace PictureLibraryViewModel.ViewModel
             CutFile = SelectedFile;
         }
 
-        public void PasteFile()
+        public void Paste()
         {
             if(CopiedFile != null)
             {

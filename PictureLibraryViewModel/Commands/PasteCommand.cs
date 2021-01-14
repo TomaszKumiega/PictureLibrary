@@ -23,7 +23,7 @@ namespace PictureLibraryViewModel.Commands
 
         public void Execute(object parameter)
         {
-            _viewModel.PasteFile();
+            _viewModel.Paste();
         }
     }
 }
