@@ -36,6 +36,9 @@ namespace PictureLibraryModel.Model
             FileProvider = fileProvider;
             Origin = origin;
             SubDirectories = new ObservableCollection<Directory>();
+
+            PropertyChanged += OnIsExpandedChanged;
+
             InitializeIcon();
         }
 
@@ -47,6 +50,17 @@ namespace PictureLibraryModel.Model
             {
                 _isExpanded = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsExpanded"));
+            }
+        }
+
+        protected virtual async void OnIsExpandedChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if(args.PropertyName == "IsExpanded")
+            {
+                if (IsExpanded) await Expand();
+                else await Collapse();
+                
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SubDirectories"));
             }
         }
 
