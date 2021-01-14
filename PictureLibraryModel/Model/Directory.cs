@@ -2,16 +2,20 @@
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Model
 {
-    public abstract class Directory : IFileSystemEntity
+    public abstract class Directory : IFileSystemEntity, INotifyPropertyChanged
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         protected IFileProvider FileProvider { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public string FullPath { get; set; }
         public string Name { get; set; }
