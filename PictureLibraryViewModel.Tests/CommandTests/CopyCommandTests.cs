@@ -19,9 +19,9 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             viewModel.Setup(x => x.SelectedFile)
                 .Returns(imageFile.Object);
 
-            var copyFileCommand = new CopyCommand(viewModel.Object);
+            var copyCommand = new CopyCommand(viewModel.Object);
 
-            Assert.True(copyFileCommand.CanExecute(new object()));
+            Assert.True(copyCommand.CanExecute(new object()));
         }
 
         [Fact]
@@ -32,13 +32,13 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             viewModel.Setup(x => x.SelectedFile)
                 .Returns(file);
 
-            var copyFileCommand = new CopyCommand(viewModel.Object);
+            var copyCommand = new CopyCommand(viewModel.Object);
 
-            Assert.False(copyFileCommand.CanExecute(new object()));
+            Assert.False(copyCommand.CanExecute(new object()));
         }
 
         [Fact]
-        public void Execute_ShouldTriggerCopyFileMethod()
+        public void Execute_ShouldTriggerCopyMethod()
         {
             bool methodWasCalled = false;
 
@@ -46,9 +46,9 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             viewModelMock.Setup(x => x.Copy())
                 .Callback(() => { methodWasCalled = true; });
 
-            var copyFileCommand = new CopyCommand(viewModelMock.Object);
+            var copyCommand = new CopyCommand(viewModelMock.Object);
 
-            copyFileCommand.Execute(new object());
+            copyCommand.Execute(new object());
 
             Assert.True(methodWasCalled);
         }
