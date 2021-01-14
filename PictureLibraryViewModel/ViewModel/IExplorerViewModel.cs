@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace PictureLibraryViewModel.ViewModel
         IExplorableElement SelectedNode { get; set; }
         ICommand CopyFileCommand { get; }
         ICommand PasteCommand { get; }
+        IClipboardService Clipboard { get; }
 
         void Copy();
         void Cut();
