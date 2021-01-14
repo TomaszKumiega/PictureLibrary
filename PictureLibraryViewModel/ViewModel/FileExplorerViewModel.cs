@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel
@@ -47,7 +48,7 @@ namespace PictureLibraryViewModel.ViewModel
             
             foreach(var t in rootDirectories)
             {
-                t.LoadSubDirectories();
+                Task.Run(() => t.LoadSubDirectoriesAsync()).Wait();
                 DirectoryTree.Add(t);
             }
         }

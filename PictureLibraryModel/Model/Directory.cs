@@ -58,7 +58,7 @@ namespace PictureLibraryModel.Model
             if(args.PropertyName == "IsExpanded")
             {
                 if (IsExpanded) await Expand();
-                else await Collapse();
+                else Collapse();
                 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SubDirectories"));
             }
@@ -68,15 +68,15 @@ namespace PictureLibraryModel.Model
         {
             foreach(var t in SubDirectories)
             {
-               await Task.Run(() => t.LoadSubDirectories());
+                await t.LoadSubDirectoriesAsync();
             }
         }
 
-        public virtual async Task Collapse()
+        public virtual void Collapse()
         {
             foreach(var t in SubDirectories)
             {
-                await Task.Run(() => t.SubDirectories.Clear());
+                t.SubDirectories.Clear();
             }
         }
 
@@ -92,11 +92,11 @@ namespace PictureLibraryModel.Model
             }
         }
 
-        public virtual void LoadSubDirectories()
+        public virtual async Task LoadSubDirectoriesAsync()
         {
             SubDirectories.Clear();
 
-            var directories = FileProvider.GetSubFolders(FullPath, SearchOption.TopDirectoryOnly);
+            var directories = await Task.Run(() => FileProvider.GetSubFolders(FullPath, SearchOption.TopDirectoryOnly));
 
             foreach (var t in directories)
             {
