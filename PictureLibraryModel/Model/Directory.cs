@@ -32,7 +32,14 @@ namespace PictureLibraryModel.Model
             Origin = origin;
             SubDirectories = new ObservableCollection<Directory>();
             InitializeIcon();
-            LoadSubDirectories();
+        }
+
+        public virtual void Expand()
+        {
+            foreach(var t in SubDirectories)
+            {
+                t.LoadSubDirectories();
+            }
         }
 
         private void InitializeIcon()
