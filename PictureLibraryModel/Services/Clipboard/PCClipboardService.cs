@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PictureLibraryModel.Services.Clipboard
 {
-    public class ClipboardService : IClipboardService
+    public class PCClipboardService : IClipboardService
     {
         public string SystemClipboard
         {
