@@ -48,6 +48,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             if (destinationPath.Trim() == String.Empty) throw new ArgumentException("destinationPath");
             if (!System.IO.Directory.Exists(destinationPath)) throw new DirectoryNotFoundException(destinationPath);
             if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
+            if (entity.Origin != Origin.Local) throw new Exception("Cannot copy remote files");
 
             if (entity is Folder)
             {
@@ -65,8 +66,9 @@ namespace PictureLibraryModel.Services.FileSystemServices
             if (destinationPath == null) throw new ArgumentNullException("destinationPath");
             if (destinationPath.Trim() == String.Empty) throw new ArgumentException("destinationPath");
             if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
+            if (entity.Origin != Origin.Local) throw new Exception("Cannot move remote files");
 
-            if(entity is Folder)
+            if (entity is Folder)
             {
                 System.IO.Directory.Move(entity.FullPath, destinationPath + entity.Name);
             }
