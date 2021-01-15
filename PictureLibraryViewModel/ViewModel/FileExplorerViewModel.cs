@@ -20,7 +20,7 @@ namespace PictureLibraryViewModel.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<IExplorableElement> DirectoryTree { get; private set; }
+        public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
         public ObservableCollection<IExplorableElement> CurrentDirectoryFiles { get; private set; }
         public ICommand CopyFileCommand { get; }
         public ICommand PasteCommand { get; }
@@ -67,14 +67,14 @@ namespace PictureLibraryViewModel.ViewModel
 
         private void InitializeDirectoryTree()
         {
-            DirectoryTree = new ObservableCollection<IExplorableElement>();
+            ExplorableElementsTree = new ObservableCollection<IExplorableElement>();
 
             var rootDirectories = _fileSystemService.GetRootDirectories();
             
             foreach(var t in rootDirectories)
             {
                 Task.Run(() => t.LoadSubDirectoriesAsync()).Wait();
-                DirectoryTree.Add(t);
+                ExplorableElementsTree.Add(t);
             }
         }
 
@@ -82,7 +82,7 @@ namespace PictureLibraryViewModel.ViewModel
         {
             CurrentDirectoryFiles = new ObservableCollection<IExplorableElement>();
 
-            foreach (var t in DirectoryTree)
+            foreach (var t in ExplorableElementsTree)
             {
                 CurrentDirectoryFiles.Add(t);
             }

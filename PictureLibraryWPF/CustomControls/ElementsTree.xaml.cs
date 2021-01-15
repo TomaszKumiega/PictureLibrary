@@ -11,7 +11,7 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class ElementsTree : UserControl
     {
-        public ElementsTree(IFileExplorerViewModel viewModel)
+        public ElementsTree(IExplorerViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
@@ -19,7 +19,7 @@ namespace PictureLibraryWPF.CustomControls
 
         private void ElementTreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            var viewModel = DataContext as IFileExplorerViewModel;
+            var viewModel = DataContext as IExplorerViewModel;
 
             viewModel.SelectedNode = ElementTreeView.SelectedItem as IExplorableElement;
         }

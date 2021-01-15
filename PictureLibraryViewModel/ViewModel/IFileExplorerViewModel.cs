@@ -9,7 +9,7 @@ namespace PictureLibraryViewModel.ViewModel
     {
         ObservableCollection<IExplorableElement> CurrentDirectoryFiles { get; }
         string CurrentDirectoryPath { get; set; }
-        ObservableCollection<IExplorableElement> DirectoryTree { get; }
+        ObservableCollection<IExplorableElement> ExplorableElementsTree { get; }
         ICommand CopyPathCommand { get; }
         
         void CopyPath();
