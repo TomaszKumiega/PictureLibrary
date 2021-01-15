@@ -6,6 +6,8 @@ namespace PictureLibraryModel.Model.Builders
 {
     public interface IImageFileBuilder
     {
+        ImageFile ImageFile { get; }
+
         void BuildName();
         void BuildExtension();
         void BuildFullPath();
