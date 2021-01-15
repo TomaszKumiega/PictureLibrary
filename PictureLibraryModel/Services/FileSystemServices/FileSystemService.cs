@@ -8,6 +8,7 @@ using System.Linq;
 
 using Directory = PictureLibraryModel.Model.Directory;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.Builders;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {
@@ -79,6 +80,39 @@ namespace PictureLibraryModel.Services.FileSystemServices
         }
 
         public abstract IEnumerable<Directory> GetRootDirectories();
+
+        public virtual IEnumerable<IExplorableElement> GetDirectoryContent(string path)
+        {
+            var content = new List<IExplorableElement>();
+
+            var filePaths = System.IO.Directory.GetFiles(path);
+            var directoryPaths = System.IO.Directory.GetDirectories(path);
+
+            foreach(var t in filePaths)
+            {
+                if(ImageFile.IsFileAnImage(t))
+                {
+                    var fileInfo = new FileInfo(t);
+
+                    var imageFileBuilder = new LocalFileSystemImageFileBuilder(fileInfo);
+                    var imageFileDirector = new ImageFileDirector(imageFileBuilder);
+                    imageFileDirector.MakeImageFile();
+
+                    var imageFile = imageFileDirector.GetImageFile();
+
+                    content.Add(imageFile);
+                }
+            }
+
+            foreach(var t in directoryPaths)
+            {
+                var directoryInfo = new DirectoryInfo(t);
+
+                content.Add(new Folder(directoryInfo.Name, directoryInfo.FullName, this, Origin.Local));
+            }
+
+            return content;
+        }
 
         private void CopyDirectory(string sourcePath, string destinationPath)
         {
