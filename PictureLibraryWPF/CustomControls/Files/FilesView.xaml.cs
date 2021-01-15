@@ -24,6 +24,7 @@ namespace PictureLibraryWPF.CustomControls.Files
         public FilesView(IFileExplorerViewModel viewModel)
         {
             InitializeComponent();
+            viewModel.SelectedElements = (List<IExplorableElement>) FilesList.SelectedItems;
             DataContext = viewModel;
         }
 
