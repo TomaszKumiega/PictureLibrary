@@ -1,4 +1,5 @@
-﻿using PictureLibraryViewModel;
+﻿using Autofac;
+using PictureLibraryViewModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,8 +16,12 @@ namespace PictureLibraryWPF
     public partial class App : Application
     {
         private void Application_Startup(object sender, StartupEventArgs e)
-        { 
+        {
+            var container = ContainerConfig.Configure();
 
+            var mainWindow = container.Resolve<MainWindow>();
+
+            mainWindow.Show();
         }
     }
 }
