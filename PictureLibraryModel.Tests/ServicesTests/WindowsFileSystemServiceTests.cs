@@ -256,8 +256,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
                 new ImageFile()
                 {
                     Name = fileName,
-                    FullPath = sourceDirectory + fileName,
-                    Extension = ".jpg"
+                    FullPath = sourceDirectory + fileName
                 };
 
             var service = new WindowsFileSystemService();
