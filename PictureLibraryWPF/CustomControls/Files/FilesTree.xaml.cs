@@ -21,16 +21,7 @@ namespace PictureLibraryWPF.CustomControls.Files
         {
             var viewModel = DataContext as IFileExplorerViewModel;
 
-            
-            try
-            {
-                viewModel.CurrentDirectoryPath = (this.FilesTreeView.SelectedItem as IExplorableElement).FullPath;
-            }
-            catch 
-            {
-                //TODO add logger
-            }
-
+            viewModel.SelectedNode = FilesTreeView.SelectedItem as IExplorableElement;
         }
     }
 }
