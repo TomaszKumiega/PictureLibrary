@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PictureLibraryModel.Model
 {
-    public enum ImageExtensions
+    public enum ImageExtension
     {
         JPG,
         BMP,
@@ -17,9 +17,9 @@ namespace PictureLibraryModel.Model
         NONE
     }
 
-    public class ImageExtension
+    public static class ImageExtensionHelper
     {
-        public static ImageExtensions GetExtension(byte[] bytes)
+        public static ImageExtension GetExtension(byte[] bytes)
         {
             var bmp = Encoding.ASCII.GetBytes("BM");     // BMP
             var gif = Encoding.ASCII.GetBytes("GIF");    // GIF
@@ -30,34 +30,34 @@ namespace PictureLibraryModel.Model
             var jpeg2 = new byte[] { 255, 216, 255, 225 }; // jpeg2
 
             if (bmp.SequenceEqual(bytes.Take(bmp.Length)))
-                return ImageExtensions.BMP;
+                return ImageExtension.BMP;
 
             if (gif.SequenceEqual(bytes.Take(gif.Length)))
-                return ImageExtensions.GIF;
+                return ImageExtension.GIF;
 
             if (png.SequenceEqual(bytes.Take(png.Length)))
-                return ImageExtensions.PNG;
+                return ImageExtension.PNG;
 
             if (tiff.SequenceEqual(bytes.Take(tiff.Length)))
-                return ImageExtensions.TIFF;
+                return ImageExtension.TIFF;
 
             if (tiff2.SequenceEqual(bytes.Take(tiff2.Length)))
-                return ImageExtensions.TIFF;
+                return ImageExtension.TIFF;
 
             if (jpeg.SequenceEqual(bytes.Take(jpeg.Length)))
-                return ImageExtensions.JPG;
+                return ImageExtension.JPG;
 
             if (jpeg2.SequenceEqual(bytes.Take(jpeg2.Length)))
-                return ImageExtensions.JPG;
+                return ImageExtension.JPG;
 
-            return ImageExtensions.NONE;
+            return ImageExtension.NONE;
         }
     }
 
     public class ImageFile : IExplorableElement
     {
         public string Name { get; set; }
-        public ImageExtensions Extension { get; set; }
+        public ImageExtension Extension { get; set; }
         public string FullPath { get; set; }
         public string LibraryFullPath { get; set; }
         public DateTime CreationTime { get; set; }
@@ -76,7 +76,7 @@ namespace PictureLibraryModel.Model
         public static bool IsFileAnImage(string path)
         {
             var fileBytes = File.ReadAllBytes(path);
-            return ImageExtension.GetExtension(fileBytes) != ImageExtensions.NONE;
+            return ImageExtensionHelper.GetExtension(fileBytes) != ImageExtension.NONE;
         }
     }
 }
