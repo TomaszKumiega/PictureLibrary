@@ -34,6 +34,8 @@ namespace PictureLibraryViewModel.ViewModel
             _fileSystemService = fileSystemService;
             Clipboard = clipboard;
 
+            SelectedFiles = new List<IExplorableElement>();
+
             CopyFileCommand = commandFactory.GetCopyCommand(this);
             PasteCommand = commandFactory.GetPasteCommand(this);
             CutCommand = commandFactory.GetCutCommand(this);
