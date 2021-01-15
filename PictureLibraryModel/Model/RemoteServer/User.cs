@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PictureLibraryModel.Model.RemoteServerUser
+namespace PictureLibraryModel.Model.RemoteServer
 {
     public class User
     {

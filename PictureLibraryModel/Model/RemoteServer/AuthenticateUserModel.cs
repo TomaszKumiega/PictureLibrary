@@ -3,31 +3,24 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace PictureLibraryModel.Model.RemoteServerUser
+namespace PictureLibraryModel.Model.RemoteServerServe
 {
-    /// <summary>
-    /// User model used for registration and updating
-    /// </summary>
-    public class UserModel
+    public class AuthenticateUserModel
     {
         [Required]
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
-        [Required]
-        public string Email { get; set; }
 
-        public UserModel()
+        public AuthenticateUserModel()
         {
 
         }
 
-        public UserModel(string username, string password, string email)
+        public AuthenticateUserModel(string username, string password)
         {
             Username = username;
             Password = password;
-            Email = email;
         }
     }
 }
-
