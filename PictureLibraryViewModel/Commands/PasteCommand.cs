@@ -1,6 +1,7 @@
 ﻿using PictureLibraryViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
@@ -18,7 +19,9 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-           return  _viewModel.Clipboard.CopiedElement != null || _viewModel.Clipboard.CutElement != null;
+            if (_viewModel.Clipboard.CopiedElements == null || _viewModel.Clipboard.CutElements == null) return false;
+            else if (_viewModel.Clipboard.CopiedElements.Any() || _viewModel.Clipboard.CutElements.Any()) return true;
+            else return false;
         }
 
         public void Execute(object parameter)
