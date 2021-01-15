@@ -14,16 +14,16 @@ namespace PictureLibraryViewModel.ViewModel
     public class FileExplorerViewModel : IFileExplorerViewModel
     {
         private FileSystemService _fileSystemService;
+        private IExplorableElement _selectedNode;
+        private string _currentDirectoryPath;
 
         public ObservableCollection<IExplorableElement> DirectoryTree { get; private set; }
         public ObservableCollection<IExplorableElement> CurrentDirectoryFiles { get; private set; }
-        public string CurrentDirectoryPath { get; set; }
         public ICommand CopyFileCommand { get; }
         public ICommand PasteCommand { get; }
         public ICommand CutCommand { get; }
         public ICommand CopyPathCommand { get; }
         public IExplorableElement SelectedFile { get; set; }
-        public IExplorableElement SelectedNode { get; set; }
         public IClipboardService Clipboard { get; }
 
         public FileExplorerViewModel(FileSystemService fileSystemService, ICommandFactory commandFactory, IClipboardService clipboard)
@@ -38,6 +38,26 @@ namespace PictureLibraryViewModel.ViewModel
 
             InitializeDirectoryTree();
             InitializeCurrentDirectoryFiles();
+        }
+
+        public IExplorableElement SelectedNode 
+        { 
+            get => _selectedNode; 
+            set
+            {
+                _selectedNode = value;
+                CurrentDirectoryPath = _selectedNode.FullPath;
+            }
+        }
+
+        public string CurrentDirectoryPath 
+        {
+            get => _currentDirectoryPath; 
+            set
+            {
+                _currentDirectoryPath = value;
+                ReloadCurrentDirectoryFiles();
+            }
         }
 
         private void InitializeDirectoryTree()
@@ -58,6 +78,16 @@ namespace PictureLibraryViewModel.ViewModel
             CurrentDirectoryFiles = new ObservableCollection<IExplorableElement>();
 
             foreach (var t in DirectoryTree)
+            {
+                CurrentDirectoryFiles.Add(t);
+            }
+        }
+
+        private void ReloadCurrentDirectoryFiles()
+        {
+            CurrentDirectoryFiles.Clear();
+
+            foreach (var t in _fileSystemService.GetDirectoryContent(CurrentDirectoryPath))
             {
                 CurrentDirectoryFiles.Add(t);
             }
