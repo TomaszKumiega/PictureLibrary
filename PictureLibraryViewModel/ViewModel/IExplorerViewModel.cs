@@ -3,12 +3,13 @@ using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel
 {
-    public interface IExplorerViewModel
+    public interface IExplorerViewModel : INotifyPropertyChanged
     {
         IExplorableElement SelectedFile { get; set; }
         IExplorableElement SelectedNode { get; set; }

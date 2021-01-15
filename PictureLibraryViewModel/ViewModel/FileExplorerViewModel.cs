@@ -5,6 +5,7 @@ using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -16,6 +17,8 @@ namespace PictureLibraryViewModel.ViewModel
         private FileSystemService _fileSystemService;
         private IExplorableElement _selectedNode;
         private string _currentDirectoryPath;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<IExplorableElement> DirectoryTree { get; private set; }
         public ObservableCollection<IExplorableElement> CurrentDirectoryFiles { get; private set; }
@@ -91,6 +94,8 @@ namespace PictureLibraryViewModel.ViewModel
             {
                 CurrentDirectoryFiles.Add(t);
             }
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryFiles"));
         }
 
         public void Copy()
