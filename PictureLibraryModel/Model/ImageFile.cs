@@ -52,6 +52,24 @@ namespace PictureLibraryModel.Model
 
             return ImageExtension.NONE;
         }
+
+        public static ImageExtension GetExtension(string extension)
+        {
+            switch(extension)
+            {
+                case ".jpg": return ImageExtension.JPG;
+                case ".jpeg": return ImageExtension.JPG;
+                case ".jfif": return ImageExtension.JPG;
+                case ".pjpeg": return ImageExtension.JPG;
+                case ".pjp": return ImageExtension.JPG;
+                case ".png": return ImageExtension.PNG;
+                case ".bmp": return ImageExtension.BMP;
+                case ".gif": return ImageExtension.GIF;
+                case ".tiff": return ImageExtension.TIFF;
+                case ".tif": return ImageExtension.TIFF;
+            }
+            return ImageExtension.NONE;
+        }
     }
 
     public class ImageFile : IExplorableElement
