@@ -12,7 +12,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
     public class PasteCommandTests
     {
         [Fact]
-        public void CanExecute_ShouldReturnTrue_WhenCopiedFileIsInitialized()
+        public void CanExecute_ShouldReturnTrue_WhenCopiedFilesIsInitialized()
         {
             var imageFileMock = new Mock<ImageFile>();
 

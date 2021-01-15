@@ -19,7 +19,7 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            if (_viewModel.Clipboard.CopiedElements == null || _viewModel.Clipboard.CutElements == null) return false;
+            if (_viewModel.Clipboard.CopiedElements == null && _viewModel.Clipboard.CutElements == null) return false;
             else if (_viewModel.Clipboard.CopiedElements.Any() || _viewModel.Clipboard.CutElements.Any()) return true;
             else return false;
         }

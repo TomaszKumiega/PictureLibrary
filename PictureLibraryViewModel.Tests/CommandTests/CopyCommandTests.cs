@@ -29,16 +29,13 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         }
 
         [Fact]
-        public void CanExecute_ShouldReturnFalse_WhenSelectedFileIsNull()
+        public void CanExecute_ShouldReturnFalse_WhenSelectedFilesIsNull()
         {
-            ImageFile imageFile = null;
-
-            var elementsList = new List<IExplorableElement>();
-            elementsList.Add(imageFile);
+            List<IExplorableElement> list = null;
 
             var viewModel = new Mock<IExplorerViewModel>();
             viewModel.Setup(x => x.SelectedElements)
-                .Returns(elementsList);
+                .Returns(list);
 
             var copyCommand = new CopyCommand(viewModel.Object);
 
