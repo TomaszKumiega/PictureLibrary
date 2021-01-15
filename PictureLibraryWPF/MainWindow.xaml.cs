@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using PictureLibraryWPF.CustomControls.Files;
+using PictureLibraryWPF.CustomControls;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,16 +12,16 @@ namespace PictureLibraryWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private FilesTree FilesTree { get; set; }
+        //private FilesTree FilesTree { get; set; }
         private GridSplitter LeftPanelGridSplitter { get; set; }
-        private FilesView FilesView { get; }
+        //private FilesView FilesView { get; }
 
         public MainWindow()
         {
             var container = PictureLibraryViewModel.ContainerConfig.Configure();
-            FilesTree = container.Resolve<FilesTree>();
+            //FilesTree = container.Resolve<FilesTree>();
             LeftPanelGridSplitter = new GridSplitter();
-            FilesView = container.Resolve<FilesView>();
+            //FilesView = container.Resolve<FilesView>();
 
             InitializeComponent();
             InitializeControlsOnStartup();
@@ -31,6 +31,8 @@ namespace PictureLibraryWPF
         {
             //TODO: change color of filestree scrollbar
             //TODO: fix formatting / add spaces after and before regions
+            
+            /*
             #region FilesTree
             Grid.Children.Add(FilesTree);         
             FilesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -58,6 +60,7 @@ namespace PictureLibraryWPF
             Grid.SetColumn(LeftPanelGridSplitter, 0);
             Grid.SetRow(LeftPanelGridSplitter, 4);
             #endregion
+            */
         }
 
 

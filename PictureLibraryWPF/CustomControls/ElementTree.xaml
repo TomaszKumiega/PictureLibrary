@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="PictureLibraryWPF.CustomControls.Files.FilesTree"
+﻿<UserControl x:Class="PictureLibraryWPF.CustomControls.ElementTree"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:src="clr-namespace:PictureLibraryModel.Model;assembly=PictureLibraryModel"
              xmlns:vm="clr-namespace:PictureLibraryViewModel.ViewModel;assembly=PictureLibraryViewModel"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls.Files"
+             xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200" >
 
@@ -17,7 +17,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TreeView x:Name="FilesTreeView" ItemsSource="{Binding DirectoryTree}" Background="#37393f" BorderThickness="0" SelectedItemChanged="FilesTreeView_OnSelectedItemChanged">
+        <TreeView x:Name="ElementTreeView" ItemsSource="{Binding DirectoryTree}" Background="#37393f" BorderThickness="0" SelectedItemChanged="ElementTreeView_OnSelectedItemChanged">
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type src:Directory}" ItemsSource="{Binding SubDirectories}">
                     <WrapPanel Orientation="Horizontal">

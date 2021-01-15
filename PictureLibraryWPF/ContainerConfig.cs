@@ -2,7 +2,6 @@
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel;
-using PictureLibraryWPF.CustomControls.Files;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.Clipboard;
 
@@ -21,8 +20,6 @@ namespace PictureLibraryViewModel
             var builder = new ContainerBuilder();
 
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();
-            builder.RegisterType<FilesTree>().AsSelf();
-            builder.RegisterType<FilesView>().AsSelf();
             builder.RegisterType<WindowsFileSystemService>().As<FileSystemService>();
             builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();

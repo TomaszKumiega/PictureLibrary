@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PictureLibraryViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,9 @@ namespace PictureLibraryWPF
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        { 
+
+        }
     }
 }

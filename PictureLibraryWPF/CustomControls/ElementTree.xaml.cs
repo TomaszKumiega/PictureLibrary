@@ -4,24 +4,24 @@ using System.Windows.Controls;
 using PictureLibraryModel.Model;
 using PictureLibraryViewModel.ViewModel;
 
-namespace PictureLibraryWPF.CustomControls.Files
+namespace PictureLibraryWPF.CustomControls
 {
     /// <summary>
     /// Interaction logic for FilesTree.xaml
     /// </summary>
-    public partial class FilesTree : UserControl
+    public partial class ElementTree : UserControl
     {
-        public FilesTree(IFileExplorerViewModel viewModel)
+        public ElementTree(IFileExplorerViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
         }
 
-        private void FilesTreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void ElementTreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             var viewModel = DataContext as IFileExplorerViewModel;
 
-            viewModel.SelectedNode = FilesTreeView.SelectedItem as IExplorableElement;
+            viewModel.SelectedNode = ElementTreeView.SelectedItem as IExplorableElement;
         }
     }
 }

@@ -14,7 +14,7 @@ using PictureLibraryModel.Model;
 using PictureLibraryModel.Services;
 using PictureLibraryViewModel.ViewModel;
 
-namespace PictureLibraryWPF.CustomControls.Files
+namespace PictureLibraryWPF.CustomControls
 {
     /// <summary>
     /// Interaction logic for FilesView.xaml
