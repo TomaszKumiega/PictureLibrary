@@ -136,11 +136,15 @@ namespace PictureLibraryViewModel.ViewModel
         {
             var text = "";
 
-            foreach(var t in SelectedFiles)
+            if (SelectedFiles.Count == 1) text = SelectedFiles[0].FullPath;
+            else
             {
-                text += t.FullPath + "\n";
+                foreach (var t in SelectedFiles)
+                {
+                    text += t.FullPath + "\n";
+                }
             }
-
+            
             Clipboard.SystemClipboard = text;
         }
     }
