@@ -14,10 +14,14 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         [Fact]
         public void CanExecute_ShouldReturnTrue_WhenSelectedFileIsInitialized()
         {
-            var imageFile = new Mock<ImageFile>();
+            var imageFileMock = new Mock<ImageFile>();
+
+            var elementsList = new List<IExplorableElement>();
+            elementsList.Add(imageFileMock.Object);
+
             var viewModel = new Mock<IExplorerViewModel>();
-            viewModel.Setup(x => x.SelectedFile)
-                .Returns(imageFile.Object);
+            viewModel.Setup(x => x.SelectedFiles)
+                .Returns(elementsList);
 
             var copyCommand = new CopyCommand(viewModel.Object);
 
@@ -27,10 +31,14 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         [Fact]
         public void CanExecute_ShouldReturnFalse_WhenSelectedFileIsNull()
         {
-            ImageFile file = null;
+            ImageFile imageFile = null;
+
+            var elementsList = new List<IExplorableElement>();
+            elementsList.Add(imageFile);
+
             var viewModel = new Mock<IExplorerViewModel>();
-            viewModel.Setup(x => x.SelectedFile)
-                .Returns(file);
+            viewModel.Setup(x => x.SelectedFiles)
+                .Returns(elementsList);
 
             var copyCommand = new CopyCommand(viewModel.Object);
 

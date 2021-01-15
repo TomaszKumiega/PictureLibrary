@@ -6,6 +6,7 @@ using System;
 using Xunit;
 using Moq;
 using PictureLibraryModel.Services.Clipboard;
+using System.Collections.Generic;
 
 namespace PictureLibraryViewModel.Tests
 {
@@ -21,10 +22,13 @@ namespace PictureLibraryViewModel.Tests
 
             var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object, clipboardMock.Object);
 
-            viewModel.SelectedFile = imageFile;
+            var elementsList = new List<IExplorableElement>();
+            elementsList.Add(imageFile);
+
+            viewModel.SelectedFiles = elementsList;
             viewModel.Copy();
 
-            clipboardMock.VerifySet(x => x.CopiedElement = imageFile);
+            clipboardMock.VerifySet(x => x.CopiedElements = elementsList);
         }
 
 
@@ -38,10 +42,13 @@ namespace PictureLibraryViewModel.Tests
 
             var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object, clipboardMock.Object);
 
-            viewModel.SelectedFile = imageFile;
+            var elementsList = new List<IExplorableElement>();
+            elementsList.Add(imageFile);
+
+            viewModel.SelectedFiles = elementsList;
             viewModel.Cut();
 
-            clipboardMock.VerifySet(x => x.CutElement = imageFile);
+            clipboardMock.VerifySet(x => x.CutElements = elementsList);
         }
 
         [Fact]
@@ -61,8 +68,11 @@ namespace PictureLibraryViewModel.Tests
             var destination = "Tests\\Directory2\\";
             bool copyMethodWasCalled = false;
 
-            clipboardMock.Setup(x => x.CopiedElement)
-                .Returns(imageFile);
+            var elementsList = new List<IExplorableElement>();
+            elementsList.Add(imageFile);
+
+            clipboardMock.Setup(x => x.CopiedElements)
+                .Returns(elementsList);
 
             windowsFileSystemMock.Setup(x => x.Copy(imageFile, destination))
                 .Callback(() => { copyMethodWasCalled = true; });
@@ -90,11 +100,14 @@ namespace PictureLibraryViewModel.Tests
                     FullPath = "Tests\\Directory\\testFile.jpg"
                 };
 
+            var elementsList = new List<IExplorableElement>();
+            elementsList.Add(imageFile);
+
             var destination = "Tests\\Directory2\\";
             bool moveMethodWasCalled = false;
 
-            clipboardMock.Setup(x => x.CutElement)
-                .Returns(imageFile);
+            clipboardMock.Setup(x => x.CutElements)
+                .Returns(elementsList);
 
             windowsFileSystemMock.Setup(x => x.Move(imageFile, destination))
                 .Callback(() => { moveMethodWasCalled = true; });
@@ -125,7 +138,7 @@ namespace PictureLibraryViewModel.Tests
                     FullPath = "Tests\\Directory\\testFile.jpg"
                 };
 
-            viewModel.SelectedFile = imageFile;
+            viewModel.SelectedFiles.Add(imageFile);
 
             viewModel.CopyPath();
 

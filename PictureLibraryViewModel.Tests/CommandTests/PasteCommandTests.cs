@@ -16,9 +16,12 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         {
             var imageFileMock = new Mock<ImageFile>();
 
+            var elementsList = new List<IExplorableElement>();
+            elementsList.Add(imageFileMock.Object);
+
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.Clipboard.CopiedElement)
-                .Returns(imageFileMock.Object);
+            viewModelMock.Setup(x => x.Clipboard.CopiedElements)
+                .Returns(elementsList);
 
             var pasteCommand = new PasteCommand(viewModelMock.Object);
 
@@ -30,9 +33,12 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         {
             ImageFile imageFile = null;
 
+            var elementsList = new List<IExplorableElement>();
+            elementsList.Add(imageFile);
+
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.Clipboard.CopiedElement)
-                .Returns(imageFile);
+            viewModelMock.Setup(x => x.Clipboard.CopiedElements)
+                .Returns(elementsList);
 
             var pasteCommand = new PasteCommand(viewModelMock.Object);
 
