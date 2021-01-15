@@ -20,7 +20,7 @@ namespace PictureLibraryModel.Model
 
         public string FullPath { get; set; }
         public string Name { get; set; }
-        public Bitmap Icon { get; protected set; }
+        public string IconSource { get; protected set; }
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
         public Origin Origin { get; set; }
 
@@ -39,7 +39,7 @@ namespace PictureLibraryModel.Model
 
             PropertyChanged += OnIsExpandedChanged;
 
-            InitializeIcon();
+            IconSource = "pack://application:,,,/Icons/FolderIcon.png";
         }
 
         public bool IsExpanded
@@ -78,18 +78,6 @@ namespace PictureLibraryModel.Model
             }
         }
 
-        private void InitializeIcon()
-        {
-            try
-            {
-                Icon = new Bitmap("Icons\\FolderIcon.png");
-            }
-            catch(Exception e)
-            {
-                _logger.Error(e, "Couldn't load the folder icon");
-            }
-        }
-
         public virtual async Task LoadSubDirectoriesAsync()
         {
             SubDirectories.Clear();
@@ -100,11 +88,6 @@ namespace PictureLibraryModel.Model
             {
                 SubDirectories.Add(t);
             }
-        }
-
-        ~Directory()
-        {
-            Icon?.Dispose();
         }
     }
 }

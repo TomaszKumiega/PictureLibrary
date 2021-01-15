@@ -16,13 +16,13 @@ namespace PictureLibraryModel.Model
         public DateTime LastWriteTime { get; set; }
         public long Size { get; set; }
         public List<Tag> Tags { get; set; }
-
-        public Bitmap Icon { get; set; }
+        public string IconSource { get; }
         public Origin Origin { get; set; }
 
-        ~ImageFile()
+        public ImageFile()
         {
-            Icon?.Dispose();
+            IconSource = FullPath;
         }
+
     }
 }

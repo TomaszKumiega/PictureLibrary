@@ -13,5 +13,11 @@ namespace PictureLibraryModel.Model
         public List<ImageFile> Images { get; set; }
         public List<Guid> Owners { get; set; }
         public Origin Origin { get; set; }
+        public string IconSource { get; }
+
+        public Library()
+        {
+            IconSource = FullPath;
+        }
     }
 }
