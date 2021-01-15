@@ -21,7 +21,7 @@
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type src:Directory}" ItemsSource="{Binding SubDirectories}">
                     <WrapPanel Orientation="Horizontal">
-                        <Image Width="25" Height="25" Source="{Binding ImageSource}"/>
+                        <Image Width="25" Height="25" Source="{Binding IconSource}"/>
                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="#cdcdcd"/>
                     </WrapPanel>
                 </HierarchicalDataTemplate>
