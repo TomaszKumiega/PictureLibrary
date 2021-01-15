@@ -29,7 +29,10 @@ namespace PictureLibraryWPF.CustomControls
 
         private void ItemMouseDoubleClick(object o, EventArgs args)
         {
-            
+            if(DataContext is IFileExplorerViewModel)
+            {
+                (DataContext as IFileExplorerViewModel).CurrentDirectoryPath = (FilesList.SelectedItem as IExplorableElement).FullPath;
+            }
         }
     }
 }
