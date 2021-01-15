@@ -12,16 +12,19 @@ namespace PictureLibraryWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private FilesTree FilesTree { get; set; }
-        private GridSplitter LeftPanelGridSplitter { get; set; }
-        //private FilesView FilesView { get; }
+        private IMainWindowControlsFactory _controlsFactory;
 
-        public MainWindow()
+        private GridSplitter LeftPanelGridSplitter { get; set; }
+        private ElementsView ElementsView { get; }
+        private ElementsTree ElementsTree { get; }
+
+        public MainWindow(IMainWindowControlsFactory controlsFactory)
         {
-            var container = PictureLibraryViewModel.ContainerConfig.Configure();
-            //FilesTree = container.Resolve<FilesTree>();
+            _controlsFactory = controlsFactory;
+
             LeftPanelGridSplitter = new GridSplitter();
-            //FilesView = container.Resolve<FilesView>();
+            ElementsView = _controlsFactory.GetFileElementsView();
+            ElementsTree = _controlsFactory.GetFileElementsTree();
 
             InitializeComponent();
             InitializeControlsOnStartup();
@@ -32,22 +35,20 @@ namespace PictureLibraryWPF
             //TODO: change color of filestree scrollbar
             //TODO: fix formatting / add spaces after and before regions
             
-            /*
-            #region FilesTree
-            Grid.Children.Add(FilesTree);         
-            FilesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
-            FilesTree.VerticalAlignment = VerticalAlignment.Stretch;
-            Grid.SetColumn(FilesTree, 0);
-            Grid.SetRow(FilesTree, 4);
+            #region ElementsTree
+            Grid.Children.Add(ElementsTree);         
+            ElementsTree.HorizontalAlignment = HorizontalAlignment.Stretch;
+            ElementsTree.VerticalAlignment = VerticalAlignment.Stretch;
+            Grid.SetColumn(ElementsTree, 0);
+            Grid.SetRow(ElementsTree, 4);
             #endregion
 
-            #region FilesView
-            Grid.Children.Add(FilesView);
-            FilesView.HorizontalAlignment = HorizontalAlignment.Stretch;
-            FilesView.VerticalAlignment = VerticalAlignment.Stretch;
-            Grid.SetColumn(FilesView, 2);
-            Grid.SetRow(FilesView, 4);
-
+            #region ElementsView
+            Grid.Children.Add(ElementsView);
+            ElementsView.HorizontalAlignment = HorizontalAlignment.Stretch;
+            ElementsView.VerticalAlignment = VerticalAlignment.Stretch;
+            Grid.SetColumn(ElementsView, 2);
+            Grid.SetRow(ElementsView, 4);
             #endregion
 
             #region LeftPanelGridSplitter
@@ -60,7 +61,6 @@ namespace PictureLibraryWPF
             Grid.SetColumn(LeftPanelGridSplitter, 0);
             Grid.SetRow(LeftPanelGridSplitter, 4);
             #endregion
-            */
         }
 
 
