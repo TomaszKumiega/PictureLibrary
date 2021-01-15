@@ -57,7 +57,7 @@ namespace PictureLibraryModel.Model
     public class ImageFile : IExplorableElement
     {
         public string Name { get; set; }
-        public string Extension { get; set; }
+        public ImageExtensions Extension { get; set; }
         public string FullPath { get; set; }
         public string LibraryFullPath { get; set; }
         public DateTime CreationTime { get; set; }
