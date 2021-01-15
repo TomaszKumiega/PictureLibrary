@@ -15,8 +15,8 @@ namespace PictureLibraryViewModel.ViewModel
     {
         private FileSystemService _fileSystemService;
 
-        public ObservableCollection<IFileSystemEntity> DirectoryTree { get; private set; }
-        public ObservableCollection<IFileSystemEntity> CurrentDirectoryFiles { get; private set; }
+        public ObservableCollection<IExplorableElement> DirectoryTree { get; private set; }
+        public ObservableCollection<IExplorableElement> CurrentDirectoryFiles { get; private set; }
         public string CurrentDirectoryPath { get; set; }
         public ICommand CopyFileCommand { get; }
         public ICommand PasteCommand { get; }
@@ -42,7 +42,7 @@ namespace PictureLibraryViewModel.ViewModel
 
         private void InitializeDirectoryTree()
         {
-            DirectoryTree = new ObservableCollection<IFileSystemEntity>();
+            DirectoryTree = new ObservableCollection<IExplorableElement>();
 
             var rootDirectories = _fileSystemService.GetRootDirectories();
             
@@ -55,7 +55,7 @@ namespace PictureLibraryViewModel.ViewModel
 
         private void InitializeCurrentDirectoryFiles()
         {
-            CurrentDirectoryFiles = new ObservableCollection<IFileSystemEntity>();
+            CurrentDirectoryFiles = new ObservableCollection<IExplorableElement>();
 
             foreach (var t in DirectoryTree)
             {
@@ -77,12 +77,12 @@ namespace PictureLibraryViewModel.ViewModel
         {
             if(Clipboard.CopiedElement != null)
             {
-                _fileSystemService.Copy(Clipboard.CopiedElement as IFileSystemEntity, CurrentDirectoryPath);
+                _fileSystemService.Copy(Clipboard.CopiedElement, CurrentDirectoryPath);
                 Clipboard.CopiedElement = null;
             }
             else if(Clipboard.CutElement != null)
             {
-                _fileSystemService.Move(Clipboard.CutElement as IFileSystemEntity, CurrentDirectoryPath);
+                _fileSystemService.Move(Clipboard.CutElement, CurrentDirectoryPath);
                 Clipboard.CutElement = null;
             }
         }

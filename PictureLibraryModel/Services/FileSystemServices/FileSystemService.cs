@@ -41,7 +41,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             return directories;
         }
 
-        public virtual void Copy(IFileSystemEntity entity, string destinationPath)
+        public virtual void Copy(IExplorableElement entity, string destinationPath)
         {
             if (entity == null) throw new ArgumentNullException("Entity");
             if (destinationPath == null) throw new ArgumentNullException("destinationPath");
@@ -59,7 +59,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             }
         }
 
-        public virtual void Move(IFileSystemEntity entity, string destinationPath)
+        public virtual void Move(IExplorableElement entity, string destinationPath)
         {
             if (entity == null) throw new ArgumentNullException("entity");
             if (destinationPath == null) throw new ArgumentNullException("destinationPath");

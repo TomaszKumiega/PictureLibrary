@@ -7,9 +7,9 @@ namespace PictureLibraryViewModel.ViewModel
 {
     public interface IFileExplorerViewModel : IExplorerViewModel
     {
-        ObservableCollection<IFileSystemEntity> CurrentDirectoryFiles { get; }
+        ObservableCollection<IExplorableElement> CurrentDirectoryFiles { get; }
         string CurrentDirectoryPath { get; set; }
-        ObservableCollection<IFileSystemEntity> DirectoryTree { get; }
+        ObservableCollection<IExplorableElement> DirectoryTree { get; }
         ICommand CopyPathCommand { get; }
         
         void CopyPath();

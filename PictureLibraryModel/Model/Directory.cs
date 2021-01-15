@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Model
 {
-    public abstract class Directory : IFileSystemEntity, INotifyPropertyChanged
+    public abstract class Directory : IExplorableElement, INotifyPropertyChanged
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private bool _isExpanded;
@@ -82,7 +82,7 @@ namespace PictureLibraryModel.Model
         {
             try
             {
-                Icon = new Bitmap("Icons/FolderIcon.png");
+                Icon = new Bitmap("Icons\\FolderIcon.png");
             }
             catch(Exception e)
             {

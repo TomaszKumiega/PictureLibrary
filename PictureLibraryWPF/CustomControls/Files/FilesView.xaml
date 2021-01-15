@@ -28,9 +28,9 @@
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
-                <DataTemplate DataType="{x:Type src:IFileSystemEntity}">
+                <DataTemplate DataType="{x:Type src:IExplorableElement}">
                     <StackPanel>
-                        <Image Width="50" Height="50" Source="{Binding ImageSource}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <Image Width="50" Height="50" Source="{Binding IconSource}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         <TextBlock Width="100" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center"  Text="{Binding Name}" Foreground="#cdcdcd"/>
                     </StackPanel>
                 </DataTemplate>

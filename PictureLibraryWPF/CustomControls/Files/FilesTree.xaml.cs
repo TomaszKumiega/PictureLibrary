@@ -24,7 +24,7 @@ namespace PictureLibraryWPF.CustomControls.Files
             
             try
             {
-                viewModel.CurrentDirectoryPath = (this.FilesTreeView.SelectedItem as IFileSystemEntity).FullPath;
+                viewModel.CurrentDirectoryPath = (this.FilesTreeView.SelectedItem as IExplorableElement).FullPath;
             }
             catch 
             {
