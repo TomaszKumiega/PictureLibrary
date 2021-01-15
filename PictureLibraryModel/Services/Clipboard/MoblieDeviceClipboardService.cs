@@ -13,7 +13,13 @@ namespace PictureLibraryModel.Services.Clipboard
             set => Xamarin.Essentials.Clipboard.SetTextAsync(value).Wait();
         }
 
-        public IExplorableElement CopiedElement { get; set; }
-        public IExplorableElement CutElement { get; set; }
+        public MoblieDeviceClipboardService()
+        {
+            CopiedElements = new List<IExplorableElement>();
+            CutElements = new List<IExplorableElement>();
+        }
+
+        public List<IExplorableElement> CopiedElements { get; set; }
+        public List<IExplorableElement> CutElements { get; set; }
     }
 }

@@ -7,12 +7,19 @@ namespace PictureLibraryModel.Services.Clipboard
 {
     public class PCClipboardService : IClipboardService
     {
+        public PCClipboardService()
+        {
+            CopiedElements = new List<IExplorableElement>();
+            CutElements = new List<IExplorableElement>();
+        }
+
         public string SystemClipboard
         {
             get => TextCopy.ClipboardService.GetText(); 
             set => TextCopy.ClipboardService.SetText(value);
         }
-        public IExplorableElement CopiedElement { get; set; }
-        public IExplorableElement CutElement { get; set; }
+
+        public List<IExplorableElement> CopiedElements { get; set; }
+        public List<IExplorableElement> CutElements { get; set; }
     }
 }
