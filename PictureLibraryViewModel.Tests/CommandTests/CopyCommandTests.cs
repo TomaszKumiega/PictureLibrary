@@ -20,7 +20,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             elementsList.Add(imageFileMock.Object);
 
             var viewModel = new Mock<IExplorerViewModel>();
-            viewModel.Setup(x => x.SelectedFiles)
+            viewModel.Setup(x => x.SelectedElements)
                 .Returns(elementsList);
 
             var copyCommand = new CopyCommand(viewModel.Object);
@@ -37,7 +37,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             elementsList.Add(imageFile);
 
             var viewModel = new Mock<IExplorerViewModel>();
-            viewModel.Setup(x => x.SelectedFiles)
+            viewModel.Setup(x => x.SelectedElements)
                 .Returns(elementsList);
 
             var copyCommand = new CopyCommand(viewModel.Object);

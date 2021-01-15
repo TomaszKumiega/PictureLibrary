@@ -19,8 +19,8 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            if (_viewModel.SelectedFiles == null) return false;
-            else if (_viewModel.SelectedFiles.Any()) return true;
+            if (_viewModel.SelectedElements == null) return false;
+            else if (_viewModel.SelectedElements.Any()) return true;
             else return false;
         }
 

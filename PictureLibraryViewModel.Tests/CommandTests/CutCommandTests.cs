@@ -20,7 +20,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             elementsList.Add(imageFileMock.Object);
 
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.SelectedFiles)
+            viewModelMock.Setup(x => x.SelectedElements)
                 .Returns(elementsList);
 
             var cutCommand = new CutCommand(viewModelMock.Object);
@@ -37,7 +37,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             elementsList.Add(imageFile);
 
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.SelectedFiles)
+            viewModelMock.Setup(x => x.SelectedElements)
                 .Returns(elementsList);
 
             var cutCommand = new CutCommand(viewModelMock.Object);

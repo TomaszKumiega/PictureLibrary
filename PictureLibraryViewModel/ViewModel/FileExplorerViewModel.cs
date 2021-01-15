@@ -26,7 +26,7 @@ namespace PictureLibraryViewModel.ViewModel
         public ICommand PasteCommand { get; }
         public ICommand CutCommand { get; }
         public ICommand CopyPathCommand { get; }
-        public List<IExplorableElement> SelectedFiles { get; set; }
+        public List<IExplorableElement> SelectedElements { get; set; }
         public IClipboardService Clipboard { get; }
 
         public FileExplorerViewModel(FileSystemService fileSystemService, ICommandFactory commandFactory, IClipboardService clipboard)
@@ -34,7 +34,7 @@ namespace PictureLibraryViewModel.ViewModel
             _fileSystemService = fileSystemService;
             Clipboard = clipboard;
 
-            SelectedFiles = new List<IExplorableElement>();
+            SelectedElements = new List<IExplorableElement>();
 
             CopyFileCommand = commandFactory.GetCopyCommand(this);
             PasteCommand = commandFactory.GetPasteCommand(this);
@@ -102,12 +102,12 @@ namespace PictureLibraryViewModel.ViewModel
 
         public void Copy()
         {
-            Clipboard.CopiedElements = SelectedFiles;
+            Clipboard.CopiedElements = SelectedElements;
         }
 
         public void Cut()
         {
-            Clipboard.CutElements = SelectedFiles;
+            Clipboard.CutElements = SelectedElements;
         }
 
         public void Paste()
@@ -136,10 +136,10 @@ namespace PictureLibraryViewModel.ViewModel
         {
             var text = "";
 
-            if (SelectedFiles.Count == 1) text = SelectedFiles[0].FullPath;
+            if (SelectedElements.Count == 1) text = SelectedElements[0].FullPath;
             else
             {
-                foreach (var t in SelectedFiles)
+                foreach (var t in SelectedElements)
                 {
                     text += t.FullPath + "\n";
                 }

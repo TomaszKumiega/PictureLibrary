@@ -25,7 +25,7 @@ namespace PictureLibraryViewModel.Tests
             var elementsList = new List<IExplorableElement>();
             elementsList.Add(imageFile);
 
-            viewModel.SelectedFiles = elementsList;
+            viewModel.SelectedElements = elementsList;
             viewModel.Copy();
 
             clipboardMock.VerifySet(x => x.CopiedElements = elementsList);
@@ -45,7 +45,7 @@ namespace PictureLibraryViewModel.Tests
             var elementsList = new List<IExplorableElement>();
             elementsList.Add(imageFile);
 
-            viewModel.SelectedFiles = elementsList;
+            viewModel.SelectedElements = elementsList;
             viewModel.Cut();
 
             clipboardMock.VerifySet(x => x.CutElements = elementsList);
@@ -138,7 +138,7 @@ namespace PictureLibraryViewModel.Tests
                     FullPath = "Tests\\Directory\\testFile.jpg"
                 };
 
-            viewModel.SelectedFiles.Add(imageFile);
+            viewModel.SelectedElements.Add(imageFile);
 
             viewModel.CopyPath();
 

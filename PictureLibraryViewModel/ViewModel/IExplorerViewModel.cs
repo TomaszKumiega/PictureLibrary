@@ -11,7 +11,7 @@ namespace PictureLibraryViewModel.ViewModel
 {
     public interface IExplorerViewModel : INotifyPropertyChanged
     {
-        List<IExplorableElement> SelectedFiles { get; set; }
+        List<IExplorableElement> SelectedElements { get; set; }
         IExplorableElement SelectedNode { get; set; }
         ICommand CopyFileCommand { get; }
         ICommand PasteCommand { get; }
