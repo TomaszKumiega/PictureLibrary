@@ -9,9 +9,9 @@ namespace PictureLibraryWPF.CustomControls
     /// <summary>
     /// Interaction logic for FilesTree.xaml
     /// </summary>
-    public partial class ElementTree : UserControl
+    public partial class ElementsTree : UserControl
     {
-        public ElementTree(IFileExplorerViewModel viewModel)
+        public ElementsTree(IFileExplorerViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
