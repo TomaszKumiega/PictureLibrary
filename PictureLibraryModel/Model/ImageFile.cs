@@ -83,7 +83,7 @@ namespace PictureLibraryModel.Model
         public DateTime LastWriteTime { get; set; }
         public long Size { get; set; }
         public List<Tag> Tags { get; set; }
-        public string IconSource { get; }
+        public string IconSource { get; set; }
         public Origin Origin { get; set; }
 
         public ImageFile()
