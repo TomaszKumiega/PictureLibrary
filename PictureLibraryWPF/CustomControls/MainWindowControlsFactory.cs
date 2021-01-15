@@ -15,12 +15,12 @@ namespace PictureLibraryWPF.CustomControls
             FileExplorerViewModel = fileExplorerViewModel;
         }
 
-        public UserControl GetFileElementsTree()
+        public ElementsTree GetFileElementsTree()
         {
             return new ElementsTree(FileExplorerViewModel);
         }
 
-        public UserControl GetFileElementsView()
+        public ElementsView GetFileElementsView()
         {
             return new ElementsView(FileExplorerViewModel);
         }

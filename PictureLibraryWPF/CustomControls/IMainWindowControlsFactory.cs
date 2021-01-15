@@ -10,7 +10,7 @@ namespace PictureLibraryWPF.CustomControls
     {
         IFileExplorerViewModel FileExplorerViewModel { get; }
 
-        UserControl GetFileElementsTree();
-        UserControl GetFileElementsView();
+        ElementsTree GetFileElementsTree();
+        ElementsView GetFileElementsView();
     }
 }
