@@ -21,7 +21,7 @@ namespace PictureLibraryViewModel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
-        public ObservableCollection<IExplorableElement> CurrentDirectoryFiles { get; private set; }
+        public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; private set; }
         public ICommand CopyFileCommand { get; }
         public ICommand PasteCommand { get; }
         public ICommand CutCommand { get; }
@@ -80,21 +80,21 @@ namespace PictureLibraryViewModel.ViewModel
 
         private void InitializeCurrentDirectoryFiles()
         {
-            CurrentDirectoryFiles = new ObservableCollection<IExplorableElement>();
+            CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
 
             foreach (var t in ExplorableElementsTree)
             {
-                CurrentDirectoryFiles.Add(t);
+                CurrentlyShownElements.Add(t);
             }
         }
 
         private void ReloadCurrentDirectoryFiles()
         {
-            CurrentDirectoryFiles.Clear();
+            CurrentlyShownElements.Clear();
 
             foreach (var t in _fileSystemService.GetDirectoryContent(CurrentDirectoryPath))
             {
-                CurrentDirectoryFiles.Add(t);
+                CurrentlyShownElements.Add(t);
             }
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryFiles"));

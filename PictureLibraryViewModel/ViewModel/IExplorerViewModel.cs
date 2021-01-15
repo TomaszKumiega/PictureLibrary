@@ -3,6 +3,7 @@ using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
@@ -17,7 +18,8 @@ namespace PictureLibraryViewModel.ViewModel
         ICommand PasteCommand { get; }
         ICommand CutCommand { get; }
         IClipboardService Clipboard { get; }
-        
+        ObservableCollection<IExplorableElement> ExplorableElementsTree { get; }
+
         void Copy();
         void Cut();
         void Paste();
