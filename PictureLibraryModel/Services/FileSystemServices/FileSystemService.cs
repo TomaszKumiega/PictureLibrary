@@ -108,7 +108,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             {
                 var directoryInfo = new DirectoryInfo(t);
 
-                content.Add(new Folder(directoryInfo.Name, directoryInfo.FullName, this, Origin.Local));
+                content.Add(new Folder(directoryInfo.FullName, directoryInfo.Name, this, Origin.Local));
             }
 
             return content;
