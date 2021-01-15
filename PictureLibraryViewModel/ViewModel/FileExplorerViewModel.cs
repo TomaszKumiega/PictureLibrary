@@ -97,7 +97,7 @@ namespace PictureLibraryViewModel.ViewModel
                 CurrentlyShownElements.Add(t);
             }
 
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryFiles"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyShownElements"));
         }
 
         public void Copy()
