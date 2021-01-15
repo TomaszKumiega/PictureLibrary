@@ -29,16 +29,15 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         }
 
         [Fact]
-        public void CanExecute_ShouldReturnFalse_WhenCopiedFileIsNull()
+        public void CanExecute_ShouldReturnFalse_WhenCopiedElements_AndCutElements_AreNull()
         {
-            ImageFile imageFile = null;
-
-            var elementsList = new List<IExplorableElement>();
-            elementsList.Add(imageFile);
+            List<IExplorableElement> list = null;
 
             var viewModelMock = new Mock<IExplorerViewModel>();
             viewModelMock.Setup(x => x.Clipboard.CopiedElements)
-                .Returns(elementsList);
+                .Returns(list);
+            viewModelMock.Setup(x => x.Clipboard.CutElements)
+                .Returns(list);
 
             var pasteCommand = new PasteCommand(viewModelMock.Object);
 
