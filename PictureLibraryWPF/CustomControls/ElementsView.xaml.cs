@@ -19,9 +19,9 @@ namespace PictureLibraryWPF.CustomControls
     /// <summary>
     /// Interaction logic for FilesView.xaml
     /// </summary>
-    public partial class FilesView : UserControl
+    public partial class ElementsView : UserControl
     {
-        public FilesView(IFileExplorerViewModel viewModel)
+        public ElementsView(IFileExplorerViewModel viewModel)
         {
             InitializeComponent();
             viewModel.SelectedElements = (List<IExplorableElement>) FilesList.SelectedItems;
