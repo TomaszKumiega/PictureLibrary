@@ -9,7 +9,7 @@ namespace PictureLibraryModel.Services.Clipboard
     {
         string SystemClipboard { get; set; }
 
-        IExplorableElement CopiedElement { get; set; }
-        IExplorableElement CutElement { get; set; }
+        List<IExplorableElement> CopiedElements { get; set; }
+        List<IExplorableElement> CutElements { get; set; }
     }
 }

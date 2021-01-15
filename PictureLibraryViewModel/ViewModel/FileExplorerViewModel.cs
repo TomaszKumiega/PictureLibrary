@@ -26,7 +26,7 @@ namespace PictureLibraryViewModel.ViewModel
         public ICommand PasteCommand { get; }
         public ICommand CutCommand { get; }
         public ICommand CopyPathCommand { get; }
-        public IExplorableElement SelectedFile { get; set; }
+        public List<IExplorableElement> SelectedFiles { get; set; }
         public IClipboardService Clipboard { get; }
 
         public FileExplorerViewModel(FileSystemService fileSystemService, ICommandFactory commandFactory, IClipboardService clipboard)
@@ -100,31 +100,46 @@ namespace PictureLibraryViewModel.ViewModel
 
         public void Copy()
         {
-            Clipboard.CopiedElement = SelectedFile;
+            Clipboard.CopiedElements = SelectedFiles;
         }
 
         public void Cut()
         {
-            Clipboard.CutElement = SelectedFile;
+            Clipboard.CutElements = SelectedFiles;
         }
 
         public void Paste()
         {
-            if(Clipboard.CopiedElement != null)
+            if(Clipboard.CopiedElements != null)
             {
-                _fileSystemService.Copy(Clipboard.CopiedElement, CurrentDirectoryPath);
-                Clipboard.CopiedElement = null;
+                foreach(var t in Clipboard.CopiedElements)
+                {
+                    _fileSystemService.Copy(t, CurrentDirectoryPath);
+                }
+
+                Clipboard.CopiedElements = null;
             }
-            else if(Clipboard.CutElement != null)
+            else if(Clipboard.CutElements != null)
             {
-                _fileSystemService.Move(Clipboard.CutElement, CurrentDirectoryPath);
-                Clipboard.CutElement = null;
+                foreach(var t in Clipboard.CutElements)
+                {
+                    _fileSystemService.Move(t, CurrentDirectoryPath);
+                }
+
+                Clipboard.CutElements = null;
             }
         }
 
         public void CopyPath()
         {
-            Clipboard.SystemClipboard = SelectedFile.FullPath;
+            var text = "";
+
+            foreach(var t in SelectedFiles)
+            {
+                text += t.FullPath + "\n";
+            }
+
+            Clipboard.SystemClipboard = text;
         }
     }
 }
