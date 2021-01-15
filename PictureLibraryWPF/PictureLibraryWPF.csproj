@@ -13,6 +13,7 @@
     <None Remove="Icons\ComputerIcon.png" />
     <None Remove="Icons\DiskIcon.png" />
     <None Remove="Icons\FolderIcon.png" />
+    <None Remove="Icons\LibraryIcon.png" />
     <None Remove="Icons\MaximizeIcon.png" />
     <None Remove="Icons\MinimizeIcon.png" />
     <None Remove="Icons\SearchIcon.png" />
@@ -42,6 +43,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\FolderIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\LibraryIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\MaximizeIcon.png">

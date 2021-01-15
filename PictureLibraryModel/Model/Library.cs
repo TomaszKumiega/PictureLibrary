@@ -17,7 +17,7 @@ namespace PictureLibraryModel.Model
 
         public Library()
         {
-            IconSource = FullPath;
+            IconSource = "pack://application:,,,/Icons/LibraryIcon.png";
         }
     }
 }
