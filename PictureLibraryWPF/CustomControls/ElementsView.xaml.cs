@@ -21,7 +21,7 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class ElementsView : UserControl
     {
-        public ElementsView(IFileExplorerViewModel viewModel)
+        public ElementsView(IExplorerViewModel viewModel)
         {
             InitializeComponent();
             viewModel.SelectedElements = (List<IExplorableElement>) FilesList.SelectedItems;
@@ -30,8 +30,7 @@ namespace PictureLibraryWPF.CustomControls
 
         private void ItemMouseDoubleClick(object o, EventArgs args)
         {
-            (DataContext as IFileExplorerViewModel).CurrentDirectoryPath =
-                ((o as ListViewItem).Tag as string);
+            
         }
     }
 }
