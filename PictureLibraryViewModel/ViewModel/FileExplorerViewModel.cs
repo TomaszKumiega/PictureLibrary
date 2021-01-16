@@ -130,6 +130,8 @@ namespace PictureLibraryViewModel.ViewModel
 
                 Clipboard.CutElements = null;
             }
+
+            ReloadCurrentDirectoryFiles();
         }
 
         public void CopyPath()
