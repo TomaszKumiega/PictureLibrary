@@ -147,5 +147,17 @@ namespace PictureLibraryModel.Tests.ModelTests
 
             Assert.True(name == builder.ImageFile.Name);
         }
+
+        [Fact]
+        public void BuildOrigin_ShouldSetOriginToLocal()
+        {
+            var fileInfoMock = new Mock<IFileInfo>();
+
+            var builder = new LocalFileSystemImageFileBuilder(fileInfoMock.Object);
+
+            builder.BuildOrigin();
+
+            Assert.True(Origin.Local == builder.ImageFile.Origin);
+        }
     }
 }
