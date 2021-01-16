@@ -9,6 +9,8 @@ using System.Linq;
 using Directory = PictureLibraryModel.Model.Directory;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders;
+using SystemInterface.IO;
+using SystemWrapper.IO;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {
@@ -112,6 +114,11 @@ namespace PictureLibraryModel.Services.FileSystemServices
             }
 
             return content;
+        }
+
+        public virtual IFileInfo GetFileInfo(string path)
+        {
+            return new FileInfoWrap(new FileInfo(path));
         }
 
         private void CopyDirectory(string sourcePath, string destinationPath)
