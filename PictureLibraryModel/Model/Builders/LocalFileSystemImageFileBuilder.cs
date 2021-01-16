@@ -13,6 +13,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public LocalFileSystemImageFileBuilder(IFileInfo fileInfo)
         {
+            ImageFile = new ImageFile();
             _fileInfo = fileInfo;
         }
 
