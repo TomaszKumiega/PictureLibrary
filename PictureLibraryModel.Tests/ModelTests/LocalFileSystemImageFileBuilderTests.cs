@@ -100,5 +100,24 @@ namespace PictureLibraryModel.Tests.ModelTests
 
             Assert.True(DateTime.Compare(dateTime, builder.ImageFile.LastAccessTime) == 0);
         }
+
+        [Fact]
+        public void BuildLastWriteTime_ShouldInitializeLastWriteTime_WhenFileInfoIsInitialized()
+        {
+            var dateTime = DateTime.Now;
+            var fileInfoMock = new Mock<IFileInfo>();
+            var dateTimeMock = new Mock<IDateTime>();
+
+            dateTimeMock.Setup(x => x.DateTimeInstance)
+                .Returns(dateTime);
+            fileInfoMock.Setup(x => x.LastWriteTimeUtc)
+                .Returns(dateTimeMock.Object);
+
+            var builder = new LocalFileSystemImageFileBuilder(fileInfoMock.Object);
+
+            builder.BuildLastWriteTime();
+
+            Assert.True(DateTime.Compare(dateTime, builder.ImageFile.LastWriteTime) == 0);
+        }
     }
 }
