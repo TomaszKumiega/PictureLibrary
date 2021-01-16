@@ -159,5 +159,21 @@ namespace PictureLibraryModel.Tests.ModelTests
 
             Assert.True(Origin.Local == builder.ImageFile.Origin);
         }
+
+        [Fact]
+        public void BuildSize_ShouldInitializeSize_WhenFileInfoIsInitialized()
+        {
+            long size = 1634131;
+            var fileInfoMock = new Mock<IFileInfo>();
+
+            fileInfoMock.Setup(x => x.Length)
+                .Returns(size);
+
+            var builder = new LocalFileSystemImageFileBuilder(fileInfoMock.Object);
+
+            builder.BuildSize();
+
+            Assert.Equal(size, builder.ImageFile.Size);
+        }
     }
 }
