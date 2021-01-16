@@ -156,6 +156,8 @@ namespace PictureLibraryViewModel.ViewModel
             {
                 _fileSystemService.Remove(t);
             }
+
+            ReloadCurrentDirectoryFiles();
         }
     }
 }
