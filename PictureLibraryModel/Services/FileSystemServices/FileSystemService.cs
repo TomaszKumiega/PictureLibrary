@@ -121,6 +121,22 @@ namespace PictureLibraryModel.Services.FileSystemServices
             return new FileInfoWrap(new FileInfo(path));
         }
 
+        public virtual void Remove(IExplorableElement element)
+        {
+            if(element is ImageFile)
+            {
+                File.Delete(element.FullPath);
+            }
+            else if(element is Folder)
+            {
+                System.IO.Directory.Delete(element.FullPath, true);
+            }
+            else
+            {
+                throw new NotSupportedException("Cannot remove element of type: " + element.GetType().ToString());
+            }
+        }
+
         private void CopyDirectory(string sourcePath, string destinationPath)
         {
             if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
