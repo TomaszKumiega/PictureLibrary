@@ -81,5 +81,24 @@ namespace PictureLibraryModel.Tests.ModelTests
 
             Assert.True(filePath == builder.ImageFile.IconSource);
         }
+
+        [Fact]
+        public void BuildLastAccessTime_ShouldInitializeLastAccessTime_WhenFileInfoIsInitialized()
+        {
+            var dateTime = DateTime.Now;
+            var fileInfoMock = new Mock<IFileInfo>();
+            var dateTimeMock = new Mock<IDateTime>();
+
+            dateTimeMock.Setup(x => x.DateTimeInstance)
+                .Returns(dateTime);
+            fileInfoMock.Setup(x => x.LastAccessTimeUtc)
+                .Returns(dateTimeMock.Object);
+
+            var builder = new LocalFileSystemImageFileBuilder(fileInfoMock.Object);
+
+            builder.BuildLastAccessTime();
+
+            Assert.True(DateTime.Compare(dateTime, builder.ImageFile.LastAccessTime) == 0);
+        }
     }
 }
