@@ -2,47 +2,48 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using SystemInterface.IO;
 
 namespace PictureLibraryModel.Model.Builders
 {
     public class LocalFileSystemImageFileBuilder : IImageFileBuilder
     {
-        private FileInfo _fileInfo;
+        private IFileInfo _fileInfo;
         public ImageFile ImageFile { get; private set; }
 
-        public LocalFileSystemImageFileBuilder(FileInfo fileInfo)
+        public LocalFileSystemImageFileBuilder(IFileInfo fileInfo)
         {
             _fileInfo = fileInfo;
         }
 
         public void BuildCreationTime()
         {
-            ImageFile.CreationTime = _fileInfo.CreationTimeUtc;
+            ImageFile.CreationTime = _fileInfo.FileInfoInstance.CreationTimeUtc;
         }
 
         public void BuildExtension()
         {
-            ImageFile.Extension = ImageExtensionHelper.GetExtension(_fileInfo.Extension);
+            ImageFile.Extension = ImageExtensionHelper.GetExtension(_fileInfo.FileInfoInstance.Extension);
         }
 
         public void BuildFullPath()
         {
-            ImageFile.FullPath = _fileInfo.FullName;
+            ImageFile.FullPath = _fileInfo.FileInfoInstance.FullName;
         }
 
         public void BuildIconSource()
         {
-            ImageFile.IconSource = _fileInfo.FullName;
+            ImageFile.IconSource = _fileInfo.FileInfoInstance.FullName;
         }
 
         public void BuildLastAccessTime()
         {
-            ImageFile.LastAccessTime = _fileInfo.LastAccessTimeUtc;
+            ImageFile.LastAccessTime = _fileInfo.FileInfoInstance.LastAccessTimeUtc;
         }
 
         public void BuildLastWriteTime()
         {
-            ImageFile.LastWriteTime = _fileInfo.LastWriteTimeUtc;
+            ImageFile.LastWriteTime = _fileInfo.FileInfoInstance.LastWriteTimeUtc;
         }
 
         public void BuildLibraryFullPath()
@@ -52,7 +53,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public void BuildName()
         {
-            ImageFile.Name = _fileInfo.Name;
+            ImageFile.Name = _fileInfo.FileInfoInstance.Name;
         }
 
         public void BuildOrigin()
@@ -62,7 +63,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public void BuildSize()
         {
-            ImageFile.Size = _fileInfo.Length;
+            ImageFile.Size = _fileInfo.FileInfoInstance.Length;
         }
 
         public void BuildTags()
