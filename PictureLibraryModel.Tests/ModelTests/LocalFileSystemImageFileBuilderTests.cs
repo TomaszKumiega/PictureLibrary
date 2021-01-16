@@ -65,5 +65,21 @@ namespace PictureLibraryModel.Tests.ModelTests
 
             Assert.True(filePath == builder.ImageFile.FullPath);
         }
+
+        [Fact]
+        public void BuildIconSource_ShouldInitializeIconSource_WhenFileInfoIsInitialized()
+        {
+            var filePath = "Tests\\fileName.jpg";
+            var fileInfoMock = new Mock<IFileInfo>();
+
+            fileInfoMock.Setup(x => x.FullName)
+                .Returns(filePath);
+
+            var builder = new LocalFileSystemImageFileBuilder(fileInfoMock.Object);
+
+            builder.BuildIconSource();
+
+            Assert.True(filePath == builder.ImageFile.IconSource);
+        }
     }
 }
