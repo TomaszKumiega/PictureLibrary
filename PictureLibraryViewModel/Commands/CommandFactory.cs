@@ -27,5 +27,10 @@ namespace PictureLibraryViewModel.Commands
         {
             return new CopyPathCommand(viewModel);
         }
+
+        public ICommand GetRemoveCommand(IExplorerViewModel viewModel)
+        {
+            return new RemoveCommand(viewModel);
+        }
     }
 }
