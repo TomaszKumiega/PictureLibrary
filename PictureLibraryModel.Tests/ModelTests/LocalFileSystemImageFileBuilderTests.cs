@@ -131,5 +131,21 @@ namespace PictureLibraryModel.Tests.ModelTests
 
             Assert.True(builder.ImageFile.LibraryFullPath == null);
         }
+
+        [Fact]
+        public void BuildName_ShouldInitializeName_WhenFileInfoIsInitialized()
+        {
+            var name = "filename.jpg";
+            var fileInfoMock = new Mock<IFileInfo>();
+
+            fileInfoMock.Setup(x => x.Name)
+                .Returns(name);
+
+            var builder = new LocalFileSystemImageFileBuilder(fileInfoMock.Object);
+
+            builder.BuildName();
+
+            Assert.True(name == builder.ImageFile.Name);
+        }
     }
 }
