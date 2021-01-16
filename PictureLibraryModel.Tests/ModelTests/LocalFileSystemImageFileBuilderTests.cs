@@ -175,5 +175,17 @@ namespace PictureLibraryModel.Tests.ModelTests
 
             Assert.Equal(size, builder.ImageFile.Size);
         }
+
+        [Fact]
+        public void BuildTags_ShouldSetTagsToNull()
+        {
+            var fileInfoMock = new Mock<IFileInfo>();
+
+            var builder = new LocalFileSystemImageFileBuilder(fileInfoMock.Object);
+
+            builder.BuildTags();
+
+            Assert.True(builder.ImageFile.Tags == null);
+        }
     }
 }
