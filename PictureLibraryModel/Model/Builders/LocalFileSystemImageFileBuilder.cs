@@ -18,32 +18,32 @@ namespace PictureLibraryModel.Model.Builders
 
         public void BuildCreationTime()
         {
-            ImageFile.CreationTime = _fileInfo.FileInfoInstance.CreationTimeUtc;
+            ImageFile.CreationTime = _fileInfo.CreationTimeUtc.DateTimeInstance;
         }
 
         public void BuildExtension()
         {
-            ImageFile.Extension = ImageExtensionHelper.GetExtension(_fileInfo.FileInfoInstance.Extension);
+            ImageFile.Extension = ImageExtensionHelper.GetExtension(_fileInfo.Extension);
         }
 
         public void BuildFullPath()
         {
-            ImageFile.FullPath = _fileInfo.FileInfoInstance.FullName;
+            ImageFile.FullPath = _fileInfo.FullName;
         }
 
         public void BuildIconSource()
         {
-            ImageFile.IconSource = _fileInfo.FileInfoInstance.FullName;
+            ImageFile.IconSource = _fileInfo.FullName;
         }
 
         public void BuildLastAccessTime()
         {
-            ImageFile.LastAccessTime = _fileInfo.FileInfoInstance.LastAccessTimeUtc;
+            ImageFile.LastAccessTime = _fileInfo.LastAccessTimeUtc.DateTimeInstance;
         }
 
         public void BuildLastWriteTime()
         {
-            ImageFile.LastWriteTime = _fileInfo.FileInfoInstance.LastWriteTimeUtc;
+            ImageFile.LastWriteTime = _fileInfo.LastWriteTimeUtc.DateTimeInstance;
         }
 
         public void BuildLibraryFullPath()
@@ -53,7 +53,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public void BuildName()
         {
-            ImageFile.Name = _fileInfo.FileInfoInstance.Name;
+            ImageFile.Name = _fileInfo.Name;
         }
 
         public void BuildOrigin()
@@ -63,7 +63,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public void BuildSize()
         {
-            ImageFile.Size = _fileInfo.FileInfoInstance.Length;
+            ImageFile.Size = _fileInfo.Length;
         }
 
         public void BuildTags()
