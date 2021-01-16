@@ -119,5 +119,17 @@ namespace PictureLibraryModel.Tests.ModelTests
 
             Assert.True(DateTime.Compare(dateTime, builder.ImageFile.LastWriteTime) == 0);
         }
+
+        [Fact]
+        public void BuildLibraryFullPath_ShouldMakeLibraryFullPathNull_WhenFileInfoIsInitialized()
+        {
+            var fileInfoMock = new Mock<IFileInfo>();
+
+            var builder = new LocalFileSystemImageFileBuilder(fileInfoMock.Object);
+
+            builder.BuildLibraryFullPath();
+
+            Assert.True(builder.ImageFile.LibraryFullPath == null);
+        }
     }
 }
