@@ -147,5 +147,13 @@ namespace PictureLibraryViewModel.ViewModel
             
             Clipboard.SystemClipboard = text;
         }
+
+        public void Remove()
+        {
+            foreach(var t in SelectedElements)
+            {
+                _fileSystemService.Remove(t);
+            }
+        }
     }
 }
