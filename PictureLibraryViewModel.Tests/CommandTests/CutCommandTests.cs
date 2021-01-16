@@ -48,7 +48,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             bool methodWasCalled = false;
 
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.Cut())
+            viewModelMock.Setup(x => x.CutSelectedElements())
                 .Callback(() => { methodWasCalled = true; });
 
             var cutCommand = new CutCommand(viewModelMock.Object);

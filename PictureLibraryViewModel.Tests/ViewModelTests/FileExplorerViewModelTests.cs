@@ -26,7 +26,7 @@ namespace PictureLibraryViewModel.Tests
             elementsList.Add(imageFile);
 
             viewModel.SelectedElements = elementsList;
-            viewModel.Copy();
+            viewModel.CopySelectedElements();
 
             clipboardMock.VerifySet(x => x.CopiedElements = elementsList);
         }
@@ -46,7 +46,7 @@ namespace PictureLibraryViewModel.Tests
             elementsList.Add(imageFile);
 
             viewModel.SelectedElements = elementsList;
-            viewModel.Cut();
+            viewModel.CutSelectedElements();
 
             clipboardMock.VerifySet(x => x.CutElements = elementsList);
         }
@@ -81,7 +81,7 @@ namespace PictureLibraryViewModel.Tests
 
             viewModel.CurrentDirectoryPath = destination;
 
-            viewModel.Paste();
+            viewModel.PasteSelectedElements();
 
             Assert.True(copyMethodWasCalled);
         }
@@ -116,7 +116,7 @@ namespace PictureLibraryViewModel.Tests
 
             viewModel.CurrentDirectoryPath = destination;
 
-            viewModel.Paste();
+            viewModel.PasteSelectedElements();
 
             Assert.True(moveMethodWasCalled);
 

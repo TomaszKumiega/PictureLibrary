@@ -50,7 +50,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             bool methodWasCalled = false;
 
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.Paste())
+            viewModelMock.Setup(x => x.PasteSelectedElements())
                 .Callback(() => { methodWasCalled = true; });
 
             var pasteCommand = new PasteCommand(viewModelMock.Object);

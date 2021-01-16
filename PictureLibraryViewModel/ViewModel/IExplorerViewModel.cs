@@ -21,8 +21,8 @@ namespace PictureLibraryViewModel.ViewModel
         ObservableCollection<IExplorableElement> ExplorableElementsTree { get; }
         ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
 
-        void Copy();
-        void Cut();
-        void Paste();
+        void CopySelectedElements();
+        void CutSelectedElements();
+        void PasteSelectedElements();
     }
 }

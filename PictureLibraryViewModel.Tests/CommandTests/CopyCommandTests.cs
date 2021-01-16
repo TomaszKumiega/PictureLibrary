@@ -48,7 +48,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
             bool methodWasCalled = false;
 
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.Copy())
+            viewModelMock.Setup(x => x.CopySelectedElements())
                 .Callback(() => { methodWasCalled = true; });
 
             var copyCommand = new CopyCommand(viewModelMock.Object);

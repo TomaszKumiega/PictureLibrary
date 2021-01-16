@@ -100,17 +100,17 @@ namespace PictureLibraryViewModel.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyShownElements"));
         }
 
-        public void Copy()
+        public void CopySelectedElements()
         {
             Clipboard.CopiedElements = SelectedElements;
         }
 
-        public void Cut()
+        public void CutSelectedElements()
         {
             Clipboard.CutElements = SelectedElements;
         }
 
-        public void Paste()
+        public void PasteSelectedElements()
         {
             if(Clipboard.CopiedElements != null)
             {
@@ -148,7 +148,7 @@ namespace PictureLibraryViewModel.ViewModel
             Clipboard.SystemClipboard = text;
         }
 
-        public void Remove()
+        public void RemoveSelectedElements()
         {
             foreach(var t in SelectedElements)
             {

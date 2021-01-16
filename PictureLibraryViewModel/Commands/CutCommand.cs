@@ -26,7 +26,7 @@ namespace PictureLibraryViewModel.Commands
 
         public void Execute(object parameter)
         {
-            _viewModel.Cut();
+            _viewModel.CutSelectedElements();
         }
     }
 }
