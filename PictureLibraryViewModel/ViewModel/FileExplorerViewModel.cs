@@ -26,6 +26,7 @@ namespace PictureLibraryViewModel.ViewModel
         public ICommand PasteCommand { get; }
         public ICommand CutCommand { get; }
         public ICommand CopyPathCommand { get; }
+        public ICommand RemoveCommand { get; }
         public List<IExplorableElement> SelectedElements { get; set; }
         public IClipboardService Clipboard { get; }
 
@@ -40,6 +41,7 @@ namespace PictureLibraryViewModel.ViewModel
             PasteCommand = commandFactory.GetPasteCommand(this);
             CutCommand = commandFactory.GetCutCommand(this);
             CopyPathCommand = commandFactory.GetCopyPathCommand(this);
+            RemoveCommand = commandFactory.GetRemoveCommand(this);
 
             InitializeDirectoryTree();
             InitializeCurrentDirectoryFiles();
