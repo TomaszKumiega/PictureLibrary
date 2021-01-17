@@ -32,5 +32,10 @@ namespace PictureLibraryViewModel.Commands
         {
             return new RemoveCommand(viewModel);
         }
+
+        public ICommand GetRenameCommand(IExplorerViewModel viewModel)
+        {
+            return new RenameCommand(viewModel);
+        }
     }
 }

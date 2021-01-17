@@ -13,5 +13,6 @@ namespace PictureLibraryViewModel.Commands
         ICommand GetCutCommand(IExplorerViewModel viewModel);
         ICommand GetCopyPathCommand(IFileExplorerViewModel viewModel);
         ICommand GetRemoveCommand(IExplorerViewModel viewModel);
+        ICommand GetRenameCommand(IExplorerViewModel viewModel);
     }
 }

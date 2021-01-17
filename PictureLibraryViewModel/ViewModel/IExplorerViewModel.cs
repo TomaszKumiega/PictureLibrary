@@ -17,6 +17,7 @@ namespace PictureLibraryViewModel.ViewModel
         ICommand CopyFileCommand { get; }
         ICommand PasteCommand { get; }
         ICommand CutCommand { get; }
+        ICommand RenameCommand { get; }
         IClipboardService Clipboard { get; }
         ObservableCollection<IExplorableElement> ExplorableElementsTree { get; }
         ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
