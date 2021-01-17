@@ -11,5 +11,6 @@ namespace PictureLibraryViewModel.ViewModel
         ICommand CopyPathCommand { get; }
         
         void CopyPath();
+        void CreateDirectory(string path);
     }
 }

@@ -180,6 +180,11 @@ namespace PictureLibraryViewModel.ViewModel
                 _fileSystemService.Rename(SelectedElements[i], SelectedElements[i].Name + (i > 0 ? i.ToString() : ""));
             }
         }
+
+        public void CreateDirectory(string path)
+        { 
+            _fileSystemService.CreateDirectory(path);    
+        }
         #endregion
     }
 }
