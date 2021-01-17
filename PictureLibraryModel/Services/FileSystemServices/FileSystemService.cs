@@ -153,6 +153,11 @@ namespace PictureLibraryModel.Services.FileSystemServices
             }
         }
 
+        public virtual void CreateDirectory(string path)
+        {
+            System.IO.Directory.CreateDirectory(path);
+        }
+
         private void CopyDirectory(string sourcePath, string destinationPath)
         {
             if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
