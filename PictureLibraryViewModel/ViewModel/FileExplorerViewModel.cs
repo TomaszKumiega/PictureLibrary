@@ -20,6 +20,7 @@ namespace PictureLibraryViewModel.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #region Public Properties
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; private set; }
         public ICommand CopyFileCommand { get; }
@@ -27,10 +28,30 @@ namespace PictureLibraryViewModel.ViewModel
         public ICommand CutCommand { get; }
         public ICommand CopyPathCommand { get; }
         public ICommand RemoveCommand { get; }
-
         public ICommand RenameCommand { get; }
         public List<IExplorableElement> SelectedElements { get; set; }
         public IClipboardService Clipboard { get; }
+
+        public IExplorableElement SelectedNode
+        {
+            get => _selectedNode;
+            set
+            {
+                _selectedNode = value;
+                CurrentDirectoryPath = _selectedNode.FullPath;
+            }
+        }
+
+        public string CurrentDirectoryPath
+        {
+            get => _currentDirectoryPath;
+            set
+            {
+                _currentDirectoryPath = value;
+                ReloadCurrentDirectoryFiles();
+            }
+        }
+        #endregion
 
         public FileExplorerViewModel(FileSystemService fileSystemService, ICommandFactory commandFactory, IClipboardService clipboard)
         {
@@ -39,37 +60,20 @@ namespace PictureLibraryViewModel.ViewModel
 
             SelectedElements = new List<IExplorableElement>();
 
+            #region Command Initialization
             CopyFileCommand = commandFactory.GetCopyCommand(this);
             PasteCommand = commandFactory.GetPasteCommand(this);
             CutCommand = commandFactory.GetCutCommand(this);
             CopyPathCommand = commandFactory.GetCopyPathCommand(this);
             RemoveCommand = commandFactory.GetRemoveCommand(this);
             RenameCommand = commandFactory.GetRenameCommand(this);
+            #endregion
 
             InitializeDirectoryTree();
             InitializeCurrentDirectoryFiles();
         }
 
-        public IExplorableElement SelectedNode 
-        { 
-            get => _selectedNode; 
-            set
-            {
-                _selectedNode = value;
-                CurrentDirectoryPath = _selectedNode.FullPath;
-            }
-        }
-
-        public string CurrentDirectoryPath 
-        {
-            get => _currentDirectoryPath; 
-            set
-            {
-                _currentDirectoryPath = value;
-                ReloadCurrentDirectoryFiles();
-            }
-        }
-
+        #region Initialize methods
         private void InitializeDirectoryTree()
         {
             ExplorableElementsTree = new ObservableCollection<IExplorableElement>();
@@ -92,7 +96,9 @@ namespace PictureLibraryViewModel.ViewModel
                 CurrentlyShownElements.Add(t);
             }
         }
+        #endregion
 
+        #region ViewModel Logic
         private void ReloadCurrentDirectoryFiles()
         {
             CurrentlyShownElements.Clear();
@@ -174,5 +180,6 @@ namespace PictureLibraryViewModel.ViewModel
                 _fileSystemService.Rename(SelectedElements[i], SelectedElements[i].Name + (i > 0 ? i.ToString() : ""));
             }
         }
+        #endregion
     }
 }
