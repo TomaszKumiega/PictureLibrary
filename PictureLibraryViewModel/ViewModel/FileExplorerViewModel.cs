@@ -162,13 +162,13 @@ namespace PictureLibraryViewModel.ViewModel
             ReloadCurrentDirectoryFiles();
         }
 
-        public void RenameSelectedElements(string name)
+        public void RenameSelectedElements()
         {
             if (SelectedElements == null) throw new ArgumentNullException();
             
             for(int i=0; i<SelectedElements.Count; i++)
             {
-                _fileSystemService.Rename(SelectedElements[i], name + (i > 0 ? i.ToString() : ""));
+                _fileSystemService.Rename(SelectedElements[i], SelectedElements[i].Name + (i > 0 ? i.ToString() : ""));
             }
         }
     }
