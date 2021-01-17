@@ -9,7 +9,8 @@ namespace PictureLibraryViewModel.ViewModel
     {
         string CurrentDirectoryPath { get; set; }
         ICommand CopyPathCommand { get; }
-        
+        ICommand CreateFolderCommand { get; }
+
         void CopyPath();
         void CreateDirectory(string path);
     }

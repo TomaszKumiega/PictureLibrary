@@ -37,5 +37,10 @@ namespace PictureLibraryViewModel.Commands
         {
             return new RenameCommand(viewModel);
         }
+
+        public ICommand GetCreateFolderCommand(IFileExplorerViewModel viewModel)
+        {
+            return new CreateFolderCommand(viewModel);
+        }
     }
 }
