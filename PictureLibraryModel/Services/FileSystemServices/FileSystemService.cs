@@ -137,6 +137,22 @@ namespace PictureLibraryModel.Services.FileSystemServices
             }
         }
 
+        public virtual void Rename(IExplorableElement element, string name)
+        {
+            if(element is ImageFile)
+            {
+                File.Move(element.FullPath, System.IO.Directory.GetParent(element.FullPath).FullName + "\\" + name);
+            }
+            else if(element is Folder)
+            {
+                Move(element, System.IO.Directory.GetParent(element.FullPath).FullName + "\\" + name);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
         private void CopyDirectory(string sourcePath, string destinationPath)
         {
             if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
