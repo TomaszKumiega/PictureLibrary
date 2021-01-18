@@ -71,5 +71,18 @@
                 </Image>
             </Button>
         </Grid>
+        
+        <!--Main Panel Grid-->
+        <Grid x:Name="MainPanelGrid" Grid.Row="2" Grid.Column="1" Grid.RowSpan="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>  
+        </Grid>
     </Grid>
 </Window>
