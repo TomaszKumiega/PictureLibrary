@@ -40,7 +40,15 @@ namespace PictureLibraryWPF
         {
             Page = Pages.Home;
 
+            ResetButtonClickedRectangles();
             HomeButtonClickedRectangle.Fill = new SolidColorBrush(Color.FromArgb(0,102,255,1)); // change rectangle color to #0066ff
+        }
+
+        private void ResetButtonClickedRectangles()
+        {
+            HomeButtonClickedRectangle.Fill = Brushes.Transparent;
+            FileButtonClickedRectangle.Fill = Brushes.Transparent;
+            LibrariesButtonClickedRectangle.Fill = Brushes.Transparent;
         }
 
         private void InitializeControlsOnStartup()
