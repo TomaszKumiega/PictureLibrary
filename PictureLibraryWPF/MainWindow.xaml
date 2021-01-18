@@ -86,6 +86,14 @@
             </StackPanel>
         </Button>
 
+        <!--File Explorer Button-->
+        <Button x:Name="FilesButton" Grid.Column="0" Grid.Row="4" Margin="10,0,0,0" BorderThickness="0" Background="#2b2d30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Icons/GrayFolderIcon.png" Height="35" Width="35" HorizontalAlignment="Left"/>
+                <TextBlock x:Name="FilesButtonTextBlock" Text="Files" FontFamily="Segoe UI" FontSize="24" Foreground="WhiteSmoke" TextAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+
         <!--Main Panel Grid-->
         <Grid x:Name="MainPanelGrid" Grid.Row="2" Grid.Column="2" Grid.RowSpan="10">
             <Grid.ColumnDefinitions>
