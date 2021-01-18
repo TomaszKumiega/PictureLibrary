@@ -73,6 +73,9 @@
             </Button>
         </Grid>
         
+        <!--Left Panel Background-->
+        <Rectangle x:Name="LeftPanelBackground" Grid.Column="0" Grid.Row="2" Grid.RowSpan="10" Fill="#2b2d30"/>
+
         <!--Main Panel Grid-->
         <Grid x:Name="MainPanelGrid" Grid.Row="2" Grid.Column="2" Grid.RowSpan="10">
             <Grid.ColumnDefinitions>
