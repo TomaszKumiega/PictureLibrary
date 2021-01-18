@@ -114,14 +114,15 @@ namespace PictureLibraryWPF
         }
         #endregion
 
+        #region Button click event handlers
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-
+            LoadHomePage();
         }
 
         private void FilesButton_Click(object sender, RoutedEventArgs e)
         {
-
+            LoadFileExplorerPage();
         }
 
         private void LibrariesButton_Click(object sender, RoutedEventArgs e)
@@ -133,5 +134,6 @@ namespace PictureLibraryWPF
         {
 
         }
+        #endregion
     }
 }
