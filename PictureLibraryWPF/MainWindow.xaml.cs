@@ -22,7 +22,6 @@ namespace PictureLibraryWPF
     {
         private IMainWindowControlsFactory _controlsFactory;
 
-        private GridSplitter LeftPanelGridSplitter { get; set; }
         private ElementsView ElementsView { get; }
         private ElementsTree ElementsTree { get; }
 
@@ -34,7 +33,6 @@ namespace PictureLibraryWPF
 
             Page = Pages.Home;
 
-            LeftPanelGridSplitter = new GridSplitter();
             ElementsView = _controlsFactory.GetFileElementsView();
             ElementsTree = _controlsFactory.GetFileElementsTree();
 
@@ -61,17 +59,6 @@ namespace PictureLibraryWPF
             ElementsView.VerticalAlignment = VerticalAlignment.Stretch;
             Grid.SetColumn(ElementsView, 2);
             Grid.SetRow(ElementsView, 4);
-            #endregion
-
-            #region LeftPanelGridSplitter
-            Grid.Children.Add(LeftPanelGridSplitter);
-            LeftPanelGridSplitter.HorizontalAlignment = HorizontalAlignment.Right;
-            LeftPanelGridSplitter.VerticalAlignment = VerticalAlignment.Stretch;
-            LeftPanelGridSplitter.ShowsPreview = true;
-            LeftPanelGridSplitter.Width = 5;
-            LeftPanelGridSplitter.Opacity = 0;
-            Grid.SetColumn(LeftPanelGridSplitter, 0);
-            Grid.SetRow(LeftPanelGridSplitter, 4);
             #endregion
         }
 
