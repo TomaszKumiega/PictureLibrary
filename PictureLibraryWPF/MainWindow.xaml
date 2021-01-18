@@ -95,6 +95,8 @@
             
             <!--Toolbar Background-->
             <Rectangle x:Name="ToolBarBackground" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Fill="#414346"/>
+            <!--Toolbar Shadow-->
+            <Rectangle x:Name="ToolBarShadow" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Fill="#414346"/>
             
             <!--Main Panel Background-->
             <Rectangle x:Name="MainPanelBackground" Grid.Column="0" Grid.Row="2" Fill="#414346"/>
