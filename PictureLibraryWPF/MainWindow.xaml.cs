@@ -4,6 +4,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace PictureLibraryWPF
 {
@@ -31,13 +32,15 @@ namespace PictureLibraryWPF
         {
             _controlsFactory = controlsFactory;
 
+            InitializeComponent();
+            LoadHomePage();
+        }
+
+        private void LoadHomePage()
+        {
             Page = Pages.Home;
 
-            ElementsView = _controlsFactory.GetFileElementsView();
-            ElementsTree = _controlsFactory.GetFileElementsTree();
-
-            InitializeComponent();
-            InitializeControlsOnStartup();
+            HomeButtonClickedRectangle.Fill = new SolidColorBrush(Color.FromArgb(0,102,255,1)); // change rectangle color to #0066ff
         }
 
         private void InitializeControlsOnStartup()
