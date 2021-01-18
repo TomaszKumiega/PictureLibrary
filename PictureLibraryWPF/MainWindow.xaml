@@ -77,9 +77,6 @@
         <Rectangle x:Name="LeftPanelBackground" Grid.Column="0" Grid.Row="2" Grid.RowSpan="10" Fill="#2b2d30"/>
         <!--Left Panel Shadow-->
         <Rectangle x:Name="LeftPanelShadow" Grid.Column="1" Grid.Row="2" Grid.RowSpan="10" Fill="#222427"/>
-        
-        <!--Info Bar Background-->
-        <Rectangle x:Name="InfoBarBackground" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="3" Fill="#0066ff"/>
 
         <!--Main Panel Grid-->
         <Grid x:Name="MainPanelGrid" Grid.Row="2" Grid.Column="2" Grid.RowSpan="10">
@@ -91,13 +88,13 @@
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="2"/>
                 <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>  
-            
+            </Grid.RowDefinitions>
+
             <!--Toolbar Background-->
             <Rectangle x:Name="ToolBarBackground" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Fill="#414346"/>
             <!--Toolbar Shadow-->
             <Rectangle x:Name="ToolBarShadow" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Fill="#414346"/>
-            
+
             <!--Main Panel Background-->
             <Rectangle x:Name="MainPanelBackground" Grid.Column="0" Grid.Row="2" Fill="#414346"/>
 
@@ -105,5 +102,8 @@
             <Rectangle x:Name="RightPanelBackground" Grid.Column="1" Grid.Row="2" Fill="#414346"/>
 
         </Grid>
+
+        <!--Info Bar Background-->
+        <Rectangle x:Name="InfoBarBackground" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="3" Fill="#0066ff"/>
     </Grid>
 </Window>
