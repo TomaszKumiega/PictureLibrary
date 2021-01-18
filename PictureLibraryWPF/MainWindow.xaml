@@ -101,6 +101,9 @@
             <!--Main Panel Background-->
             <Rectangle x:Name="MainPanelBackground" Grid.Column="0" Grid.Row="2" Fill="#414346"/>
 
+            <!--Right Panel Background-->
+            <Rectangle x:Name="RightPanelBackground" Grid.Column="1" Grid.Row="2" Fill="#414346"/>
+
         </Grid>
     </Grid>
 </Window>
