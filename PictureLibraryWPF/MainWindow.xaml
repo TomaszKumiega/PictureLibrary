@@ -92,6 +92,10 @@
                 <RowDefinition Height="2"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>  
+            
+            <!--Toolbar Background-->
+            <Rectangle x:Name="ToolBarBackground" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Fill="#414346"/>
+
         </Grid>
     </Grid>
 </Window>
