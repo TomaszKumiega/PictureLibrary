@@ -77,6 +77,14 @@
         <Rectangle x:Name="LeftPanelBackground" Grid.Column="0" Grid.Row="2" Grid.RowSpan="10" Fill="#2b2d30"/>
         <!--Left Panel Shadow-->
         <Rectangle x:Name="LeftPanelShadow" Grid.Column="1" Grid.Row="2" Grid.RowSpan="10" Fill="#222427"/>
+        
+        <!--Home Button-->
+        <Button x:Name="HomeButton" Grid.Column="0" Grid.Row="3" Margin="10,0,0,0" BorderThickness="0" Background="#2b2d30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Icons/HomeIcon.png" Height="35" Width="35" HorizontalAlignment="Left"/>
+                <TextBlock x:Name="HomeButtonTextBlock" Text="Home" FontFamily="Segoe UI" FontSize="24" Foreground="WhiteSmoke" TextAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
 
         <!--Main Panel Grid-->
         <Grid x:Name="MainPanelGrid" Grid.Row="2" Grid.Column="2" Grid.RowSpan="10">
