@@ -32,6 +32,7 @@ namespace PictureLibraryWPF
             LoadHomePage();
         }
 
+        #region Page loading methods
         private void LoadHomePage()
         {
             Page = Pages.Home;
@@ -71,6 +72,7 @@ namespace PictureLibraryWPF
             FileButtonClickedRectangle.Fill = Brushes.Transparent;
             LibrariesButtonClickedRectangle.Fill = Brushes.Transparent;
         }
+        #endregion
 
         #region Window behaviour methods
         /// <summary>
