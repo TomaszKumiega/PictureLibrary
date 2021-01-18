@@ -82,7 +82,7 @@
         <GridSplitter Grid.Column="1" Grid.Row="2" Grid.RowSpan="6" Background="Transparent"/>
 
         <!--Home Button-->
-        <Button x:Name="HomeButton" Grid.Column="0" Grid.Row="3" BorderThickness="0" Background="#2b2d30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+        <Button x:Name="HomeButton" Grid.Column="0" Grid.Row="3" BorderThickness="0" Background="#2b2d30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Click="HomeButton_Click">
             <StackPanel Orientation="Horizontal">
                 <Rectangle x:Name="HomeButtonClickedRectangle" Width="4" Fill="#0066ff"/>
                 <Image Source="pack://application:,,,/Icons/HomeIcon.png" Height="35" Margin="10,0,0,0" Width="35" HorizontalAlignment="Left"/>
@@ -91,7 +91,7 @@
         </Button>
 
         <!--File Explorer Button-->
-        <Button x:Name="FilesButton" Grid.Column="0" Grid.Row="4" BorderThickness="0" Background="#2b2d30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+        <Button x:Name="FilesButton" Grid.Column="0" Grid.Row="4" BorderThickness="0" Background="#2b2d30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Click="FilesButton_Click">
             <StackPanel Orientation="Horizontal">
                 <Rectangle x:Name="FileButtonClickedRectangle" Width="4" Fill="Transparent"/>
                 <Image Source="pack://application:,,,/Icons/GrayFolderIcon.png" Margin="10,0,0,0" Height="35" Width="35" HorizontalAlignment="Left"/>
@@ -100,7 +100,7 @@
         </Button>
 
         <!--Libraries Button-->
-        <Button x:Name="LibrariesButton" Grid.Column="0" Grid.Row="5" BorderThickness="0" Background="#2b2d30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+        <Button x:Name="LibrariesButton" Grid.Column="0" Grid.Row="5" BorderThickness="0" Background="#2b2d30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Click="LibrariesButton_Click">
             <StackPanel Orientation="Horizontal">
                 <Rectangle x:Name="LibrariesButtonClickedRectangle" Width="4" Fill="Transparent"/>
                 <Image Source="pack://application:,,,/Icons/LibraryIcon.png" Margin="10,0,0,0" Height="35" Width="35" HorizontalAlignment="Left"/>
@@ -109,7 +109,7 @@
         </Button>
 
         <!--Settings Button-->
-        <Button x:Name="SettingsButton" Grid.Column="0" Grid.Row="7"  BorderThickness="0" Background="#2b2d30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
+        <Button x:Name="SettingsButton" Grid.Column="0" Grid.Row="7"  BorderThickness="0" Background="#2b2d30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="SettingsButton_Click">
             <StackPanel Orientation="Horizontal">
                 <Image Source="pack://application:,,,/Icons/SettingsIcon.png" Height="35" Width="35" HorizontalAlignment="Center"/>
             </StackPanel>

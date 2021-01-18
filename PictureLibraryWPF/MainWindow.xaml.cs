@@ -113,5 +113,25 @@ namespace PictureLibraryWPF
             Application.Current.Shutdown();
         }
         #endregion
+
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FilesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LibrariesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
