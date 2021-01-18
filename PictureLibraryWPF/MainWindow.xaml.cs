@@ -32,6 +32,8 @@ namespace PictureLibraryWPF
         {
             _controlsFactory = controlsFactory;
 
+            Page = Pages.Home;
+
             LeftPanelGridSplitter = new GridSplitter();
             ElementsView = _controlsFactory.GetFileElementsView();
             ElementsTree = _controlsFactory.GetFileElementsTree();
