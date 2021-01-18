@@ -72,6 +72,7 @@ namespace PictureLibraryWPF
             LibrariesButtonClickedRectangle.Fill = Brushes.Transparent;
         }
 
+        #region Window behaviour methods
         /// <summary>
         /// Allows to drag window with a mouse with its left button down.
         /// </summary>
@@ -109,5 +110,6 @@ namespace PictureLibraryWPF
         {
             Application.Current.Shutdown();
         }
+        #endregion
     }
 }
