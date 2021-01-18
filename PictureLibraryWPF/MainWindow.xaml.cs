@@ -7,6 +7,14 @@ using System.Windows.Input;
 
 namespace PictureLibraryWPF
 {
+    public enum Pages
+    {
+        Home,
+        FileExplorer,
+        LibraryExplorer,
+        Settings
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -17,6 +25,8 @@ namespace PictureLibraryWPF
         private GridSplitter LeftPanelGridSplitter { get; set; }
         private ElementsView ElementsView { get; }
         private ElementsTree ElementsTree { get; }
+
+        private Pages Page { get; set; }
 
         public MainWindow(IMainWindowControlsFactory controlsFactory)
         {
