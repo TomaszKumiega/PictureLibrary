@@ -8,64 +8,21 @@
         mc:Ignorable="d"
         Title="PictureLibrary" Height="600" Width="1000" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
 
-    <Window.Resources>
-        <SolidColorBrush x:Key="BrightBrush" Color="#777b79"/>
-
-        <SolidColorBrush x:Key="SolidBorderBrush" Color="#c9d0cc" Opacity="0.4"/>
-
-        <SolidColorBrush x:Key="DarkBrush" Color="#37393f" />
-
-        <SolidColorBrush x:Key="SelectedBorderBrush" Color="#524f78" />
-
-        <SolidColorBrush x:Key="SeethroughForegroundBrush" Color="#cdcdcd" Opacity="0.4" />
-
-        <Style TargetType="{x:Type TabItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Grid>
-                            <Border 
-                                Name="Border"
-                                Margin="-1,-3,-4,0" 
-                                Background="{StaticResource DarkBrush}"                               
-                                BorderBrush="{StaticResource  SolidBorderBrush}" 
-                                BorderThickness="0,0,0,0" 
-                                CornerRadius="0,0,0,0" >
-                                <ContentPresenter x:Name="ContentSite"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    ContentSource="Header"
-                                    Margin="12,2,12,2"
-                                    RecognizesAccessKey="True"/>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Panel.ZIndex" Value="100" />
-                                <Setter Property="FontWeight" Value="Bold" />
-                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource SelectedBorderBrush}" />
-                                <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-
-
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="170"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="28"/>
             <RowDefinition Height="2"/>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="2"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
         <!--Title Bar-->
@@ -74,57 +31,6 @@
 
         <!--Title Bar Shadow-->
         <Rectangle x:Name="RectangleTitleBarShadow" Fill="#161719" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" />
-
-        <!--Menu Background-->
-        <Rectangle x:Name="RectangleTopBarBackground" Fill="#37393f" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5"/>
-
-        <!--Menu Shadow-->
-        <Rectangle x:Name="RectangleTopBarShadow" Fill="#292b2f" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5"/>
-
-        <!--Information Panel Background-->
-        <Rectangle x:Name="RectangleInformationPanelShadow" Fill="#37393f" Grid.Column="0" Grid.Row="4" Grid.RowSpan="3"/>
-
-        <!--Main Panel Background-->
-        <Rectangle x:Name="RectangleMainPanelBackground" Fill="#3b3f45" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="5" Grid.RowSpan="8"/>
-
-        <!--Tabbed Menu-->
-        <TabControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TabStripPlacement="Top" Background="#37393f" BorderThickness="0,0,0,0">
-            <TabItem Header="Files" Foreground="#cdcdcd">
-            </TabItem>
-            <TabItem Header="Albums" Foreground="#cdcdcd">
-            </TabItem>
-            <TabItem Header="Edit" Foreground="#cdcdcd">
-            </TabItem>
-            <TabItem Header="Share" Foreground="#cdcdcd">
-            </TabItem>
-            <TabItem Header="View" Foreground="#cdcdcd" Visibility="Hidden">
-            </TabItem>
-        </TabControl>
-
-        <!--Search bar-->
-        <Grid Grid.Row="2" Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="130"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Border BorderThickness="1,1,1,1" Grid.Column="1" BorderBrush="{StaticResource SeethroughForegroundBrush}">
-                <DockPanel  HorizontalAlignment="Right">
-                    <Image DockPanel.Dock="Left">
-                        <Image.Source>
-                            <BitmapImage UriSource="/Icons/SearchIcon.png"/>
-                        </Image.Source>
-                    </Image>
-                    <TextBox Text="Search.." FontSize="12" HorizontalAlignment="Stretch" Width="110"  Background="Transparent" Foreground="{StaticResource SeethroughForegroundBrush}" BorderThickness="0,0,0,0"/>
-                </DockPanel>
-            </Border>
-        </Grid>
-
-
 
         <!--Title Bar Buttons Grid-->
         <Grid Grid.Row="0" Grid.Column="1">
