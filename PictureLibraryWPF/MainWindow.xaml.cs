@@ -44,6 +44,31 @@ namespace PictureLibraryWPF
             HomeButtonClickedRectangle.Fill = new SolidColorBrush(Color.FromArgb(0,102,255,1)); // change rectangle color to #0066ff
         }
 
+        private void LoadFileExplorerPage()
+        {
+            Page = Pages.FileExplorer;
+
+            ResetButtonClickedRectangles();
+            FileButtonClickedRectangle.Fill = new SolidColorBrush(Color.FromArgb(0, 102, 255, 1)); // change rectangle color to #0066ff
+
+            // Add files tree to the grid
+            var filesTree = _controlsFactory.GetFileElementsTree();
+            Grid.Children.Add(filesTree);
+            filesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
+            filesTree.VerticalAlignment = VerticalAlignment.Stretch;
+            Grid.SetColumn(filesTree, 0);
+            Grid.SetRow(filesTree, 6);
+
+            // Add files view to the grid
+            var filesView = _controlsFactory.GetFileElementsView();
+            MainPanelGrid.Children.Add(filesView);
+            filesView.HorizontalAlignment = HorizontalAlignment.Stretch;
+            filesView.VerticalAlignment = VerticalAlignment.Stretch;
+            Grid.SetColumn(filesView, 0);
+            Grid.SetRow(filesView, 2);
+            Grid.SetColumnSpan(filesView, 2);
+        }
+
         private void ResetButtonClickedRectangles()
         {
             HomeButtonClickedRectangle.Fill = Brushes.Transparent;
