@@ -22,10 +22,6 @@ namespace PictureLibraryWPF
     public partial class MainWindow : Window
     {
         private IMainWindowControlsFactory _controlsFactory;
-
-        private ElementsView ElementsView { get; }
-        private ElementsTree ElementsTree { get; }
-
         private Pages Page { get; set; }
 
         public MainWindow(IMainWindowControlsFactory controlsFactory)
@@ -75,29 +71,6 @@ namespace PictureLibraryWPF
             FileButtonClickedRectangle.Fill = Brushes.Transparent;
             LibrariesButtonClickedRectangle.Fill = Brushes.Transparent;
         }
-
-        private void InitializeControlsOnStartup()
-        {
-            //TODO: change color of filestree scrollbar
-            //TODO: fix formatting / add spaces after and before regions
-            
-            #region ElementsTree
-            Grid.Children.Add(ElementsTree);         
-            ElementsTree.HorizontalAlignment = HorizontalAlignment.Stretch;
-            ElementsTree.VerticalAlignment = VerticalAlignment.Stretch;
-            Grid.SetColumn(ElementsTree, 0);
-            Grid.SetRow(ElementsTree, 4);
-            #endregion
-
-            #region ElementsView
-            Grid.Children.Add(ElementsView);
-            ElementsView.HorizontalAlignment = HorizontalAlignment.Stretch;
-            ElementsView.VerticalAlignment = VerticalAlignment.Stretch;
-            Grid.SetColumn(ElementsView, 2);
-            Grid.SetRow(ElementsView, 4);
-            #endregion
-        }
-
 
         /// <summary>
         /// Allows to drag window with a mouse with its left button down.
