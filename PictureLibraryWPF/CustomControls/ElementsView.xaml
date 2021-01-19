@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
 
 
-        <ListView Grid.Column="0" Grid.Row="0" x:Name="FilesList" Background="#3b3f45" BorderThickness="0" 
+        <ListView Grid.Column="0" Grid.Row="0" x:Name="FilesList" Background="Transparent" BorderThickness="0" 
                   ItemsSource="{Binding Path=CurrentlyShownElements, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Multiple">
             <ListView.ItemsPanel>
