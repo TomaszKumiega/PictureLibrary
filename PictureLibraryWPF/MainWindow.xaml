@@ -6,7 +6,7 @@
         xmlns:src="clr-namespace:PictureLibraryWPF.CustomControls"
         xmlns:local="clr-namespace:PictureLibraryWPF"
         mc:Ignorable="d"
-        Title="PictureLibrary" Height="600" Width="1000" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
+        Title="PictureLibrary" Height="650" Width="1000" MinHeight="600" MinWidth="900" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
 
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
