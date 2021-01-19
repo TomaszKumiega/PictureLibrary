@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using PictureLibraryWPF.CustomControls;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,11 +23,13 @@ namespace PictureLibraryWPF
     public partial class MainWindow : Window
     {
         private IMainWindowControlsFactory _controlsFactory;
+        private List<Control> CurrentPageControls { get; }
         private Pages Page { get; set; }
 
         public MainWindow(IMainWindowControlsFactory controlsFactory)
         {
             _controlsFactory = controlsFactory;
+            CurrentPageControls = new List<Control>();
 
             InitializeComponent();
             LoadHomePage();
@@ -37,7 +40,10 @@ namespace PictureLibraryWPF
         {
             Page = Pages.Home;
 
+            // Reset window to default state
             ResetButtonClickedRectangles();
+            RemoveCurrentPageControlsFromTheGrid();
+
             HomeButtonClickedRectangle.Fill = new SolidColorBrush(Color.FromArgb(0,102,255,1)); // change rectangle color to #0066ff
         }
 
@@ -45,7 +51,10 @@ namespace PictureLibraryWPF
         {
             Page = Pages.FileExplorer;
 
+            // Reset window to default state
             ResetButtonClickedRectangles();
+            RemoveCurrentPageControlsFromTheGrid();
+
             FileButtonClickedRectangle.Fill = new SolidColorBrush(Color.FromArgb(0, 102, 255, 1)); // change rectangle color to #0066ff
 
             // Add files tree to the grid
@@ -64,6 +73,18 @@ namespace PictureLibraryWPF
             Grid.SetColumn(filesView, 0);
             Grid.SetRow(filesView, 2);
             Grid.SetColumnSpan(filesView, 2);
+
+            CurrentPageControls.Add(filesTree);
+            CurrentPageControls.Add(filesView);
+        }
+
+        private void RemoveCurrentPageControlsFromTheGrid()
+        {
+            foreach(var t in CurrentPageControls)
+            {
+                Grid.Children.Remove(t);
+                MainPanelGrid.Children.Remove(t);
+            }
         }
 
         private void ResetButtonClickedRectangles()
