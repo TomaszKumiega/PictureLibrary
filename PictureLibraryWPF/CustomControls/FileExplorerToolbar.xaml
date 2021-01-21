@@ -47,6 +47,9 @@
 
         <!--Folder Image-->
         <Image x:Name="FolderImage" Grid.Row="1" Grid.Column="3" Margin="4,4,4,4" Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
+        
+        <!--Path TextBlock-->
+        <TextBlock x:Name="PathTextBlock" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="6" FontFamily="Segoe UI" FontSize="11" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{Binding CurrentDirectoryPath}"/>
 
     </Grid>
 </UserControl>
