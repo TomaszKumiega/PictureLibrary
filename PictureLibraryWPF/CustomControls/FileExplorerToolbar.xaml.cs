@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PictureLibraryViewModel.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,8 +19,9 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class FileExplorerToolbar : UserControl
     {
-        public FileExplorerToolbar()
+        public FileExplorerToolbar(IFileExplorerViewModel viewModel)
         {
+            DataContext = viewModel;
             InitializeComponent();
         }
     }
