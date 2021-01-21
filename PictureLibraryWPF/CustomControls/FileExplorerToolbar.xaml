@@ -52,7 +52,7 @@
         <Image x:Name="FolderImage" Grid.Row="1" Grid.Column="3" Margin="4,4,4,4" Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
         
         <!--Path TextBlock-->
-        <TextBlock x:Name="PathTextBlock" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="6" FontFamily="Segoe UI" FontSize="11" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{Binding CurrentDirectoryPath}"/>
+        <TextBox x:Name="PathTextBlock" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="6" FontFamily="Segoe UI" FontSize="11" Background="Transparent" BorderThickness="0" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{Binding CurrentDirectoryPath}"/>
         
         <!--Refresh Button-->
         <Button x:Name="RefreshButton" Grid.Column="10" Grid.Row="1" BorderThickness="0" Background="Transparent">
@@ -66,6 +66,6 @@
         <Image x:Name="SearchIcon" Grid.Row="1" Grid.Column="12" Margin="4,4,4,4" Source="pack://application:,,,/Icons/SearchIcon.png"/>
         
         <!--Search TextBlock-->
-        <TextBlock x:Name="SearchTextBlock" Grid.Row="1" Grid.Column="13" Margin="3,0,0,0" FontFamily="Segoe UI" FontSize="10" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{x:Static res:Strings.Search}"/>
+        <TextBox x:Name="SearchTextBlock" Grid.Row="1" Grid.Column="13" Margin="3,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="Transparent" BorderThickness="0" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{x:Static res:Strings.Search}"/>
     </Grid>
 </UserControl>
