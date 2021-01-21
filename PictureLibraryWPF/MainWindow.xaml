@@ -7,9 +7,9 @@
         xmlns:local="clr-namespace:PictureLibraryWPF"
         xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
         mc:Ignorable="d"
-        Title="PictureLibrary" Height="650" Width="1000" MinHeight="600" MinWidth="900" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
+        Title="PictureLibrary" Background="Transparent" Height="650" Width="1000" MinHeight="600" MinWidth="900" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
 
-    <Grid x:Name="Grid">
+    <Grid x:Name="Grid" Margin="7,7,7,7">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" MinWidth="180" MaxWidth="270"/>
             <ColumnDefinition Width="2"/>
@@ -31,7 +31,7 @@
 
         <!--Title Bar-->
         <Rectangle x:Name="RectangleTitleBarBackground" Fill="#202225" Grid.ColumnSpan="5" MouseDown="RectangleTitleBarBackground_MouseDown"/>
-        <TextBlock x:Name="TextBlockTitleBar" Text="Picture Library" FontFamily="Segoe UI" FontSize="18" Foreground="#949597" VerticalAlignment="Bottom" />
+        <TextBlock x:Name="TextBlockTitleBar" Margin="5,0,0,0"  Text="Picture Library" FontFamily="Segoe UI" FontSize="18" Foreground="#949597" VerticalAlignment="Bottom" />
 
         <!--Title Bar Shadow-->
         <Rectangle x:Name="RectangleTitleBarShadow" Fill="#161719" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" />
