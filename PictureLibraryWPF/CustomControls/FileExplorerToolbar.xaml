@@ -32,10 +32,15 @@
             <Image Source="pack://application:,,,/Icons/BackIcon.png"/>
         </Button>
         
+        <!--Up Button-->
+        <Button x:Name="UpButton" Grid.Column="2" Grid.Row="1" BorderThickness="0" Background="Transparent">
+            <Image Source="pack://application:,,,/Icons/UpIcon.png"/>
+        </Button>
+
         <!--Forward Button-->
         <Button x:Name="ForwardButton" Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="Transparent">
             <Image Source="pack://application:,,,/Icons/ForwardIcon.png"/>
         </Button>
-        
+
     </Grid>
 </UserControl>
