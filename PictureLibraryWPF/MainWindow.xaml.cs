@@ -74,8 +74,18 @@ namespace PictureLibraryWPF
             Grid.SetRow(filesView, 2);
             Grid.SetColumnSpan(filesView, 2);
 
+            // Add file explorer toolbar to the grid
+            var toolbar = _controlsFactory.GetFileExplorerToolbar();
+            MainPanelGrid.Children.Add(toolbar);
+            toolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
+            toolbar.VerticalAlignment = VerticalAlignment.Stretch;
+            Grid.SetColumn(toolbar, 0);
+            Grid.SetRow(toolbar, 0);
+            Grid.SetColumnSpan(toolbar, 2);
+
             CurrentPageControls.Add(filesTree);
             CurrentPageControls.Add(filesView);
+            CurrentPageControls.Add(toolbar);
         }
 
         private void RemoveCurrentPageControlsFromTheGrid()
