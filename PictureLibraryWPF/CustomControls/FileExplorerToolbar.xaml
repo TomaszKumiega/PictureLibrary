@@ -42,5 +42,8 @@
             <Image Source="pack://application:,,,/Icons/ForwardIcon.png"/>
         </Button>
 
+        <!--Folder Image-->
+        <Image x:Name="FolderImage" Grid.Row="1" Grid.Column="3" Margin="4,4,4,4" Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
+
     </Grid>
 </UserControl>
