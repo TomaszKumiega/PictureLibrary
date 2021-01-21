@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls"
              xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="400">
+             d:DesignHeight="60" d:DesignWidth="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -19,11 +19,11 @@
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="0.5"/>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
