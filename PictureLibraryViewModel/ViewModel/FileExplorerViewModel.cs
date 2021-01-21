@@ -49,6 +49,7 @@ namespace PictureLibraryViewModel.ViewModel
             set
             {
                 _currentDirectoryPath = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
                 ReloadCurrentDirectoryFiles();
             }
         }
@@ -87,6 +88,8 @@ namespace PictureLibraryViewModel.ViewModel
                 Task.Run(() => t.LoadSubDirectoriesAsync()).Wait();
                 ExplorableElementsTree.Add(t);
             }
+
+            CurrentDirectoryPath = "\\";
         }
 
         private void InitializeCurrentDirectoryFiles()
@@ -103,6 +106,8 @@ namespace PictureLibraryViewModel.ViewModel
         #region ViewModel Logic
         private void ReloadCurrentDirectoryFiles()
         {
+            if (CurrentlyShownElements == null) return;
+            
             CurrentlyShownElements.Clear();
 
             foreach (var t in _fileSystemService.GetDirectoryContent(CurrentDirectoryPath))
