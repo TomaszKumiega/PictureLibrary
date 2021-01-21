@@ -78,13 +78,11 @@
         
         <!--Left Panel Background-->
         <Rectangle x:Name="LeftPanelBackground" Grid.Column="0" Grid.Row="2" Grid.RowSpan="10" Fill="#2b2d30"/>
-        <!--Left Panel Shadow-->
-        <Rectangle x:Name="LeftPanelShadow" Grid.Column="1" Grid.Row="2" Grid.RowSpan="10" Fill="#222427"/>
         <!--Left Panel Page Buttons Shadow-->
         <Rectangle x:Name="LeftPanelButtonsShadow" Grid.Column="0" Grid.Row="7"  Fill="#222427"/>
         
         <!--Left Panel Grid Splitter-->
-        <GridSplitter Grid.Column="1" Grid.Row="2" Grid.RowSpan="8" Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Column="1" Grid.Row="2" Grid.RowSpan="8" Background="#222427" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
         <!--Home Button-->
         <Button x:Name="HomeButton" Grid.Column="0" Grid.Row="3" BorderThickness="0" Background="#2b2d30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Click="HomeButton_Click">
