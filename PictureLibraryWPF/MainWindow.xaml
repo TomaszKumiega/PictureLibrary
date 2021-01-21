@@ -91,7 +91,7 @@
             <StackPanel Orientation="Horizontal">
                 <Rectangle x:Name="HomeButtonClickedRectangle" Width="4" Fill="#0066ff"/>
                 <Image Source="pack://application:,,,/Icons/HomeIcon.png" Height="30" Margin="10,0,0,0" Width="30" HorizontalAlignment="Left"/>
-                <TextBlock x:Name="HomeButtonTextBlock" Text="{x:Static res:Strings.Home}" FontFamily="Segoe UI" FontSize="20" Foreground="WhiteSmoke" TextAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                <TextBlock x:Name="HomeButtonTextBlock" Text="{x:Static res:Strings.Home}" FontFamily="Segoe UI" FontSize="20" Foreground="WhiteSmoke" TextAlignment="Left" Margin="10,0,10,0" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
 
@@ -100,7 +100,7 @@
             <StackPanel Orientation="Horizontal">
                 <Rectangle x:Name="FileButtonClickedRectangle" Width="4" Fill="Transparent"/>
                 <Image Source="pack://application:,,,/Icons/GrayFolderIcon.png" Margin="10,0,0,0" Height="30" Width="30" HorizontalAlignment="Left"/>
-                <TextBlock x:Name="FilesButtonTextBlock" Text="{x:Static res:Strings.Files}" FontFamily="Segoe UI" FontSize="20" Foreground="WhiteSmoke" TextAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                <TextBlock x:Name="FilesButtonTextBlock" Text="{x:Static res:Strings.Files}" FontFamily="Segoe UI" FontSize="20" Foreground="WhiteSmoke" TextAlignment="Left" Margin="10,0,10,0" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
 
@@ -109,7 +109,7 @@
             <StackPanel Orientation="Horizontal">
                 <Rectangle x:Name="LibrariesButtonClickedRectangle" Width="4" Fill="Transparent"/>
                 <Image Source="pack://application:,,,/Icons/LibraryIcon.png" Margin="10,0,0,0" Height="30" Width="30" HorizontalAlignment="Left"/>
-                <TextBlock x:Name="LibrariesButtonTextBlock" Text="{x:Static res:Strings.Library}" FontFamily="Segoe UI" FontSize="20" Foreground="WhiteSmoke" TextAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                <TextBlock x:Name="LibrariesButtonTextBlock" Text="{x:Static res:Strings.Library}" FontFamily="Segoe UI" FontSize="20" Foreground="WhiteSmoke" TextAlignment="Left" Margin="10,0,10,0" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
 
