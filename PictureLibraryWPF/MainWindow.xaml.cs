@@ -24,7 +24,6 @@ namespace PictureLibraryWPF
     {
         private IMainWindowControlsFactory _controlsFactory;
         private List<Control> CurrentPageControls { get; }
-        private Pages Page { get; set; }
 
         public MainWindow(IMainWindowControlsFactory controlsFactory)
         {
@@ -38,8 +37,6 @@ namespace PictureLibraryWPF
         #region Page loading methods
         private void LoadHomePage()
         {
-            Page = Pages.Home;
-
             // Reset window to default state
             ResetButtonClickedRectangles();
             RemoveCurrentPageControlsFromTheGrid();
@@ -49,8 +46,6 @@ namespace PictureLibraryWPF
 
         private void LoadFileExplorerPage()
         {
-            Page = Pages.FileExplorer;
-
             // Reset window to default state
             ResetButtonClickedRectangles();
             RemoveCurrentPageControlsFromTheGrid();
