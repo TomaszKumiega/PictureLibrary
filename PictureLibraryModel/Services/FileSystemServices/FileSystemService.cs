@@ -94,7 +94,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             {
                 if(ImageFile.IsFileAnImage(t))
                 {
-                    var fileInfo = GetFileInfo(path);
+                    var fileInfo = GetFileInfo(t);
 
                     var imageFileBuilder = new LocalFileSystemImageFileBuilder(fileInfo);
                     var imageFileDirector = new ImageFileDirector(imageFileBuilder);
