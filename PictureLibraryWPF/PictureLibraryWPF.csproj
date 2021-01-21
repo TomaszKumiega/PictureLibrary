@@ -76,9 +76,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Properties\Strings.pl.resx">
+      <CustomToolNamespace>PublicResXFileCodeGenerator</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PublicResXFileCodeGenerator</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
 
