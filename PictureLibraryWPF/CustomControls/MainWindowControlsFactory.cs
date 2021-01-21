@@ -24,5 +24,10 @@ namespace PictureLibraryWPF.CustomControls
         {
             return new ElementsView(FileExplorerViewModel);
         }
+
+        public FileExplorerToolbar GetFileExplorerToolbar()
+        {
+            return new FileExplorerToolbar(FileExplorerViewModel);
+        }
     }
 }

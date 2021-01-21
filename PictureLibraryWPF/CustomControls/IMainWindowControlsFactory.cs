@@ -12,5 +12,6 @@ namespace PictureLibraryWPF.CustomControls
 
         ElementsTree GetFileElementsTree();
         ElementsView GetFileElementsView();
+        FileExplorerToolbar GetFileExplorerToolbar();
     }
 }
