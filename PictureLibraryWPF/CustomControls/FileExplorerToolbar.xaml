@@ -50,6 +50,10 @@
         
         <!--Path TextBlock-->
         <TextBlock x:Name="PathTextBlock" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="6" FontFamily="Segoe UI" FontSize="11" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{Binding CurrentDirectoryPath}"/>
-
+        
+        <!--Refresh Button-->
+        <Button x:Name="RefreshButton" Grid.Column="10" Grid.Row="1" BorderThickness="0" Background="Transparent">
+            <Image Source="pack://application:,,,/Icons/RefreshIcon.png" Margin="4,4,4,4"/>
+        </Button>
     </Grid>
 </UserControl>
