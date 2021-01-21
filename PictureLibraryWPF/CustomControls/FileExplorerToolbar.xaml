@@ -42,6 +42,9 @@
             <Image Source="pack://application:,,,/Icons/ForwardIcon.png"/>
         </Button>
 
+        <!--Path Border-->
+        <Border x:Name="PathBorderRectangle" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="9" BorderThickness="0.3" BorderBrush="WhiteSmoke"/>
+
         <!--Folder Image-->
         <Image x:Name="FolderImage" Grid.Row="1" Grid.Column="3" Margin="4,4,4,4" Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
 
