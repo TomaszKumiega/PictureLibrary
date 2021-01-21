@@ -20,6 +20,7 @@
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="0.5"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -43,7 +44,7 @@
         </Button>
 
         <!--Path Border-->
-        <Border x:Name="PathBorderRectangle" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="9" BorderThickness="0.3" BorderBrush="WhiteSmoke"/>
+        <Border x:Name="PathBorderRectangle" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="10" BorderThickness="0.3" BorderBrush="WhiteSmoke"/>
 
         <!--Folder Image-->
         <Image x:Name="FolderImage" Grid.Row="1" Grid.Column="3" Margin="4,4,4,4" Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
@@ -55,5 +56,8 @@
         <Button x:Name="RefreshButton" Grid.Column="10" Grid.Row="1" BorderThickness="0" Background="Transparent">
             <Image Source="pack://application:,,,/Icons/RefreshIcon.png" Margin="4,4,4,4"/>
         </Button>
+        
+        <!--Search/Path bodrer-->
+        <Rectangle x:Name="SearchBorderRectangle" Grid.Column="11" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="WhiteSmoke"/>
     </Grid>
 </UserControl>
