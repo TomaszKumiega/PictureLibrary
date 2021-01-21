@@ -9,17 +9,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icons\AddToLibraryIcon.png" />
+    <None Remove="Icons\BackIcon.png" />
     <None Remove="Icons\CloseIcon.png" />
     <None Remove="Icons\ComputerIcon.png" />
+    <None Remove="Icons\CopyIcon.png" />
+    <None Remove="Icons\CopyPathIcon.png" />
+    <None Remove="Icons\CutIcon.png" />
     <None Remove="Icons\DiskIcon.png" />
     <None Remove="Icons\FolderIcon.png" />
+    <None Remove="Icons\ForwardIcon.png" />
     <None Remove="Icons\GrayFolderIcon.png" />
     <None Remove="Icons\HomeIcon.png" />
     <None Remove="Icons\LibraryIcon.png" />
     <None Remove="Icons\MaximizeIcon.png" />
     <None Remove="Icons\MinimizeIcon.png" />
+    <None Remove="Icons\PasteIcon.png" />
+    <None Remove="Icons\PropertiesIcon.png" />
+    <None Remove="Icons\RefreshIcon.png" />
+    <None Remove="Icons\RenameIcon.png" />
     <None Remove="Icons\SearchIcon.png" />
     <None Remove="Icons\SettingsIcon.png" />
+    <None Remove="Icons\UpIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,16 +43,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icons\AddToLibraryIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\BackIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Icons\CloseIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\ComputerIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icons\CopyIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\CopyPathIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\CutIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Icons\DiskIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\FolderIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\ForwardIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\GrayFolderIcon.png">
@@ -59,10 +88,25 @@
     <Resource Include="Icons\MinimizeIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icons\PasteIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\PropertiesIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\RefreshIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\RenameIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Icons\SearchIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\SettingsIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\UpIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
