@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:PictureLibraryViewModel.ViewModel;assembly=PictureLibraryViewModel"
              xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls"
+             xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="400">
     <Grid>
@@ -63,5 +64,8 @@
         
         <!--Search Icon-->
         <Image x:Name="SearchIcon" Grid.Row="1" Grid.Column="12" Margin="4,4,4,4" Source="pack://application:,,,/Icons/SearchIcon.png"/>
+        
+        <!--Search TextBlock-->
+        <TextBlock x:Name="SearchTextBlock" Grid.Row="1" Grid.Column="13" Margin="3,0,0,0" FontFamily="Segoe UI" FontSize="10" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{x:Static res:Strings.Search}"/>
     </Grid>
 </UserControl>

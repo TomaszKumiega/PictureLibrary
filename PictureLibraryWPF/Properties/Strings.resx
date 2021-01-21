@@ -126,4 +126,7 @@
   <data name="Library" xml:space="preserve">
     <value>Library</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search...</value>
+  </data>
 </root>
