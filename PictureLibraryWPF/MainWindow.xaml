@@ -11,7 +11,7 @@
 
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="170" MinWidth="170" MaxWidth="270"/>
+            <ColumnDefinition Width="auto" MinWidth="180" MaxWidth="270"/>
             <ColumnDefinition Width="2"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
