@@ -27,8 +27,15 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
+        <!--Back Button-->
         <Button x:Name="BackButton" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="Transparent">
             <Image Source="pack://application:,,,/Icons/BackIcon.png"/>
         </Button>
+        
+        <!--Forward Button-->
+        <Button x:Name="ForwardButton" Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="Transparent">
+            <Image Source="pack://application:,,,/Icons/ForwardIcon.png"/>
+        </Button>
+        
     </Grid>
 </UserControl>
