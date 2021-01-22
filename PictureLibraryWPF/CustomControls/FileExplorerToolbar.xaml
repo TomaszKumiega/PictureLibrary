@@ -54,6 +54,14 @@
             </StackPanel>
         </Button>
 
+        <!--Paste Button-->
+        <Button x:Name="PasteButton" Grid.Column="3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Bottom">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Icons/PasteIcon.png"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="9" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Paste}"/>
+            </StackPanel>
+        </Button>
+
         <!--Back Button-->
         <Button x:Name="BackButton" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="Transparent">
             <Image Source="pack://application:,,,/Icons/BackIcon.png" Margin="4,4,4,4"/>

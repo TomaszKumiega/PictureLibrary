@@ -115,6 +115,15 @@ namespace PublicResXFileCodeGenerator {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paste.
+        /// </summary>
+        public static string Paste {
+            get {
+                return ResourceManager.GetString("Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search....
         /// </summary>
         public static string Search {

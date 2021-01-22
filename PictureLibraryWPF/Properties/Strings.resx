@@ -135,6 +135,9 @@
   <data name="Library" xml:space="preserve">
     <value>Library</value>
   </data>
+  <data name="Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search...</value>
   </data>
