@@ -32,17 +32,17 @@
 
         <!--Back Button-->
         <Button x:Name="BackButton" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="Transparent">
-            <Image Source="pack://application:,,,/Icons/BackIcon.png"/>
+            <Image Source="pack://application:,,,/Icons/BackIcon.png" Margin="4,4,4,4"/>
         </Button>
         
         <!--Up Button-->
         <Button x:Name="UpButton" Grid.Column="2" Grid.Row="1" BorderThickness="0" Background="Transparent">
-            <Image Source="pack://application:,,,/Icons/UpIcon.png"/>
+            <Image Source="pack://application:,,,/Icons/UpIcon.png" Margin="4,4,4,4"/>
         </Button>
 
         <!--Forward Button-->
         <Button x:Name="ForwardButton" Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="Transparent">
-            <Image Source="pack://application:,,,/Icons/ForwardIcon.png"/>
+            <Image Source="pack://application:,,,/Icons/ForwardIcon.png" Margin="4,4,4,4"/>
         </Button>
 
         <!--Path Border-->
