@@ -123,6 +123,9 @@
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
+  <data name="Cut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
   <data name="Files" xml:space="preserve">
     <value>Files</value>
   </data>
