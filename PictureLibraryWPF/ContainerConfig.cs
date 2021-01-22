@@ -10,7 +10,7 @@ using PictureLibraryWPF;
 namespace PictureLibraryViewModel
 {
     /// <summary>
-    /// Configurates autofac dependency injection container.
+    /// Configures autofac dependency injection container.
     /// </summary>
     public static class ContainerConfig
     {
