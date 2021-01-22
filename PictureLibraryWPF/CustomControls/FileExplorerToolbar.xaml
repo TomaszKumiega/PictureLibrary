@@ -10,15 +10,15 @@
              d:DesignHeight="80" d:DesignWidth="600">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="0.5"/>
