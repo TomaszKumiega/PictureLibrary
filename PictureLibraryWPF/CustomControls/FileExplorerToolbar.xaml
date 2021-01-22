@@ -7,11 +7,11 @@
              xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls"
              xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="600">
+             d:DesignHeight="80" d:DesignWidth="600">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="40"/>
@@ -30,6 +30,14 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
+        <!--Add To Library Button-->
+        <Button x:Name="AddToLibraryButton" Background="Transparent" BorderThickness="0">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Icons/AddToLibraryIcon.png"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="9" Foreground="#CDCDCD" TextAlignment="Center" VerticalAlignment="Center" Text="{x:Static res:Strings.Add}"/>
+            </StackPanel>
+        </Button>
+        
         <!--Back Button-->
         <Button x:Name="BackButton" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="Transparent">
             <Image Source="pack://application:,,,/Icons/BackIcon.png" Margin="4,4,4,4"/>
@@ -37,7 +45,7 @@
         
         <!--Up Button-->
         <Button x:Name="UpButton" Grid.Column="2" Grid.Row="1" BorderThickness="0" Background="Transparent">
-            <Image Source="pack://application:,,,/Icons/UpIcon.png" Margin="5,5,5,5"/>
+            <Image Source="pack://application:,,,/Icons/UpIcon.png" Margin="4,4,4,4"/>
         </Button>
 
         <!--Forward Button-->
