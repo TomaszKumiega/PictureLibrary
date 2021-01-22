@@ -138,6 +138,9 @@
   <data name="Library" xml:space="preserve">
     <value>Library</value>
   </data>
+  <data name="NewFolder" xml:space="preserve">
+    <value>New folder</value>
+  </data>
   <data name="Paste" xml:space="preserve">
     <value>Paste</value>
   </data>

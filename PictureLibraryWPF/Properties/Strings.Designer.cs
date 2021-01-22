@@ -124,6 +124,15 @@ namespace PublicResXFileCodeGenerator {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New folder.
+        /// </summary>
+        public static string NewFolder {
+            get {
+                return ResourceManager.GetString("NewFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paste.
         /// </summary>
         public static string Paste {

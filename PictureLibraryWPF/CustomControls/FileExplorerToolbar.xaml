@@ -77,7 +77,15 @@
                 <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Rename}" TextWrapping="Wrap"/>
             </StackPanel>
         </Button>
-        
+
+        <!--New Folder Button-->
+        <Button x:Name="NewFolderButton" Grid.Column="6" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.NewFolder}" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Button>
+
         <!--Back Button-->
         <Button x:Name="BackButton" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="Transparent">
             <Image Source="pack://application:,,,/Icons/BackIcon.png" Margin="4,4,4,4"/>
