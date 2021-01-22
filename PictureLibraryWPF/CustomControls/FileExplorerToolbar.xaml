@@ -37,69 +37,72 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
-        <!--Add To Library Button-->
-        <Button x:Name="AddToLibraryButton" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
-            <StackPanel>
-                <Image Source="pack://application:,,,/Icons/AddToLibraryIcon.png"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Add}"/>
-            </StackPanel>
-        </Button>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="20">
+            <!--Add To Library Button-->
+            <Button x:Name="AddToLibraryButton" Margin="5,3,3,3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/AddToLibraryIcon.png"/>
+                    <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Add}"/>
+                </StackPanel>
+            </Button>
 
-        <!--Copy Button-->
-        <Button x:Name="CopyButton" Grid.Column="2" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
-            <StackPanel>
-                <Image Source="pack://application:,,,/Icons/CopyIcon.png"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Copy}"/>
-            </StackPanel>
-        </Button>
+            <!--Copy Button-->
+            <Button x:Name="CopyButton" Margin="5,3,3,3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/CopyIcon.png"/>
+                    <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Copy}"/>
+                </StackPanel>
+            </Button>
 
-        <!--Cut Button-->
-        <Button x:Name="CutButton" Grid.Column="4" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
-            <StackPanel>
-                <Image Source="pack://application:,,,/Icons/CutIcon.png" />
-                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Cut}"/>
-            </StackPanel>
-        </Button>
+            <!--Cut Button-->
+            <Button x:Name="CutButton" Margin="5,3,3,3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/CutIcon.png" />
+                    <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Cut}"/>
+                </StackPanel>
+            </Button>
 
-        <!--Paste Button-->
-        <Button x:Name="PasteButton" Grid.Column="6" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
-            <StackPanel>
-                <Image Source="pack://application:,,,/Icons/PasteIcon.png"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Paste}"/>
-            </StackPanel>
-        </Button>
+            <!--Paste Button-->
+            <Button x:Name="PasteButton" Margin="5,3,3,3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/PasteIcon.png"/>
+                    <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Paste}"/>
+                </StackPanel>
+            </Button>
 
-        <!--Copy Path Button-->
-        <Button x:Name="CopyPathButton" Grid.Column="8" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
-            <StackPanel>
-                <Image Source="pack://application:,,,/Icons/CopyPathIcon.png"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.CopyPath}" TextWrapping="Wrap"/>
-            </StackPanel>
-        </Button>
+            <!--Copy Path Button-->
+            <Button x:Name="CopyPathButton" Margin="5,3,3,3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/CopyPathIcon.png"/>
+                    <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.CopyPath}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
 
-        <!--Rename Button-->
-        <Button x:Name="RenameButton" Grid.Column="10" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
-            <StackPanel>
-                <Image Source="pack://application:,,,/Icons/RenameIcon.png"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Rename}" TextWrapping="Wrap"/>
-            </StackPanel>
-        </Button>
+            <!--Rename Button-->
+            <Button x:Name="RenameButton" Margin="5,3,3,3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/RenameIcon.png"/>
+                    <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Rename}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
 
-        <!--New Folder Button-->
-        <Button x:Name="NewFolderButton" Grid.Column="12" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
-            <StackPanel>
-                <Image Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.NewFolder}" TextWrapping="Wrap"/>
-            </StackPanel>
-        </Button>
+            <!--New Folder Button-->
+            <Button x:Name="NewFolderButton" Margin="5,3,3,3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
+                    <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.NewFolder}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
 
-        <!--Properties Button-->
-        <Button x:Name="PropertiesButton" Grid.Column="14" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
-            <StackPanel>
-                <Image Source="pack://application:,,,/Icons/PropertiesIcon.png"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Properties}" TextWrapping="Wrap"/>
-            </StackPanel>
-        </Button>
+            <!--Properties Button-->
+            <Button x:Name="PropertiesButton" Margin="5,3,3,3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/PropertiesIcon.png"/>
+                    <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Properties}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
 
         <!--Back Button-->
         <Button x:Name="BackButton" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="Transparent">
