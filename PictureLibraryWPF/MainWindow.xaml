@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="PictureLibrary" Background="Transparent" Height="650" Width="1000" MinHeight="600" MinWidth="900" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
 
-    <Grid x:Name="Grid" Margin="7,7,7,7">
+    <Grid x:Name="Grid" Margin="7,7,7,7" Background="#222427">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" MinWidth="180" MaxWidth="270"/>
             <ColumnDefinition Width="2"/>

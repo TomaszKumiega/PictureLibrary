@@ -51,6 +51,7 @@ namespace PictureLibraryWPF
             RemoveCurrentPageControlsFromTheGrid();
 
             FileButtonClickedRectangle.Fill = new SolidColorBrush(Color.FromArgb(0, 102, 255, 1)); // change rectangle color to #0066ff
+            ToolBarShadow.Fill = new SolidColorBrush(Color.FromArgb(29, 31, 33, 1)); // change rectangle color to #2b2d30
 
             // Add files tree to the grid
             var filesTree = _controlsFactory.GetFileElementsTree();
