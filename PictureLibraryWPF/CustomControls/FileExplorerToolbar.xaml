@@ -31,34 +31,42 @@
         </Grid.RowDefinitions>
 
         <!--Add To Library Button-->
-        <Button x:Name="AddToLibraryButton" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Bottom">
+        <Button x:Name="AddToLibraryButton" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/AddToLibraryIcon.png"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="9" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Add}"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Add}"/>
             </StackPanel>
         </Button>
 
         <!--Copy Button-->
-        <Button x:Name="CopyButton" Grid.Column="1" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Bottom">
+        <Button x:Name="CopyButton" Grid.Column="1" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/CopyIcon.png"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="9" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Copy}"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Copy}"/>
             </StackPanel>
         </Button>
 
         <!--Cut Button-->
-        <Button x:Name="CutButton" Grid.Column="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Bottom">
+        <Button x:Name="CutButton" Grid.Column="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/CutIcon.png" />
-                <TextBlock FontFamily="Segoe UI" FontSize="9" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Cut}"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Cut}"/>
             </StackPanel>
         </Button>
 
         <!--Paste Button-->
-        <Button x:Name="PasteButton" Grid.Column="3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Bottom">
+        <Button x:Name="PasteButton" Grid.Column="3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/PasteIcon.png"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="9" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Paste}"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Paste}"/>
+            </StackPanel>
+        </Button>
+
+        <!--Copy Path Button-->
+        <Button x:Name="CopyPathButton" Grid.Column="4" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Icons/CopyPathIcon.png"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.CopyPath}" TextWrapping="Wrap"/>
             </StackPanel>
         </Button>
 
