@@ -141,6 +141,9 @@
   <data name="Paste" xml:space="preserve">
     <value>Wklej</value>
   </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Zmień nazwę</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Wyszukaj...</value>
   </data>

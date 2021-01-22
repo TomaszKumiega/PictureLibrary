@@ -70,6 +70,14 @@
             </StackPanel>
         </Button>
 
+        <!--Rename Button-->
+        <Button x:Name="RenameButton" Grid.Column="5" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Icons/RenameIcon.png"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Rename}" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Button>
+        
         <!--Back Button-->
         <Button x:Name="BackButton" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="Transparent">
             <Image Source="pack://application:,,,/Icons/BackIcon.png" Margin="4,4,4,4"/>
