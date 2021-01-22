@@ -31,13 +31,21 @@
         </Grid.RowDefinitions>
 
         <!--Add To Library Button-->
-        <Button x:Name="AddToLibraryButton" Background="Transparent" BorderThickness="0">
+        <Button x:Name="AddToLibraryButton" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Bottom">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/AddToLibraryIcon.png"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="9" Foreground="#CDCDCD" TextAlignment="Center" VerticalAlignment="Center" Text="{x:Static res:Strings.Add}"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="9" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Add}"/>
             </StackPanel>
         </Button>
-        
+
+        <!--Copy Button-->
+        <Button x:Name="CopyButton" Grid.Column="1" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Bottom">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Icons/CopyIcon.png"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="9" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Copy}"/>
+            </StackPanel>
+        </Button>
+
         <!--Back Button-->
         <Button x:Name="BackButton" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="Transparent">
             <Image Source="pack://application:,,,/Icons/BackIcon.png" Margin="4,4,4,4"/>
