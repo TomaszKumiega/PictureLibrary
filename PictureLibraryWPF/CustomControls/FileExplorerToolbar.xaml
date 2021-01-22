@@ -7,9 +7,16 @@
              xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls"
              xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="600">
+             d:DesignHeight="150" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="30"/>
@@ -31,7 +38,7 @@
         </Grid.RowDefinitions>
 
         <!--Add To Library Button-->
-        <Button x:Name="AddToLibraryButton" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+        <Button x:Name="AddToLibraryButton" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/AddToLibraryIcon.png"/>
                 <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Add}"/>
@@ -39,7 +46,7 @@
         </Button>
 
         <!--Copy Button-->
-        <Button x:Name="CopyButton" Grid.Column="1" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+        <Button x:Name="CopyButton" Grid.Column="2" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/CopyIcon.png"/>
                 <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Copy}"/>
@@ -47,7 +54,7 @@
         </Button>
 
         <!--Cut Button-->
-        <Button x:Name="CutButton" Grid.Column="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+        <Button x:Name="CutButton" Grid.Column="4" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/CutIcon.png" />
                 <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Cut}"/>
@@ -55,7 +62,7 @@
         </Button>
 
         <!--Paste Button-->
-        <Button x:Name="PasteButton" Grid.Column="3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+        <Button x:Name="PasteButton" Grid.Column="6" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/PasteIcon.png"/>
                 <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Paste}"/>
@@ -63,7 +70,7 @@
         </Button>
 
         <!--Copy Path Button-->
-        <Button x:Name="CopyPathButton" Grid.Column="4" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+        <Button x:Name="CopyPathButton" Grid.Column="8" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/CopyPathIcon.png"/>
                 <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.CopyPath}" TextWrapping="Wrap"/>
@@ -71,7 +78,7 @@
         </Button>
 
         <!--Rename Button-->
-        <Button x:Name="RenameButton" Grid.Column="5" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+        <Button x:Name="RenameButton" Grid.Column="10" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/RenameIcon.png"/>
                 <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Rename}" TextWrapping="Wrap"/>
@@ -79,7 +86,7 @@
         </Button>
 
         <!--New Folder Button-->
-        <Button x:Name="NewFolderButton" Grid.Column="6" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+        <Button x:Name="NewFolderButton" Grid.Column="12" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
                 <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.NewFolder}" TextWrapping="Wrap"/>
@@ -87,7 +94,7 @@
         </Button>
 
         <!--Properties Button-->
-        <Button x:Name="PropertiesButton" Grid.Column="7" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+        <Button x:Name="PropertiesButton" Grid.Column="14" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
             <StackPanel>
                 <Image Source="pack://application:,,,/Icons/PropertiesIcon.png"/>
                 <TextBlock FontFamily="Segoe UI" FontSize="7" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Properties}" TextWrapping="Wrap"/>
@@ -110,26 +117,26 @@
         </Button>
 
         <!--Path Border-->
-        <Border x:Name="PathBorderRectangle" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="11" BorderThickness="0.3" BorderBrush="WhiteSmoke"/>
+        <Border x:Name="PathBorderRectangle" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="18" BorderThickness="0.3" BorderBrush="WhiteSmoke"/>
 
         <!--Folder Image-->
         <Image x:Name="FolderImage" Grid.Row="1" Grid.Column="3" Margin="6,6,6,6" Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
         
         <!--Path TextBlock-->
-        <TextBox x:Name="PathTextBlock" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="6" FontFamily="Segoe UI" FontSize="11" Background="Transparent" BorderThickness="0" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{Binding Path=CurrentDirectoryPath}"/>
+        <TextBox x:Name="PathTextBlock" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="13" FontFamily="Segoe UI" FontSize="11" Background="Transparent" BorderThickness="0" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{Binding Path=CurrentDirectoryPath}"/>
         
         <!--Refresh Button-->
-        <Button x:Name="RefreshButton" Grid.Column="10" Grid.Row="1" BorderThickness="0" Background="Transparent">
+        <Button x:Name="RefreshButton" Grid.Column="17" Grid.Row="1" BorderThickness="0" Background="Transparent">
             <Image Source="pack://application:,,,/Icons/RefreshIcon.png" Margin="6,6,6,6"/>
         </Button>
         
         <!--Search/Path bodrer-->
-        <Rectangle x:Name="SearchBorderRectangle" Grid.Column="11" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="WhiteSmoke"/>
+        <Rectangle x:Name="SearchBorderRectangle" Grid.Column="18" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="WhiteSmoke"/>
         
         <!--Search Icon-->
-        <Image x:Name="SearchIcon" Grid.Row="1" Grid.Column="12" Margin="7,7,7,7" Source="pack://application:,,,/Icons/SearchIcon.png"/>
+        <Image x:Name="SearchIcon" Grid.Row="1" Grid.Column="19" Margin="7,7,7,7" Source="pack://application:,,,/Icons/SearchIcon.png"/>
         
         <!--Search TextBlock-->
-        <TextBox x:Name="SearchTextBlock" Grid.Row="1" Grid.Column="13" Margin="3,0,0,0" FontFamily="Segoe UI" FontSize="12" Background="Transparent" BorderThickness="0" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{x:Static res:Strings.Search}"/>
+        <TextBox x:Name="SearchTextBlock" Grid.Row="1" Grid.Column="20" Margin="3,0,0,0" FontFamily="Segoe UI" FontSize="12" Background="Transparent" BorderThickness="0" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{x:Static res:Strings.Search}"/>
     </Grid>
 </UserControl>
