@@ -30,7 +30,11 @@
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type src:IExplorableElement}">
                     <StackPanel>
-                        <Image Width="50" Height="50" Source="{Binding IconSource}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <Image x:Name="ElementImage" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding IconSource}" DecodePixelWidth="50"/>
+                            </Image.Source>
+                        </Image>
                         <TextBlock Width="100" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center"  Text="{Binding Name}" Foreground="#cdcdcd"/>
                     </StackPanel>
                 </DataTemplate>
