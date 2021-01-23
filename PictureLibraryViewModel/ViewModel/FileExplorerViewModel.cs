@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -30,7 +31,7 @@ namespace PictureLibraryViewModel.ViewModel
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
         public ICommand CreateFolderCommand { get; }
-        public List<IExplorableElement> SelectedElements { get; set; }
+        public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public IClipboardService Clipboard { get; }
 
         public IExplorableElement SelectedNode
@@ -60,7 +61,8 @@ namespace PictureLibraryViewModel.ViewModel
             _fileSystemService = fileSystemService;
             Clipboard = clipboard;
 
-            SelectedElements = new List<IExplorableElement>();
+            SelectedElements = new ObservableCollection<IExplorableElement>();
+            SelectedElements.CollectionChanged += OnSelectedElementsChanged;
 
             #region Command Initialization
             CopyCommand = commandFactory.GetCopyCommand(this);
@@ -74,6 +76,11 @@ namespace PictureLibraryViewModel.ViewModel
 
             InitializeDirectoryTree();
             InitializeCurrentDirectoryFiles();
+        }
+
+        private void OnSelectedElementsChanged(object o, EventArgs args)
+        {
+            (CopyCommand as CopyCommand).OnExecuteChanged();
         }
 
         #region Initialize methods
@@ -120,12 +127,12 @@ namespace PictureLibraryViewModel.ViewModel
 
         public void CopySelectedElements()
         {
-            Clipboard.CopiedElements = SelectedElements;
+            Clipboard.CopiedElements = ((IEnumerable<IExplorableElement>)SelectedElements).ToList();
         }
 
         public void CutSelectedElements()
         {
-            Clipboard.CutElements = SelectedElements;
+            Clipboard.CutElements = ((IEnumerable<IExplorableElement>)SelectedElements).ToList();
         }
 
         public void PasteSelectedElements()

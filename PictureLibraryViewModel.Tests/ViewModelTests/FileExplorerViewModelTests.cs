@@ -7,6 +7,8 @@ using Xunit;
 using Moq;
 using PictureLibraryModel.Services.Clipboard;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace PictureLibraryViewModel.Tests
 {
@@ -22,13 +24,13 @@ namespace PictureLibraryViewModel.Tests
 
             var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object, clipboardMock.Object);
 
-            var elementsList = new List<IExplorableElement>();
+            var elementsList = new ObservableCollection<IExplorableElement>();
             elementsList.Add(imageFile);
 
             viewModel.SelectedElements = elementsList;
             viewModel.CopySelectedElements();
 
-            clipboardMock.VerifySet(x => x.CopiedElements = elementsList);
+            clipboardMock.VerifySet(x => x.CopiedElements = ((IEnumerable<IExplorableElement>)elementsList).ToList());
         }
 
 
@@ -42,13 +44,13 @@ namespace PictureLibraryViewModel.Tests
 
             var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, commandFactoryMock.Object, clipboardMock.Object);
 
-            var elementsList = new List<IExplorableElement>();
+            var elementsList = new ObservableCollection<IExplorableElement>();
             elementsList.Add(imageFile);
 
             viewModel.SelectedElements = elementsList;
             viewModel.CutSelectedElements();
 
-            clipboardMock.VerifySet(x => x.CutElements = elementsList);
+            clipboardMock.VerifySet(x => x.CutElements = ((IEnumerable<IExplorableElement>)elementsList).ToList());
         }
 
         [Fact]
