@@ -47,7 +47,7 @@
             </Button>
 
             <!--Copy Button-->
-            <Button x:Name="CopyButton" Margin="5,3,3,3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top">
+            <Button x:Name="CopyButton" Margin="5,3,3,3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Top" Command="{Binding CopyCommand}">
                 <StackPanel>
                     <Image Width="40" Height="40" Source="pack://application:,,,/Icons/CopyIcon.png"/>
                     <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Copy}"/>
