@@ -14,7 +14,7 @@ namespace PictureLibraryViewModel.ViewModel
     {
         List<IExplorableElement> SelectedElements { get; set; }
         IExplorableElement SelectedNode { get; set; }
-        ICommand CopyFileCommand { get; }
+        ICommand CopyCommand { get; }
         ICommand PasteCommand { get; }
         ICommand CutCommand { get; }
         ICommand RenameCommand { get; }

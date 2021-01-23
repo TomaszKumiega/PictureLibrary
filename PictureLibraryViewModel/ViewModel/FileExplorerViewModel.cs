@@ -23,7 +23,7 @@ namespace PictureLibraryViewModel.ViewModel
         #region Public Properties
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; private set; }
-        public ICommand CopyFileCommand { get; }
+        public ICommand CopyCommand { get; }
         public ICommand PasteCommand { get; }
         public ICommand CutCommand { get; }
         public ICommand CopyPathCommand { get; }
@@ -63,7 +63,7 @@ namespace PictureLibraryViewModel.ViewModel
             SelectedElements = new List<IExplorableElement>();
 
             #region Command Initialization
-            CopyFileCommand = commandFactory.GetCopyCommand(this);
+            CopyCommand = commandFactory.GetCopyCommand(this);
             PasteCommand = commandFactory.GetPasteCommand(this);
             CutCommand = commandFactory.GetCutCommand(this);
             CopyPathCommand = commandFactory.GetCopyPathCommand(this);
