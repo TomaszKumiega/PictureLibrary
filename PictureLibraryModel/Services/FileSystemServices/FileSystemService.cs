@@ -37,7 +37,10 @@ namespace PictureLibraryModel.Services.FileSystemServices
             {
                 foreach (var t in fullPaths)
                 {
-                    directories.Add(new Folder(t, (new System.IO.DirectoryInfo(t)).Name, this, Origin.Local));
+                    if (UserHasAccessToTheFolder(t))
+                    {
+                        directories.Add(new Folder(t, (new System.IO.DirectoryInfo(t)).Name, this, Origin.Local));
+                    }
                 }
             }
 
@@ -87,12 +90,12 @@ namespace PictureLibraryModel.Services.FileSystemServices
         {
             var content = new List<IExplorableElement>();
 
-            var filePaths = System.IO.Directory.GetFiles(path);
-            var directoryPaths = System.IO.Directory.GetDirectories(path);
+            var filePaths = System.IO.Directory.GetFiles(path).ToList();
+            var directoryPaths = System.IO.Directory.GetDirectories(path).ToList();
 
             foreach(var t in filePaths)
             {
-                if(ImageFile.IsFileAnImage(t))
+                if(ImageFile.IsFileAnImage(t) && UserHasAccessToTheFile(t))
                 {
                     var fileInfo = GetFileInfo(t);
 
@@ -108,9 +111,11 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
             foreach(var t in directoryPaths)
             {
-                var directoryInfo = new DirectoryInfo(t);
-
-                content.Add(new Folder(directoryInfo.FullName, directoryInfo.Name, this, Origin.Local));
+                if (UserHasAccessToTheFolder(t))
+                {
+                    var directoryInfo = new DirectoryInfo(t);
+                    content.Add(new Folder(directoryInfo.FullName, directoryInfo.Name, this, Origin.Local));
+                }
             }
 
             return content;
@@ -156,6 +161,32 @@ namespace PictureLibraryModel.Services.FileSystemServices
         public virtual void CreateDirectory(string path)
         {
             System.IO.Directory.CreateDirectory(path);
+        }
+
+        private bool UserHasAccessToTheFolder(string path)
+        {
+            try
+            {
+                System.IO.Directory.GetDirectories(path);
+                return true;
+            }
+            catch(UnauthorizedAccessException)
+            {
+                return false;
+            }
+        }
+
+        private bool UserHasAccessToTheFile(string path)
+        {
+            try
+            {
+                File.GetAttributes(path);
+                return true;
+            }
+            catch(UnauthorizedAccessException)
+            {
+                return false;
+            }
         }
 
         private void CopyDirectory(string sourcePath, string destinationPath)
