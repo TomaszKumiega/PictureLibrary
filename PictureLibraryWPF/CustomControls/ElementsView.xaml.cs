@@ -34,5 +34,18 @@ namespace PictureLibraryWPF.CustomControls
                 (DataContext as IFileExplorerViewModel).CurrentDirectoryPath = (FilesList.SelectedItem as IExplorableElement).FullPath;
             }
         }
+
+        private void FilesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(DataContext is IFileExplorerViewModel)
+            {
+                (DataContext as IFileExplorerViewModel).SelectedElements.Clear();
+
+                foreach (var t in FilesList.SelectedItems)
+                {
+                    (DataContext as IFileExplorerViewModel).SelectedElements.Add(t as IExplorableElement);
+                }
+            }
+        }
     }
 }

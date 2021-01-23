@@ -21,7 +21,7 @@
 
         <ListView Grid.Column="0" Grid.Row="0" x:Name="FilesList" Background="Transparent" BorderThickness="0" 
                   ItemsSource="{Binding Path=CurrentlyShownElements, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Multiple">
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Multiple" SelectionChanged="FilesList_SelectionChanged">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
