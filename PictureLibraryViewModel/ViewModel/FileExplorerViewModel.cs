@@ -85,6 +85,7 @@ namespace PictureLibraryViewModel.ViewModel
         {
             (CopyCommand as CopyCommand).OnExecuteChanged();
             (CutCommand as CutCommand).OnExecuteChanged();
+            (CopyPathCommand as CopyPathCommand).OnExecuteChanged();
         }
 
         private void OnCopiedElementsChanged(object o, EventArgs args)
