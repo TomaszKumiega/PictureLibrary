@@ -95,7 +95,7 @@
             </Button>
 
             <!--Paste Button-->
-            <Button x:Name="PasteButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}">
+            <Button x:Name="PasteButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}" Command="{Binding PasteCommand}">
                 <StackPanel>
                     <Image Width="40" Height="40" Source="pack://application:,,,/Icons/PasteIcon.png"/>
                     <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Paste}"/>
