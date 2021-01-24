@@ -81,6 +81,7 @@ namespace PictureLibraryViewModel.ViewModel
         private void OnSelectedElementsChanged(object o, EventArgs args)
         {
             (CopyCommand as CopyCommand).OnExecuteChanged();
+            (CutCommand as CutCommand).OnExecuteChanged();
         }
 
         #region Initialize methods
