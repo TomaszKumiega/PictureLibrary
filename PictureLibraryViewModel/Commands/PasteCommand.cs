@@ -17,6 +17,11 @@ namespace PictureLibraryViewModel.Commands
             _viewModel = viewModel;
         }
 
+        public void OnExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         public bool CanExecute(object parameter)
         {
             if (_viewModel.Clipboard.CopiedElements == null && _viewModel.Clipboard.CutElements == null) return false;

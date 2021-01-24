@@ -63,6 +63,8 @@ namespace PictureLibraryViewModel.ViewModel
 
             SelectedElements = new ObservableCollection<IExplorableElement>();
             SelectedElements.CollectionChanged += OnSelectedElementsChanged;
+            Clipboard.CopiedElements.CollectionChanged += OnCopiedElementsChanged;
+            Clipboard.CutElements.CollectionChanged += OnCutElementsChanged;
 
             #region Command Initialization
             CopyCommand = commandFactory.GetCopyCommand(this);
@@ -82,6 +84,16 @@ namespace PictureLibraryViewModel.ViewModel
         {
             (CopyCommand as CopyCommand).OnExecuteChanged();
             (CutCommand as CutCommand).OnExecuteChanged();
+        }
+
+        private void OnCopiedElementsChanged(object o, EventArgs args)
+        {
+            (PasteCommand as PasteCommand).OnExecuteChanged();
+        }
+
+        private void OnCutElementsChanged(object o, EventArgs args)
+        {
+            (PasteCommand as PasteCommand).OnExecuteChanged();
         }
 
         #region Initialize methods
