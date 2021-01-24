@@ -103,7 +103,7 @@
             </Button>
 
             <!--Copy Path Button-->
-            <Button x:Name="CopyPathButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}">
+            <Button x:Name="CopyPathButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}" Command="{Binding CopyPathCommand}">
                 <StackPanel>
                     <Image Width="40" Height="40" Source="pack://application:,,,/Icons/CopyPathIcon.png"/>
                     <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.CopyPath}" TextWrapping="Wrap"/>
