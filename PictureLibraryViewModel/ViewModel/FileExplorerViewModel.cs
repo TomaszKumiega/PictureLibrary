@@ -80,6 +80,7 @@ namespace PictureLibraryViewModel.ViewModel
             InitializeCurrentDirectoryFiles();
         }
 
+        #region Events Handlers
         private void OnSelectedElementsChanged(object o, EventArgs args)
         {
             (CopyCommand as CopyCommand).OnExecuteChanged();
@@ -95,6 +96,7 @@ namespace PictureLibraryViewModel.ViewModel
         {
             (PasteCommand as PasteCommand).OnExecuteChanged();
         }
+        #endregion
 
         #region Initialize methods
         private void InitializeDirectoryTree()
