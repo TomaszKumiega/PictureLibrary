@@ -87,7 +87,7 @@
             </Button>
 
             <!--Cut Button-->
-            <Button x:Name="CutButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}">
+            <Button x:Name="CutButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}" Command="{Binding CutCommand}">
                 <StackPanel>
                     <Image Width="40" Height="40" Source="pack://application:,,,/Icons/CutIcon.png" />
                     <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Cut}"/>
