@@ -128,12 +128,12 @@ namespace PictureLibraryViewModel.ViewModel
 
         public void CopySelectedElements()
         {
-            Clipboard.CopiedElements = ((IEnumerable<IExplorableElement>)SelectedElements).ToList();
+            Clipboard.CopiedElements = SelectedElements;
         }
 
         public void CutSelectedElements()
         {
-            Clipboard.CutElements = ((IEnumerable<IExplorableElement>)SelectedElements).ToList();
+            Clipboard.CutElements = SelectedElements;
         }
 
         public void PasteSelectedElements()

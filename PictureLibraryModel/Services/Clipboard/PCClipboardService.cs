@@ -1,6 +1,7 @@
 ﻿using PictureLibraryModel.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace PictureLibraryModel.Services.Clipboard
@@ -9,8 +10,8 @@ namespace PictureLibraryModel.Services.Clipboard
     {
         public PCClipboardService()
         {
-            CopiedElements = new List<IExplorableElement>();
-            CutElements = new List<IExplorableElement>();
+            CopiedElements = new ObservableCollection<IExplorableElement>();
+            CutElements = new ObservableCollection<IExplorableElement>();
         }
 
         public string SystemClipboard
@@ -19,7 +20,7 @@ namespace PictureLibraryModel.Services.Clipboard
             set => TextCopy.ClipboardService.SetText(value);
         }
 
-        public List<IExplorableElement> CopiedElements { get; set; }
-        public List<IExplorableElement> CutElements { get; set; }
+        public ObservableCollection<IExplorableElement> CopiedElements { get; set; }
+        public ObservableCollection<IExplorableElement> CutElements { get; set; }
     }
 }
