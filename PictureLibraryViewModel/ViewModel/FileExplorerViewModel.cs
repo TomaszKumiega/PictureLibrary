@@ -142,12 +142,18 @@ namespace PictureLibraryViewModel.ViewModel
 
         public void CopySelectedElements()
         {
-            Clipboard.CopiedElements = SelectedElements;
+            foreach(var t in SelectedElements)
+            {
+                Clipboard.CopiedElements.Add(t);
+            }
         }
 
         public void CutSelectedElements()
         {
-            Clipboard.CutElements = SelectedElements;
+            foreach(var t in SelectedElements)
+            {
+                Clipboard.CutElements.Add(t);
+            }
         }
 
         public void PasteSelectedElements()
