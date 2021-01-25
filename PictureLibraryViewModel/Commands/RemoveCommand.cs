@@ -16,6 +16,11 @@ namespace PictureLibraryViewModel.Commands
             _viewModel = viewModel;
         }
 
+        public void OnExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         public bool CanExecute(object parameter)
         {
             if (_viewModel.SelectedElements == null) return false;
