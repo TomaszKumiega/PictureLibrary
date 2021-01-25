@@ -101,6 +101,14 @@
                     <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Paste}"/>
                 </StackPanel>
             </Button>
+            
+            <!--Remove Button-->
+            <Button x:Name="RemoveButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}" Command="{Binding RemoveCommand}">
+                <StackPanel>
+                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/RemoveIcon.png"/>
+                    <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Remove}"/>
+                </StackPanel>
+            </Button>
 
             <!--Copy Path Button-->
             <Button x:Name="CopyPathButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}" Command="{Binding CopyPathCommand}">

@@ -27,6 +27,7 @@
     <None Remove="Icons\PasteIcon.png" />
     <None Remove="Icons\PropertiesIcon.png" />
     <None Remove="Icons\RefreshIcon.png" />
+    <None Remove="Icons\RemoveIcon.png" />
     <None Remove="Icons\RenameIcon.png" />
     <None Remove="Icons\SearchIcon.png" />
     <None Remove="Icons\SettingsIcon.png" />
@@ -95,6 +96,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\RefreshIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\RemoveIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\RenameIcon.png">

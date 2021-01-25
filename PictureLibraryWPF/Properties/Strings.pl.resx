@@ -147,6 +147,9 @@
   <data name="Properties" xml:space="preserve">
     <value>Właściwości</value>
   </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Usuń</value>
+  </data>
   <data name="Rename" xml:space="preserve">
     <value>Zmień nazwę</value>
   </data>
