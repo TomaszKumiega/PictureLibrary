@@ -25,7 +25,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public FileSystemInfo GetInfo(string path)
         {
-            throw new NotImplementedException();
+            return new DirectoryInfo(path);
         }
 
         public IEnumerable<Model.Directory> GetRootDirectories()
