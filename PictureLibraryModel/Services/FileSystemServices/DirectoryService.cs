@@ -15,7 +15,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public void Create(string path)
         {
-            throw new NotImplementedException();
+            System.IO.Directory.CreateDirectory(path);
         }
 
         public IEnumerable<IExplorableElement> GetDirectoryContent(string path)
