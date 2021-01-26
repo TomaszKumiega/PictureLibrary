@@ -80,5 +80,47 @@ namespace PictureLibraryModel.Tests.ServicesTests
 
             CleanupFiles();
         }
+
+        [Fact]
+        public void Rename_ShouldRenameAFile()
+        {
+            var extension = ".jpg";
+            var fileName = "testimage";
+            var newFileName = "testImage2";
+            var sourceDirectory = "Tests\\Folder1\\";
+
+            Directory.CreateDirectory(sourceDirectory);
+            var fileStream = File.Create(sourceDirectory + fileName + extension);
+            fileStream.Close();
+
+            var service = new FileService();
+
+            service.Rename(sourceDirectory + fileName + extension, newFileName);
+
+            Assert.True(File.Exists(sourceDirectory + newFileName + extension));
+
+            CleanupFiles();
+        }
+
+        [Fact]
+        public void Rename_ShouldThrowIOException_WhenFileWithTheSameNameAlreadyExists()
+        {
+            var extension = ".jpg";
+            var fileName = "testimage";
+            var newFileName = "testImage2";
+            var sourceDirectory = "Tests\\Folder1\\";
+
+            Directory.CreateDirectory(sourceDirectory);
+            var fileStream = File.Create(sourceDirectory + fileName + extension);
+            fileStream.Close();
+            fileStream = File.Create(sourceDirectory + newFileName + extension);
+            fileStream.Close();
+
+            var service = new FileService();
+
+            Assert.Throws<IOException>(() => service.Rename(sourceDirectory + fileName + extension, newFileName));
+
+            CleanupFiles();
+        }
     }
 }
