@@ -27,7 +27,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public void Move(string sourcePath, string destinationPath)
         {
-            throw new NotImplementedException();
+            File.Move(sourcePath, destinationPath);
         }
 
         public FileStream OpenFile(string path)
