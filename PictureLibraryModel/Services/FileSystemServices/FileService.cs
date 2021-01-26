@@ -32,7 +32,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public FileStream OpenFile(string path)
         {
-            throw new NotImplementedException();
+            return File.Open(path, FileMode.Open);
         }
 
         public void Rename(string path, string name)
