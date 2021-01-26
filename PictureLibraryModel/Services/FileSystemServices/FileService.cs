@@ -12,7 +12,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public void Copy(string sourcePath, string destinationPath)
         {
-            throw new NotImplementedException();
+            File.Copy(sourcePath, destinationPath);
         }
 
         public void Create(string path)
