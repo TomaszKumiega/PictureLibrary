@@ -22,7 +22,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public FileSystemInfo GetInfo(string path)
         {
-            throw new NotImplementedException();
+            return new FileInfo(path);
         }
 
         public void Move(string sourcePath, string destinationPath)
