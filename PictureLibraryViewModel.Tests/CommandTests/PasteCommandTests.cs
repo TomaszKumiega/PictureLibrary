@@ -4,6 +4,7 @@ using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using Xunit;
 
@@ -16,7 +17,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         {
             var imageFileMock = new Mock<ImageFile>();
 
-            var elementsList = new List<IExplorableElement>();
+            var elementsList = new ObservableCollection<IExplorableElement>();
             elementsList.Add(imageFileMock.Object);
 
             var viewModelMock = new Mock<IExplorerViewModel>();
@@ -31,7 +32,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         [Fact]
         public void CanExecute_ShouldReturnFalse_WhenCopiedElements_AndCutElements_AreNull()
         {
-            List<IExplorableElement> list = null;
+            ObservableCollection<IExplorableElement> list = null;
 
             var viewModelMock = new Mock<IExplorerViewModel>();
             viewModelMock.Setup(x => x.Clipboard.CopiedElements)

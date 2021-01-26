@@ -6,6 +6,7 @@ using Moq;
 using PictureLibraryModel.Model;
 using PictureLibraryViewModel.ViewModel;
 using PictureLibraryViewModel.Commands;
+using System.Collections.ObjectModel;
 
 namespace PictureLibraryViewModel.Tests.CommandTests
 {
@@ -16,7 +17,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         {
             var imageFileMock = new Mock<ImageFile>();
 
-            var elementsList = new List<IExplorableElement>();
+            var elementsList = new ObservableCollection<IExplorableElement>();
             elementsList.Add(imageFileMock.Object);
 
             var viewModelMock = new Mock<IExplorerViewModel>();
@@ -31,7 +32,7 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         [Fact]
         public void CanExecute_ShouldReturnFalse_WhenSelectedFilesIsNull()
         {
-            List<IExplorableElement> list = null;
+            ObservableCollection<IExplorableElement> list = null;
 
             var viewModelMock = new Mock<IExplorerViewModel>();
             viewModelMock.Setup(x => x.SelectedElements)
