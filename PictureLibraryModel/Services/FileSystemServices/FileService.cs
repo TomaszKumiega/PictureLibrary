@@ -17,7 +17,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public void Create(string path)
         {
-            throw new NotImplementedException();
+            File.Create(path);
         }
 
         public FileSystemInfo GetInfo(string path)
