@@ -160,23 +160,23 @@ namespace PictureLibraryViewModel.ViewModel
 
         public void PasteSelectedElements()
         {
-            if(Clipboard.CopiedElements != null)
+            if(Clipboard.CopiedElements.Count != 0)
             {
                 foreach(var t in Clipboard.CopiedElements)
                 {
                     _fileSystemService.Copy(t, CurrentDirectoryPath);
                 }
 
-                Clipboard.CopiedElements = null;
+                Clipboard.CopiedElements.Clear();
             }
-            else if(Clipboard.CutElements != null)
+            else if(Clipboard.CutElements.Count != 0)
             {
                 foreach(var t in Clipboard.CutElements)
                 {
                     _fileSystemService.Move(t, CurrentDirectoryPath);
                 }
 
-                Clipboard.CutElements = null;
+                Clipboard.CutElements.Clear();
             }
 
             ReloadCurrentDirectoryFiles();
