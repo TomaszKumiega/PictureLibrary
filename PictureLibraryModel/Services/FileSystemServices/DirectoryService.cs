@@ -45,7 +45,9 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public void Rename(string path, string name)
         {
-            throw new NotImplementedException();
+            var parentDirectory = System.IO.Directory.GetParent(path).FullName;
+
+            Move(path, parentDirectory + '\\' + name);
         }
     }
 }
