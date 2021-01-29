@@ -15,12 +15,13 @@ namespace PictureLibraryViewModel.ViewModel
 {
     public class FileExplorerViewModel : IFileExplorerViewModel
     {
-        private FileSystemService _fileSystemService;
+        private IDirectoryService _directoryService;
+        private IFileService _fileService;
         private IExplorableElement _selectedNode;
         private string _currentDirectoryPath;
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
         #region Public Properties
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; private set; }
@@ -56,9 +57,10 @@ namespace PictureLibraryViewModel.ViewModel
         }
         #endregion
 
-        public FileExplorerViewModel(FileSystemService fileSystemService, ICommandFactory commandFactory, IClipboardService clipboard)
+        public FileExplorerViewModel(IDirectoryService directoryService, IFileService fileService, ICommandFactory commandFactory, IClipboardService clipboard)
         {
-            _fileSystemService = fileSystemService;
+            _directoryService = directoryService;
+            _fileService = fileService;
             Clipboard = clipboard;
 
             SelectedElements = new ObservableCollection<IExplorableElement>();
@@ -105,7 +107,7 @@ namespace PictureLibraryViewModel.ViewModel
         {
             ExplorableElementsTree = new ObservableCollection<IExplorableElement>();
 
-            var rootDirectories = _fileSystemService.GetRootDirectories();
+            var rootDirectories = _directoryService.GetRootDirectories();
             
             foreach(var t in rootDirectories)
             {
@@ -134,7 +136,7 @@ namespace PictureLibraryViewModel.ViewModel
             
             CurrentlyShownElements.Clear();
 
-            foreach (var t in _fileSystemService.GetDirectoryContent(CurrentDirectoryPath))
+            foreach (var t in _directoryService.GetDirectoryContent(CurrentDirectoryPath))
             {
                 CurrentlyShownElements.Add(t);
             }
@@ -164,7 +166,14 @@ namespace PictureLibraryViewModel.ViewModel
             {
                 foreach(var t in Clipboard.CopiedElements)
                 {
-                    _fileSystemService.Copy(t, CurrentDirectoryPath);
+                    if(t is File)
+                    {
+                        _fileService.Copy(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                    }
+                    else if(t is Directory)
+                    {
+                        _directoryService.Copy(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                    }
                 }
 
                 Clipboard.CopiedElements.Clear();
@@ -173,7 +182,14 @@ namespace PictureLibraryViewModel.ViewModel
             {
                 foreach(var t in Clipboard.CutElements)
                 {
-                    _fileSystemService.Move(t, CurrentDirectoryPath);
+                    if (t is File)
+                    {
+                        _fileService.Move(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                    }
+                    else if(t is Directory)
+                    {
+                        _directoryService.Move(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                    }
                 }
 
                 Clipboard.CutElements.Clear();
@@ -202,7 +218,14 @@ namespace PictureLibraryViewModel.ViewModel
         {
             foreach(var t in SelectedElements)
             {
-                _fileSystemService.Remove(t);
+                if(t is File)
+                {
+                    _fileService.Remove(t.FullPath);
+                }
+                else if(t is Directory)
+                {
+                    _directoryService.Remove(t.FullPath);
+                }
             }
 
             ReloadCurrentDirectoryFiles();
@@ -214,13 +237,20 @@ namespace PictureLibraryViewModel.ViewModel
             
             for(int i=0; i<SelectedElements.Count; i++)
             {
-                _fileSystemService.Rename(SelectedElements[i], SelectedElements[i].Name + (i > 0 ? i.ToString() : ""));
+                if (SelectedElements[i] is File)
+                {
+                    _fileService.Rename(SelectedElements[i].FullPath, SelectedElements[i].Name + (i > 0 ? i.ToString() : ""));
+                }
+                else if (SelectedElements[i] is Directory)
+                {
+                    _directoryService.Rename(SelectedElements[i].FullPath, SelectedElements[i].Name + (i > 0 ? i.ToString() : ""));
+                }
             }
         }
 
         public void CreateDirectory(string path)
         { 
-            _fileSystemService.CreateDirectory(path);    
+            _directoryService.Create(path);    
         }
         #endregion
     }
