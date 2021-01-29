@@ -10,7 +10,24 @@ namespace PictureLibraryModel.Services.FileSystemServices
     {
         public void Copy(string sourcePath, string destinationPath)
         {
-            throw new NotImplementedException();
+            if (destinationPath == null) throw new ArgumentNullException();
+            if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
+
+            System.IO.Directory.CreateDirectory(destinationPath);
+
+            var sourceDirectoryInfo = new DirectoryInfo(sourcePath);
+            var destinationDirectoryInfo = new DirectoryInfo(destinationPath);
+
+            foreach (FileInfo i in sourceDirectoryInfo.GetFiles())
+            {
+                i.CopyTo(destinationPath + i.Name, true);
+            }
+
+            foreach(DirectoryInfo d in sourceDirectoryInfo.GetDirectories())
+            {
+                var subDirectory = destinationDirectoryInfo.CreateSubdirectory(d.Name);
+                Copy(d.FullName, subDirectory.FullName);
+            }
         }
 
         public void Create(string path)
