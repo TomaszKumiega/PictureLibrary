@@ -1,9 +1,11 @@
-﻿using PictureLibraryModel.Services.FileSystemServices;
+﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Xunit;
+using Directory = System.IO.Directory;
 
 namespace PictureLibraryModel.Tests.ServicesTests
 {
@@ -27,6 +29,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
             }
         }
 
+        #region Copy Tests
         [Fact]
         public void Copy_ShouldThrowArgumentNullException_WhenSourcePathIsNull()
         {
@@ -83,5 +86,42 @@ namespace PictureLibraryModel.Tests.ServicesTests
 
             CleanupFiles();
         }
+        #endregion
+
+        #region GetDirectoryContent Tests
+        [Fact]
+        public void GetDirectoryContent_ShouldReturnContentOfTheDirectory()
+        {
+            var subFolder1 = "folder1";
+            var subFolder2 = "folder2";
+            var fileName = "testFile1.jpg";
+            var sourcePath = "Tests\\Folder\\";
+
+            Directory.CreateDirectory(sourcePath);
+            Directory.CreateDirectory(sourcePath+subFolder1);
+            Directory.CreateDirectory(sourcePath+subFolder2);
+            var fileStream = File.Create(sourcePath + fileName);
+            fileStream.Close();
+
+            var service = new DirectoryService();
+            var content = service.GetDirectoryContent(sourcePath);
+
+            Assert.Contains(content, x => x.Name == subFolder1);
+            Assert.Contains(content, x => x.Name == subFolder2);
+            Assert.Contains(content, x => x.Name == fileName);
+
+            CleanupFiles();
+        }
+
+        [Fact]
+        public void GetDirectoryContent_ShouldThrowArgumentNullException_WhenPathIsNull()
+        {
+            string path = null;
+
+            var service = new DirectoryService();
+
+            Assert.Throws<ArgumentNullException>(() => service.GetDirectoryContent(path));
+        }
+        #endregion
     }
 }
