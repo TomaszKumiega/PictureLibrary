@@ -82,7 +82,7 @@ namespace PictureLibraryModel.Model
         {
             SubDirectories.Clear();
 
-            var directories = await Task.Run(() => DirectoryService.GetSubFolders(FullPath, SearchOption.TopDirectoryOnly));
+            var directories = await Task.Run(() => DirectoryService.GetSubFolders(FullPath));
 
             foreach (var t in directories)
             {
