@@ -11,6 +11,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
         void Copy(string sourcePath, string destinationPath);
         void Move(string sourcePath, string destinationPath);
         void Rename(string path, string name);
+        void Remove(string path);
         FileSystemInfo GetInfo(string path);
     }
 }

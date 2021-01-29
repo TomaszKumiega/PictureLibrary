@@ -45,7 +45,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             var filePaths = System.IO.Directory.GetFiles(path).ToList();
             var directoryPaths = System.IO.Directory.GetDirectories(path).ToList();
 
-            foreach (var t in filePaths)
+            foreach (string t in filePaths)
             {
                 if (ImageFile.IsFileAnImage(t) && UserHasAccessToTheFile(t))
                 {
@@ -117,13 +117,18 @@ namespace PictureLibraryModel.Services.FileSystemServices
         {
             try
             {
-                File.GetAttributes(path);
+                System.IO.File.GetAttributes(path);
                 return true;
             }
             catch (UnauthorizedAccessException)
             {
                 return false;
             }
+        }
+
+        public void Remove(string path)
+        {
+            throw new NotImplementedException();
         }
     }
 }

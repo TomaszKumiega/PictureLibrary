@@ -35,6 +35,11 @@ namespace PictureLibraryModel.Services.FileSystemServices
             return File.Open(path, FileMode.Open);
         }
 
+        public void Remove(string path)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Rename(string path, string name)
         {
             var extension = new FileInfo(path).Extension;
