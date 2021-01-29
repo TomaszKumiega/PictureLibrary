@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PictureLibraryModel.Model
 {
-    public enum ImageExtension
+    public enum ImageExtension : int
     {
         JPG,
         BMP,
@@ -72,23 +72,15 @@ namespace PictureLibraryModel.Model
         }
     }
 
-    public class ImageFile : IExplorableElement
+    public class ImageFile : File
     {
-        public string Name { get; set; }
         public ImageExtension Extension { get; set; }
-        public string FullPath { get; set; }
         public string LibraryFullPath { get; set; }
-        public DateTime CreationTime { get; set; }
-        public DateTime LastAccessTime { get; set; }
-        public DateTime LastWriteTime { get; set; }
-        public long Size { get; set; }
         public List<Tag> Tags { get; set; }
-        public string IconSource { get; set; }
-        public Origin Origin { get; set; }
 
-        public ImageFile()
+        public ImageFile() : base()
         {
-            IconSource = FullPath;
+
         }
 
         public static bool IsFileAnImage(string path)
