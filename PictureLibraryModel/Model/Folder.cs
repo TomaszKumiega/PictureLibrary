@@ -12,7 +12,7 @@ namespace PictureLibraryModel.Model
 
         }
 
-        public Folder(string path, string name, IFileProvider fileProvider, Origin origin) : base(path, name, fileProvider, origin)
+        public Folder(string path, string name, IDirectoryService directoryService, Origin origin) : base(path, name, directoryService, origin)
         {
 
         }

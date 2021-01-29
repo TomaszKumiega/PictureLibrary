@@ -11,7 +11,7 @@ namespace PictureLibraryModel.Model
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public Drive(string path, string name, IFileProvider fileProvider, Origin origin) : base(path, name, fileProvider, origin)
+        public Drive(string path, string name, IDirectoryService directoryService, Origin origin) : base(path, name, directoryService, origin)
         {
             IconSource = "pack://application:,,,/Icons/DiskIcon.png";
         }

@@ -14,7 +14,7 @@ namespace PictureLibraryModel.Model
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private bool _isExpanded;
 
-        protected IFileProvider FileProvider { get; set; }
+        protected IDirectoryService DirectoryService { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -29,11 +29,11 @@ namespace PictureLibraryModel.Model
 
         }
 
-        public Directory(string path, string name, IFileProvider fileProvider, Origin origin)
+        public Directory(string path, string name, IDirectoryService directoryService, Origin origin)
         {
             FullPath = path;
             Name = name;
-            FileProvider = fileProvider;
+            DirectoryService = directoryService;
             Origin = origin;
             SubDirectories = new ObservableCollection<Directory>();
 
@@ -82,7 +82,7 @@ namespace PictureLibraryModel.Model
         {
             SubDirectories.Clear();
 
-            var directories = await Task.Run(() => FileProvider.GetSubFolders(FullPath, SearchOption.TopDirectoryOnly));
+            var directories = await Task.Run(() => DirectoryService.GetSubFolders(FullPath, SearchOption.TopDirectoryOnly));
 
             foreach (var t in directories)
             {
