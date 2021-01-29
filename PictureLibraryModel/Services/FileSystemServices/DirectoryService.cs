@@ -1,8 +1,11 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.Builders;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using SystemWrapper.IO;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {
@@ -37,7 +40,37 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public IEnumerable<IExplorableElement> GetDirectoryContent(string path)
         {
-            throw new NotImplementedException();
+            var content = new List<IExplorableElement>();
+
+            var filePaths = System.IO.Directory.GetFiles(path).ToList();
+            var directoryPaths = System.IO.Directory.GetDirectories(path).ToList();
+
+            foreach (var t in filePaths)
+            {
+                if (ImageFile.IsFileAnImage(t) && UserHasAccessToTheFile(t))
+                {
+                    var fileInfo = new FileInfoWrap(new FileInfo(t));
+
+                    var imageFileBuilder = new LocalFileSystemImageFileBuilder(fileInfo);
+                    var imageFileDirector = new ImageFileDirector(imageFileBuilder);
+                    imageFileDirector.MakeImageFile();
+
+                    var imageFile = imageFileDirector.GetImageFile();
+
+                    content.Add(imageFile);
+                }
+            }
+
+            foreach (var t in directoryPaths)
+            {
+                if (UserHasAccessToTheFolder(t))
+                {
+                    var directoryInfo = new DirectoryInfo(t);
+                    content.Add(new Folder(directoryInfo.FullName, directoryInfo.Name, this, Origin.Local));
+                }
+            }
+
+            return content;
         }
 
         public FileSystemInfo GetInfo(string path)
@@ -65,6 +98,32 @@ namespace PictureLibraryModel.Services.FileSystemServices
             var parentDirectory = System.IO.Directory.GetParent(path).FullName;
 
             Move(path, parentDirectory + '\\' + name);
+        }
+
+        private bool UserHasAccessToTheFolder(string path)
+        {
+            try
+            {
+                System.IO.Directory.GetDirectories(path);
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
+        }
+
+        private bool UserHasAccessToTheFile(string path)
+        {
+            try
+            {
+                File.GetAttributes(path);
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
         }
     }
 }
