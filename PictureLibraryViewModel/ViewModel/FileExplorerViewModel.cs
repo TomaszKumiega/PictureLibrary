@@ -168,11 +168,26 @@ namespace PictureLibraryViewModel.ViewModel
                 {
                     if(t is File)
                     {
-                        _fileService.Copy(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                        if (CurrentDirectoryPath.EndsWith("\\"))
+                        {
+                            _fileService.Copy(t.FullPath, CurrentDirectoryPath + t.Name);
+                        }
+                        else
+                        {
+                            _fileService.Copy(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                        }
+                        
                     }
                     else if(t is Directory)
                     {
-                        _directoryService.Copy(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                        if(CurrentDirectoryPath.EndsWith("\\"))
+                        {
+                            _directoryService.Copy(t.FullPath, CurrentDirectoryPath + t.Name);
+                        }
+                        else
+                        {
+                            _directoryService.Copy(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                        }
                     }
                 }
 
@@ -184,11 +199,25 @@ namespace PictureLibraryViewModel.ViewModel
                 {
                     if (t is File)
                     {
-                        _fileService.Move(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                        if (CurrentDirectoryPath.EndsWith("\\"))
+                        {
+                            _fileService.Move(t.FullPath, CurrentDirectoryPath + t.Name);
+                        }
+                        else
+                        {
+                            _fileService.Move(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                        }
                     }
                     else if(t is Directory)
                     {
-                        _directoryService.Move(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                        if (CurrentDirectoryPath.EndsWith("\\"))
+                        { 
+                            _directoryService.Move(t.FullPath, CurrentDirectoryPath + t.Name);
+                        }
+                        else
+                        {
+                            _directoryService.Move(t.FullPath, CurrentDirectoryPath + "\\" + t.Name);
+                        }
                     }
                 }
 
