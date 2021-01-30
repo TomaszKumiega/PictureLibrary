@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Model;
+﻿using NLog;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace PictureLibraryModel.Services.FileSystemServices
 {
     public class DirectoryService : IDirectoryService
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public void Copy(string sourcePath, string destinationPath)
         {
             if (destinationPath == null) throw new ArgumentNullException();
@@ -85,7 +88,28 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public IEnumerable<Folder> GetSubFolders(string path)
         {
-            throw new NotImplementedException();
+            string[] fullPaths = null;
+
+            try
+            {
+                fullPaths = System.IO.Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                _logger.Debug(e, "UnauthorizedAccessException directory wasn't added");
+            }
+
+            var directories = new List<Folder>();
+
+            if (fullPaths != null)
+            {
+                foreach (var t in fullPaths)
+                {
+                    directories.Add(new Folder(t, (new System.IO.DirectoryInfo(t)).Name, this, Origin.Local));
+                }
+            }
+
+            return directories;
         }
 
         public void Move(string sourcePath, string destinationPath)
