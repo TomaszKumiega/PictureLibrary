@@ -18,7 +18,8 @@ namespace PictureLibraryViewModel.Tests
         [Fact]
         public void Copy_ShouldAssignSelectedFileToCopiedFile_WhenSelectedFileIsNotNull()
         {
-            var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
+            var directoryService = new Mock<IDirectoryService>();
+            var fileService = new Mock<IFileService>();
             var clipboardMock = new Mock<IClipboardService>();
             var imageFile = new ImageFile();
             var viewModelMock = new Mock<IFileExplorerViewModel>();
@@ -28,7 +29,7 @@ namespace PictureLibraryViewModel.Tests
             clipboardMock.Setup(x => x.CopiedElements)
                 .Returns(new ObservableCollection<IExplorableElement>());
 
-            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, new CommandFactory(), clipboardMock.Object);
+            var viewModel = new FileExplorerViewModel(directoryService.Object, fileService.Object, new CommandFactory(), clipboardMock.Object);
 
             var elementsList = new ObservableCollection<IExplorableElement>();
             elementsList.Add(imageFile);
@@ -43,7 +44,8 @@ namespace PictureLibraryViewModel.Tests
         [Fact]
         public void Cut_ShouldAssignSelectedFileToCutFile_WhenSelectedFileIsNotNull()
         {
-            var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
+            var directoryService = new Mock<IDirectoryService>();
+            var fileService = new Mock<IFileService>();
             var clipboardMock = new Mock<IClipboardService>();
             var imageFile = new ImageFile();
 
@@ -52,7 +54,7 @@ namespace PictureLibraryViewModel.Tests
             clipboardMock.Setup(x => x.CopiedElements)
                 .Returns(new ObservableCollection<IExplorableElement>());
 
-            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, new CommandFactory(), clipboardMock.Object);
+            var viewModel = new FileExplorerViewModel(directoryService.Object, fileService.Object, new CommandFactory(), clipboardMock.Object);
 
             var elementsList = new ObservableCollection<IExplorableElement>();
             elementsList.Add(imageFile);
@@ -66,7 +68,8 @@ namespace PictureLibraryViewModel.Tests
         [Fact]
         public void Paste_ShouldCallCopyMethod_WhenCopiedFileIsInitialized()
         {
-            var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
+            var directoryService = new Mock<IDirectoryService>();
+            var fileService = new Mock<IFileService>();
             var clipboardMock = new Mock<IClipboardService>();
 
             var imageFile =
@@ -77,7 +80,6 @@ namespace PictureLibraryViewModel.Tests
                 };
 
             var destination = "Tests\\Directory2\\";
-            bool copyMethodWasCalled = false;
 
             var elementsList = new ObservableCollection<IExplorableElement>();
             elementsList.Add(imageFile);
@@ -87,22 +89,24 @@ namespace PictureLibraryViewModel.Tests
             clipboardMock.Setup(x => x.CopiedElements)
                 .Returns(elementsList);
 
-            windowsFileSystemMock.Setup(x => x.Copy(imageFile, destination))
-                .Callback(() => { copyMethodWasCalled = true; });
+            fileService.Setup(x => x.Copy(imageFile.FullPath, destination + imageFile.Name))
+                .Verifiable();
 
-            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, new CommandFactory(), clipboardMock.Object);
-
-            viewModel.CurrentDirectoryPath = destination;
+            var viewModel = new FileExplorerViewModel(directoryService.Object, fileService.Object, new CommandFactory(), clipboardMock.Object)
+            {
+                CurrentDirectoryPath = destination
+            };
 
             viewModel.PasteSelectedElements();
 
-            Assert.True(copyMethodWasCalled);
+            fileService.Verify();
         }
 
         [Fact]
         public void Paste_ShouldCallMoveMethod_WhenCutFileIsInitialized()
         {
-            var windowsFileSystemMock = new Mock<WindowsFileSystemService>();
+            var directoryService = new Mock<IDirectoryService>();
+            var fileService = new Mock<IFileService>();
             var clipboardMock = new Mock<IClipboardService>();
 
             var imageFile =
@@ -123,10 +127,10 @@ namespace PictureLibraryViewModel.Tests
             clipboardMock.Setup(x => x.CutElements)
                 .Returns(elementsList);
 
-            windowsFileSystemMock.Setup(x => x.Move(imageFile, destination))
+            fileService.Setup(x => x.Move(imageFile.FullPath, destination + imageFile.Name))
                 .Callback(() => { moveMethodWasCalled = true; });
 
-            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, new CommandFactory(), clipboardMock.Object)
+            var viewModel = new FileExplorerViewModel(directoryService.Object, fileService.Object, new CommandFactory(), clipboardMock.Object)
             {
                 CurrentDirectoryPath = destination
             };
@@ -141,7 +145,8 @@ namespace PictureLibraryViewModel.Tests
         public void CopyPath_ShouldAddFullPathOfSelectedFileToSystemClipboard_WhenSelectedFileIsNotNull()
         {
             var clipboardMock = new Mock<IClipboardService>();
-            var windowsFileSystemMock = new Mock<FileSystemService>();
+            var directoryService = new Mock<IDirectoryService>();
+            var fileService = new Mock<IFileService>();
 
             clipboardMock.Setup(x => x.CutElements)
                 .Returns(new ObservableCollection<IExplorableElement>());
@@ -149,7 +154,7 @@ namespace PictureLibraryViewModel.Tests
                 .Returns(new ObservableCollection<IExplorableElement>());
 
 
-            var viewModel = new FileExplorerViewModel(windowsFileSystemMock.Object, new CommandFactory(), clipboardMock.Object);
+            var viewModel = new FileExplorerViewModel(directoryService.Object, fileService.Object, new CommandFactory(), clipboardMock.Object);
 
             var imageFile =
                 new ImageFile()
