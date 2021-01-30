@@ -124,5 +124,48 @@ namespace PictureLibraryModel.Tests.ServicesTests
             Assert.Throws<ArgumentNullException>(() => service.GetDirectoryContent(path));
         }
         #endregion
+
+        #region GetSubFolders Tests
+        [Fact]
+        public void GetSubFolders_ShouldReturnSubFolders_WhenPathIsCorrect()
+        {
+            var directory = "3D2DCE88-3524-4CB7-9311-47864BC0DAEE\\";
+            var subFolder1 = "Folder1";
+            var subFolder2 = "Folder2";
+
+            Directory.CreateDirectory(TestFolder + directory + subFolder1);
+            Directory.CreateDirectory(TestFolder + directory + subFolder2);
+
+            var service = new DirectoryService();
+            var folders = service.GetSubFolders(TestFolder + directory);
+
+            Assert.Contains(folders, x => x.Name == subFolder1);
+            Assert.Contains(folders, x => x.Name == subFolder2);
+        }
+
+        [Fact]
+        public void GetSubFolders_ShouldThrowArgumentNullException_WhenPathIsNull()
+        {
+            var service = new DirectoryService();
+
+            Assert.Throws<ArgumentNullException>(() => service.GetSubFolders(null));
+        }
+
+        [Fact]
+        public void GetSubFolders_ShouldThrowArgumentException_WhenPathIsEmpty()
+        {
+            var service = new DirectoryService();
+
+            Assert.Throws<ArgumentException>(() => service.GetSubFolders(String.Empty));
+        }
+
+        [Fact]
+        public void GetSubFolders_ShouldThrowDirectoryNotFoundException_WhenPathDoesntExist()
+        {
+            var service = new DirectoryService();
+
+            Assert.Throws<DirectoryNotFoundException>(() => service.GetSubFolders(TestFolder + "randomString"));
+        }
+        #endregion
     }
 }
