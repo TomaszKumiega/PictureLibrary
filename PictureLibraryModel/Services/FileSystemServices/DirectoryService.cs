@@ -90,7 +90,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public void Move(string sourcePath, string destinationPath)
         {
-            throw new NotImplementedException();
+            System.IO.Directory.Move(sourcePath, destinationPath);
         }
 
         public void Rename(string path, string name)
