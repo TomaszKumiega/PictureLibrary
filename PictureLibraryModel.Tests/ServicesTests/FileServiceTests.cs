@@ -9,6 +9,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
 {
     public class FileServiceTests
     {
+        #region Setup
         private string TestFolder = "FileServiceTests\\";
         public FileServiceTests()
         {
@@ -31,7 +32,9 @@ namespace PictureLibraryModel.Tests.ServicesTests
                 return;
             }
         }
+        #endregion
 
+        #region Copy tests
         [Fact]
         public void Copy_ShouldCopyTheFile_WhenFileExists()
         {
@@ -80,7 +83,9 @@ namespace PictureLibraryModel.Tests.ServicesTests
 
             Assert.Throws<ArgumentNullException>(() => service.Copy(sourceDirectory + fileName, destinationPath));
         }
+        #endregion
 
+        #region Rename tests
         [Fact]
         public void Rename_ShouldRenameAFile()
         {
@@ -118,5 +123,6 @@ namespace PictureLibraryModel.Tests.ServicesTests
 
             Assert.Throws<IOException>(() => service.Rename(sourceDirectory + fileName + extension, newFileName));
         }
+        #endregion
     }
 }

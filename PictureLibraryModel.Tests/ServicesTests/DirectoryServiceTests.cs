@@ -12,7 +12,9 @@ namespace PictureLibraryModel.Tests.ServicesTests
 {
     public class DirectoryServiceTests
     {
+        #region Setup
         private string TestFolder = "DirectoryServiceTests\\";
+
         public DirectoryServiceTests()
         {
             CleanupFiles();
@@ -34,6 +36,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
                 return;
             }
         }
+        #endregion
 
         #region Copy Tests
         [Fact]
