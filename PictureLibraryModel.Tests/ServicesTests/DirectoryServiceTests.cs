@@ -6,13 +6,19 @@ using System.IO;
 using System.Text;
 using Xunit;
 using Directory = System.IO.Directory;
+using File = System.IO.File;
 
 namespace PictureLibraryModel.Tests.ServicesTests
 {
     public class DirectoryServiceTests
     {
-
+        private string TestFolder = "DirectoryServiceTests\\";
         public DirectoryServiceTests()
+        {
+            CleanupFiles();
+        }
+
+        ~DirectoryServiceTests()
         {
             CleanupFiles();
         }
@@ -21,7 +27,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
         {
             try
             {
-                Directory.Delete("Tests\\", true);
+                Directory.Delete(TestFolder, true);
             }
             catch
             {
@@ -34,21 +40,19 @@ namespace PictureLibraryModel.Tests.ServicesTests
         public void Copy_ShouldThrowArgumentNullException_WhenSourcePathIsNull()
         {
             string sourcePath = null;
-            var destinationDirectoryPath = "Tests\\Folder1";
+            var destinationDirectoryPath = TestFolder + "0972F3EA-7C52-43A0-8139-C9862D1F34EA";
 
             Directory.CreateDirectory(destinationDirectoryPath);
 
             var service = new DirectoryService();
 
             Assert.Throws<ArgumentNullException>(() => service.Copy(sourcePath, destinationDirectoryPath));
-
-            CleanupFiles();
         }
 
         [Fact]
         public void Copy_ShouldThrowArgumentNullException_WhenDestinationDirectoryPathIsNull()
         {
-            var sourcePath = "Tests\\Folder1";
+            var sourcePath = TestFolder + "0972F3EA-7C52-43A0-8139-C9862D1F34EA";
             string destinationDirectoryPath = null;
 
             Directory.CreateDirectory(sourcePath);
@@ -56,15 +60,13 @@ namespace PictureLibraryModel.Tests.ServicesTests
             var service = new DirectoryService();
 
             Assert.Throws<ArgumentNullException>(() => service.Copy(sourcePath, destinationDirectoryPath));
-
-            CleanupFiles();
         }
 
         [Fact]
         public void Copy_ShouldCopyFolder_WithItsContent()
         {
-            var sourcePath = "Tests\\Folder1\\";
-            var destinationDirectoryPath = "Tests\\Folder2\\";
+            var sourcePath = TestFolder + "FB51D97B-5106-45EC-8EA6-A8ACE3EA7558\\";
+            var destinationDirectoryPath = TestFolder + "E5C698D6-C470-412C-8F3E-703100AD2A79\\";
             var subFolder1 = "folder1\\";
             var subFolder2 = "folder2\\";
             var file1 = "testFile1.jpg";
@@ -83,8 +85,6 @@ namespace PictureLibraryModel.Tests.ServicesTests
 
             Assert.True(Directory.Exists(sourcePath + subFolder1) && Directory.Exists(destinationDirectoryPath + subFolder1) 
                 && File.Exists(sourcePath + subFolder2 + file1) && File.Exists(sourcePath + subFolder2 + file1));
-
-            CleanupFiles();
         }
         #endregion
 
@@ -95,7 +95,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
             var subFolder1 = "folder1";
             var subFolder2 = "folder2";
             var fileName = "testFile1.jpg";
-            var sourcePath = "Tests\\Folder\\";
+            var sourcePath = TestFolder + "6589E232-641A-48FC-B4F7-48F421B8CBCF\\";
 
             Directory.CreateDirectory(sourcePath);
             Directory.CreateDirectory(sourcePath+subFolder1);
@@ -109,8 +109,6 @@ namespace PictureLibraryModel.Tests.ServicesTests
             Assert.Contains(content, x => x.Name == subFolder1);
             Assert.Contains(content, x => x.Name == subFolder2);
             Assert.Contains(content, x => x.Name == fileName);
-
-            CleanupFiles();
         }
 
         [Fact]
