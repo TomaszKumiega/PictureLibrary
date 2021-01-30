@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using SystemWrapper.IO;
 
@@ -83,7 +84,24 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public IEnumerable<Model.Directory> GetRootDirectories()
         {
-            throw new NotImplementedException();
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                var rootDirectories = new List<Model.Directory>();
+
+                foreach (var driveinfo in DriveInfo.GetDrives())
+                {
+                    if (System.IO.Directory.Exists(driveinfo.Name))
+                    {
+                        rootDirectories.Add(new Drive(driveinfo.Name, driveinfo.Name, this, Origin.Local));
+                    }
+                }
+
+                return rootDirectories;
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
 
         public IEnumerable<Folder> GetSubFolders(string path)
