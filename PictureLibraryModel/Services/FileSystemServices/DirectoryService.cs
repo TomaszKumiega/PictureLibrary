@@ -128,7 +128,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public void Remove(string path)
         {
-            throw new NotImplementedException();
+            System.IO.Directory.Delete(path);
         }
     }
 }
