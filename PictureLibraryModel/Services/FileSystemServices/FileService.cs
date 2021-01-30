@@ -37,7 +37,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public void Remove(string path)
         {
-            throw new NotImplementedException();
+            File.Delete(path);
         }
 
         public void Rename(string path, string name)
