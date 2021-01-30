@@ -22,7 +22,8 @@ namespace PictureLibraryViewModel
             var builder = new ContainerBuilder();
 
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();
-            builder.RegisterType<WindowsFileSystemService>().As<FileSystemService>();
+            builder.RegisterType<DirectoryService>().As<IDirectoryService>();
+            builder.RegisterType<FileService>().As<IFileService>();
             builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();
             builder.RegisterType<PCClipboardService>().As<IClipboardService>();
