@@ -221,14 +221,14 @@ namespace PictureLibraryModel.Repositories
             return library;
         }
 
-        public Task RemoveAsync(string path)
+        public async Task RemoveAsync(string path)
         {
-            throw new NotImplementedException();
+            await Task.Run(() => _fileService.Remove(path));
         }
 
-        public Task RemoveAsync(Library library)
+        public async Task RemoveAsync(Library library)
         {
-            throw new NotImplementedException();
+            await Task.Run(() => _fileService.Remove(library.FullPath));
         }
 
         public Task RemoveRangeAsync(IEnumerable<Library> libraries)
