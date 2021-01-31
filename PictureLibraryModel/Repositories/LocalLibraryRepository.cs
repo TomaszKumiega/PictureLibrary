@@ -213,9 +213,12 @@ namespace PictureLibraryModel.Repositories
             return libraries;
         }
 
-        public Task<Library> GetByPathAsync(string path)
+        public async Task<Library> GetByPathAsync(string path)
         {
-            throw new NotImplementedException();
+            var stream = await Task.Run(() => _fileService.OpenFile(path));
+            var library = await ReadLibraryFromStreamAsync(stream);
+
+            return library;
         }
 
         public Task RemoveAsync(string path)
