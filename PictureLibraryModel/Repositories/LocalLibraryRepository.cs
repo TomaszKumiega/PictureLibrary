@@ -231,9 +231,12 @@ namespace PictureLibraryModel.Repositories
             await Task.Run(() => _fileService.Remove(library.FullPath));
         }
 
-        public Task RemoveRangeAsync(IEnumerable<Library> libraries)
+        public async Task RemoveRangeAsync(IEnumerable<Library> libraries)
         {
-            throw new NotImplementedException();
+            foreach(var t in libraries)
+            {
+                await RemoveAsync(t);
+            }
         }
 
         public Task UpdateAsync(Library library)
