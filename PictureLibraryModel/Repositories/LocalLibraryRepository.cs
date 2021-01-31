@@ -105,9 +105,9 @@ namespace PictureLibraryModel.Repositories
             await WriteLibraryToFileStreamAsync(fileStream, library);
         }
 
-        public Task AddRangeAsync(IEnumerable<Library> libraries)
+        public async Task AddRangeAsync(IEnumerable<Library> libraries)
         {
-            throw new NotImplementedException();
+            foreach (var t in libraries) await AddAsync(t);
         }
 
         public Task<Library> FindAsync(Predicate<Library> predicate)
