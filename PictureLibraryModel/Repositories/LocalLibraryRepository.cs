@@ -24,7 +24,7 @@ namespace PictureLibraryModel.Repositories
         }
 
         #region Private methods
-        private async Task WriteLibraryToFileStreamAsync(Stream fileStream, Library library)
+        private async Task WriteLibraryToStreamAsync(Stream fileStream, Library library)
         {
             if (fileStream == null) throw new Exception("File creation error");
 
@@ -181,7 +181,7 @@ namespace PictureLibraryModel.Repositories
             await Task.Run(() => _fileService.Create(library.FullPath));
             var fileStream = await Task.Run(() => _fileService.OpenFile(library.FullPath));
 
-            await WriteLibraryToFileStreamAsync(fileStream, library);
+            await WriteLibraryToStreamAsync(fileStream, library);
         }
 
         public async Task AddRangeAsync(IEnumerable<Library> libraries)
