@@ -20,6 +20,16 @@ namespace PictureLibraryModel.Services.FileSystemServices
             File.Create(path);
         }
 
+        public List<string> FindFiles(string searchPattern)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> FindFiles(string searchPattern, string directory)
+        {
+            throw new NotImplementedException();
+        }
+
         public FileSystemInfo GetInfo(string path)
         {
             return new FileInfo(path);

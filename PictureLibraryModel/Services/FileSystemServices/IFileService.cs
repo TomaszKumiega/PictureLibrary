@@ -8,5 +8,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
     public interface IFileService : IFileSystemService
     {
         Stream OpenFile(string path);
+        List<string> FindFiles(string searchPattern);
+        List<string> FindFiles(string searchPattern, string directory);
     }
 }
