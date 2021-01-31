@@ -7,6 +7,6 @@ namespace PictureLibraryModel.Services.FileSystemServices
 {
     public interface IFileService : IFileSystemService
     {
-        FileStream OpenFile(string path);
+        Stream OpenFile(string path);
     }
 }

@@ -30,7 +30,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             File.Move(sourcePath, destinationPath);
         }
 
-        public FileStream OpenFile(string path)
+        public Stream OpenFile(string path)
         {
             return File.Open(path, FileMode.Open);
         }

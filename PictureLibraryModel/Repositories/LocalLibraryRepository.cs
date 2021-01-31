@@ -23,7 +23,7 @@ namespace PictureLibraryModel.Repositories
             _fileService = fileService;
         }
 
-        private async Task WriteLibraryToFileStreamAsync(FileStream fileStream, Library entity)
+        private async Task WriteLibraryToFileStreamAsync(Stream fileStream, Library entity)
         {
             if (fileStream == null) throw new Exception("File creation error");
 
