@@ -4,6 +4,7 @@ using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -189,9 +190,11 @@ namespace PictureLibraryModel.Repositories
             foreach (var t in libraries) await AddAsync(t);
         }
 
-        public Task<Library> FindAsync(Predicate<Library> predicate)
+        public async Task<Library> FindAsync(Predicate<Library> predicate)
         {
-            throw new NotImplementedException();
+            var libraries = await GetAllAsync();
+
+            return libraries.ToList().Find(predicate);
         }
 
         public async Task<IEnumerable<Library>> GetAllAsync()
