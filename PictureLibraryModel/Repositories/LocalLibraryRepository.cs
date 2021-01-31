@@ -23,28 +23,31 @@ namespace PictureLibraryModel.Repositories
             _fileService = fileService;
         }
 
-        private async Task WriteLibraryToFileStreamAsync(Stream fileStream, Library entity)
+        private async Task WriteLibraryToFileStreamAsync(Stream fileStream, Library library)
         {
             if (fileStream == null) throw new Exception("File creation error");
 
             // write all owners in one string
             string owners = "";
 
-            for (int i = 0; i < entity.Owners.Count - 1; i++)
+            if (library.Owners.Count > 0)
             {
-                owners += entity.Owners[i].ToString() + ',';
+                for (int i = 0; i < library.Owners.Count - 1; i++)
+                {
+                    owners += library.Owners[i].ToString() + ',';
+                }
+
+                owners += library.Owners[library.Owners.Count - 1].ToString();
             }
 
-            owners += entity.Owners[entity.Owners.Count - 1].ToString();
-
             // create library element
-            var libraryElement = new XElement("library", new XAttribute("name", entity.Name),
-                new XAttribute("description", entity.Description), new XAttribute("owners", owners));
+            var libraryElement = new XElement("library", new XAttribute("name", library.Name),
+                new XAttribute("description", library.Description), new XAttribute("owners", owners));
 
             // create tags elements
             var tagsElement = new XElement("tags");
 
-            foreach (var t in entity.Tags)
+            foreach (var t in library.Tags)
             {
                 var tagElement = new XElement("tag", new XAttribute("name", t.Name), new XAttribute("description", t.Description));
 
@@ -56,7 +59,7 @@ namespace PictureLibraryModel.Repositories
             // create images elements
             var imagesElement = new XElement("images");
 
-            foreach (var i in entity.Images)
+            foreach (var i in library.Images)
             {
                 // write all tags to one string
                 string tags = "";
