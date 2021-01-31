@@ -23,6 +23,7 @@ namespace PictureLibraryModel.Repositories
             _fileService = fileService;
         }
 
+        #region Private methods
         private async Task WriteLibraryToFileStreamAsync(Stream fileStream, Library library)
         {
             if (fileStream == null) throw new Exception("File creation error");
@@ -99,6 +100,81 @@ namespace PictureLibraryModel.Repositories
                 _logger.Error(e, e.Message);
             }
         }
+        private async Task<Library> ReadLibraryFromStreamAsync(Stream fileStream)
+        {
+            var tags = new List<Tag>();
+            var images = new List<ImageFile>();
+            var library = new Library();
+
+            if (fileStream.Length == 0) throw new ArgumentException("Given stream is empty");
+
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.DtdProcessing = DtdProcessing.Parse;
+
+            using (var reader = XmlReader.Create(fileStream, settings))
+            {
+                while (reader.Read())
+                {
+                    if (reader.NodeType == XmlNodeType.Element)
+                    {
+                        switch (reader.Name)
+                        {
+                            case "library":
+                                {
+                                    var libraryElement = await Task.Run(() => XNode.ReadFrom(reader)) as XElement;
+
+                                    library.Name = libraryElement.Attribute("name").Value;
+                                    library.Description = libraryElement.Attribute("description").Value;
+
+                                    foreach (var t in libraryElement.Attribute("owners").Value.Split(','))
+                                    {
+                                        library.Owners.Add(Guid.Parse(t));
+                                    }
+                                }
+                                break;
+                            case "tag":
+                                {
+                                    var tagElement = await Task.Run(() => XNode.ReadFrom(reader)) as XElement;
+
+                                    var tag = new Tag();
+                                    tag.Name = tagElement.Attribute("name").Value;
+                                    tag.Description = tagElement.Attribute("description").Value;
+
+                                    tags.Add(tag);
+                                }
+                                break;
+                            case "imageFile":
+                                {
+                                    var imageElement = await Task.Run(() => XNode.ReadFrom(reader)) as XElement;
+
+                                    var imageFile = new ImageFile();
+                                    imageFile.Name = imageElement.Attribute("name").Value;
+                                    imageFile.Extension = ImageExtensionHelper.GetExtension(imageElement.Attribute("extension").Value);
+                                    imageFile.FullPath = imageElement.Attribute("source").Value;
+                                    imageFile.CreationTime = DateTime.Parse(imageElement.Attribute("creationTime").Value);
+                                    imageFile.LastAccessTime = DateTime.Parse(imageElement.Attribute("lastAccessTime").Value);
+                                    imageFile.LastWriteTime = DateTime.Parse(imageElement.Attribute("lastWriteTime").Value);
+                                    imageFile.Size = long.Parse(imageElement.Attribute("size").Value);
+
+                                    foreach (var t in imageElement.Attribute("tags").Value.Split(','))
+                                    {
+                                        imageFile.Tags.Add(tags.Find(x => x.Name == t));
+                                    }
+
+                                    images.Add(imageFile);
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+
+            library.Tags = tags;
+            library.Images = images;
+
+            return library;
+        }
+        #endregion
 
         public async Task AddAsync(Library library)
         {
@@ -118,9 +194,20 @@ namespace PictureLibraryModel.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Library>> GetAllAsync()
+        public async Task<IEnumerable<Library>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var filePaths = await Task.Run(() => _fileService.FindFiles("*.plib"));
+            var libraries = new List<Library>();
+
+            foreach (var f in filePaths)
+            {
+                var stream = await Task.Run(() => _fileService.OpenFile(f));
+                var library = await ReadLibraryFromStreamAsync(stream);
+                library.FullPath = f;
+                libraries.Add(library);
+            }
+
+            return libraries;
         }
 
         public Task<Library> GetByPathAsync(string path)
