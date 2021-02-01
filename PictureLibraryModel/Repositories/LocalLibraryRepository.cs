@@ -239,9 +239,30 @@ namespace PictureLibraryModel.Repositories
             }
         }
 
-        public Task UpdateAsync(Library library)
+        public async Task UpdateAsync(Library library)
         {
-            throw new NotImplementedException();
+            if (library == null) throw new ArgumentException();
+            if (!System.IO.File.Exists(library.FullPath)) throw new ArgumentException();
+
+            // Load file for eventual recovery
+            XmlDocument document = new XmlDocument();
+            await Task.Run(() => document.Load(library.FullPath));
+
+            // Remove contents of the file
+            string[] text = { "" };
+            await Task.Run(() => System.IO.File.WriteAllLines(library.FullPath, text));
+
+            try
+            {
+                // Write library to the file
+                var stream = _fileService.OpenFile(library.FullPath);
+                await WriteLibraryToStreamAsync(stream, library);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, e.Message);
+                await Task.Run(() => document.Save(library.FullPath));
+            }
         }
     }
 }
