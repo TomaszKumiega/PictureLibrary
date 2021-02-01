@@ -58,9 +58,15 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             return library;
         }
 
-        private string GetLibraryXml()
+        private List<string> GetLibraryXmlSamples()
         {
-            return "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n <library owners = \"\" description = \"picture library\" name = \"library\" > \n <tags /> \n <images /> \n </library>";
+            var libraries = new List<string>();
+
+            libraries.Add("<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n <library owners = \"\" description = \"picture library1\" name = \"library1\" > \n <tags /> \n <images /> \n </library>");
+            libraries.Add("<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n <library owners = \"\" description = \"picture library2\" name = \"library2\" > \n <tags /> \n <images /> \n </library>");
+            libraries.Add("<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n <library owners = \"\" description = \"picture library3\" name = \"library3\" > \n <tags /> \n <images /> \n </library>");
+            
+            return libraries;
         }
         #endregion
 
@@ -98,13 +104,14 @@ namespace PictureLibraryModel.Tests.RepositoryTests
         [Fact]
         public async void GetAllAsync_ShouldReturnLibraries()
         {
-            var xml = GetLibraryXml();
+            var xml = GetLibraryXmlSamples();
             var paths = new List<string>();
             paths.Add("Folder1\\library1.plib");
             paths.Add("Folder2\\library2.plib");
-            byte[] buffer = Encoding.UTF8.GetBytes(xml);
+            byte[] buffer = Encoding.UTF8.GetBytes(xml[0]);
+            byte[] buffer2 = Encoding.UTF8.GetBytes(xml[1]);
             var memoryStream1 = new MemoryStream(buffer);
-            var memoryStream2 = new MemoryStream(buffer);
+            var memoryStream2 = new MemoryStream(buffer2);
 
             var fileServiceMock = new Mock<IFileService>();
             fileServiceMock.Setup(x => x.FindFiles("*.plib"))
@@ -118,8 +125,40 @@ namespace PictureLibraryModel.Tests.RepositoryTests
 
             var libraries = await repository.GetAllAsync();
 
-            Assert.Contains(libraries, x => x.Name == "library" && x.Description=="picture library");
             Assert.True(libraries.ToList().Count > 1);
+            Assert.Contains(libraries, x => x.Name == "library1" && x.Description == "picture library1");
+            Assert.Contains(libraries, x => x.Name == "library2" && x.Description == "picture library2");
+        }
+        #endregion
+
+        #region FindAsync Tests
+        [Fact]
+        public void FindAsync_ShouldFindSpecificLibrary_WhenGetAllReturnsMoreThanOneLibrary()
+        {
+            var xml = GetLibraryXmlSamples();
+            var paths = new List<string>();
+            paths.Add("Folder1\\library1.plib");
+            paths.Add("Folder2\\library2.plib");
+            byte[] buffer = Encoding.UTF8.GetBytes(xml[0]);
+            byte[] buffer2 = Encoding.UTF8.GetBytes(xml[1]);
+            var memoryStream1 = new MemoryStream(buffer);
+            var memoryStream2 = new MemoryStream(buffer2);
+
+            var fileServiceMock = new Mock<IFileService>();
+
+            fileServiceMock.Setup(x => x.FindFiles("*.plib"))
+                .Returns(paths);
+            fileServiceMock.Setup(x => x.OpenFile(paths[0]))
+                .Returns(memoryStream1);
+            fileServiceMock.Setup(x => x.OpenFile(paths[1]))
+                .Returns(memoryStream2);
+
+            var repository = new LocalLibraryRepository(fileServiceMock.Object);
+
+            var library = repository.FindAsync(x => x.Name == "library2").Result;
+
+            Assert.True(library != null);
+            Assert.True(library.Name == "library2" && library.Description == "picture library2");
         }
         #endregion
     }
