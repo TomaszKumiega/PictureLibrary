@@ -1,6 +1,7 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Repositories;
 using PictureLibraryModel.Services.Clipboard;
+using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,13 +16,13 @@ namespace PictureLibraryViewModel.ViewModel
         public ObservableCollection<IExplorableElement> SelectedElements { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IExplorableElement SelectedNode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public ICommand CopyCommand => throw new NotImplementedException();
+        public ICommand CopyCommand { get; }
 
-        public ICommand PasteCommand => throw new NotImplementedException();
+        public ICommand PasteCommand { get; }
 
-        public ICommand CutCommand => throw new NotImplementedException();
+        public ICommand CutCommand { get; }
 
-        public ICommand RenameCommand => throw new NotImplementedException();
+        public ICommand RenameCommand { get; }
 
         public IClipboardService Clipboard => throw new NotImplementedException();
 
@@ -30,6 +31,14 @@ namespace PictureLibraryViewModel.ViewModel
         public ObservableCollection<IExplorableElement> CurrentlyShownElements => throw new NotImplementedException();
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public LibraryExplorerViewModel(ICommandFactory commandFactory)
+        {
+            CopyCommand = commandFactory.GetCopyCommand(this);
+            PasteCommand = commandFactory.GetPasteCommand(this);
+            CutCommand = commandFactory.GetCutCommand(this);
+            RenameCommand = commandFactory.GetRenameCommand(this);
+        }
 
         public void CopySelectedElements()
         {
