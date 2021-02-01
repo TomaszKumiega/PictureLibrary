@@ -5,6 +5,7 @@ using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using Xunit;
@@ -56,6 +57,11 @@ namespace PictureLibraryModel.Tests.RepositoryTests
 
             return library;
         }
+
+        private string GetLibraryXml()
+        {
+            return "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n <library owners = \"\" description = \"picture library\" name = \"library\" > \n <tags /> \n <images /> \n </library>";
+        }
         #endregion
 
         #region AddAsync Tests
@@ -85,6 +91,35 @@ namespace PictureLibraryModel.Tests.RepositoryTests
 
             Assert.True(name.Value == library.Name);
             Assert.True(description.Value == library.Description);
+        }
+        #endregion
+
+        #region GetAllAsync Tests
+        [Fact]
+        public async void GetAllAsync_ShouldReturnLibraries()
+        {
+            var xml = GetLibraryXml();
+            var paths = new List<string>();
+            paths.Add("Folder1\\library1.plib");
+            paths.Add("Folder2\\library2.plib");
+            byte[] buffer = Encoding.UTF8.GetBytes(xml);
+            var memoryStream1 = new MemoryStream(buffer);
+            var memoryStream2 = new MemoryStream(buffer);
+
+            var fileServiceMock = new Mock<IFileService>();
+            fileServiceMock.Setup(x => x.FindFiles("*.plib"))
+                .Returns(paths);
+            fileServiceMock.Setup(x => x.OpenFile(paths[0]))
+                .Returns(memoryStream1);
+            fileServiceMock.Setup(x => x.OpenFile(paths[1]))
+                .Returns(memoryStream2);
+
+            var repository = new LocalLibraryRepository(fileServiceMock.Object);
+
+            var libraries = await repository.GetAllAsync();
+
+            Assert.Contains(libraries, x => x.Name == "library" && x.Description=="picture library");
+            Assert.True(libraries.ToList().Count > 1);
         }
         #endregion
     }
