@@ -127,6 +127,8 @@ namespace PictureLibraryModel.Repositories
                                     library.Name = libraryElement.Attribute("name").Value;
                                     library.Description = libraryElement.Attribute("description").Value;
 
+                                    if (libraryElement.Attribute("owners").Value.Trim() == String.Empty) break;
+
                                     foreach (var t in libraryElement.Attribute("owners").Value.Split(','))
                                     {
                                         library.Owners.Add(Guid.Parse(t));
