@@ -43,16 +43,35 @@ namespace PictureLibraryModel.Repositories
             properties.ForEach(prop => { insertQuery.Append($"[{prop}],"); });
 
             insertQuery
-                .Remove(insertQuery.Length - 1, 1)
+                .Remove(insertQuery.Length - 1, 1) // remove last comma
                 .Append(") VALUES (");
 
             properties.ForEach(prop => { insertQuery.Append($"@{prop},"); });
 
             insertQuery
-                .Remove(insertQuery.Length - 1, 1)
+                .Remove(insertQuery.Length - 1, 1) // remove last comma
                 .Append(")");
 
             return insertQuery.ToString();
+        }
+
+        private string GetUpdateQuery()
+        {
+            var updateQuery = new StringBuilder($"UPDATE {_tableName} SET ");
+            var properties = GetProperties();
+
+            properties.ForEach(property =>
+            {
+                if (!property.Equals("Id"))
+                {
+                    updateQuery.Append($"{property}=@{property},");
+                }
+            });
+
+            updateQuery.Remove(updateQuery.Length - 1, 1); // remove last comma
+            updateQuery.Append(" WHERE Id=@Id");
+
+            return updateQuery.ToString();
         }
 
         public Task AddAsync(T entity)
