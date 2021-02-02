@@ -34,6 +34,27 @@ namespace PictureLibraryModel.Repositories
                     select prop.Name).ToList();
         }
 
+        private string GetInsertQuery()
+        {
+            var insertQuery = new StringBuilder($"INSERT INTO {_tableName} ");
+            insertQuery.Append("(");
+
+            var properties = GetProperties();
+            properties.ForEach(prop => { insertQuery.Append($"[{prop}],"); });
+
+            insertQuery
+                .Remove(insertQuery.Length - 1, 1)
+                .Append(") VALUES (");
+
+            properties.ForEach(prop => { insertQuery.Append($"@{prop},"); });
+
+            insertQuery
+                .Remove(insertQuery.Length - 1, 1)
+                .Append(")");
+
+            return insertQuery.ToString();
+        }
+
         public Task AddAsync(T entity)
         {
             throw new NotImplementedException();
