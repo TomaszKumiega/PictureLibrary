@@ -84,9 +84,9 @@ namespace PictureLibraryModel.Repositories
             }
         }
 
-        public Task AddRangeAsync(IEnumerable<T> entities)
+        public async Task AddRangeAsync(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            foreach (var t in entities) await AddAsync(t);
         }
 
         public Task<T> FindAsync(Predicate<T> predicate)
