@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Dapper;
+using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,9 +38,12 @@ namespace PictureLibraryModel.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            using(IDbConnection conn = new SQLiteConnection(GetConnectionString()))
+            {
+                return await conn.QueryAsync<T>($"SELECT * FROM {_tableName}");
+            }
         }
 
         public Task RemoveAsync(T entity)
