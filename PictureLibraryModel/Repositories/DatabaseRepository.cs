@@ -16,26 +16,26 @@ namespace PictureLibraryModel.Repositories
 {
     public abstract class DatabaseRepository<T> : IRepository<T> where T: IDatabaseEntity
     {
-        private string _tableName;
+        protected string _tableName;
 
         public DatabaseRepository(string tableName)
         {
             _tableName = tableName;
         }
 
-        #region Private methods
-        private string GetConnectionString()
+        #region Protected methods
+        protected string GetConnectionString()
         {
             return "Data Source=.\\picture_library.db;Version=3;";
         }
 
-        private List<string> GetProperties()
+        protected List<string> GetProperties()
         {
             return (from prop in typeof(T).GetProperties()
                     select prop.Name).ToList();
         }
 
-        private string GetInsertQuery()
+        protected string GetInsertQuery()
         {
             var insertQuery = new StringBuilder($"INSERT INTO {_tableName} ");
             insertQuery.Append("(");
@@ -56,7 +56,7 @@ namespace PictureLibraryModel.Repositories
             return insertQuery.ToString();
         }
 
-        private string GetUpdateQuery()
+        protected string GetUpdateQuery()
         {
             var updateQuery = new StringBuilder($"UPDATE {_tableName} SET ");
             var properties = GetProperties();
