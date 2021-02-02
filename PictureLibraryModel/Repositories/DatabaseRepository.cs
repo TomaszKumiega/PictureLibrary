@@ -76,9 +76,12 @@ namespace PictureLibraryModel.Repositories
         }
         #endregion
 
-        public Task AddAsync(T entity)
+        public async Task AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            using(var conn = new SQLiteConnection(GetConnectionString()))
+            {
+                await conn.ExecuteAsync(GetInsertQuery(), entity);
+            }
         }
 
         public Task AddRangeAsync(IEnumerable<T> entities)
