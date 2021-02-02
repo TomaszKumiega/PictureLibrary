@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PictureLibraryModel.ConnectedServices
+namespace PictureLibraryModel.Model.ConnectedServices
 {
     public class ConnectedService : IDatabaseEntity
     {
