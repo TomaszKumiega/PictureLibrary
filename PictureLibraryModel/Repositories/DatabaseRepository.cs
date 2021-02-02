@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Repositories
 {
-    public abstract class DatabaseRepository<T> : IRepository<T>
+    public abstract class DatabaseRepository<T> : IRepository<T> where T: class
     {
         private string _tableName;
 
