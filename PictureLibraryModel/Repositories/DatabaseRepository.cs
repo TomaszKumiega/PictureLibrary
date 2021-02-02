@@ -110,9 +110,9 @@ namespace PictureLibraryModel.Repositories
             }
         }
 
-        public Task RemoveRangeAsync(IEnumerable<T> entities)
+        public async Task RemoveRangeAsync(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            foreach (var t in entities) await RemoveAsync(t);
         }
 
         public Task UpdateAsync(T entity)
