@@ -31,7 +31,8 @@ namespace PictureLibraryWPF.CustomControls
         {
             if(DataContext is IFileExplorerViewModel)
             {
-                (DataContext as IFileExplorerViewModel).CurrentDirectoryPath = (FilesList.SelectedItem as IExplorableElement).FullPath;
+                
+                (DataContext as IFileExplorerViewModel).CurrentDirectoryPath = ((o as ListViewItem).Tag as string);
             }
         }
 
