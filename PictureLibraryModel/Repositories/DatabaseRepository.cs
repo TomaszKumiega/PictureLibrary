@@ -102,9 +102,12 @@ namespace PictureLibraryModel.Repositories
             }
         }
 
-        public Task RemoveAsync(T entity)
+        public async Task RemoveAsync(T entity)
         {
-            throw new NotImplementedException();
+            using(var conn = new SQLiteConnection(GetConnectionString()))
+            {
+                await conn.ExecuteAsync($"DELETE FROM {_tableName} WHERE Id=@Id", new { entity.Id });
+            }
         }
 
         public Task RemoveRangeAsync(IEnumerable<T> entities)
