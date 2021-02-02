@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PictureLibraryModel.ConnectedServices
 {
-    enum ConnectedServiceType
+    public enum ConnectedServiceType
     {
         RemoteServer,
         GoogleDrive
