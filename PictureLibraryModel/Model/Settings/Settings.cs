@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PictureLibraryModel.Settings
+namespace PictureLibraryModel.Model.Settings
 {
     public class Settings : IDatabaseEntity
     {

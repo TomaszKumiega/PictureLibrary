@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Repositories
 {
-    public interface ISettingsRepository : IRepository<Settings.Settings>
+    public interface ISettingsRepository : IRepository<Model.Settings.Settings>
     {
-        Task<Settings.Settings> GetByUserId(Guid id);
+        Task<Model.Settings.Settings> GetByUserId(Guid id);
     }
 }
