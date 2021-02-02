@@ -192,11 +192,11 @@ namespace PictureLibraryModel.Repositories
             foreach (var t in libraries) await AddAsync(t);
         }
 
-        public async Task<Library> FindAsync(Predicate<Library> predicate)
+        public async Task<IEnumerable<Library>> FindAsync(Predicate<Library> predicate)
         {
             var libraries = await GetAllAsync();
 
-            return libraries.ToList().Find(predicate);
+            return libraries.ToList().FindAll(predicate);
         }
 
         public async Task<IEnumerable<Library>> GetAllAsync()

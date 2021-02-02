@@ -89,9 +89,15 @@ namespace PictureLibraryModel.Repositories
             foreach (var t in entities) await AddAsync(t);
         }
 
-        public Task<T> FindAsync(Predicate<T> predicate)
+        public async Task<IEnumerable<T>> FindAsync(Predicate<T> predicate)
         {
-            throw new NotImplementedException();
+            T entity = (T)predicate.Target;
+            var methodInfo = predicate.Method;
+            
+            using (var conn = new SQLiteConnection(GetConnectionString()))
+            {
+                return (await conn.QueryAsync<T>($"SELECT * FROM {_tableName} WHERE {methodInfo.Name}=@{methodInfo.Name}", entity)).ToList();
+            }
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
