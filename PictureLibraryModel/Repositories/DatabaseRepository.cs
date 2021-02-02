@@ -1,15 +1,20 @@
 ﻿using Dapper;
 using Microsoft.Data.Sqlite;
+using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.Database;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Repositories
 {
-    public abstract class DatabaseRepository<T> : IRepository<T> where T: class
+    public abstract class DatabaseRepository<T> : IRepository<T> where T: IDatabaseEntity
     {
         private string _tableName;
 
