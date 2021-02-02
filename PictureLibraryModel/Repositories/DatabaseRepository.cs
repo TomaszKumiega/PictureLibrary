@@ -23,6 +23,7 @@ namespace PictureLibraryModel.Repositories
             _tableName = tableName;
         }
 
+        #region Private methods
         private string GetConnectionString()
         {
             return "Data Source=.\\picture_library.db;Version=3;";
@@ -73,6 +74,7 @@ namespace PictureLibraryModel.Repositories
 
             return updateQuery.ToString();
         }
+        #endregion
 
         public Task AddAsync(T entity)
         {
