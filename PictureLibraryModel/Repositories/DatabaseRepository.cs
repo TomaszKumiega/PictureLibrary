@@ -115,9 +115,12 @@ namespace PictureLibraryModel.Repositories
             foreach (var t in entities) await RemoveAsync(t);
         }
 
-        public Task UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            using(var conn = new SQLiteConnection(GetConnectionString()))
+            {
+                await conn.ExecuteAsync(GetUpdateQuery(), entity);
+            }
         }
     }
 }
