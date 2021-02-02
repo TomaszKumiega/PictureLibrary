@@ -24,10 +24,8 @@ namespace PictureLibraryModel.Repositories
         }
 
         #region Protected methods
-        protected string GetConnectionString()
-        {
-            return "Data Source=.\\picture_library.db;Version=3;";
-        }
+        protected string GetConnectionString() => "Data Source=.\\picture_library.db;Version=3;";
+        protected IDbConnection GetConnection() => new SQLiteConnection(GetConnectionString());
 
         protected List<string> GetProperties()
         {
@@ -78,7 +76,7 @@ namespace PictureLibraryModel.Repositories
 
         public async Task AddAsync(T entity)
         {
-            using(var conn = new SQLiteConnection(GetConnectionString()))
+            using(var conn = GetConnection())
             {
                 await conn.ExecuteAsync(GetInsertQuery(), entity);
             }
@@ -94,7 +92,7 @@ namespace PictureLibraryModel.Repositories
             T entity = (T)predicate.Target;
             var methodInfo = predicate.Method;
             
-            using (var conn = new SQLiteConnection(GetConnectionString()))
+            using (var conn = GetConnection())
             {
                 return (await conn.QueryAsync<T>($"SELECT * FROM {_tableName} WHERE {methodInfo.Name}=@{methodInfo.Name}", entity)).ToList();
             }
@@ -102,7 +100,7 @@ namespace PictureLibraryModel.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            using(IDbConnection conn = new SQLiteConnection(GetConnectionString()))
+            using(IDbConnection conn = GetConnection())
             {
                 return await conn.QueryAsync<T>($"SELECT * FROM {_tableName}");
             }
@@ -110,7 +108,7 @@ namespace PictureLibraryModel.Repositories
 
         public async Task RemoveAsync(T entity)
         {
-            using(var conn = new SQLiteConnection(GetConnectionString()))
+            using(var conn = GetConnection())
             {
                 await conn.ExecuteAsync($"DELETE FROM {_tableName} WHERE Id=@Id", new { entity.Id });
             }
@@ -123,7 +121,7 @@ namespace PictureLibraryModel.Repositories
 
         public async Task UpdateAsync(T entity)
         {
-            using(var conn = new SQLiteConnection(GetConnectionString()))
+            using(var conn = GetConnection())
             {
                 await conn.ExecuteAsync(GetUpdateQuery(), entity);
             }
