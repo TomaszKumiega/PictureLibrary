@@ -15,8 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="5.0.2" />
     <PackageReference Include="NLog" Version="4.7.6" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.7" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
     <PackageReference Include="SystemWrapper.Interfaces" Version="0.27.0" />
     <PackageReference Include="SystemWrapper.Wrappers" Version="0.27.0" />
