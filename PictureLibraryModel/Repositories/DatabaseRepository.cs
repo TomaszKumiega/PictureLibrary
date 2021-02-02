@@ -14,6 +14,11 @@ namespace PictureLibraryModel.Repositories
             _tableName = tableName;
         }
 
+        private string GetConnectionString()
+        {
+            return "Data Source=.\\picture_library.db;Version=3;";
+        }
+
         public Task AddAsync(T entity)
         {
             throw new NotImplementedException();
