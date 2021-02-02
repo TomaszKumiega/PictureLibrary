@@ -133,7 +133,7 @@ namespace PictureLibraryModel.Tests.RepositoryTests
 
         #region FindAsync Tests
         [Fact]
-        public void FindAsync_ShouldFindSpecificLibrary_WhenGetAllReturnsMoreThanOneLibrary()
+        public void FindAsync_ShouldFindLibraryLibrariesMatchingThePredicate()
         {
             var xml = GetLibraryXmlSamples();
             var paths = new List<string>();
@@ -155,10 +155,11 @@ namespace PictureLibraryModel.Tests.RepositoryTests
 
             var repository = new LocalLibraryRepository(fileServiceMock.Object);
 
-            var library = repository.FindAsync(x => x.Name == "library2").Result;
+            var libraries = repository.FindAsync(x => x.Name == "library2").Result;
 
-            Assert.True(library != null);
-            Assert.True(library.Name == "library2" && library.Description == "picture library2");
+            Assert.True(libraries != null);
+            Assert.True(libraries.Any());
+            Assert.Contains(libraries, x => x.Name == "library2" && x.Description == "picture library2");
         }
         #endregion
     }
