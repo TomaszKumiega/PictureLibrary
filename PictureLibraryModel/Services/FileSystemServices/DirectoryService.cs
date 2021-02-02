@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using SystemWrapper.IO;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {
@@ -53,8 +52,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             {
                 if (ImageFile.IsFileAnImage(t) && UserHasAccessToTheFile(t))
                 {
-                    var fileInfo = new FileInfoWrap(new FileInfo(t));
-
+                    var fileInfo = new FileInfo(t);
                     var imageFileBuilder = new LocalFileSystemImageFileBuilder(fileInfo);
                     var imageFileDirector = new ImageFileDirector(imageFileBuilder);
                     imageFileDirector.MakeImageFile();

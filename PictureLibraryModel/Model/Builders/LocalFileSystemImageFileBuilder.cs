@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using SystemInterface.IO;
 
 namespace PictureLibraryModel.Model.Builders
 {
     public class LocalFileSystemImageFileBuilder : IImageFileBuilder
     {
-        private IFileInfo _fileInfo;
+        private FileInfo _fileInfo;
         public ImageFile ImageFile { get; private set; }
 
-        public LocalFileSystemImageFileBuilder(IFileInfo fileInfo)
+        public LocalFileSystemImageFileBuilder(FileInfo fileInfo)
         {
             ImageFile = new ImageFile();
             _fileInfo = fileInfo;
@@ -19,7 +18,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public void BuildCreationTime()
         {
-            ImageFile.CreationTime = _fileInfo.CreationTimeUtc.DateTimeInstance;
+            ImageFile.CreationTime = _fileInfo.CreationTimeUtc;
         }
 
         public void BuildExtension()
@@ -39,12 +38,12 @@ namespace PictureLibraryModel.Model.Builders
 
         public void BuildLastAccessTime()
         {
-            ImageFile.LastAccessTime = _fileInfo.LastAccessTimeUtc.DateTimeInstance;
+            ImageFile.LastAccessTime = _fileInfo.LastAccessTimeUtc;
         }
 
         public void BuildLastWriteTime()
         {
-            ImageFile.LastWriteTime = _fileInfo.LastWriteTimeUtc.DateTimeInstance;
+            ImageFile.LastWriteTime = _fileInfo.LastWriteTimeUtc;
         }
 
         public void BuildLibraryFullPath()
