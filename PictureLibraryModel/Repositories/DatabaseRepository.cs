@@ -28,6 +28,16 @@ namespace PictureLibraryModel.Repositories
             return "Data Source=.\\picture_library.db;Version=3;";
         }
 
+        private IEnumerable<PropertyInfo> GetProperties => typeof(T).GetProperties();
+        private List<string> GetListOfProperties(IEnumerable<PropertyInfo> listOfProperties)
+        {
+            return (from prop in listOfProperties
+                    let attributes = prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                    where attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore"
+                    select prop.Name).ToList();
+        }
+
+
         public Task AddAsync(T entity)
         {
             throw new NotImplementedException();
