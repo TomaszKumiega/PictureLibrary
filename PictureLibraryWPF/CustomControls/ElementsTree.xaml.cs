@@ -17,11 +17,18 @@ namespace PictureLibraryWPF.CustomControls
             DataContext = viewModel;
         }
 
-        private void ElementTreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void TreeViewItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var viewModel = DataContext as IExplorerViewModel;
+            var item = sender as TreeViewItem;
 
-            viewModel.SelectedNode = ElementTreeView.SelectedItem as IExplorableElement;
+            item.Focusable = true;
+            item.Focus();
+            item.Focusable = false;
+
+            viewModel.SelectedNode = item.DataContext as IExplorableElement;
+
+            e.Handled = true;
         }
     }
 }

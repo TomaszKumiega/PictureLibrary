@@ -17,7 +17,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <TreeView x:Name="ElementTreeView" ItemsSource="{Binding ExplorableElementsTree}" Background="Transparent" Margin="0,10,0,10" BorderThickness="0" SelectedItemChanged="ElementTreeView_OnSelectedItemChanged">
+        <TreeView x:Name="ElementTreeView" ItemsSource="{Binding ExplorableElementsTree}" Background="Transparent" Margin="0,10,0,10" BorderThickness="0">
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type src:Directory}" ItemsSource="{Binding SubDirectories}">
                     <WrapPanel Orientation="Horizontal">
@@ -28,6 +28,8 @@
             </TreeView.Resources>
             <TreeView.ItemContainerStyle>
                 <Style TargetType="TreeViewItem">
+                    <EventSetter Event="MouseDown" Handler="TreeViewItem_MouseDown"/>
+                    <Setter Property="Focusable" Value="False"/>
                     <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
                 </Style>
             </TreeView.ItemContainerStyle>
