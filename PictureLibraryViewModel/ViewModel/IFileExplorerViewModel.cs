@@ -13,5 +13,6 @@ namespace PictureLibraryViewModel.ViewModel
 
         void CopyPath();
         void CreateDirectory(string path);
+        void GoToParentDirectory();
     }
 }
