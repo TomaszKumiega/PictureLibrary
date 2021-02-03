@@ -44,7 +44,7 @@ namespace PictureLibraryWPF.Clipboard
 
         public string GetText()
         {
-            throw new NotImplementedException();
+            return System.Windows.Clipboard.GetText();
         }
 
         public void SetFiles(IEnumerable<string> paths, ClipboardFilesState filesState)
