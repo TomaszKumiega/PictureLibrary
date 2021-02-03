@@ -16,7 +16,7 @@ namespace PictureLibraryViewModel.Commands
             _viewModel = viewModel;
         }
 
-        public void OnExecuteChanged(object sender, EventArgs args)
+        public void OnExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
