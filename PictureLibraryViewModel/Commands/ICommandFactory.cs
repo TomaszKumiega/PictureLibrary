@@ -15,5 +15,6 @@ namespace PictureLibraryViewModel.Commands
         ICommand GetRemoveCommand(IExplorerViewModel viewModel);
         ICommand GetRenameCommand(IExplorerViewModel viewModel);
         ICommand GetCreateFolderCommand(IFileExplorerViewModel viewModel);
+        ICommand GetBackCommand(IExplorerViewModel viewModel);
     }
 }
