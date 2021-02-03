@@ -23,12 +23,12 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            throw new NotImplementedException();
+            return _viewModel.ExplorerHistory.ForwardStack.Count > 0;
         }
 
         public void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            _viewModel.Forward();
         }
     }
 }
