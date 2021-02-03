@@ -137,7 +137,7 @@ namespace PictureLibraryViewModel.ViewModel
                 ExplorableElementsTree.Add(t);
             }
 
-            CurrentDirectoryPath = "\\";
+            _currentDirectoryPath = "\\";
         }
 
         private void InitializeCurrentDirectoryFiles()
