@@ -29,5 +29,7 @@ namespace PictureLibraryViewModel.ViewModel
         void PasteSelectedElements();
         void RemoveSelectedElements();
         void RenameSelectedElements();
+        void Back();
+        void Forward();
     }
 }

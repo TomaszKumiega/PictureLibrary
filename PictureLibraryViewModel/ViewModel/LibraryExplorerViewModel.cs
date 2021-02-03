@@ -67,5 +67,15 @@ namespace PictureLibraryViewModel.ViewModel
         {
             throw new NotImplementedException();
         }
+
+        public void Back()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Forward()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
