@@ -24,7 +24,7 @@ namespace PictureLibraryWPF.Clipboard
 
         public bool ContainsImage()
         {
-            throw new NotImplementedException();
+            return System.Windows.Clipboard.ContainsImage();
         }
 
         public bool ContainsText()
