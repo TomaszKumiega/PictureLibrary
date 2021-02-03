@@ -145,7 +145,7 @@
 
 
         <!--Back Button-->
-        <Button x:Name="BackButton" Grid.Column="0" Grid.Row="1" BorderThickness="0"  Style="{StaticResource CustomButton}">
+        <Button x:Name="BackButton" Grid.Column="0" Grid.Row="1" BorderThickness="0"  Style="{StaticResource CustomButton}" Command="{Binding BackCommand}">
             <Image Source="pack://application:,,,/Icons/BackIcon.png" Margin="4,4,4,4"/>
         </Button>
         
@@ -155,7 +155,7 @@
         </Button>
 
         <!--Forward Button-->
-        <Button x:Name="ForwardButton" Grid.Column="1" Grid.Row="1" BorderThickness="0" Style="{StaticResource CustomButton}">
+        <Button x:Name="ForwardButton" Grid.Column="1" Grid.Row="1" BorderThickness="0" Style="{StaticResource CustomButton}" Command="{Binding ForwardCommand}">
             <Image Source="pack://application:,,,/Icons/ForwardIcon.png" Margin="4,4,4,4"/>
         </Button>
 
