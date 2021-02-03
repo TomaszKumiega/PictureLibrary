@@ -57,5 +57,10 @@ namespace PictureLibraryViewModel.Commands
         {
             return new GoToParentDirectoryCommand(viewModel);
         }
+
+        public ICommand GetRefreshCommand(IExplorerViewModel viewModel)
+        {
+            return new RefreshCommand(viewModel);
+        }
     }
 }

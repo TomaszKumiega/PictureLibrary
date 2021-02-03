@@ -18,5 +18,6 @@ namespace PictureLibraryViewModel.Commands
         ICommand GetBackCommand(IExplorerViewModel viewModel);
         ICommand GetForwardCommand(IExplorerViewModel viewModel);
         ICommand GetGoToParentDirectoryCommand(IFileExplorerViewModel viewModel);
+        ICommand GetRefreshCommand(IExplorerViewModel viewModel);
     }
 }
