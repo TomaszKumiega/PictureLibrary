@@ -13,16 +13,13 @@ namespace PictureLibraryViewModel.Tests.CommandTests
     public class PasteCommandTests
     {
         [Fact]
-        public void CanExecute_ShouldReturnTrue_WhenCopiedFilesIsInitialized()
+        public void CanExecute_ShouldReturnTrue_WhenContainsFilesRetursTrue()
         {
             var imageFileMock = new Mock<ImageFile>();
-
-            var elementsList = new ObservableCollection<IExplorableElement>();
-            elementsList.Add(imageFileMock.Object);
-
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.Clipboard.CopiedElements)
-                .Returns(elementsList);
+
+            viewModelMock.Setup(x => x.Clipboard.ContainsFiles())
+                .Returns(true);
 
             var pasteCommand = new PasteCommand(viewModelMock.Object);
 
@@ -30,15 +27,11 @@ namespace PictureLibraryViewModel.Tests.CommandTests
         }
 
         [Fact]
-        public void CanExecute_ShouldReturnFalse_WhenCopiedElements_AndCutElements_AreNull()
+        public void CanExecute_ShouldReturnFalse_WhenContainsFilesReturnsFalse()
         {
-            ObservableCollection<IExplorableElement> list = null;
-
             var viewModelMock = new Mock<IExplorerViewModel>();
-            viewModelMock.Setup(x => x.Clipboard.CopiedElements)
-                .Returns(list);
-            viewModelMock.Setup(x => x.Clipboard.CutElements)
-                .Returns(list);
+            viewModelMock.Setup(x => x.Clipboard.ContainsFiles())
+                .Returns(false);
 
             var pasteCommand = new PasteCommand(viewModelMock.Object);
 
