@@ -196,10 +196,12 @@ namespace PictureLibraryViewModel.ViewModel
                         if (CurrentDirectoryPath.EndsWith("\\"))
                         {
                             _directoryService.Move(t, CurrentDirectoryPath + directoryName);
+                            Clipboard.Clear();
                         }
                         else
                         {
                             _directoryService.Move(t, CurrentDirectoryPath + "\\" + directoryName);
+                            Clipboard.Clear();
                         }
                     }
                 }
@@ -212,10 +214,12 @@ namespace PictureLibraryViewModel.ViewModel
                         if (CurrentDirectoryPath.EndsWith("\\"))
                         {
                             _fileService.Copy(t, CurrentDirectoryPath + fileName);
+                            Clipboard.Clear();
                         }
                         else
                         {
                             _fileService.Copy(t, CurrentDirectoryPath + '\\' + fileName);
+                            Clipboard.Clear();
                         }
                     }
                     else if (Clipboard.FilesState == ClipboardFilesState.Cut)
@@ -223,10 +227,12 @@ namespace PictureLibraryViewModel.ViewModel
                         if (CurrentDirectoryPath.EndsWith("\\"))
                         {
                             _fileService.Move(t, CurrentDirectoryPath + fileName);
+                            Clipboard.Clear();
                         }
                         else
                         {
                             _fileService.Move(t, CurrentDirectoryPath + '\\' + fileName);
+                            Clipboard.Clear();
                         }
                     }
                 }
