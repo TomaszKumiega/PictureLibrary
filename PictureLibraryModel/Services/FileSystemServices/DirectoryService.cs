@@ -170,5 +170,13 @@ namespace PictureLibraryModel.Services.FileSystemServices
         {
             System.IO.Directory.Delete(path);
         }
+
+        public bool IsDirectory(string path)
+        {
+            FileAttributes attr = System.IO.File.GetAttributes(path);
+
+            if ((attr & FileAttributes.Directory) == FileAttributes.Directory) return true;
+            else return false;
+        }
     }
 }

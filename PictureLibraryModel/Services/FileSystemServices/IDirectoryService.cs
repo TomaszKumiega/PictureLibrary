@@ -10,5 +10,6 @@ namespace PictureLibraryModel.Services.FileSystemServices
         IEnumerable<Folder> GetSubFolders(string path);
         IEnumerable<Directory> GetRootDirectories();
         IEnumerable<IExplorableElement> GetDirectoryContent(string path);
+        bool IsDirectory(string path);
     }
 }
