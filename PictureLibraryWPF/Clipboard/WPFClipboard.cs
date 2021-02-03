@@ -29,7 +29,7 @@ namespace PictureLibraryWPF.Clipboard
 
         public bool ContainsText()
         {
-            throw new NotImplementedException();
+            return System.Windows.Clipboard.ContainsText();
         }
 
         public IEnumerable<string> GetFiles()
