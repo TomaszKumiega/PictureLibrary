@@ -51,6 +51,8 @@ namespace PictureLibraryWPF.Clipboard
 
         public void SetFiles(IEnumerable<string> paths, ClipboardFilesState filesState)
         {
+            Clear();
+
             FilesState = filesState;
 
             var collection = new StringCollection();
@@ -67,6 +69,8 @@ namespace PictureLibraryWPF.Clipboard
 
         public void SetText(string text)
         {
+            Clear();
+
             System.Windows.Clipboard.SetText(text);
         }
     }
