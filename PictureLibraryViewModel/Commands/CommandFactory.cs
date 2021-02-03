@@ -47,5 +47,10 @@ namespace PictureLibraryViewModel.Commands
         {
             return new BackCommand(viewModel);
         }
+
+        public ICommand GetForwardCommand(IExplorerViewModel viewModel)
+        {
+            return new ForwardCommand(viewModel);
+        }
     }
 }
