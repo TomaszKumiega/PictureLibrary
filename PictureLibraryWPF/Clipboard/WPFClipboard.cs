@@ -64,6 +64,8 @@ namespace PictureLibraryWPF.Clipboard
             foreach (var t in paths) collection.Add(t);
 
             System.Windows.Clipboard.SetFileDropList(collection);
+
+            ClipboardContentChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void SetImage(ImageFile image)
@@ -76,6 +78,8 @@ namespace PictureLibraryWPF.Clipboard
             Clear();
 
             System.Windows.Clipboard.SetText(text);
+
+            ClipboardContentChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
