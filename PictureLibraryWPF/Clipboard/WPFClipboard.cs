@@ -36,7 +36,11 @@ namespace PictureLibraryWPF.Clipboard
 
         public IEnumerable<string> GetFiles()
         {
-            throw new NotImplementedException();
+            var filePaths = new List<string>();
+
+            foreach (var t in System.Windows.Clipboard.GetFileDropList()) filePaths.Add(t);
+
+            return filePaths;
         }
 
         public ImageFile GetImage()
