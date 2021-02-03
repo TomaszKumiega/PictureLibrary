@@ -148,7 +148,19 @@ namespace PictureLibraryViewModel.ViewModel
             
             CurrentlyShownElements.Clear();
 
-            foreach (var t in _directoryService.GetDirectoryContent(CurrentDirectoryPath))
+            IEnumerable<IExplorableElement> content = new List<IExplorableElement>();
+
+            try
+            {
+                content = _directoryService.GetDirectoryContent(CurrentDirectoryPath);
+            }
+            catch(Exception e)
+            {
+                _logger.Error(e, e.Message);
+                throw new Exception("Application failed loading the contents of: " + CurrentDirectoryPath + " directory.");
+            }
+
+            foreach (var t in content)
             {
                 CurrentlyShownElements.Add(t);
             }
