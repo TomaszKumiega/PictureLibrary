@@ -376,6 +376,11 @@ namespace PictureLibraryViewModel.ViewModel
             var parent = (_directoryService.GetInfo(_currentDirectoryPath) as DirectoryInfo).Parent?.FullName;
             if (parent != null) CurrentDirectoryPath = parent;
         }
+
+        public void Refresh()
+        {
+            ReloadCurrentDirectoryFiles();
+        }
         #endregion
     }
 }

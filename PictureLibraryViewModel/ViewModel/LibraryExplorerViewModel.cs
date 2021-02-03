@@ -81,5 +81,10 @@ namespace PictureLibraryViewModel.ViewModel
         {
             throw new NotImplementedException();
         }
+
+        public void Refresh()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

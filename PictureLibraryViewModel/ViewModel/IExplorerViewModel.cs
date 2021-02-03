@@ -33,5 +33,6 @@ namespace PictureLibraryViewModel.ViewModel
         void RenameSelectedElements();
         void Back();
         void Forward();
+        void Refresh();
     }
 }
