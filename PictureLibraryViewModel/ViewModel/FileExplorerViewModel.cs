@@ -64,11 +64,17 @@ namespace PictureLibraryViewModel.ViewModel
             get => _currentDirectoryPath;
             set
             {
+                // Change explorer history
                 ExplorerHistory.BackStack.Push(_currentDirectoryPath);
                 ExplorerHistory.ForwardStack.Clear();
-                (BackCommand as BackCommand).OnExecuteChanged();
+
                 _currentDirectoryPath = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
+
+                // Raise commands CanExecuteChanged 
+                (BackCommand as BackCommand).OnExecuteChanged();
+                (GoToParentDirectoryCommand as GoToParentDirectoryCommand).OnExecuteChanged();
+
                 ReloadCurrentDirectoryFiles();
             }
         }
