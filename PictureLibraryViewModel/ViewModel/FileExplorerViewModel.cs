@@ -3,6 +3,7 @@ using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryViewModel.Commands;
+using PictureLibraryViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +22,7 @@ namespace PictureLibraryViewModel.ViewModel
         private IFileService _fileService;
         private IExplorableElement _selectedNode;
         private string _currentDirectoryPath;
+        private IExplorerHistory ExplorerHistory { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         
@@ -59,11 +61,12 @@ namespace PictureLibraryViewModel.ViewModel
         }
         #endregion
 
-        public FileExplorerViewModel(IDirectoryService directoryService, IFileService fileService, ICommandFactory commandFactory, IClipboardService clipboard)
+        public FileExplorerViewModel(IDirectoryService directoryService, IFileService fileService, ICommandFactory commandFactory, IClipboardService clipboard, IExplorerHistory explorerHistory)
         {
             _directoryService = directoryService;
             _fileService = fileService;
             Clipboard = clipboard;
+            ExplorerHistory = explorerHistory;
 
             SelectedElements = new ObservableCollection<IExplorableElement>();
             SelectedElements.CollectionChanged += OnSelectedElementsChanged;
