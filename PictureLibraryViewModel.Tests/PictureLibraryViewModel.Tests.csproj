@@ -23,4 +23,8 @@
     <ProjectReference Include="..\PictureLibraryViewModel\PictureLibraryViewModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModelTests\" />
+  </ItemGroup>
+
 </Project>
