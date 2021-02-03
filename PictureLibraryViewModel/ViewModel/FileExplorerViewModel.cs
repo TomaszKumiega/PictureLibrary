@@ -327,6 +327,8 @@ namespace PictureLibraryViewModel.ViewModel
 
         public void Back()
         {
+            if (ExplorerHistory.BackStack.Count == 0) return;
+
             ExplorerHistory.ForwardStack.Push(_currentDirectoryPath);
             _currentDirectoryPath = ExplorerHistory.BackStack.Pop();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
