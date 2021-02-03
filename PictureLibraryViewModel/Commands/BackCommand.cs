@@ -23,7 +23,7 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            return _viewModel.ExplorerHistory.BackStack.Count > 0;
+            return _viewModel.ExplorerHistory.BackStack.Count > 1;
         }
 
         public void Execute(object parameter)
