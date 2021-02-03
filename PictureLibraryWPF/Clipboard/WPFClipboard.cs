@@ -2,6 +2,7 @@
 using PictureLibraryModel.Services.Clipboard;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text;
 
 namespace PictureLibraryWPF.Clipboard
@@ -49,7 +50,13 @@ namespace PictureLibraryWPF.Clipboard
 
         public void SetFiles(IEnumerable<string> paths, ClipboardFilesState filesState)
         {
-            throw new NotImplementedException();
+            FilesState = filesState;
+
+            var collection = new StringCollection();
+
+            foreach (var t in paths) collection.Add(t);
+
+            System.Windows.Clipboard.SetFileDropList(collection);
         }
 
         public void SetImage(ImageFile image)
