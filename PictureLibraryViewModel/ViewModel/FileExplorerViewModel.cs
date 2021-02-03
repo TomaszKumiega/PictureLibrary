@@ -71,12 +71,6 @@ namespace PictureLibraryViewModel.ViewModel
 
                 _currentDirectoryPath = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
-
-                // Raise commands CanExecuteChanged 
-                (BackCommand as BackCommand).OnExecuteChanged();
-                (GoToParentDirectoryCommand as GoToParentDirectoryCommand).OnExecuteChanged();
-
-                ReloadCurrentDirectoryFiles();
             }
         }
         #endregion
@@ -93,6 +87,7 @@ namespace PictureLibraryViewModel.ViewModel
             SelectedElements.CollectionChanged += OnSelectedElementsChanged;
             Clipboard.ClipboardContentChanged += OnCopiedElementsChanged;
             Clipboard.ClipboardContentChanged += OnCutElementsChanged;
+            PropertyChanged += OnCurrentDirectoryPathChanged;
             #endregion
 
             #region Command Initialization
@@ -130,6 +125,16 @@ namespace PictureLibraryViewModel.ViewModel
         private void OnCutElementsChanged(object o, EventArgs args)
         {
             (PasteCommand as PasteCommand).OnExecuteChanged();
+        }
+
+        private void OnCurrentDirectoryPathChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName != "CurrentDirectoryPath") return;
+
+            (BackCommand as BackCommand).OnExecuteChanged();
+            (GoToParentDirectoryCommand as GoToParentDirectoryCommand).OnExecuteChanged();
+
+            ReloadCurrentDirectoryFiles();
         }
         #endregion
 
