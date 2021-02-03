@@ -2,6 +2,7 @@
 using PictureLibraryModel.Repositories;
 using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.Commands;
+using PictureLibraryViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,6 +30,8 @@ namespace PictureLibraryViewModel.ViewModel
         public ObservableCollection<IExplorableElement> ExplorableElementsTree => throw new NotImplementedException();
 
         public ObservableCollection<IExplorableElement> CurrentlyShownElements => throw new NotImplementedException();
+
+        public IExplorerHistory ExplorerHistory => throw new NotImplementedException();
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -1,6 +1,7 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.Commands;
+using PictureLibraryViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,7 @@ namespace PictureLibraryViewModel.ViewModel
 {
     public interface IExplorerViewModel : INotifyPropertyChanged
     {
+        IExplorerHistory ExplorerHistory { get; }
         ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         IExplorableElement SelectedNode { get; set; }
         ICommand CopyCommand { get; }
