@@ -15,6 +15,7 @@ namespace PictureLibraryWPF.Clipboard
 
         public void Clear()
         {
+            FilesState = ClipboardFilesState.NoFiles;
             System.Windows.Clipboard.Clear();
         }
 

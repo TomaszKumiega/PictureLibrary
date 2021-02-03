@@ -9,7 +9,8 @@ namespace PictureLibraryModel.Services.Clipboard
     public enum ClipboardFilesState
     {
         Copied,
-        Cut
+        Cut,
+        NoFiles
     }
 
     public interface IClipboardService
