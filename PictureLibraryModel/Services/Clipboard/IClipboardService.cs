@@ -6,8 +6,15 @@ using System.Text;
 
 namespace PictureLibraryModel.Services.Clipboard
 {
+    public enum ClipboardFilesState
+    {
+        Copied,
+        Cut
+    }
+
     public interface IClipboardService
     {
+        ClipboardFilesState FilesState { get; }
         event EventHandler ClipboardContentChanged;
         bool ContainsText();
         bool ContainsImage();
@@ -17,7 +24,7 @@ namespace PictureLibraryModel.Services.Clipboard
         void SetText(string text);
         void SetImage(ImageFile image);
         ImageFile GetImage();
-        void SetFiles(IEnumerable<string> paths);
+        void SetFiles(IEnumerable<string> paths, ClipboardFilesState filesState);
         IEnumerable<string> GetFiles();
     }
 }
