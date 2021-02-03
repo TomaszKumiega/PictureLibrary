@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Model;
+﻿using NLog;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryViewModel.Commands;
@@ -15,6 +16,7 @@ namespace PictureLibraryViewModel.ViewModel
 {
     public class FileExplorerViewModel : IFileExplorerViewModel
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IDirectoryService _directoryService;
         private IFileService _fileService;
         private IExplorableElement _selectedNode;
@@ -107,7 +109,17 @@ namespace PictureLibraryViewModel.ViewModel
         {
             ExplorableElementsTree = new ObservableCollection<IExplorableElement>();
 
-            var rootDirectories = _directoryService.GetRootDirectories();
+            IEnumerable<Directory> rootDirectories = new List<Directory>();
+
+            try
+            {
+               rootDirectories = _directoryService.GetRootDirectories();
+            }
+            catch(Exception e)
+            {
+                _logger.Error(e, e.Message);
+                throw new Exception("Application failed loading the directory tree");
+            }
             
             foreach(var t in rootDirectories)
             {
