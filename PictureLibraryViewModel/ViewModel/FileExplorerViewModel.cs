@@ -324,6 +324,14 @@ namespace PictureLibraryViewModel.ViewModel
         { 
             _directoryService.Create(path);    
         }
+
+        public void Back()
+        {
+            ExplorerHistory.ForwardStack.Push(_currentDirectoryPath);
+            _currentDirectoryPath = ExplorerHistory.BackStack.Pop();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
+            ReloadCurrentDirectoryFiles();
+        }
         #endregion
     }
 }
