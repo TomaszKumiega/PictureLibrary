@@ -41,6 +41,7 @@ namespace PictureLibraryViewModel.ViewModel
         public ICommand BackCommand { get; }
         public ICommand ForwardCommand { get; }
         public ICommand GoToParentDirectoryCommand { get; }
+        public ICommand RefreshCommand { get; }
         #endregion
 
         public IExplorerHistory ExplorerHistory { get; }
@@ -105,6 +106,7 @@ namespace PictureLibraryViewModel.ViewModel
             BackCommand = commandFactory.GetBackCommand(this);
             ForwardCommand = commandFactory.GetForwardCommand(this);
             GoToParentDirectoryCommand = commandFactory.GetGoToParentDirectoryCommand(this);
+            RefreshCommand = commandFactory.GetRefreshCommand(this);
             #endregion
 
             InitializeDirectoryTree();

@@ -37,6 +37,8 @@ namespace PictureLibraryViewModel.ViewModel
 
         public ICommand ForwardCommand => throw new NotImplementedException();
 
+        public ICommand RefreshCommand => throw new NotImplementedException();
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public LibraryExplorerViewModel(ICommandFactory commandFactory)
