@@ -22,11 +22,11 @@ namespace PictureLibraryViewModel.ViewModel
         private IFileService _fileService;
         private IExplorableElement _selectedNode;
         private string _currentDirectoryPath;
-        private IExplorerHistory ExplorerHistory { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         #region Public Properties
+        public IExplorerHistory ExplorerHistory { get; }
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; private set; }
         public ICommand CopyCommand { get; }
