@@ -332,6 +332,16 @@ namespace PictureLibraryViewModel.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
             ReloadCurrentDirectoryFiles();
         }
+
+        public void Forward()
+        {
+            if (ExplorerHistory.ForwardStack.Count == 0) return;
+
+            ExplorerHistory.BackStack.Push(_currentDirectoryPath);
+            _currentDirectoryPath = ExplorerHistory.ForwardStack.Pop();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
+            ReloadCurrentDirectoryFiles();
+        }
         #endregion
     }
 }
