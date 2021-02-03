@@ -59,7 +59,7 @@ namespace PictureLibraryWPF.Clipboard
 
         public void SetText(string text)
         {
-            throw new NotImplementedException();
+            System.Windows.Clipboard.SetText(text);
         }
     }
 }
