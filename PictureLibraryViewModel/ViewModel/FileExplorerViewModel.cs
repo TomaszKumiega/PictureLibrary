@@ -36,6 +36,8 @@ namespace PictureLibraryViewModel.ViewModel
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
         public ICommand CreateFolderCommand { get; }
+        public ICommand BackCommand { get; }
+        public ICommand ForwardCommand { get; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public IClipboardService Clipboard { get; }
 
@@ -83,6 +85,8 @@ namespace PictureLibraryViewModel.ViewModel
             RemoveCommand = commandFactory.GetRemoveCommand(this);
             RenameCommand = commandFactory.GetRenameCommand(this);
             CreateFolderCommand = commandFactory.GetCreateFolderCommand(this);
+            BackCommand = commandFactory.GetBackCommand(this);
+            ForwardCommand = commandFactory.GetForwardCommand(this);
             #endregion
 
             InitializeDirectoryTree();

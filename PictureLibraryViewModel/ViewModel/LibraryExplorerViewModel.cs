@@ -33,6 +33,10 @@ namespace PictureLibraryViewModel.ViewModel
 
         public IExplorerHistory ExplorerHistory => throw new NotImplementedException();
 
+        public ICommand BackCommand => throw new NotImplementedException();
+
+        public ICommand ForwardCommand => throw new NotImplementedException();
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public LibraryExplorerViewModel(ICommandFactory commandFactory)
