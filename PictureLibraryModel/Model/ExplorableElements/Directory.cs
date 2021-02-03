@@ -1,6 +1,7 @@
 ﻿using NLog;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
@@ -82,7 +83,17 @@ namespace PictureLibraryModel.Model
         {
             SubDirectories.Clear();
 
-            var directories = await Task.Run(() => DirectoryService.GetSubFolders(FullPath));
+            IEnumerable<Folder> directories = new List<Folder>();
+
+            try
+            {
+                directories = await Task.Run(() => DirectoryService.GetSubFolders(FullPath));
+            }
+            catch(Exception e)
+            {
+                _logger.Error(e, e.Message);
+                throw new Exception("Application failed loading sub directories of: " + this.FullPath + " directory.");
+            }
 
             foreach (var t in directories)
             {
