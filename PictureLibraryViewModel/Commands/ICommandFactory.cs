@@ -17,5 +17,6 @@ namespace PictureLibraryViewModel.Commands
         ICommand GetCreateFolderCommand(IFileExplorerViewModel viewModel);
         ICommand GetBackCommand(IExplorerViewModel viewModel);
         ICommand GetForwardCommand(IExplorerViewModel viewModel);
+        ICommand GetGoToParentDirectoryCommand(IFileExplorerViewModel viewModel);
     }
 }
