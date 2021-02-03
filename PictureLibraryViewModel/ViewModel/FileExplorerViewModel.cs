@@ -65,8 +65,8 @@ namespace PictureLibraryViewModel.ViewModel
 
             SelectedElements = new ObservableCollection<IExplorableElement>();
             SelectedElements.CollectionChanged += OnSelectedElementsChanged;
-            Clipboard.CopiedElements.CollectionChanged += OnCopiedElementsChanged;
-            Clipboard.CutElements.CollectionChanged += OnCutElementsChanged;
+            Clipboard.ClipboardContentChanged += OnCopiedElementsChanged;
+            Clipboard.ClipboardContentChanged += OnCutElementsChanged;
 
             #region Command Initialization
             CopyCommand = commandFactory.GetCopyCommand(this);
@@ -146,82 +146,90 @@ namespace PictureLibraryViewModel.ViewModel
 
         public void CopySelectedElements()
         {
+            var paths = new List<string>();
+
             foreach(var t in SelectedElements)
             {
-                Clipboard.CopiedElements.Add(t);
+                paths.Add(t.FullPath);
             }
+
+            Clipboard.SetFiles(paths, ClipboardFilesState.Copied);
         }
 
         public void CutSelectedElements()
         {
+            var paths = new List<string>();
+
             foreach(var t in SelectedElements)
             {
-                Clipboard.CutElements.Add(t);
+                paths.Add(t.FullPath);
             }
+
+            Clipboard.SetFiles(paths, ClipboardFilesState.Cut);
         }
 
         public void PasteSelectedElements()
         {
-            if(Clipboard.CopiedElements.Count != 0)
+            var paths = Clipboard.GetFiles();
+
+            foreach(var t in paths)
             {
-                foreach(var t in Clipboard.CopiedElements)
+                if(_directoryService.IsDirectory(t))
                 {
-                    if(t is File)
+                    var directoryName = _directoryService.GetInfo(t).Name;
+
+                    if (Clipboard.FilesState == ClipboardFilesState.Copied)
+                    { 
+                        if (CurrentDirectoryPath.EndsWith("\\"))
+                        {
+                            _directoryService.Copy(t, CurrentDirectoryPath + directoryName);
+                            Clipboard.Clear();
+                        }
+                        else
+                        {
+                            _directoryService.Copy(t, CurrentDirectoryPath + '\\' + directoryName);
+                            Clipboard.Clear();
+                        }
+                    }
+                    else if(Clipboard.FilesState == ClipboardFilesState.Cut)
                     {
                         if (CurrentDirectoryPath.EndsWith("\\"))
                         {
-                            _fileService.Copy(t.FullPath, CurrentDirectoryPath + t.Name);
+                            _directoryService.Move(t, CurrentDirectoryPath + directoryName);
                         }
                         else
                         {
-                            _fileService.Copy(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
-                        }
-                        
-                    }
-                    else if(t is Directory)
-                    {
-                        if(CurrentDirectoryPath.EndsWith("\\"))
-                        {
-                            _directoryService.Copy(t.FullPath, CurrentDirectoryPath + t.Name);
-                        }
-                        else
-                        {
-                            _directoryService.Copy(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                            _directoryService.Move(t, CurrentDirectoryPath + "\\" + directoryName);
                         }
                     }
                 }
-
-                Clipboard.CopiedElements.Clear();
-            }
-            else if(Clipboard.CutElements.Count != 0)
-            {
-                foreach(var t in Clipboard.CutElements)
+                else
                 {
-                    if (t is File)
+                    var fileName = _fileService.GetInfo(t).Name;
+
+                    if (Clipboard.FilesState == ClipboardFilesState.Copied)
                     {
                         if (CurrentDirectoryPath.EndsWith("\\"))
                         {
-                            _fileService.Move(t.FullPath, CurrentDirectoryPath + t.Name);
+                            _fileService.Copy(t, CurrentDirectoryPath + fileName);
                         }
                         else
                         {
-                            _fileService.Move(t.FullPath, CurrentDirectoryPath + '\\' + t.Name);
+                            _fileService.Copy(t, CurrentDirectoryPath + '\\' + fileName);
                         }
                     }
-                    else if(t is Directory)
+                    else if (Clipboard.FilesState == ClipboardFilesState.Cut)
                     {
                         if (CurrentDirectoryPath.EndsWith("\\"))
-                        { 
-                            _directoryService.Move(t.FullPath, CurrentDirectoryPath + t.Name);
+                        {
+                            _fileService.Move(t, CurrentDirectoryPath + fileName);
                         }
                         else
                         {
-                            _directoryService.Move(t.FullPath, CurrentDirectoryPath + "\\" + t.Name);
+                            _fileService.Move(t, CurrentDirectoryPath + '\\' + fileName);
                         }
                     }
                 }
-
-                Clipboard.CutElements.Clear();
             }
 
             ReloadCurrentDirectoryFiles();
@@ -239,8 +247,8 @@ namespace PictureLibraryViewModel.ViewModel
                     text += t.FullPath + "\n";
                 }
             }
-            
-            Clipboard.SystemClipboard = text;
+
+            Clipboard.SetText(text);
         }
 
         public void RemoveSelectedElements()
