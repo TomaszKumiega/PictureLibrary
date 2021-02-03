@@ -19,7 +19,7 @@ namespace PictureLibraryWPF.Clipboard
 
         public bool ContainsFiles()
         {
-            throw new NotImplementedException();
+            return System.Windows.Clipboard.ContainsFileDropList();
         }
 
         public bool ContainsImage()
