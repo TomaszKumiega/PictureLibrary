@@ -337,6 +337,7 @@ namespace PictureLibraryViewModel.ViewModel
             ExplorerHistory.ForwardStack.Push(_currentDirectoryPath);
             _currentDirectoryPath = ExplorerHistory.BackStack.Pop();
             (ForwardCommand as ForwardCommand).OnExecuteChanged();
+            (BackCommand as BackCommand).OnExecuteChanged();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
             ReloadCurrentDirectoryFiles();
         }
@@ -348,6 +349,7 @@ namespace PictureLibraryViewModel.ViewModel
             ExplorerHistory.BackStack.Push(_currentDirectoryPath);
             _currentDirectoryPath = ExplorerHistory.ForwardStack.Pop();
             (BackCommand as BackCommand).OnExecuteChanged();
+            (ForwardCommand as ForwardCommand).OnExecuteChanged();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
             ReloadCurrentDirectoryFiles();
         }
