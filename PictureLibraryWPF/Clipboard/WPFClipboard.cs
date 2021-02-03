@@ -14,7 +14,7 @@ namespace PictureLibraryWPF.Clipboard
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            System.Windows.Clipboard.Clear();
         }
 
         public bool ContainsFiles()
