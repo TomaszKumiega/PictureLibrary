@@ -29,9 +29,8 @@ namespace PictureLibraryViewModel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Public Properties
-        public IExplorerHistory ExplorerHistory { get; }
-        public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
-        public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; private set; }
+
+        #region Commands
         public ICommand CopyCommand { get; }
         public ICommand PasteCommand { get; }
         public ICommand CutCommand { get; }
@@ -42,6 +41,11 @@ namespace PictureLibraryViewModel.ViewModel
         public ICommand BackCommand { get; }
         public ICommand ForwardCommand { get; }
         public ICommand GoToParentDirectoryCommand { get; }
+        #endregion
+
+        public IExplorerHistory ExplorerHistory { get; }
+        public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
+        public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; private set; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public IClipboardService Clipboard { get; }
 
@@ -76,11 +80,13 @@ namespace PictureLibraryViewModel.ViewModel
             _fileService = fileService;
             Clipboard = clipboard;
             ExplorerHistory = explorerHistory;
-
             SelectedElements = new ObservableCollection<IExplorableElement>();
+
+            #region Event subscriptions
             SelectedElements.CollectionChanged += OnSelectedElementsChanged;
             Clipboard.ClipboardContentChanged += OnCopiedElementsChanged;
             Clipboard.ClipboardContentChanged += OnCutElementsChanged;
+            #endregion
 
             #region Command Initialization
             CopyCommand = commandFactory.GetCopyCommand(this);
