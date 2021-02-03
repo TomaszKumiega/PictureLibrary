@@ -332,7 +332,7 @@ namespace PictureLibraryViewModel.ViewModel
 
         public void Back()
         {
-            if (ExplorerHistory.BackStack.Count == 0) return;
+            if (ExplorerHistory.BackStack.Count < 2) return;
 
             ExplorerHistory.ForwardStack.Push(_currentDirectoryPath);
             _currentDirectoryPath = ExplorerHistory.BackStack.Pop();
