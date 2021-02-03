@@ -26,7 +26,6 @@ namespace PictureLibraryViewModel
             builder.RegisterType<FileService>().As<IFileService>();
             builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();
-            builder.RegisterType<PCClipboardService>().As<IClipboardService>();
             builder.RegisterType<MainWindowControlsFactory>().As<IMainWindowControlsFactory>();
             builder.RegisterType<MainWindow>().AsSelf();
 

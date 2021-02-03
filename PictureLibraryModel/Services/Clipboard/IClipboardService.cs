@@ -8,9 +8,16 @@ namespace PictureLibraryModel.Services.Clipboard
 {
     public interface IClipboardService
     {
-        string SystemClipboard { get; set; }
-
-        ObservableCollection<IExplorableElement> CopiedElements { get; set; }
-        ObservableCollection<IExplorableElement> CutElements { get; set; }
+        event EventHandler ClipboardContentChanged;
+        bool ContainsText();
+        bool ContainsImage();
+        bool ContainsFiles();
+        void Clear();
+        string GetText();
+        void SetText(string text);
+        void SetImage(ImageFile image);
+        ImageFile GetImage();
+        void SetFiles(IEnumerable<string> paths);
+        IEnumerable<string> GetFiles();
     }
 }
