@@ -32,6 +32,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
                 _currentDirectoryPath = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
+                LoadCurrentDirectoryContent();
             }
         }
 
