@@ -8,7 +8,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
     public interface IFileExplorerToolboxViewModel
     {
-        IFileExplorerViewModel FileExplorerViewModel { get; }
+        IFileExplorerViewModel CommonViewModel { get; }
         IClipboardService Clipboard { get; }
         ICommand CopyCommand { get; }
         ICommand PasteCommand { get; }

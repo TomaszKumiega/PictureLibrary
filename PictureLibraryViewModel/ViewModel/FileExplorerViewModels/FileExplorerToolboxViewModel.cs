@@ -13,9 +13,17 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         private IDirectoryService _directoryService;
         private IFileService _fileService;
 
-        public IFileExplorerViewModel FileExplorerViewModel { get; }
+        public IFileExplorerViewModel CommonViewModel { get; }
         public IClipboardService Clipboard { get; }
         public string SearchText { get; set; }
+
+        public FileExplorerToolboxViewModel(IFileExplorerViewModel viewModel, IFileService fileService, IDirectoryService directoryService, IClipboardService clipboard)
+        {
+            CommonViewModel = viewModel;
+            _fileService = fileService;
+            _directoryService = directoryService;
+            Clipboard = clipboard;
+        }
 
         #region Commands
         public ICommand CopyCommand { get; }
@@ -41,11 +49,12 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         public ICommand RefreshCommand { get; }
         #endregion
 
+        #region Public methods
         public void Copy()
         {
             var paths = new List<string>();
 
-            foreach (var t in FileExplorerViewModel.SelectedElements)
+            foreach (var t in CommonViewModel.SelectedElements)
             {
                 paths.Add(t.FullPath);
             }
@@ -57,10 +66,10 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         {
             var text = "";
 
-            if (FileExplorerViewModel.SelectedElements.Count == 1) text = FileExplorerViewModel.SelectedElements[0].FullPath;
+            if (CommonViewModel.SelectedElements.Count == 1) text = CommonViewModel.SelectedElements[0].FullPath;
             else
             {
-                foreach (var t in FileExplorerViewModel.SelectedElements)
+                foreach (var t in CommonViewModel.SelectedElements)
                 {
                     text += t.FullPath + "\n";
                 }
@@ -76,8 +85,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public void GoToParentDirectory()
         {
-            var parent = (_directoryService.GetInfo(FileExplorerViewModel.CurrentDirectoryPath) as DirectoryInfo).Parent?.FullName;
-            if (parent != null) FileExplorerViewModel.CurrentDirectoryPath = parent;
+            var parent = (_directoryService.GetInfo(CommonViewModel.CurrentDirectoryPath) as DirectoryInfo).Parent?.FullName;
+            if (parent != null) CommonViewModel.CurrentDirectoryPath = parent;
         }
 
         public void Paste()
@@ -85,8 +94,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             var paths = Clipboard.GetFiles();
             string directoryPath;
 
-            if (FileExplorerViewModel.CurrentDirectoryPath.EndsWith("\\")) directoryPath = FileExplorerViewModel.CurrentDirectoryPath;
-            else directoryPath = FileExplorerViewModel.CurrentDirectoryPath + "\\";
+            if (CommonViewModel.CurrentDirectoryPath.EndsWith("\\")) directoryPath = CommonViewModel.CurrentDirectoryPath;
+            else directoryPath = CommonViewModel.CurrentDirectoryPath + "\\";
 
             foreach (var t in paths)
             {
@@ -120,17 +129,17 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             Clipboard.Clear();
 
-            FileExplorerViewModel.LoadCurrentDirectoryContent();
+            CommonViewModel.LoadCurrentDirectoryContent();
         }
 
         public void Refresh()
         {
-            FileExplorerViewModel.LoadCurrentDirectoryContent();
+            CommonViewModel.LoadCurrentDirectoryContent();
         }
 
         public void Remove()
         {
-            foreach (var t in FileExplorerViewModel.SelectedElements)
+            foreach (var t in CommonViewModel.SelectedElements)
             {
                 if (t is File)
                 {
@@ -142,12 +151,13 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 }
             }
 
-            FileExplorerViewModel.LoadCurrentDirectoryContent();
+            CommonViewModel.LoadCurrentDirectoryContent();
         }
 
         public void Rename()
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }
