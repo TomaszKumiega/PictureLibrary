@@ -39,6 +39,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         {
             _directoryService = directoryService;
             ExplorerHistory = explorerHistory;
+            CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
+            SelectedElements = new ObservableCollection<IExplorableElement>();
             _currentDirectoryPath = "\\";
 
             LoadCurrentDirectoryContent();
