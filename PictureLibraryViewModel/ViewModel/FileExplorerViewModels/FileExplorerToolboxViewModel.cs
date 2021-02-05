@@ -1,7 +1,9 @@
 ﻿using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryModel.Services.FileSystemServices;
+using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Windows.Input;
@@ -16,14 +18,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         public IFileExplorerViewModel CommonViewModel { get; }
         public IClipboardService Clipboard { get; }
         public string SearchText { get; set; }
-
-        public FileExplorerToolboxViewModel(IFileExplorerViewModel viewModel, IFileService fileService, IDirectoryService directoryService, IClipboardService clipboard)
-        {
-            CommonViewModel = viewModel;
-            _fileService = fileService;
-            _directoryService = directoryService;
-            Clipboard = clipboard;
-        }
 
         #region Commands
         public ICommand CopyCommand { get; }
@@ -47,6 +41,41 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         public ICommand GoToParentDirectoryCommand { get; }
 
         public ICommand RefreshCommand { get; }
+        #endregion
+
+        public FileExplorerToolboxViewModel(IFileExplorerViewModel viewModel, IFileService fileService, IDirectoryService directoryService, IClipboardService clipboard)
+        {
+            CommonViewModel = viewModel;
+            _fileService = fileService;
+            _directoryService = directoryService;
+            Clipboard = clipboard;
+            CommonViewModel.SelectedElements.CollectionChanged += OnSelectedElementsChanged;
+            Clipboard.ClipboardContentChanged += OnClipboardContentChanged;
+            CommonViewModel.PropertyChanged += OnCurrentDirectoryPathChanged;
+        }
+
+
+        #region Event Handler methods
+        private void OnSelectedElementsChanged(object o, EventArgs args)
+        {
+            (CopyCommand as CopyCommand).OnExecuteChanged();
+            (CutCommand as CutCommand).OnExecuteChanged();
+            (CopyPathCommand as CopyPathCommand).OnExecuteChanged();
+            (RemoveCommand as RemoveCommand).OnExecuteChanged();
+        }
+
+        private void OnClipboardContentChanged(object o, EventArgs args)
+        {
+            (PasteCommand as PasteCommand).OnExecuteChanged();
+        }
+
+        private void OnCurrentDirectoryPathChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName != "CurrentDirectoryPath") return;
+
+            (BackCommand as BackCommand).OnExecuteChanged();
+            (GoToParentDirectoryCommand as GoToParentDirectoryCommand).OnExecuteChanged();
+        }
         #endregion
 
         #region Public methods
