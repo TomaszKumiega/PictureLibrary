@@ -16,5 +16,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         IExplorerHistory ExplorerHistory { get; }
+
+        void Back();
+        void Forward();
     }
 }
