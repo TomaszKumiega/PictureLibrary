@@ -74,6 +74,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             if (args.PropertyName != "CurrentDirectoryPath") return;
 
             (BackCommand as BackCommand).OnExecuteChanged();
+            (ForwardCommand as ForwardCommand).OnExecuteChanged();
             (GoToParentDirectoryCommand as GoToParentDirectoryCommand).OnExecuteChanged();
         }
         #endregion
