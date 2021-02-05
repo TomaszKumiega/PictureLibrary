@@ -19,5 +19,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         void Back();
         void Forward();
+        void LoadCurrentDirectoryContent();
     }
 }
