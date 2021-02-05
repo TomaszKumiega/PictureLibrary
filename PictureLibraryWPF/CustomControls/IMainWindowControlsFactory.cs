@@ -8,8 +8,6 @@ namespace PictureLibraryWPF.CustomControls
 {
     public interface IMainWindowControlsFactory
     {
-        IFileExplorerViewModel FileExplorerViewModel { get; }
-
         ElementsTree GetFileElementsTree();
         ElementsView GetFileElementsView();
         FileExplorerToolbar GetFileExplorerToolbar();
