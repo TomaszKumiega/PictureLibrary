@@ -32,6 +32,8 @@ namespace PictureLibraryViewModel
             builder.RegisterType<ExplorerHistory>().As<IExplorerHistory>();
             builder.RegisterType<MainWindowControlsFactory>().As<IMainWindowControlsFactory>();
             builder.RegisterType<MainWindow>().AsSelf();
+            builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
+            builder.RegisterType<FileExplorerViewModelFactory>().As<IFileExplorerViewModelFactory>();
 
             return builder.Build();
         }
