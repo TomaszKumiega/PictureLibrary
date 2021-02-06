@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryModel.Services.FileSystemServices;
+using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +18,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public IFileExplorerToolboxViewModel GetFileToolboxViewModel(IClipboardService clipboard)
         {
-            return new FileExplorerToolboxViewModel(_commonVM, new FileService(), new DirectoryService(), clipboard);
+            return new FileExplorerToolboxViewModel(_commonVM, new FileService(), new DirectoryService(), clipboard, new CommandFactory());
         }
 
         public IFileTreeViewModel GetFileTreeViewModel()

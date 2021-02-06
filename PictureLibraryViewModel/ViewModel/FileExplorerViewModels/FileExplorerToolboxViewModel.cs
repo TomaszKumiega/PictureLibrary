@@ -43,12 +43,27 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         public ICommand RefreshCommand { get; }
         #endregion
 
-        public FileExplorerToolboxViewModel(IFileExplorerViewModel viewModel, IFileService fileService, IDirectoryService directoryService, IClipboardService clipboard)
+        public FileExplorerToolboxViewModel(IFileExplorerViewModel viewModel, IFileService fileService, IDirectoryService directoryService, IClipboardService clipboard, ICommandFactory commandFactory)
         {
             CommonViewModel = viewModel;
             _fileService = fileService;
             _directoryService = directoryService;
             Clipboard = clipboard;
+
+            #region Command Initialization
+            CopyCommand = commandFactory.GetCopyCommand(this);
+            PasteCommand = commandFactory.GetPasteCommand(this);
+            CutCommand = commandFactory.GetCutCommand(this);
+            CopyPathCommand = commandFactory.GetCopyPathCommand(this);
+            RemoveCommand = commandFactory.GetRemoveCommand(this);
+            RenameCommand = commandFactory.GetRenameCommand(this);
+            CreateFolderCommand = commandFactory.GetCreateFolderCommand(this);
+            BackCommand = commandFactory.GetBackCommand(this);
+            ForwardCommand = commandFactory.GetForwardCommand(this);
+            GoToParentDirectoryCommand = commandFactory.GetGoToParentDirectoryCommand(this);
+            RefreshCommand = commandFactory.GetRefreshCommand(this);
+            #endregion
+
             CommonViewModel.SelectedElements.CollectionChanged += OnSelectedElementsChanged;
             Clipboard.ClipboardContentChanged += OnClipboardContentChanged;
             CommonViewModel.PropertyChanged += OnCurrentDirectoryPathChanged;
