@@ -25,5 +25,6 @@ namespace PictureLibraryViewModel.ViewModel
         void Remove();
         void Rename();
         void Refresh();
+        void Cut();
     }
 }

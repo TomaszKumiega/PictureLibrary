@@ -188,6 +188,18 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         {
             throw new NotImplementedException();
         }
+
+        public void Cut()
+        {
+            var paths = new List<string>();
+
+            foreach (var t in CommonViewModel.SelectedElements)
+            {
+                paths.Add(t.FullPath);
+            }
+
+            Clipboard.SetFiles(paths, ClipboardFilesState.Cut);
+        }
         #endregion
     }
 }
