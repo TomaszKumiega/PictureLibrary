@@ -22,7 +22,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public IExplorerHistory ExplorerHistory { get; }
 
-        public string CurrentDirectoryPath 
+        public string CurrentlyOpenedPath 
         {
             get => _currentDirectoryPath;
             set
@@ -57,19 +57,19 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             try
             {
-                if (CurrentDirectoryPath == "\\")
+                if (CurrentlyOpenedPath == "\\")
                 {
                     content = _directoryService.GetRootDirectories();
                 }
                 else
                 {
-                    content = _directoryService.GetDirectoryContent(CurrentDirectoryPath);
+                    content = _directoryService.GetDirectoryContent(CurrentlyOpenedPath);
                 }
             }
             catch(Exception e)
             {
                 _logger.Error(e, e.Message);
-                throw new Exception("Application failed loading the contents of: " + CurrentDirectoryPath + " directory.");
+                throw new Exception("Application failed loading the contents of: " + CurrentlyOpenedPath + " directory.");
             }
 
             foreach (var t in content)

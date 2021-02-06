@@ -115,8 +115,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public void GoToParentDirectory()
         {
-            var parent = (_directoryService.GetInfo(CommonViewModel.CurrentDirectoryPath) as DirectoryInfo).Parent?.FullName;
-            if (parent != null) CommonViewModel.CurrentDirectoryPath = parent;
+            var parent = (_directoryService.GetInfo(CommonViewModel.CurrentlyOpenedPath) as DirectoryInfo).Parent?.FullName;
+            if (parent != null) CommonViewModel.CurrentlyOpenedPath = parent;
         }
 
         public void Paste()
@@ -124,8 +124,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             var paths = Clipboard.GetFiles();
             string directoryPath;
 
-            if (CommonViewModel.CurrentDirectoryPath.EndsWith("\\")) directoryPath = CommonViewModel.CurrentDirectoryPath;
-            else directoryPath = CommonViewModel.CurrentDirectoryPath + "\\";
+            if (CommonViewModel.CurrentlyOpenedPath.EndsWith("\\")) directoryPath = CommonViewModel.CurrentlyOpenedPath;
+            else directoryPath = CommonViewModel.CurrentlyOpenedPath + "\\";
 
             foreach (var t in paths)
             {

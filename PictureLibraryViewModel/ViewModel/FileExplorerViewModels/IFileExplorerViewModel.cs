@@ -10,7 +10,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
     public interface IFileExplorerViewModel : IExplorerViewModel
     {
-        string CurrentDirectoryPath { get; set; }
         IExplorerHistory ExplorerHistory { get; }
 
         void Back();

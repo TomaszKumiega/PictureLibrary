@@ -10,6 +10,8 @@ namespace PictureLibraryViewModel.ViewModel
     public interface IExplorerViewModel
     {
         event PropertyChangedEventHandler PropertyChanged;
+
+        string CurrentlyOpenedPath { get; set; }
         ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         ObservableCollection<IExplorableElement> SelectedElements { get; set; }
     }

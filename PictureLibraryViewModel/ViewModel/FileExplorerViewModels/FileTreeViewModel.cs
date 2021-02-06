@@ -18,7 +18,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             set
             {
                 _selectedNode = value;
-                (CommonViewModel as IFileExplorerViewModel).CurrentDirectoryPath = _selectedNode.FullPath;
+                (CommonViewModel as IFileExplorerViewModel).CurrentlyOpenedPath = _selectedNode.FullPath;
             }
         }
 
