@@ -38,13 +38,13 @@ namespace PictureLibraryWPF.CustomControls
 
         private void FilesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(DataContext is IFileExplorerViewModel)
+            if(DataContext is IFilesViewViewModel)
             {
-                (DataContext as IFileExplorerViewModel).SelectedElements.Clear();
+                (DataContext as IFilesViewViewModel).CommonViewModel.SelectedElements.Clear();
 
                 foreach (var t in FilesList.SelectedItems)
                 {
-                    (DataContext as IFileExplorerViewModel).SelectedElements.Add(t as IExplorableElement);
+                    (DataContext as IFilesViewViewModel).CommonViewModel.SelectedElements.Add(t as IExplorableElement);
                 }
             }
         }
