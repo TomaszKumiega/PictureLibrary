@@ -1,4 +1,10 @@
-﻿using PictureLibraryViewModel.ViewModel;
+﻿using Autofac;
+using PictureLibraryModel.Services.FileSystemServices;
+using PictureLibraryViewModel;
+using PictureLibraryViewModel.Helpers;
+using PictureLibraryViewModel.ViewModel;
+using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
+using PictureLibraryWPF.Clipboard;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,26 +14,30 @@ namespace PictureLibraryWPF.CustomControls
 {
     public class MainWindowControlsFactory : IMainWindowControlsFactory
     {
-        public IFileExplorerViewModel FileExplorerViewModel { get; }
+        private IFilesViewViewModel _filesViewViewModel;
+        private IFileExplorerToolboxViewModel _filesToolboxViewModel;
+        private IFileTreeViewModel _filesTreeViewModel;
 
-        public MainWindowControlsFactory(IFileExplorerViewModel fileExplorerViewModel)
+        public MainWindowControlsFactory(IFileExplorerViewModelFactory factory)
         {
-            FileExplorerViewModel = fileExplorerViewModel;
+            _filesViewViewModel = factory.GetFilesViewViewModel();
+            _filesToolboxViewModel = factory.GetFileToolboxViewModel(new WPFClipboard());
+            _filesTreeViewModel = factory.GetFileTreeViewModel();
         }
 
         public ElementsTree GetFileElementsTree()
         {
-            return new ElementsTree(FileExplorerViewModel);
+            return new ElementsTree(_filesTreeViewModel);
         }
 
         public ElementsView GetFileElementsView()
         {
-            return new ElementsView(FileExplorerViewModel);
+            return new ElementsView(_filesViewViewModel);
         }
 
         public FileExplorerToolbar GetFileExplorerToolbar()
         {
-            return new FileExplorerToolbar(FileExplorerViewModel);
+            return new FileExplorerToolbar(_filesToolboxViewModel);
         }
     }
 }
