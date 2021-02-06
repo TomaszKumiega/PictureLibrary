@@ -10,7 +10,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
     {
         private IExplorableElement _selectedNode;
 
-        public IFileExplorerViewModel CommonViewModel { get; }
+        public IExplorerViewModel CommonViewModel { get; }
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; }
         public IExplorableElement SelectedNode 
         { 
@@ -18,7 +18,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             set
             {
                 _selectedNode = value;
-                CommonViewModel.CurrentDirectoryPath = _selectedNode.FullPath;
+                (CommonViewModel as IFileExplorerViewModel).CurrentDirectoryPath = _selectedNode.FullPath;
             }
         }
 

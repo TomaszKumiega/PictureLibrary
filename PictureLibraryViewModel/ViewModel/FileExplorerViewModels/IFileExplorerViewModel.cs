@@ -8,13 +8,9 @@ using System.Text;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
-    public interface IFileExplorerViewModel
+    public interface IFileExplorerViewModel : IExplorerViewModel
     {
-        event PropertyChangedEventHandler PropertyChanged;
-
         string CurrentDirectoryPath { get; set; }
-        ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
-        ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         IExplorerHistory ExplorerHistory { get; }
 
         void Back();

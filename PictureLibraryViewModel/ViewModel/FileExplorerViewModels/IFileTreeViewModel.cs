@@ -6,11 +6,8 @@ using System.Text;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
-    public interface IFileTreeViewModel
+    public interface IFileTreeViewModel : IExplorableElementsTreeViewModel
     {
-        IFileExplorerViewModel CommonViewModel { get; }
-        IExplorableElement SelectedNode { get; set; }
-        ObservableCollection<IExplorableElement> ExplorableElementsTree { get; }
 
     }
 }

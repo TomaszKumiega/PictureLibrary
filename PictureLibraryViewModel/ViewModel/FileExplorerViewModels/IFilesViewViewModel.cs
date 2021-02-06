@@ -4,8 +4,7 @@ using System.Text;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
-    public interface IFilesViewViewModel
+    public interface IFilesViewViewModel : IExplorableElementsViewViewModel
     {
-        IFileExplorerViewModel CommonViewModel { get; }
     }
 }

@@ -6,7 +6,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
     public class FilesViewViewModel : IFilesViewViewModel
     {
-        public IFileExplorerViewModel CommonViewModel { get; }
+        public IExplorerViewModel CommonViewModel { get; }
 
         public FilesViewViewModel(IFileExplorerViewModel viewModel)
         {
