@@ -14,5 +14,7 @@ namespace PictureLibraryViewModel.ViewModel
         string CurrentlyOpenedPath { get; set; }
         ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         ObservableCollection<IExplorableElement> SelectedElements { get; set; }
+
+        void LoadCurrentlyShownElements();
     }
 }

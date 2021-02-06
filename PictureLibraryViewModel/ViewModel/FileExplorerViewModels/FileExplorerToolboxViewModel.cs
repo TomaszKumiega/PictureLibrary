@@ -15,7 +15,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         private IDirectoryService _directoryService;
         private IFileService _fileService;
 
-        public IFileExplorerViewModel CommonViewModel { get; }
+        public IExplorerViewModel CommonViewModel { get; }
         public IClipboardService Clipboard { get; }
         public string SearchText { get; set; }
 
@@ -159,12 +159,12 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             Clipboard.Clear();
 
-            CommonViewModel.LoadCurrentDirectoryContent();
+            CommonViewModel.LoadCurrentlyShownElements();
         }
 
         public void Refresh()
         {
-            CommonViewModel.LoadCurrentDirectoryContent();
+            CommonViewModel.LoadCurrentlyShownElements();
         }
 
         public void Remove()
@@ -181,7 +181,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 }
             }
 
-            CommonViewModel.LoadCurrentDirectoryContent();
+            CommonViewModel.LoadCurrentlyShownElements();
         }
 
         public void Rename()

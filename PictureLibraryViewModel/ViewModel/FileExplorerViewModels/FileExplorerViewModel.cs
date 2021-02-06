@@ -32,7 +32,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
                 _currentDirectoryPath = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
-                LoadCurrentDirectoryContent();
+                LoadCurrentlyShownElements();
             }
         }
 
@@ -44,10 +44,10 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             SelectedElements = new ObservableCollection<IExplorableElement>();
             _currentDirectoryPath = "\\";
 
-            LoadCurrentDirectoryContent();
+            LoadCurrentlyShownElements();
         }
 
-        public void LoadCurrentDirectoryContent()
+        public void LoadCurrentlyShownElements()
         {
             if (CurrentlyShownElements == null) return;
 
@@ -86,7 +86,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             ExplorerHistory.ForwardStack.Push(_currentDirectoryPath);
             _currentDirectoryPath = ExplorerHistory.BackStack.Pop();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
-            LoadCurrentDirectoryContent();
+            LoadCurrentlyShownElements();
         }
 
         public void Forward()
@@ -96,7 +96,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             ExplorerHistory.BackStack.Push(_currentDirectoryPath);
             _currentDirectoryPath = ExplorerHistory.ForwardStack.Pop();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
-            LoadCurrentDirectoryContent();
+            LoadCurrentlyShownElements();
         }
     }
 }
