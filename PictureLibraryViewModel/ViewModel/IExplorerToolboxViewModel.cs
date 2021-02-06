@@ -17,8 +17,6 @@ namespace PictureLibraryViewModel.ViewModel
         ICommand RemoveCommand { get; }
         ICommand RenameCommand { get; }
         ICommand RefreshCommand { get; }
-        ICommand BackCommand { get; }
-        ICommand ForwardCommand { get; }
         string SearchText { get; set; }
 
         void Copy();

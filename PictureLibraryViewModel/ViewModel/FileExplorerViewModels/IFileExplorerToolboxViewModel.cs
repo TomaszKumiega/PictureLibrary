@@ -10,6 +10,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
     {
         ICommand CreateFolderCommand { get; }
         ICommand GoToParentDirectoryCommand { get; }
+        ICommand BackCommand { get; }
+        ICommand ForwardCommand { get; }
 
         void CreateDirectory();
         void GoToParentDirectory();
