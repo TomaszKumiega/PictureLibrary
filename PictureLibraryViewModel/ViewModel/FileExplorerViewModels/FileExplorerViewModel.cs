@@ -14,13 +14,13 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private string _currentDirectoryPath;
-        private IDirectoryService _directoryService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public IExplorerHistory ExplorerHistory { get; }
+        public IDirectoryService DirectoryService { get; }
 
         public string CurrentlyOpenedPath 
         {
@@ -38,7 +38,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public FileExplorerViewModel(IDirectoryService directoryService, IExplorerHistory explorerHistory)
         {
-            _directoryService = directoryService;
+            DirectoryService = directoryService;
             ExplorerHistory = explorerHistory;
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
             SelectedElements = new ObservableCollection<IExplorableElement>();
@@ -59,11 +59,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             {
                 if (CurrentlyOpenedPath == "\\")
                 {
-                    content = _directoryService.GetRootDirectories();
+                    content = DirectoryService.GetRootDirectories();
                 }
                 else
                 {
-                    content = _directoryService.GetDirectoryContent(CurrentlyOpenedPath);
+                    content = DirectoryService.GetDirectoryContent(CurrentlyOpenedPath);
                 }
             }
             catch(Exception e)

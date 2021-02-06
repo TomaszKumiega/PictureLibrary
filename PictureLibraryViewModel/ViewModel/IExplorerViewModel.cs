@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ namespace PictureLibraryViewModel.ViewModel
         string CurrentlyOpenedPath { get; set; }
         ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         ObservableCollection<IExplorableElement> SelectedElements { get; set; }
+        IDirectoryService DirectoryService { get; }
 
         void LoadCurrentlyShownElements();
     }
