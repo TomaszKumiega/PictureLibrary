@@ -11,7 +11,7 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class ElementsTree : UserControl
     {
-        public ElementsTree(IExplorerViewModel viewModel)
+        public ElementsTree(IExplorableElementsTreeViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
@@ -19,7 +19,7 @@ namespace PictureLibraryWPF.CustomControls
 
         private void TreeViewItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var viewModel = DataContext as IExplorerViewModel;
+            var viewModel = DataContext as IExplorableElementsTreeViewModel;
             var item = sender as TreeViewItem;
 
             item.Focusable = true;
