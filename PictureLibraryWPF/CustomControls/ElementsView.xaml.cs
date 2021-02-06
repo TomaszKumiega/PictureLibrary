@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Services;
 using PictureLibraryViewModel.ViewModel;
+using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 
 namespace PictureLibraryWPF.CustomControls
 {
@@ -21,7 +22,7 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class ElementsView : UserControl
     {
-        public ElementsView(IExplorerViewModel viewModel)
+        public ElementsView(IExplorableElementsViewViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
@@ -29,10 +30,9 @@ namespace PictureLibraryWPF.CustomControls
 
         private void ItemMouseDoubleClick(object o, EventArgs args)
         {
-            if(DataContext is IFileExplorerViewModel)
+            if(DataContext is IFilesViewViewModel)
             {
-                
-                (DataContext as IFileExplorerViewModel).CurrentDirectoryPath = ((o as ListViewItem).Tag as string);
+                (DataContext as IFilesViewViewModel).CommonViewModel.CurrentlyOpenedPath = ((o as ListViewItem).Tag as string);
             }
         }
 
