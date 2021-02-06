@@ -1,4 +1,5 @@
 ﻿using PictureLibraryViewModel.ViewModel;
+using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +9,10 @@ namespace PictureLibraryViewModel.Commands
 {
     public class GoToParentDirectoryCommand : ICommand
     {
-        private IFileExplorerViewModel _viewModel;
+        private IFileExplorerToolboxViewModel _viewModel;
         public event EventHandler CanExecuteChanged;
 
-        public GoToParentDirectoryCommand(IFileExplorerViewModel viewModel)
+        public GoToParentDirectoryCommand(IFileExplorerToolboxViewModel viewModel)
         {
             _viewModel = viewModel;
         }
@@ -23,7 +24,7 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            var parent = System.IO.Directory.GetParent(_viewModel.CurrentDirectoryPath);
+            var parent = System.IO.Directory.GetParent(_viewModel.CommonViewModel.CurrentlyOpenedPath);
 
             if (parent != null) return true;
             else return false;

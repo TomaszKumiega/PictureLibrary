@@ -1,4 +1,5 @@
 ﻿using PictureLibraryViewModel.ViewModel;
+using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +9,10 @@ namespace PictureLibraryViewModel.Commands
 {
     public class CreateFolderCommand : ICommand
     {
-        private IFileExplorerViewModel _viewModel;
+        private IFileExplorerToolboxViewModel _viewModel;
         public event EventHandler CanExecuteChanged;
 
-        public CreateFolderCommand(IFileExplorerViewModel viewModel)
+        public CreateFolderCommand(IFileExplorerToolboxViewModel viewModel)
         {
             _viewModel = viewModel;
         }
@@ -25,7 +26,7 @@ namespace PictureLibraryViewModel.Commands
 
         public void Execute(object parameter)
         {
-            _viewModel.CreateDirectory(parameter as string);
+            _viewModel.CreateDirectory();
         }
     }
 }

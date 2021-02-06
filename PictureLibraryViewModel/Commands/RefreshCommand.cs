@@ -8,10 +8,10 @@ namespace PictureLibraryViewModel.Commands
 {
     public class RefreshCommand : ICommand
     {
-        private IExplorerViewModel _viewModel;
+        private IExplorerToolboxViewModel _viewModel;
         public event EventHandler CanExecuteChanged;
 
-        public RefreshCommand(IExplorerViewModel viewModel)
+        public RefreshCommand(IExplorerToolboxViewModel viewModel)
         {
             _viewModel = viewModel;
         }

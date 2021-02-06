@@ -10,9 +10,9 @@ namespace PictureLibraryViewModel.Commands
     public class PasteCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private IExplorerViewModel _viewModel;
+        private IExplorerToolboxViewModel _viewModel;
 
-        public PasteCommand(IExplorerViewModel viewModel)
+        public PasteCommand(IExplorerToolboxViewModel viewModel)
         {
             _viewModel = viewModel;
         }
@@ -29,7 +29,7 @@ namespace PictureLibraryViewModel.Commands
 
         public void Execute(object parameter)
         {
-            _viewModel.PasteSelectedElements();
+            _viewModel.Paste();
         }
     }
 }

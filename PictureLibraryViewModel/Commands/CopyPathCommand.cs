@@ -10,9 +10,9 @@ namespace PictureLibraryViewModel.Commands
     public class CopyPathCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private IFileExplorerViewModel _viewModel;
+        private IExplorerToolboxViewModel _viewModel;
 
-        public CopyPathCommand(IFileExplorerViewModel viewModel)
+        public CopyPathCommand(IExplorerToolboxViewModel viewModel)
         {
             _viewModel = viewModel;
         }
@@ -24,8 +24,8 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            if (_viewModel.SelectedElements == null) return false;
-            else if (_viewModel.SelectedElements.Any()) return true;
+            if (_viewModel.CommonViewModel.SelectedElements == null) return false;
+            else if (_viewModel.CommonViewModel.SelectedElements.Any()) return true;
             else return false;
         }
 

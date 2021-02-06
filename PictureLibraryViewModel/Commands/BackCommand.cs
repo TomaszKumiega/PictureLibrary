@@ -1,4 +1,5 @@
 ﻿using PictureLibraryViewModel.ViewModel;
+using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +9,10 @@ namespace PictureLibraryViewModel.Commands
 {
     public class BackCommand : ICommand
     {
-        private IExplorerViewModel _viewModel;
+        private IFileExplorerToolboxViewModel _viewModel;
         public event EventHandler CanExecuteChanged;
 
-        public BackCommand(IExplorerViewModel viewModel)
+        public BackCommand(IFileExplorerToolboxViewModel viewModel)
         {
             _viewModel = viewModel;
         }
@@ -23,12 +24,12 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            return _viewModel.ExplorerHistory.BackStack.Count > 1;
+            return (_viewModel.CommonViewModel as IFileExplorerViewModel).ExplorerHistory.BackStack.Count > 1;
         }
 
         public void Execute(object parameter)
         {
-            _viewModel.Back();
+            (_viewModel.CommonViewModel as IFileExplorerViewModel).Back();
         }
     }
 }

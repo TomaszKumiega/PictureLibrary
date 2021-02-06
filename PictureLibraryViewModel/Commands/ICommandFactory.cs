@@ -1,4 +1,5 @@
 ﻿using PictureLibraryViewModel.ViewModel;
+using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,16 +9,16 @@ namespace PictureLibraryViewModel.Commands
 {
     public interface ICommandFactory
     {
-        ICommand GetCopyCommand(IExplorerViewModel viewModel);
-        ICommand GetPasteCommand(IExplorerViewModel viewModel);
-        ICommand GetCutCommand(IExplorerViewModel viewModel);
-        ICommand GetCopyPathCommand(IFileExplorerViewModel viewModel);
-        ICommand GetRemoveCommand(IExplorerViewModel viewModel);
-        ICommand GetRenameCommand(IExplorerViewModel viewModel);
-        ICommand GetCreateFolderCommand(IFileExplorerViewModel viewModel);
-        ICommand GetBackCommand(IExplorerViewModel viewModel);
-        ICommand GetForwardCommand(IExplorerViewModel viewModel);
-        ICommand GetGoToParentDirectoryCommand(IFileExplorerViewModel viewModel);
-        ICommand GetRefreshCommand(IExplorerViewModel viewModel);
+        ICommand GetCopyCommand(IExplorerToolboxViewModel viewModel);
+        ICommand GetPasteCommand(IExplorerToolboxViewModel viewModel);
+        ICommand GetCutCommand(IExplorerToolboxViewModel viewModel);
+        ICommand GetCopyPathCommand(IExplorerToolboxViewModel viewModel);
+        ICommand GetRemoveCommand(IExplorerToolboxViewModel viewModel);
+        ICommand GetRenameCommand(IExplorerToolboxViewModel viewModel);
+        ICommand GetCreateFolderCommand(IFileExplorerToolboxViewModel viewModel);
+        ICommand GetBackCommand(IFileExplorerToolboxViewModel viewModel);
+        ICommand GetForwardCommand(IFileExplorerToolboxViewModel viewModel);
+        ICommand GetGoToParentDirectoryCommand(IFileExplorerToolboxViewModel viewModel);
+        ICommand GetRefreshCommand(IExplorerToolboxViewModel viewModel);
     }
 }
