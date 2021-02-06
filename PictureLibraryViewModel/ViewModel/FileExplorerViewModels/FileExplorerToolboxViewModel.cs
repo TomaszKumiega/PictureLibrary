@@ -15,6 +15,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         private IDirectoryService _directoryService;
         private IFileService _fileService;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public IExplorerViewModel CommonViewModel { get; }
         public IClipboardService Clipboard { get; }
         public string SearchText { get; set; }
@@ -86,7 +88,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         private void OnCurrentDirectoryPathChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (args.PropertyName != "CurrentDirectoryPath") return;
+            if (args.PropertyName != "CurrentlyOpenedPath") return;
 
             (BackCommand as BackCommand).OnExecuteChanged();
             (ForwardCommand as ForwardCommand).OnExecuteChanged();

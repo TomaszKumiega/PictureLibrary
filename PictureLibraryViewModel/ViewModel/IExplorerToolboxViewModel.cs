@@ -1,13 +1,14 @@
 ﻿using PictureLibraryModel.Services.Clipboard;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel
 {
-    public interface IExplorerToolboxViewModel
-    {
+    public interface IExplorerToolboxViewModel : INotifyPropertyChanged
+    { 
         IExplorerViewModel CommonViewModel { get; }
         IClipboardService Clipboard { get; }
         ICommand CopyCommand { get; }

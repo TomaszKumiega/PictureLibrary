@@ -8,10 +8,8 @@ using System.Text;
 
 namespace PictureLibraryViewModel.ViewModel
 {
-    public interface IExplorerViewModel
+    public interface IExplorerViewModel : INotifyPropertyChanged
     {
-        event PropertyChangedEventHandler PropertyChanged;
-
         string CurrentlyOpenedPath { get; set; }
         ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         ObservableCollection<IExplorableElement> SelectedElements { get; set; }

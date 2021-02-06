@@ -31,7 +31,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 ExplorerHistory.ForwardStack.Clear();
 
                 _currentDirectoryPath = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
                 LoadCurrentlyShownElements();
             }
         }
