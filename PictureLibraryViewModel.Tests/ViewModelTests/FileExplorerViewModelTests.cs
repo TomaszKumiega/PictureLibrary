@@ -245,5 +245,79 @@ namespace PictureLibraryViewModel.Tests.ViewModelTests
             Assert.True(eventWasRaised);
         }
         #endregion
+
+        #region Forward Tests
+        [Fact]
+        public void Forward_ShouldPushCurrentlyOpenedPath_ToBackStack()
+        {
+            var directoryServiceMock = new Mock<IDirectoryService>();
+            var explorerHistoryMock = new Mock<IExplorerHistory>();
+            var backStack = new Stack<string>();
+            var forwardStack = new Stack<string>();
+            var path = "Tests\\Folder1\\";
+
+            explorerHistoryMock.SetupGet(x => x.BackStack)
+                .Returns(backStack);
+            explorerHistoryMock.SetupGet(x => x.ForwardStack)
+                .Returns(forwardStack);
+
+            var viewModel = new FileExplorerViewModel(directoryServiceMock.Object, explorerHistoryMock.Object);
+            viewModel.CurrentlyOpenedPath = path;
+
+            forwardStack.Push("Tests\\Folder2");
+            viewModel.Forward();
+
+            Assert.Contains(path, backStack);
+        }
+
+        [Fact]
+        public void Forward_ShouldAssignCurrentlyOpenedPath_ToTheValueFromForwardStack()
+        {
+            var directoryServiceMock = new Mock<IDirectoryService>();
+            var explorerHistoryMock = new Mock<IExplorerHistory>();
+            var forwardStack = new Stack<string>();
+            var path = "Tests\\Folder1";
+
+            explorerHistoryMock.SetupGet(x => x.BackStack)
+                .Returns(new Stack<string>());
+            explorerHistoryMock.SetupGet(x => x.ForwardStack)
+                .Returns(forwardStack);
+
+            var viewModel = new FileExplorerViewModel(directoryServiceMock.Object, explorerHistoryMock.Object);
+
+            forwardStack.Push(path);
+            viewModel.Forward();
+
+            Assert.True(viewModel.CurrentlyOpenedPath == path);
+        }
+
+        [Fact]
+        public void Forward_ShouldRaisePropertyChangedEvent_ForCurrentlyOpenedPathProperty()
+        {
+            var directoryServiceMock = new Mock<IDirectoryService>();
+            var explorerHistoryMock = new Mock<IExplorerHistory>();
+            var forwardStack = new Stack<string>();
+            var path = "Tests\\Folder1";
+            var eventWasRaised = false;
+
+            explorerHistoryMock.SetupGet(x => x.BackStack)
+                .Returns(new Stack<string>());
+            explorerHistoryMock.SetupGet(x => x.ForwardStack)
+                .Returns(forwardStack);
+
+            var viewModel = new FileExplorerViewModel(directoryServiceMock.Object, explorerHistoryMock.Object);
+
+            viewModel.PropertyChanged +=
+                (s, a) =>
+                {
+                    if (a.PropertyName == "CurrentlyOpenedPath") eventWasRaised = true;
+                };
+
+            forwardStack.Push(path);
+            viewModel.Forward();
+
+            Assert.True(eventWasRaised);
+        }
+        #endregion
     }
 }
