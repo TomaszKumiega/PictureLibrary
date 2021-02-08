@@ -6,8 +6,8 @@ namespace PictureLibraryViewModel.Helpers
 {
     public class ExplorerHistory : IExplorerHistory
     {
-        public Stack<string> BackStack { get; }
-        public Stack<string> ForwardStack { get; }
+        public Stack<string> BackStack { get; set; }
+        public Stack<string> ForwardStack { get; set; }
 
         public ExplorerHistory()
         {

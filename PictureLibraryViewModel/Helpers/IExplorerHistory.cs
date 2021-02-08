@@ -6,7 +6,7 @@ namespace PictureLibraryViewModel.Helpers
 {
     public interface IExplorerHistory
     {
-        Stack<string> BackStack { get; }
-        Stack<string> ForwardStack { get; }
+        Stack<string> BackStack { get; set; }
+        Stack<string> ForwardStack { get; set; }
     }
 }
