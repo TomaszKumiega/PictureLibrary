@@ -72,7 +72,11 @@ namespace PictureLibraryViewModel.Tests.ViewModelTests
 
             var viewModel = new FileExplorerViewModel(directoryServiceMock.Object, explorerHistoryMock.Object);
 
-            viewModel.PropertyChanged += (s, a) => { eventWasRaised = true; };
+            viewModel.PropertyChanged += 
+                (s, a) => 
+                { 
+                    if(a.PropertyName == "CurrentlyOpenedPath") eventWasRaised = true; 
+                };
 
             viewModel.CurrentlyOpenedPath = "\\";
 
