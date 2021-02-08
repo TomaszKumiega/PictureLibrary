@@ -13,7 +13,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
     public class FileExplorerViewModel : IFileExplorerViewModel
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private string _currentDirectoryPath;
+        private string _currentlyOpenedPath;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -24,13 +24,13 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public string CurrentlyOpenedPath 
         {
-            get => _currentDirectoryPath;
+            get => _currentlyOpenedPath;
             set
             {
-                ExplorerHistory.BackStack.Push(_currentDirectoryPath);
+                ExplorerHistory.BackStack.Push(_currentlyOpenedPath);
                 ExplorerHistory.ForwardStack.Clear();
 
-                _currentDirectoryPath = value;
+                _currentlyOpenedPath = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
                 LoadCurrentlyShownElements();
             }
@@ -42,7 +42,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             ExplorerHistory = explorerHistory;
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
             SelectedElements = new ObservableCollection<IExplorableElement>();
-            _currentDirectoryPath = "\\";
+            _currentlyOpenedPath = "\\";
 
             LoadCurrentlyShownElements();
         }
@@ -83,8 +83,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         {
             if (ExplorerHistory.BackStack.Count == 0) return;
 
-            ExplorerHistory.ForwardStack.Push(_currentDirectoryPath);
-            _currentDirectoryPath = ExplorerHistory.BackStack.Pop();
+            ExplorerHistory.ForwardStack.Push(_currentlyOpenedPath);
+            _currentlyOpenedPath = ExplorerHistory.BackStack.Pop();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
             LoadCurrentlyShownElements();
         }
@@ -93,8 +93,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         {
             if (ExplorerHistory.ForwardStack.Count == 0) return;
 
-            ExplorerHistory.BackStack.Push(_currentDirectoryPath);
-            _currentDirectoryPath = ExplorerHistory.ForwardStack.Pop();
+            ExplorerHistory.BackStack.Push(_currentlyOpenedPath);
+            _currentlyOpenedPath = ExplorerHistory.ForwardStack.Pop();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
             LoadCurrentlyShownElements();
         }
