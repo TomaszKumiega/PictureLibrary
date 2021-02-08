@@ -1,4 +1,5 @@
 ﻿using Moq;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryViewModel.Helpers;
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
@@ -78,6 +79,97 @@ namespace PictureLibraryViewModel.Tests.ViewModelTests
             Assert.True(eventWasRaised);
         }
 
+        #endregion
+
+        #region LoadCurrentlyShownElements Tests
+        [Fact]
+        public void LoadCurrentlyShownElements_ShouldAssignRootDirectoriesToCurrentlyShownElements_WhenCurrentlyOpenedPathIsRoot()
+        {
+            var directoryServiceMock = new Mock<IDirectoryService>();
+            var explorerHistoryMock = new Mock<IExplorerHistory>();
+            
+            var folder =
+                new Folder()
+                {
+                    Name = "Folder1",
+                    FullPath = "Tests\\Folder1\\"
+                };
+
+            var directoriesList = new List<Directory>()
+            {
+                folder
+            };
+
+            explorerHistoryMock.SetupGet(x => x.BackStack)
+                .Returns(new Stack<string>());
+            explorerHistoryMock.SetupGet(x => x.ForwardStack)
+                .Returns(new Stack<string>());
+
+            directoryServiceMock.Setup(x => x.GetRootDirectories())
+                .Returns(directoriesList);
+
+            var viewModel = new FileExplorerViewModel(directoryServiceMock.Object, explorerHistoryMock.Object);
+
+            viewModel.CurrentlyOpenedPath = "\\";
+            viewModel.LoadCurrentlyShownElements();
+
+            Assert.Contains(folder, viewModel.CurrentlyShownElements);
+        }
+
+        [Fact]
+        public void LoadCurrentlyShownElements_ShouldAssignDirectoryContentToCurrenltyShownElements_WhenDirectoryPathIsAssignedToCurrentlyOpenedPath()
+        {
+            var directoryServiceMock = new Mock<IDirectoryService>();
+            var explorerHistoryMock = new Mock<IExplorerHistory>();
+            var path = "Tests\\Folder1\\";
+
+            var folder =
+                new Folder()
+                {
+                    Name = "Folder2",
+                    FullPath = path + "Folder2"
+                };
+
+            var directoriesList = new List<Directory>()
+            {
+                folder
+            };
+
+            explorerHistoryMock.SetupGet(x => x.BackStack)
+                .Returns(new Stack<string>());
+            explorerHistoryMock.SetupGet(x => x.ForwardStack)
+                .Returns(new Stack<string>());
+
+            directoryServiceMock.Setup(x => x.GetDirectoryContent(path))
+                .Returns(directoriesList);
+
+            var viewModel = new FileExplorerViewModel(directoryServiceMock.Object, explorerHistoryMock.Object);
+
+            viewModel.CurrentlyOpenedPath = path;
+            viewModel.LoadCurrentlyShownElements();
+
+            Assert.Contains(folder, viewModel.CurrentlyShownElements);
+        }
+
+        [Fact]
+        public void LoadCurrentlyShownElements_ShouldRaisePropertyChangedEvent_ForCurrentlyShownElementsProperty()
+        {
+            var directoryServiceMock = new Mock<IDirectoryService>();
+            var explorerHistoryMock = new Mock<IExplorerHistory>();
+            var eventWasRaised = false;
+
+            var viewModel = new FileExplorerViewModel(directoryServiceMock.Object, explorerHistoryMock.Object);
+
+            viewModel.PropertyChanged +=
+                (s, a) =>
+                {
+                    if (a.PropertyName == "CurrentlyShownElements") eventWasRaised = true;
+                };
+
+            viewModel.LoadCurrentlyShownElements();
+
+            Assert.True(eventWasRaised);
+        }
         #endregion
     }
 }
