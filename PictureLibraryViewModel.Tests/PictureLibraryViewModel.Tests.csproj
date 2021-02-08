@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="CommandTests\" />
-    <Folder Include="ViewModelTests\" />
   </ItemGroup>
 
 </Project>
