@@ -81,11 +81,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         }
         public void Back()
         {
-            if (ExplorerHistory.BackStack.Count < 2) return;
+            if (ExplorerHistory.BackStack.Count == 0) return;
 
             ExplorerHistory.ForwardStack.Push(_currentDirectoryPath);
             _currentDirectoryPath = ExplorerHistory.BackStack.Pop();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
             LoadCurrentlyShownElements();
         }
 
@@ -95,7 +95,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             ExplorerHistory.BackStack.Push(_currentDirectoryPath);
             _currentDirectoryPath = ExplorerHistory.ForwardStack.Pop();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDirectoryPath"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
             LoadCurrentlyShownElements();
         }
     }
