@@ -2,6 +2,7 @@
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryViewModel.Helpers;
+using PictureLibraryViewModel.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public string InfoText { get; set; }
+        public bool IsProcessing { get; set; }
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public IExplorerHistory ExplorerHistory { get; }
