@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel
 {
@@ -17,6 +18,6 @@ namespace PictureLibraryViewModel.ViewModel
         string InfoText { get; set; }
         bool IsProcessing { get; set; }
 
-        void LoadCurrentlyShownElements();
+        Task LoadCurrentlyShownElements();
     }
 }

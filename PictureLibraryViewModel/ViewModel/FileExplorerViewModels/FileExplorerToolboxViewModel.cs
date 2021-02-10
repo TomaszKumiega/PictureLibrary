@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
@@ -97,7 +98,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         #endregion
 
         #region Public methods
-        public void Copy()
+        public async Task Copy()
         {
             var paths = new List<string>();
 
@@ -106,10 +107,10 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 paths.Add(t.FullPath);
             }
 
-            Clipboard.SetFiles(paths, ClipboardFilesState.Copied);
+            await Task.Run(() => Clipboard.SetFiles(paths, ClipboardFilesState.Copied));
         }
 
-        public void CopyPath()
+        public async Task CopyPath()
         {
             var text = "";
 
@@ -122,10 +123,10 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 }
             }
 
-            Clipboard.SetText(text);
+            await Task.Run(() => Clipboard.SetText(text));
         }
 
-        public void CreateDirectory()
+        public async Task CreateDirectory()
         {
             throw new NotImplementedException();
         }
@@ -136,7 +137,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             if (parent != null) CommonViewModel.CurrentlyOpenedPath = parent;
         }
 
-        public void Paste()
+        public async Task Paste()
         {
             var paths = Clipboard.GetFiles();
             string directoryPath;
@@ -152,11 +153,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
                     if (Clipboard.FilesState == ClipboardFilesState.Copied)
                     {
-                        _directoryService.Copy(t, directoryPath + directoryName);
+                        await Task.Run(() => _directoryService.Copy(t, directoryPath + directoryName));
                     }
                     else if (Clipboard.FilesState == ClipboardFilesState.Cut)
                     {
-                        _directoryService.Move(t, directoryPath + directoryName);
+                        await Task.Run(() => _directoryService.Move(t, directoryPath + directoryName));
                     }
                 }
                 else
@@ -165,26 +166,26 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
                     if (Clipboard.FilesState == ClipboardFilesState.Copied)
                     {
-                        _fileService.Copy(t, directoryPath + fileName);
+                        await Task.Run(() => _fileService.Copy(t, directoryPath + fileName));
                     }
                     else if (Clipboard.FilesState == ClipboardFilesState.Cut)
                     {
-                        _fileService.Move(t, directoryPath + fileName);
+                        await Task.Run(() => _fileService.Move(t, directoryPath + fileName));
                     }
                 }
             }
 
-            Clipboard.Clear();
-
-            CommonViewModel.LoadCurrentlyShownElements();
+            await Task.Run(() => Clipboard.Clear());
+            
+            await CommonViewModel.LoadCurrentlyShownElements();
         }
 
-        public void Refresh()
+        public async Task Refresh()
         {
-            CommonViewModel.LoadCurrentlyShownElements();
+            await CommonViewModel.LoadCurrentlyShownElements();
         }
 
-        public void Remove()
+        public async Task Remove()
         {
             foreach (var t in CommonViewModel.SelectedElements)
             {
@@ -198,15 +199,15 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 }
             }
 
-            CommonViewModel.LoadCurrentlyShownElements();
+            await CommonViewModel.LoadCurrentlyShownElements();
         }
 
-        public void Rename()
+        public async Task Rename()
         {
             throw new NotImplementedException();
         }
 
-        public void Cut()
+        public async Task Cut()
         {
             var paths = new List<string>();
 
@@ -215,7 +216,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 paths.Add(t.FullPath);
             }
 
-            Clipboard.SetFiles(paths, ClipboardFilesState.Cut);
+            await Task.Run(() => Clipboard.SetFiles(paths, ClipboardFilesState.Cut));
         }
         #endregion
     }

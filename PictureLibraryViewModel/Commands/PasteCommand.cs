@@ -27,9 +27,9 @@ namespace PictureLibraryViewModel.Commands
             return _viewModel.Clipboard.ContainsFiles();
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
-            _viewModel.Paste();
+            await _viewModel.Paste();
         }
     }
 }

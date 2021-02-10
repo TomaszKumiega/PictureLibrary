@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel
@@ -20,12 +21,12 @@ namespace PictureLibraryViewModel.ViewModel
         ICommand RefreshCommand { get; }
         string SearchText { get; set; }
 
-        void Copy();
-        void Paste();
-        void CopyPath();
-        void Remove();
-        void Rename();
-        void Refresh();
-        void Cut();
+        Task Copy();
+        Task Paste();
+        Task CopyPath();
+        Task Remove();
+        Task Rename();
+        Task Refresh();
+        Task Cut();
     }
 }

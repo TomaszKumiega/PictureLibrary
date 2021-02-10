@@ -21,9 +21,9 @@ namespace PictureLibraryViewModel.Commands
             return true;
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
-            _viewModel.Refresh();
+            await _viewModel.Refresh();
         }
     }
 }

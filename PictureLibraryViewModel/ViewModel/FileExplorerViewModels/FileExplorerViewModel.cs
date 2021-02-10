@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
@@ -35,7 +36,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
                 _currentlyOpenedPath = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
-                LoadCurrentlyShownElements();
             }
         }
 
@@ -45,12 +45,18 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             ExplorerHistory = explorerHistory;
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
             SelectedElements = new ObservableCollection<IExplorableElement>();
+            PropertyChanged += OnCurrentlyOpenedPathChanged;
             _currentlyOpenedPath = "\\";
 
-            LoadCurrentlyShownElements();
+            Task.Run(() => LoadCurrentlyShownElements()).Wait();
         }
 
-        public void LoadCurrentlyShownElements()
+        public async void OnCurrentlyOpenedPathChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if(args.PropertyName == "CurrentlyOpenedPath") await LoadCurrentlyShownElements();
+        }
+
+        public async Task LoadCurrentlyShownElements()
         {
             if (CurrentlyShownElements == null) return;
 
@@ -65,11 +71,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             {
                 if (CurrentlyOpenedPath == "\\")
                 {
-                    content = DirectoryService.GetRootDirectories();
+                    content = await Task.Run(() => DirectoryService.GetRootDirectories());
                 }
                 else
                 {
-                    content = DirectoryService.GetDirectoryContent(CurrentlyOpenedPath);
+                    content = await Task.Run(() => DirectoryService.GetDirectoryContent(CurrentlyOpenedPath));
                 }
             }
             catch(Exception e)
@@ -95,7 +101,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             ExplorerHistory.ForwardStack.Push(_currentlyOpenedPath);
             _currentlyOpenedPath = ExplorerHistory.BackStack.Pop();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
-            LoadCurrentlyShownElements();
         }
 
         public void Forward()
@@ -105,7 +110,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             ExplorerHistory.BackStack.Push(_currentlyOpenedPath);
             _currentlyOpenedPath = ExplorerHistory.ForwardStack.Pop();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
-            LoadCurrentlyShownElements();
         }
     }
 }

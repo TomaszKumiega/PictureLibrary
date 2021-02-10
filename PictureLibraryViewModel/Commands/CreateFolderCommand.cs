@@ -24,9 +24,9 @@ namespace PictureLibraryViewModel.Commands
             else return true;
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
-            _viewModel.CreateDirectory();
+            await _viewModel.CreateDirectory();
         }
     }
 }

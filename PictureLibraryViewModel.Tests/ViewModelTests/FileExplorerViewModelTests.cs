@@ -87,7 +87,7 @@ namespace PictureLibraryViewModel.Tests.ViewModelTests
 
         #region LoadCurrentlyShownElements Tests
         [Fact]
-        public void LoadCurrentlyShownElements_ShouldAssignRootDirectoriesToCurrentlyShownElements_WhenCurrentlyOpenedPathIsRoot()
+        public async void LoadCurrentlyShownElements_ShouldAssignRootDirectoriesToCurrentlyShownElements_WhenCurrentlyOpenedPathIsRoot()
         {
             var directoryServiceMock = new Mock<IDirectoryService>();
             var explorerHistoryMock = new Mock<IExplorerHistory>();
@@ -115,13 +115,13 @@ namespace PictureLibraryViewModel.Tests.ViewModelTests
             var viewModel = new FileExplorerViewModel(directoryServiceMock.Object, explorerHistoryMock.Object);
 
             viewModel.CurrentlyOpenedPath = "\\";
-            viewModel.LoadCurrentlyShownElements();
+            await viewModel.LoadCurrentlyShownElements();
 
             Assert.Contains(folder, viewModel.CurrentlyShownElements);
         }
 
         [Fact]
-        public void LoadCurrentlyShownElements_ShouldAssignDirectoryContentToCurrenltyShownElements_WhenDirectoryPathIsAssignedToCurrentlyOpenedPath()
+        public async void LoadCurrentlyShownElements_ShouldAssignDirectoryContentToCurrenltyShownElements_WhenDirectoryPathIsAssignedToCurrentlyOpenedPath()
         {
             var directoryServiceMock = new Mock<IDirectoryService>();
             var explorerHistoryMock = new Mock<IExplorerHistory>();
@@ -150,13 +150,13 @@ namespace PictureLibraryViewModel.Tests.ViewModelTests
             var viewModel = new FileExplorerViewModel(directoryServiceMock.Object, explorerHistoryMock.Object);
 
             viewModel.CurrentlyOpenedPath = path;
-            viewModel.LoadCurrentlyShownElements();
+            await viewModel.LoadCurrentlyShownElements();
 
             Assert.Contains(folder, viewModel.CurrentlyShownElements);
         }
 
         [Fact]
-        public void LoadCurrentlyShownElements_ShouldRaisePropertyChangedEvent_ForCurrentlyShownElementsProperty()
+        public async void LoadCurrentlyShownElements_ShouldRaisePropertyChangedEvent_ForCurrentlyShownElementsProperty()
         {
             var directoryServiceMock = new Mock<IDirectoryService>();
             var explorerHistoryMock = new Mock<IExplorerHistory>();
@@ -170,7 +170,7 @@ namespace PictureLibraryViewModel.Tests.ViewModelTests
                     if (a.PropertyName == "CurrentlyShownElements") eventWasRaised = true;
                 };
 
-            viewModel.LoadCurrentlyShownElements();
+            await viewModel.LoadCurrentlyShownElements();
 
             Assert.True(eventWasRaised);
         }

@@ -29,9 +29,9 @@ namespace PictureLibraryViewModel.Commands
             else return false;
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
-            _viewModel.Cut();
+            await _viewModel.Cut();
         }
     }
 }
