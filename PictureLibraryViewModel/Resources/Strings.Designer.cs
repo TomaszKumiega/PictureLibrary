@@ -77,5 +77,14 @@ namespace PictureLibraryViewModel.Resources {
                 return ResourceManager.GetString("Loading", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected elements:.
+        /// </summary>
+        internal static string SelectedElements {
+            get {
+                return ResourceManager.GetString("SelectedElements", resourceCulture);
+            }
+        }
     }
 }

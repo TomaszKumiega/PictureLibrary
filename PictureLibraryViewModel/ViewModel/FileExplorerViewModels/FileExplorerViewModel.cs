@@ -43,9 +43,13 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         {
             DirectoryService = directoryService;
             ExplorerHistory = explorerHistory;
+
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
             SelectedElements = new ObservableCollection<IExplorableElement>();
+
             PropertyChanged += OnCurrentlyOpenedPathChanged;
+            SelectedElements.CollectionChanged += OnSelectedElementsChanged;
+
             _currentlyOpenedPath = "\\";
 
             Task.Run(() => LoadCurrentlyShownElements()).Wait();
@@ -54,6 +58,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         public async void OnCurrentlyOpenedPathChanged(object sender, PropertyChangedEventArgs args)
         {
             if(args.PropertyName == "CurrentlyOpenedPath") await LoadCurrentlyShownElements();
+        }
+
+        public void OnSelectedElementsChanged(object sender, EventArgs args)
+        {
+            InfoText = Strings.SelectedElements + ' ' + SelectedElements.Count;
         }
 
         public async Task LoadCurrentlyShownElements()

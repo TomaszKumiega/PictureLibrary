@@ -123,4 +123,7 @@
   <data name="Loading" xml:space="preserve">
     <value>Loading...</value>
   </data>
+  <data name="SelectedElements" xml:space="preserve">
+    <value>Selected elements:</value>
+  </data>
 </root>
