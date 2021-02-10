@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel
 {
-    public interface IExplorerToolboxViewModel : INotifyPropertyChanged
+    public interface IExplorerToolboxViewModel
     { 
         IExplorerViewModel CommonViewModel { get; }
         IClipboardService Clipboard { get; }

@@ -16,8 +16,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         private IDirectoryService _directoryService;
         private IFileService _fileService;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public IExplorerViewModel CommonViewModel { get; }
         public IClipboardService Clipboard { get; }
         public string SearchText { get; set; }
