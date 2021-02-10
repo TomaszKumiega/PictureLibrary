@@ -16,15 +16,34 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private string _currentlyOpenedPath;
+        private string _infoText;
+        private bool _isProcessing;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string InfoText { get; set; }
-        public bool IsProcessing { get; set; }
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public IExplorerHistory ExplorerHistory { get; }
         public IDirectoryService DirectoryService { get; }
+
+        public string InfoText 
+        {
+            get => _infoText;
+            set
+            {
+                _infoText = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("InfoText"));
+            }
+        }
+        public bool IsProcessing 
+        { 
+            get => _isProcessing; 
+            set
+            {
+                _isProcessing = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsProcessing"));
+            }
+        }
 
         public string CurrentlyOpenedPath 
         {
