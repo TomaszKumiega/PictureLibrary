@@ -61,6 +61,15 @@ namespace PictureLibraryViewModel.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elements loaded:.
+        /// </summary>
+        internal static string ElementsLoaded {
+            get {
+                return ResourceManager.GetString("ElementsLoaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         internal static string Loading {

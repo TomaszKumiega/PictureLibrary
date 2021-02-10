@@ -56,6 +56,9 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             CurrentlyShownElements.Clear();
 
+            InfoText = Strings.Loading;
+            IsProcessing = true;
+
             IEnumerable<IExplorableElement> content = new List<IExplorableElement>();
 
             try
@@ -79,6 +82,9 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             {
                 CurrentlyShownElements.Add(t);
             }
+
+            InfoText = Strings.ElementsLoaded + ' ' + CurrentlyShownElements.Count.ToString();
+            IsProcessing = false;
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyShownElements"));
         }
