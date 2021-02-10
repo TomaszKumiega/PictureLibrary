@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace PictureLibraryModel.Repositories
+namespace PictureLibraryModel.Repositories.LibraryRepositories
 {
     public class LocalLibraryRepository : ILibraryRepository
     {

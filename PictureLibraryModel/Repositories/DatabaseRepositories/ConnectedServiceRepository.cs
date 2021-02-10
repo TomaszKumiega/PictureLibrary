@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PictureLibraryModel.Model.ConnectedServices;
 
-namespace PictureLibraryModel.Repositories
+namespace PictureLibraryModel.Repositories.DatabaseRepositories
 {
     public class ConnectedServiceRepository : DatabaseRepository<ConnectedService>, IConnectedServiceRepository
     {

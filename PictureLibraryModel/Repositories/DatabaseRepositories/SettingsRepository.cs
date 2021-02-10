@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PictureLibraryModel.Repositories
+namespace PictureLibraryModel.Repositories.DatabaseRepositories
 {
     public class SettingsRepository : DatabaseRepository<Model.Settings.Settings>, ISettingsRepository
     {

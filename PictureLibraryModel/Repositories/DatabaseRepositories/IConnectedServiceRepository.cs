@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PictureLibraryModel.Repositories
+namespace PictureLibraryModel.Repositories.DatabaseRepositories
 {
     public interface IConnectedServiceRepository : IRepository<ConnectedService>
     {

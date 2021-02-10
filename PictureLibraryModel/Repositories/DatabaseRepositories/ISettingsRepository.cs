@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PictureLibraryModel.Repositories
+namespace PictureLibraryModel.Repositories.DatabaseRepositories
 {
     public interface ISettingsRepository : IRepository<Model.Settings.Settings>
     {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PictureLibraryModel.Repositories
+namespace PictureLibraryModel.Repositories.DatabaseRepositories
 {
     public class UserRepository : DatabaseRepository<User>
     {
