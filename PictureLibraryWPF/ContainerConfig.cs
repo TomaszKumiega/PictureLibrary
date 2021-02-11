@@ -9,6 +9,7 @@ using PictureLibraryWPF;
 using PictureLibraryWPF.Clipboard;
 using PictureLibraryViewModel.Helpers;
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
+using PictureLibraryModel.Services.ConnectedServicesProvider;
 
 namespace PictureLibraryViewModel
 {
@@ -34,6 +35,7 @@ namespace PictureLibraryViewModel
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
             builder.RegisterType<FileExplorerViewModelFactory>().As<IFileExplorerViewModelFactory>();
+            builder.RegisterType<ConnectedServicesProviderService>().As<IConnectedServicesProviderService>().SingleInstance();
 
             return builder.Build();
         }
