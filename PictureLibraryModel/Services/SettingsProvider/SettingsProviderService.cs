@@ -4,6 +4,7 @@ using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -88,7 +89,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
         {
             if (Settings == null) return;
 
-            var settings = new XElement();
+            var settings = new XElement("settings");
 
             var accentColor = new XElement("accent_color", new XAttribute("value", Settings.AccentColor));
             var language = new XElement("language", new XAttribute("value", Settings.Language));
@@ -109,7 +110,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
                     xmlWriter.Formatting = Formatting.Indented;
                     xmlWriter.Indentation = 4;
 
-                    await Task.Run(() => settings.Save(xmlWriter));
+                    settings.Save(xmlWriter);
                 }
             }
             catch (Exception e)
