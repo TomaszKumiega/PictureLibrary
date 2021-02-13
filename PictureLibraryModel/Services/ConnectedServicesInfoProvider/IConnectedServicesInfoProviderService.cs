@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model.ConnectedServices;
+using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
 {
@@ -8,6 +9,6 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
         ConnectedServiceInfo RemoteServerInfo { get; set; }
 
         void LoadServicesInfo();
-        void SaveServicesInfo();
+        Task SaveServicesInfoAsync();
     }
 }

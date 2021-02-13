@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -38,7 +39,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
                         LightMode = true
                     };
 
-                SaveSettings();
+                SaveSettingsAsync();
 
                 _logger.Info("Settings file created");
             }
@@ -85,7 +86,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
             }
         }
 
-        public void SaveSettings()
+        public async Task SaveSettingsAsync()
         {
             if (Settings == null) return;
 
@@ -110,7 +111,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
                     xmlWriter.Formatting = Formatting.Indented;
                     xmlWriter.Indentation = 4;
 
-                    settings.Save(xmlWriter);
+                    await Task.Run(() => settings.Save(xmlWriter));
                 }
             }
             catch (Exception e)

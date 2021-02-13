@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model.Settings;
+using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Services.SettingsProvider
 {
@@ -6,6 +7,6 @@ namespace PictureLibraryModel.Services.SettingsProvider
     {
         Settings Settings { get; }
 
-        void SaveSettings();
+        Task SaveSettingsAsync();
     }
 }

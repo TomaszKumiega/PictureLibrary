@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -24,6 +25,8 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
         {
             _fileService = fileService;
             _encryptionService = encryptionService;
+
+            LoadServicesInfo();
         }
 
         public void LoadServicesInfo()
@@ -78,7 +81,7 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
             }
         }
 
-        public void SaveServicesInfo()
+        public async Task SaveServicesInfoAsync()
         {
             var rootElement = new XElement("services_info");
 
@@ -113,7 +116,7 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
                     xmlWriter.Formatting = Formatting.Indented;
                     xmlWriter.Indentation = 4;
 
-                    rootElement.Save(xmlWriter);
+                    await Task.Run(() => rootElement.Save(xmlWriter));
                 }
             }
             catch (Exception e)
