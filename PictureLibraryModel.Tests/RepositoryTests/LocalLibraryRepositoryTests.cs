@@ -1,6 +1,6 @@
 ﻿using Moq;
 using PictureLibraryModel.Model;
-using PictureLibraryModel.Repositories;
+using PictureLibraryModel.Repositories.LibraryRepositories;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.Generic;
