@@ -10,6 +10,10 @@ using PictureLibraryWPF.Clipboard;
 using PictureLibraryViewModel.Helpers;
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using PictureLibraryModel.Repositories.LibraryRepositories;
+using PictureLibraryModel.Services.SettingsProvider;
+using PictureLibraryModel.Model.ConnectedServices;
+using PictureLibraryModel.Services.ConnectedServicesInfoProvider;
+using PictureLibraryModel.Services.StringEncryption;
 
 namespace PictureLibraryViewModel
 {
@@ -36,6 +40,9 @@ namespace PictureLibraryViewModel
             builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
             builder.RegisterType<FileExplorerViewModelFactory>().As<IFileExplorerViewModelFactory>();
             builder.RegisterType<LibraryRepositoriesFactory>().As<ILibraryRepositoriesFactory>();
+            builder.RegisterType<SettingsProviderService>().As<ISettingsProviderService>().SingleInstance();
+            builder.RegisterType<ConnectedServicesInfoProviderService>().As<IConnectedServicesInfoProviderService>().SingleInstance();
+            builder.RegisterType<StringEncryptionService>().As<IStringEncryptionService>();
 
             return builder.Build();
         }
