@@ -12,6 +12,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
         void Move(string sourcePath, string destinationPath);
         void Rename(string path, string name);
         void Remove(string path);
+        bool Exists(string path);
         FileSystemInfo GetInfo(string path);
     }
 }

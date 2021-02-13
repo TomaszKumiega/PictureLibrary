@@ -20,6 +20,11 @@ namespace PictureLibraryModel.Services.FileSystemServices
             File.Create(path);
         }
 
+        public bool Exists(string path)
+        {
+            return File.Exists(path);
+        }
+
         public List<string> FindFiles(string searchPattern)
         {
             throw new NotImplementedException();

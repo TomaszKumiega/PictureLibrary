@@ -178,5 +178,10 @@ namespace PictureLibraryModel.Services.FileSystemServices
             if ((attr & FileAttributes.Directory) == FileAttributes.Directory) return true;
             else return false;
         }
+
+        public bool Exists(string path)
+        {
+            return System.IO.Directory.Exists(path);
+        }
     }
 }
