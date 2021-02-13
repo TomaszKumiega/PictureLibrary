@@ -1,11 +1,10 @@
-﻿using PictureLibraryModel.Model.Database;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PictureLibraryModel.Model.UserModel
+namespace PictureLibraryModel.Model.RemoteServer
 {
-    public class User : IDatabaseEntity
+    public class User
     {
         public Guid Id { get; set; }
         public string Username { get; set; }
