@@ -1,14 +1,11 @@
-﻿using PictureLibraryModel.Model.Database;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace PictureLibraryModel.Model.ConnectedServices
 {
-    public class ConnectedService : IDatabaseEntity
+    public class ConnectedService
     {
-        public Guid Id { get; set; }
-        public Guid UserId { get; set; }
         public ConnectedServiceType Type { get; set; }
         public string Token { get; set; }
         public string RefreshToken { get; set; }
