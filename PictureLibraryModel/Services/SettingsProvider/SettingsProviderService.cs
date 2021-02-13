@@ -39,7 +39,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
                         LightMode = true
                     };
 
-                SaveSettingsAsync();
+                Task.Run(() => SaveSettingsAsync()).Wait();
 
                 _logger.Info("Settings file created");
             }
