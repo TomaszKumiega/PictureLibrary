@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PictureLibraryModel.Model.ConnectedServices
 {
-    public class ConnectedService
+    public class ConnectedServiceInfo
     {
         public ConnectedServiceType Type { get; set; }
         public string Token { get; set; }
