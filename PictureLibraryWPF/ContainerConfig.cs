@@ -29,20 +29,31 @@ namespace PictureLibraryViewModel
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<CommandFactory>().As<ICommandFactory>();
-            builder.RegisterType<DirectoryService>().As<IDirectoryService>();
-            builder.RegisterType<FileService>().As<IFileService>();
-            builder.RegisterType<CommandFactory>().As<ICommandFactory>();
-            builder.RegisterType<WPFClipboard>().As<IClipboardService>();
-            builder.RegisterType<ExplorerHistory>().As<IExplorerHistory>();
-            builder.RegisterType<MainWindowControlsFactory>().As<IMainWindowControlsFactory>();
-            builder.RegisterType<MainWindow>().AsSelf();
-            builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
-            builder.RegisterType<FileExplorerViewModelFactory>().As<IFileExplorerViewModelFactory>();
+            #region Model 
             builder.RegisterType<LibraryRepositoriesFactory>().As<ILibraryRepositoriesFactory>();
+
             builder.RegisterType<SettingsProviderService>().As<ISettingsProviderService>().SingleInstance();
             builder.RegisterType<ConnectedServicesInfoProviderService>().As<IConnectedServicesInfoProviderService>().SingleInstance();
             builder.RegisterType<StringEncryptionService>().As<IStringEncryptionService>();
+
+            builder.RegisterType<DirectoryService>().As<IDirectoryService>();
+            builder.RegisterType<FileService>().As<IFileService>();
+            #endregion
+
+            #region ViewModel 
+            builder.RegisterType<CommandFactory>().As<ICommandFactory>();
+            builder.RegisterType<ExplorerHistory>().As<IExplorerHistory>();
+
+            builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
+            builder.RegisterType<FileExplorerViewModelFactory>().As<IFileExplorerViewModelFactory>();
+            #endregion
+
+            #region View
+            builder.RegisterType<WPFClipboard>().As<IClipboardService>();
+
+            builder.RegisterType<MainWindowControlsFactory>().As<IMainWindowControlsFactory>();
+            builder.RegisterType<MainWindow>().AsSelf();
+            #endregion
 
             return builder.Build();
         }
