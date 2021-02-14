@@ -7,7 +7,12 @@ namespace PictureLibraryModel.Model
 {
     public class Folder : Directory
     {
-        public Folder()
+        public Folder() : base()
+        {
+
+        }
+
+        public Folder(IDirectoryService directoryService) : base(directoryService)
         {
 
         }

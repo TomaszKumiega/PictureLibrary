@@ -33,6 +33,15 @@ namespace PictureLibraryModel.Model
             PropertyChanged += OnIsExpandedChanged;
         }
 
+        public Directory(IDirectoryService directoryService)
+        {
+            IconSource = "pack://application:,,,/Icons/FolderIcon.png";
+            SubDirectories = new ObservableCollection<Directory>();
+            DirectoryService = directoryService;
+
+            PropertyChanged += OnIsExpandedChanged;
+        }
+
         public Directory(string path, string name, IDirectoryService directoryService, Origin origin)
         {
             FullPath = path;
