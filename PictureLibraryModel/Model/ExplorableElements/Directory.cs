@@ -27,7 +27,7 @@ namespace PictureLibraryModel.Model
 
         public Directory()
         {
-
+            IconSource = "pack://application:,,,/Icons/FolderIcon.png";
         }
 
         public Directory(string path, string name, IDirectoryService directoryService, Origin origin)
