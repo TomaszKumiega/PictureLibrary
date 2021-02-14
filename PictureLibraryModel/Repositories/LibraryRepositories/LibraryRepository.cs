@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Repositories.LibraryRepositories
 {
-    public class LibraryRepository : ILibraryRepository
+    public class LibraryRepository : IRepository<Library>
     {
         private IConnectedServicesInfoProviderService ConnectedServices { get; }
         private ILibraryRepositoriesFactory RepositoriesFactory { get; }

@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace PictureLibraryModel.Repositories.LibraryRepositories
 {
-    public class LocalLibraryRepository : ILibraryRepository
+    public class LocalLibraryRepository : IRepository<Library>
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IFileService _fileService;
