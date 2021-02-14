@@ -22,7 +22,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             set
             {
                 _selectedNode = value;
-                (CommonViewModel as IFileExplorerViewModel).CurrentlyOpenedPath = _selectedNode.FullPath;
+                (CommonViewModel as IFileExplorerViewModel).CurrentlyOpenedElement = _selectedNode;
             }
         }
 
@@ -55,7 +55,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 ExplorableElementsTree.Add(t);
             }
 
-            CommonViewModel.CurrentlyOpenedPath = "\\";
+            CommonViewModel.CurrentlyOpenedElement = null;
         }
     }
 }

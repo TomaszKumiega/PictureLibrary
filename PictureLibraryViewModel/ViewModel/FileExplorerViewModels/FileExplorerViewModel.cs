@@ -15,10 +15,10 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
     public class FileExplorerViewModel : IFileExplorerViewModel
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private string _currentlyOpenedPath;
         private string _infoText;
         private bool _isProcessing;
         private IDirectoryService _directoryService;
+        private IExplorableElement _currentlyOpenedElement;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -45,16 +45,16 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             }
         }
 
-        public string CurrentlyOpenedPath 
-        {
-            get => _currentlyOpenedPath;
+        public IExplorableElement CurrentlyOpenedElement 
+        { 
+            get => _currentlyOpenedElement; 
             set
             {
-                ExplorerHistory.BackStack.Push(_currentlyOpenedPath);
+                ExplorerHistory.BackStack.Push(_currentlyOpenedElement);
                 ExplorerHistory.ForwardStack.Clear();
 
-                _currentlyOpenedPath = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
+                _currentlyOpenedElement = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
             }
         }
 
@@ -66,17 +66,17 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
             SelectedElements = new ObservableCollection<IExplorableElement>();
 
-            PropertyChanged += OnCurrentlyOpenedPathChanged;
+            PropertyChanged += OnCurrentlyOpenedElementChanged;
             SelectedElements.CollectionChanged += OnSelectedElementsChanged;
 
-            _currentlyOpenedPath = "\\";
+            _currentlyOpenedElement = null;
 
             Task.Run(() => LoadCurrentlyShownElements()).Wait();
         }
 
-        public async void OnCurrentlyOpenedPathChanged(object sender, PropertyChangedEventArgs args)
+        public async void OnCurrentlyOpenedElementChanged(object sender, PropertyChangedEventArgs args)
         {
-            if(args.PropertyName == "CurrentlyOpenedPath") await LoadCurrentlyShownElements();
+            if(args.PropertyName == "CurrentlyOpenedElement") await LoadCurrentlyShownElements();
         }
 
         public void OnSelectedElementsChanged(object sender, EventArgs args)
@@ -97,19 +97,19 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             try
             {
-                if (CurrentlyOpenedPath == "\\")
+                if (CurrentlyOpenedElement == null)
                 {
                     content = await Task.Run(() => _directoryService.GetRootDirectories());
                 }
                 else
                 {
-                    content = await Task.Run(() => _directoryService.GetDirectoryContent(CurrentlyOpenedPath));
+                    content = await Task.Run(() => _directoryService.GetDirectoryContent(CurrentlyOpenedElement.FullPath));
                 }
             }
             catch(Exception e)
             {
                 _logger.Error(e, e.Message);
-                throw new Exception("Application failed loading the contents of: " + CurrentlyOpenedPath + " directory.");
+                throw new Exception("Application failed loading the contents of: " + CurrentlyOpenedElement.FullPath + " directory.");
             }
 
             foreach (var t in content)
@@ -126,18 +126,18 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         {
             if (ExplorerHistory.BackStack.Count == 0) return;
 
-            ExplorerHistory.ForwardStack.Push(_currentlyOpenedPath);
-            _currentlyOpenedPath = ExplorerHistory.BackStack.Pop();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
+            ExplorerHistory.ForwardStack.Push(_currentlyOpenedElement);
+            _currentlyOpenedElement = ExplorerHistory.BackStack.Pop();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
         }
 
         public void Forward()
         {
             if (ExplorerHistory.ForwardStack.Count == 0) return;
 
-            ExplorerHistory.BackStack.Push(_currentlyOpenedPath);
-            _currentlyOpenedPath = ExplorerHistory.ForwardStack.Pop();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedPath"));
+            ExplorerHistory.BackStack.Push(_currentlyOpenedElement);
+            _currentlyOpenedElement = ExplorerHistory.ForwardStack.Pop();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
         }
     }
 }

@@ -32,7 +32,7 @@ namespace PictureLibraryWPF.CustomControls
         {
             if(DataContext is IFilesViewViewModel)
             {
-                (DataContext as IFilesViewViewModel).CommonViewModel.CurrentlyOpenedPath = ((o as ListViewItem).Tag as string);
+                (DataContext as IFilesViewViewModel).CommonViewModel.CurrentlyOpenedElement = ((o as ListViewItem).DataContext as IExplorableElement);
             }
         }
 

@@ -11,7 +11,7 @@ namespace PictureLibraryViewModel.ViewModel
 {
     public interface IExplorerViewModel : INotifyPropertyChanged
     {
-        string CurrentlyOpenedPath { get; set; }
+        IExplorableElement CurrentlyOpenedElement { get; set; }
         ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         string InfoText { get; set; }

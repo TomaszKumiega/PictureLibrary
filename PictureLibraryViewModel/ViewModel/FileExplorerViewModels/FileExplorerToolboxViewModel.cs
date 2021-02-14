@@ -67,7 +67,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             CommonViewModel.SelectedElements.CollectionChanged += OnSelectedElementsChanged;
             Clipboard.ClipboardContentChanged += OnClipboardContentChanged;
-            CommonViewModel.PropertyChanged += OnCurrentDirectoryPathChanged;
+            CommonViewModel.PropertyChanged += OnCurrentlyOpenedElementChanged;
         }
 
 
@@ -85,9 +85,9 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             (PasteCommand as PasteCommand).OnExecuteChanged();
         }
 
-        private void OnCurrentDirectoryPathChanged(object sender, PropertyChangedEventArgs args)
+        private void OnCurrentlyOpenedElementChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (args.PropertyName != "CurrentlyOpenedPath") return;
+            if (args.PropertyName != "CurrentlyOpenedElement") return;
 
             (BackCommand as BackCommand).OnExecuteChanged();
             (ForwardCommand as ForwardCommand).OnExecuteChanged();
@@ -131,8 +131,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public void GoToParentDirectory()
         {
-            var parent = (_directoryService.GetInfo(CommonViewModel.CurrentlyOpenedPath) as DirectoryInfo).Parent?.FullName;
-            if (parent != null) CommonViewModel.CurrentlyOpenedPath = parent;
+            var parent = _directoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.FullPath);
+            if (parent != null) CommonViewModel.CurrentlyOpenedElement = parent;
         }
 
         public async Task Paste()
@@ -140,8 +140,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             var paths = Clipboard.GetFiles();
             string directoryPath;
 
-            if (CommonViewModel.CurrentlyOpenedPath.EndsWith("\\")) directoryPath = CommonViewModel.CurrentlyOpenedPath;
-            else directoryPath = CommonViewModel.CurrentlyOpenedPath + "\\";
+            if (CommonViewModel.CurrentlyOpenedElement.FullPath.EndsWith("\\")) directoryPath = CommonViewModel.CurrentlyOpenedElement.FullPath;
+            else directoryPath = CommonViewModel.CurrentlyOpenedElement.FullPath + "\\";
 
             foreach (var t in paths)
             {
