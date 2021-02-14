@@ -162,5 +162,28 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             Assert.Contains(libraries, x => x.Name == "library2" && x.Description == "picture library2");
         }
         #endregion
+
+        #region RemoveAsync Tests
+        [Fact]
+        public async void RemoveAsync_ShouldCallRemoveMethod_ForLibraryFullPath()
+        {
+            var fileServiceMock = new Mock<IFileService>();
+            var library =
+                new Library()
+                {
+                    Name = "library1",
+                    FullPath = "Tests\\Folder1\\library1.plib"
+                };
+
+            fileServiceMock.Setup(x => x.Remove(library.FullPath))
+                .Verifiable();
+
+            var repository = new LocalLibraryRepository(fileServiceMock.Object);
+
+            await repository.RemoveAsync(library);
+
+            fileServiceMock.Verify(x => x.Remove(library.FullPath));  
+        }
+        #endregion
     }
 }
