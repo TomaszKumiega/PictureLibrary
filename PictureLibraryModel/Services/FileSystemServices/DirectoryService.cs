@@ -10,11 +10,11 @@ using System.Text;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {
-    public class DirectoryService : IDirectoryService
+    public class DirectoryService : FileSystemService, IDirectoryService
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public void Copy(string sourcePath, string destinationPath)
+        public override void Copy(string sourcePath, string destinationPath)
         {
             if (destinationPath == null) throw new ArgumentNullException();
             if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
@@ -36,7 +36,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             }
         }
 
-        public void Create(string path)
+        public override void Create(string path)
         {
             System.IO.Directory.CreateDirectory(path);
         }
@@ -75,7 +75,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             return content;
         }
 
-        public FileSystemInfo GetInfo(string path)
+        public override FileSystemInfo GetInfo(string path)
         {
             return new DirectoryInfo(path);
         }
@@ -128,12 +128,12 @@ namespace PictureLibraryModel.Services.FileSystemServices
             return directories;
         }
 
-        public void Move(string sourcePath, string destinationPath)
+        public override void Move(string sourcePath, string destinationPath)
         {
             System.IO.Directory.Move(sourcePath, destinationPath);
         }
 
-        public void Rename(string path, string name)
+        public override void Rename(string path, string name)
         {
             var parentDirectory = System.IO.Directory.GetParent(path).FullName;
 
@@ -166,7 +166,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             }
         }
 
-        public void Remove(string path)
+        public override void Remove(string path)
         {
             System.IO.Directory.Delete(path);
         }
@@ -179,7 +179,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             else return false;
         }
 
-        public bool Exists(string path)
+        public override bool Exists(string path)
         {
             return System.IO.Directory.Exists(path);
         }

@@ -13,6 +13,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
         void Rename(string path, string name);
         void Remove(string path);
         bool Exists(string path);
+        Model.Directory GetParent(string path);
         FileSystemInfo GetInfo(string path);
     }
 }

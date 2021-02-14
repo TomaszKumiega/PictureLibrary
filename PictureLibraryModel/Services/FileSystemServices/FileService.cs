@@ -1,26 +1,28 @@
 ﻿using NLog;
+using PictureLibraryModel.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using File = System.IO.File;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {
-    public class FileService : IFileService
+    public class FileService : FileSystemService, IFileService
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public void Copy(string sourcePath, string destinationPath)
+        public override void Copy(string sourcePath, string destinationPath)
         {
             File.Copy(sourcePath, destinationPath);
         }
 
-        public void Create(string path)
+        public override void Create(string path)
         {
             File.Create(path);
         }
 
-        public bool Exists(string path)
+        public override bool Exists(string path)
         {
             return File.Exists(path);
         }
@@ -35,12 +37,12 @@ namespace PictureLibraryModel.Services.FileSystemServices
             throw new NotImplementedException();
         }
 
-        public FileSystemInfo GetInfo(string path)
+        public override FileSystemInfo GetInfo(string path)
         {
             return new FileInfo(path);
         }
 
-        public void Move(string sourcePath, string destinationPath)
+        public override void Move(string sourcePath, string destinationPath)
         {
             File.Move(sourcePath, destinationPath);
         }
@@ -50,15 +52,15 @@ namespace PictureLibraryModel.Services.FileSystemServices
             return File.Open(path, FileMode.Open);
         }
 
-        public void Remove(string path)
+        public override void Remove(string path)
         {
             File.Delete(path);
         }
 
-        public void Rename(string path, string name)
+        public override void Rename(string path, string name)
         {
             var extension = new FileInfo(path).Extension;
-            var directoryPath = Directory.GetParent(path).FullName;
+            var directoryPath = System.IO.Directory.GetParent(path).FullName;
 
             File.Move(path, directoryPath + "\\" + name + extension);
         }
