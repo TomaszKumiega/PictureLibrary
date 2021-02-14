@@ -13,7 +13,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IExplorableElement _selectedNode;
-
+        private IDirectoryService _directoryService;
         public IExplorerViewModel CommonViewModel { get; }
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
         public IExplorableElement SelectedNode 
@@ -26,9 +26,10 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             }
         }
 
-        public FileTreeViewModel(IFileExplorerViewModel viewModel)
+        public FileTreeViewModel(IFileExplorerViewModel viewModel, IDirectoryService directoryService)
         {
             CommonViewModel = viewModel;
+            _directoryService = directoryService;
             InitializeDirectoryTree();
         }
 
@@ -40,7 +41,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             try
             {
-                rootDirectories = CommonViewModel.DirectoryService.GetRootDirectories();
+                rootDirectories = _directoryService.GetRootDirectories();
             }
             catch (Exception e)
             {

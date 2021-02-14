@@ -18,13 +18,13 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         private string _currentlyOpenedPath;
         private string _infoText;
         private bool _isProcessing;
+        private IDirectoryService _directoryService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public IExplorerHistory ExplorerHistory { get; }
-        public IDirectoryService DirectoryService { get; }
 
         public string InfoText 
         {
@@ -60,7 +60,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public FileExplorerViewModel(IDirectoryService directoryService, IExplorerHistory explorerHistory)
         {
-            DirectoryService = directoryService;
+            _directoryService = directoryService;
             ExplorerHistory = explorerHistory;
 
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
@@ -99,11 +99,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             {
                 if (CurrentlyOpenedPath == "\\")
                 {
-                    content = await Task.Run(() => DirectoryService.GetRootDirectories());
+                    content = await Task.Run(() => _directoryService.GetRootDirectories());
                 }
                 else
                 {
-                    content = await Task.Run(() => DirectoryService.GetDirectoryContent(CurrentlyOpenedPath));
+                    content = await Task.Run(() => _directoryService.GetDirectoryContent(CurrentlyOpenedPath));
                 }
             }
             catch(Exception e)

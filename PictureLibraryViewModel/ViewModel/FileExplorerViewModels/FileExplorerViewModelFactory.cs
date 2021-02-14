@@ -23,7 +23,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public IFileTreeViewModel GetFileTreeViewModel()
         {
-            return new FileTreeViewModel(_commonVM);
+            return new FileTreeViewModel(_commonVM, new DirectoryService());
         }
 
         public IFilesViewViewModel GetFilesViewViewModel()

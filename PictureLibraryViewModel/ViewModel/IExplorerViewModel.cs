@@ -14,7 +14,6 @@ namespace PictureLibraryViewModel.ViewModel
         string CurrentlyOpenedPath { get; set; }
         ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         ObservableCollection<IExplorableElement> SelectedElements { get; set; }
-        IDirectoryService DirectoryService { get; }
         string InfoText { get; set; }
         bool IsProcessing { get; set; }
 
