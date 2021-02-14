@@ -28,6 +28,9 @@ namespace PictureLibraryModel.Model
         public Directory()
         {
             IconSource = "pack://application:,,,/Icons/FolderIcon.png";
+            SubDirectories = new ObservableCollection<Directory>();
+
+            PropertyChanged += OnIsExpandedChanged;
         }
 
         public Directory(string path, string name, IDirectoryService directoryService, Origin origin)
