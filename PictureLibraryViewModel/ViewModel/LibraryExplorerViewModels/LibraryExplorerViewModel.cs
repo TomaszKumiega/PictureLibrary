@@ -35,7 +35,37 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
         public async Task LoadCurrentlyShownElements()
         {
-            throw new NotImplementedException();
+            if (CurrentlyShownElements == null) return;
+
+            CurrentlyShownElements.Clear();
+
+            if (CurrentlyOpenedElement == null)
+            {
+                var libraries = await _libraryRepository.GetAllAsync();
+                foreach (IExplorableElement t in libraries)
+                {
+                    CurrentlyShownElements.Add(t);
+                }
+            }
+            else if (CurrentlyOpenedElement is Library)
+            {
+                foreach (var t in (CurrentlyOpenedElement as Library).Tags)
+                {
+                    CurrentlyShownElements.Add(t);
+                }
+            }
+            else if (CurrentlyOpenedElement is Tag)
+            {
+                if((CurrentlyOpenedElement as Tag).Origin == Origin.Local)
+                {
+                    foreach(var t in (CurrentlyOpenedElement as Tag).ParentLibrary.Images)
+                    {
+                        CurrentlyShownElements.Add(t);
+                    }
+                }
+
+                //TODO: Add images from diffrent origins
+            }
         }
 
         public void Back()
