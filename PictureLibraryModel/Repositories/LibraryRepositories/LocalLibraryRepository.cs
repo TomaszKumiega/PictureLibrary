@@ -142,6 +142,9 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
                                     var tag = new Tag();
                                     tag.Name = tagElement.Attribute("name").Value;
                                     tag.Description = tagElement.Attribute("description").Value;
+                                    tag.Origin = Origin.Local;
+                                    tag.ParentLibrary = library;
+                                    tag.FullName = "Local\\" + library.Name + "\\" + tag.Name + "\\";
 
                                     tags.Add(tag);
                                 }
