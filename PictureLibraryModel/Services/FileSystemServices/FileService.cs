@@ -3,6 +3,7 @@ using PictureLibraryModel.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using File = System.IO.File;
 
@@ -27,14 +28,11 @@ namespace PictureLibraryModel.Services.FileSystemServices
             return File.Exists(path);
         }
 
-        public List<string> FindFiles(string searchPattern)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<string> FindFiles(string searchPattern, string directory)
         {
-            throw new NotImplementedException();
+            var files = System.IO.Directory.GetFiles(directory, searchPattern, SearchOption.AllDirectories);
+
+            return files.ToList();
         }
 
         public override FileSystemInfo GetInfo(string path)
