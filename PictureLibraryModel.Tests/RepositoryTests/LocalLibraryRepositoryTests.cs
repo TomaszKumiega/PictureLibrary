@@ -75,13 +75,14 @@ namespace PictureLibraryModel.Tests.RepositoryTests
         public async void AddAsync_ShouldWriteLibraryToTheStream_WhenLibraryIsInitialized()
         {
             var fileServiceMock = new Mock<IFileService>();
+            var directoryServiceMock = new Mock<IDirectoryService>();
             var memoryStream = new MemoryStream();
             var library = GetLibrary();
             
             fileServiceMock.Setup(x => x.OpenFile(library.FullName))
                 .Returns(memoryStream);
 
-            var repository = new LocalLibraryRepository(fileServiceMock.Object);
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, directoryServiceMock.Object);
             await repository.AddAsync(library);
 
             // convert memory stream buffer to string
@@ -113,15 +114,31 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             var memoryStream1 = new MemoryStream(buffer);
             var memoryStream2 = new MemoryStream(buffer2);
 
+            var rootDirectory =
+                new Folder()
+                {
+                    Name = "\\",
+                    FullName = "\\"
+                };
+
+            var rootDirectories = new List<Model.Directory>
+            {
+                rootDirectory
+            };
+
+            var directoryServiceMock = new Mock<IDirectoryService>();
+            directoryServiceMock.Setup(x => x.GetRootDirectories())
+                .Returns(rootDirectories);
+
             var fileServiceMock = new Mock<IFileService>();
-            fileServiceMock.Setup(x => x.FindFiles("*.plib"))
+            fileServiceMock.Setup(x => x.FindFiles("*.plib", rootDirectory.FullName))
                 .Returns(paths);
             fileServiceMock.Setup(x => x.OpenFile(paths[0]))
                 .Returns(memoryStream1);
             fileServiceMock.Setup(x => x.OpenFile(paths[1]))
                 .Returns(memoryStream2);
 
-            var repository = new LocalLibraryRepository(fileServiceMock.Object);
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, directoryServiceMock.Object);
 
             var libraries = await repository.GetAllAsync();
 
@@ -144,6 +161,23 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             var memoryStream1 = new MemoryStream(buffer);
             var memoryStream2 = new MemoryStream(buffer2);
 
+            var rootDirectory =
+                new Folder()
+                {
+                    Name = "\\",
+                    FullName = "\\"
+                };
+    
+
+            var rootDirectories = new List<Model.Directory>
+            {
+                rootDirectory
+            };
+
+            var directoryServiceMock = new Mock<IDirectoryService>();
+            directoryServiceMock.Setup(x => x.GetRootDirectories())
+                .Returns(rootDirectories);
+
             var fileServiceMock = new Mock<IFileService>();
 
             fileServiceMock.Setup(x => x.FindFiles("*.plib"))
@@ -153,7 +187,7 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             fileServiceMock.Setup(x => x.OpenFile(paths[1]))
                 .Returns(memoryStream2);
 
-            var repository = new LocalLibraryRepository(fileServiceMock.Object);
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, directoryServiceMock.Object);
 
             var libraries = repository.FindAsync(x => x.Name == "library2").Result;
 
@@ -168,6 +202,8 @@ namespace PictureLibraryModel.Tests.RepositoryTests
         public async void RemoveAsync_ShouldCallRemoveMethod_ForLibraryFullPath()
         {
             var fileServiceMock = new Mock<IFileService>();
+            var directoryServiceMock = new Mock<IDirectoryService>();
+
             var library =
                 new Library()
                 {
@@ -178,7 +214,7 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             fileServiceMock.Setup(x => x.Remove(library.FullName))
                 .Verifiable();
 
-            var repository = new LocalLibraryRepository(fileServiceMock.Object);
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, directoryServiceMock.Object);
 
             await repository.RemoveAsync(library);
 
