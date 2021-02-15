@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.FileSystemServices;
+using PictureLibraryViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,7 +17,10 @@ namespace PictureLibraryViewModel.ViewModel
         ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         string InfoText { get; set; }
         bool IsProcessing { get; set; }
+        IExplorerHistory ExplorerHistory { get; }
 
+        void Back();
+        void Forward();
         Task LoadCurrentlyShownElements();
     }
 }

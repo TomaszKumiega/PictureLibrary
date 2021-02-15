@@ -11,9 +11,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
     public interface IFileExplorerViewModel : IExplorerViewModel
     {
-        IExplorerHistory ExplorerHistory { get; }
 
-        void Back();
-        void Forward();
     }
 }
