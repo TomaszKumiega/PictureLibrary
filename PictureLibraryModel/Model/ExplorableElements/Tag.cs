@@ -11,6 +11,7 @@ namespace PictureLibraryModel.Model
         public Origin Origin { get; set; }
         public string FullName { get; set; }
         public string IconSource { get; }
+        public Library ParentLibrary { get; set; }
 
         public Tag()
         {
