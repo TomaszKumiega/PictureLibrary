@@ -30,22 +30,16 @@ namespace PictureLibraryWPF.CustomControls
 
         private void ItemMouseDoubleClick(object o, EventArgs args)
         {
-            if(DataContext is IFilesViewViewModel)
-            {
-                (DataContext as IFilesViewViewModel).CommonViewModel.CurrentlyOpenedElement = ((o as ListViewItem).DataContext as IExplorableElement);
-            }
+            (DataContext as IExplorableElementsViewViewModel).CommonViewModel.CurrentlyOpenedElement = ((o as ListViewItem).DataContext as IExplorableElement);
         }
 
         private void FilesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(DataContext is IFilesViewViewModel)
-            {
-                (DataContext as IFilesViewViewModel).CommonViewModel.SelectedElements.Clear();
+            (DataContext as IExplorableElementsViewViewModel).CommonViewModel.SelectedElements.Clear();
 
-                foreach (var t in FilesList.SelectedItems)
-                {
-                    (DataContext as IFilesViewViewModel).CommonViewModel.SelectedElements.Add(t as IExplorableElement);
-                }
+            foreach (var t in FilesList.SelectedItems)
+            {
+                (DataContext as IExplorableElementsViewViewModel).CommonViewModel.SelectedElements.Add(t as IExplorableElement);
             }
         }
     }
