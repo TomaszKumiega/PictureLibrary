@@ -6,7 +6,7 @@ namespace PictureLibraryModel.Model
 {
     public class Library : IExplorableElement
     {
-        public string FullPath { get; set; }
+        public string FullName { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public List<Tag> Tags { get; set; }

@@ -46,7 +46,7 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             var library =
                 new Library()
                 {
-                    FullPath = TestFolder + "library.plib",
+                    FullName = TestFolder + "library.plib",
                     Name = "library",
                     Description = "picture library",
                     Tags = new List<Tag>(),
@@ -78,7 +78,7 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             var memoryStream = new MemoryStream();
             var library = GetLibrary();
             
-            fileServiceMock.Setup(x => x.OpenFile(library.FullPath))
+            fileServiceMock.Setup(x => x.OpenFile(library.FullName))
                 .Returns(memoryStream);
 
             var repository = new LocalLibraryRepository(fileServiceMock.Object);
@@ -172,17 +172,17 @@ namespace PictureLibraryModel.Tests.RepositoryTests
                 new Library()
                 {
                     Name = "library1",
-                    FullPath = "Tests\\Folder1\\library1.plib"
+                    FullName = "Tests\\Folder1\\library1.plib"
                 };
 
-            fileServiceMock.Setup(x => x.Remove(library.FullPath))
+            fileServiceMock.Setup(x => x.Remove(library.FullName))
                 .Verifiable();
 
             var repository = new LocalLibraryRepository(fileServiceMock.Object);
 
             await repository.RemoveAsync(library);
 
-            fileServiceMock.Verify(x => x.Remove(library.FullPath));  
+            fileServiceMock.Verify(x => x.Remove(library.FullName));  
         }
         #endregion
     }

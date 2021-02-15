@@ -25,7 +25,7 @@ namespace PictureLibraryViewModel.Commands
         public bool CanExecute(object parameter)
         {
             if (_viewModel.CommonViewModel.CurrentlyOpenedElement == null) return false;
-            var parent = System.IO.Directory.GetParent(_viewModel.CommonViewModel.CurrentlyOpenedElement.FullPath);
+            var parent = System.IO.Directory.GetParent(_viewModel.CommonViewModel.CurrentlyOpenedElement.FullName);
 
             if (parent != null) return true;
             else return false;

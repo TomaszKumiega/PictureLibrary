@@ -19,7 +19,7 @@ namespace PictureLibraryModel.Model
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string FullPath { get; set; }
+        public string FullName { get; set; }
         public string Name { get; set; }
         public string IconSource { get; protected set; }
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
@@ -44,7 +44,7 @@ namespace PictureLibraryModel.Model
 
         public Directory(string path, string name, IDirectoryService directoryService, Origin origin)
         {
-            FullPath = path;
+            FullName = path;
             Name = name;
             DirectoryService = directoryService;
             Origin = origin;
@@ -99,12 +99,12 @@ namespace PictureLibraryModel.Model
 
             try
             {
-                directories = await Task.Run(() => DirectoryService.GetSubFolders(FullPath));
+                directories = await Task.Run(() => DirectoryService.GetSubFolders(FullName));
             }
             catch(Exception e)
             {
                 _logger.Error(e, e.Message);
-                throw new Exception("Application failed loading sub directories of: " + this.FullPath + " directory.");
+                throw new Exception("Application failed loading sub directories of: " + this.FullName + " directory.");
             }
 
             foreach (var t in directories)

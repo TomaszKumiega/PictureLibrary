@@ -14,7 +14,7 @@ namespace PictureLibraryModel.Model
     {
         string Name { get; set; }
         Origin Origin { get; set; }
-        string FullPath { get; set; }
+        string FullName { get; set; }
         string IconSource { get; }
     }
 }

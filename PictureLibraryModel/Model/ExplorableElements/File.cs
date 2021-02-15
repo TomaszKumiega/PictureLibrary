@@ -8,7 +8,7 @@ namespace PictureLibraryModel.Model
     {
         public string Name { get; set; }
         public Origin Origin { get; set; }
-        public string FullPath { get; set; }
+        public string FullName { get; set; }
         public string IconSource { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime LastAccessTime { get; set; }
@@ -17,7 +17,7 @@ namespace PictureLibraryModel.Model
         
         public File()
         {
-            IconSource = FullPath;
+            IconSource = FullName;
         }
     }
 }

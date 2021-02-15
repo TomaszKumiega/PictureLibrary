@@ -28,7 +28,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public void BuildFullPath()
         {
-            ImageFile.FullPath = _fileInfo.FullName;
+            ImageFile.FullName = _fileInfo.FullName;
         }
 
         public void BuildIconSource()

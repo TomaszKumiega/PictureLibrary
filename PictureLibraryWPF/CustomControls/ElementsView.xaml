@@ -42,7 +42,7 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <EventSetter Event="MouseDoubleClick" Handler="ItemMouseDoubleClick"/>
-                    <Setter Property="Tag" Value="{Binding FullPath}"/>
+                    <Setter Property="Tag" Value="{Binding FullName}"/>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>

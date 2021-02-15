@@ -102,7 +102,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             foreach (var t in CommonViewModel.SelectedElements)
             {
-                paths.Add(t.FullPath);
+                paths.Add(t.FullName);
             }
 
             await Task.Run(() => Clipboard.SetFiles(paths, ClipboardFilesState.Copied));
@@ -112,12 +112,12 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         {
             var text = "";
 
-            if (CommonViewModel.SelectedElements.Count == 1) text = CommonViewModel.SelectedElements[0].FullPath;
+            if (CommonViewModel.SelectedElements.Count == 1) text = CommonViewModel.SelectedElements[0].FullName;
             else
             {
                 foreach (var t in CommonViewModel.SelectedElements)
                 {
-                    text += t.FullPath + "\n";
+                    text += t.FullName + "\n";
                 }
             }
 
@@ -131,7 +131,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public void GoToParentDirectory()
         {
-            var parent = _directoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.FullPath);
+            var parent = _directoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.FullName);
             if (parent != null) CommonViewModel.CurrentlyOpenedElement = parent;
         }
 
@@ -140,8 +140,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             var paths = Clipboard.GetFiles();
             string directoryPath;
 
-            if (CommonViewModel.CurrentlyOpenedElement.FullPath.EndsWith("\\")) directoryPath = CommonViewModel.CurrentlyOpenedElement.FullPath;
-            else directoryPath = CommonViewModel.CurrentlyOpenedElement.FullPath + "\\";
+            if (CommonViewModel.CurrentlyOpenedElement.FullName.EndsWith("\\")) directoryPath = CommonViewModel.CurrentlyOpenedElement.FullName;
+            else directoryPath = CommonViewModel.CurrentlyOpenedElement.FullName + "\\";
 
             foreach (var t in paths)
             {
@@ -189,11 +189,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             {
                 if (t is File)
                 {
-                    _fileService.Remove(t.FullPath);
+                    _fileService.Remove(t.FullName);
                 }
                 else if (t is Directory)
                 {
-                    _directoryService.Remove(t.FullPath);
+                    _directoryService.Remove(t.FullName);
                 }
             }
 
@@ -211,7 +211,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             foreach (var t in CommonViewModel.SelectedElements)
             {
-                paths.Add(t.FullPath);
+                paths.Add(t.FullName);
             }
 
             await Task.Run(() => Clipboard.SetFiles(paths, ClipboardFilesState.Cut));

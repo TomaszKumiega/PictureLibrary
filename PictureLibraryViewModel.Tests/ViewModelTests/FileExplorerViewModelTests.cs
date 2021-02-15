@@ -96,7 +96,7 @@ namespace PictureLibraryViewModel.Tests.ViewModelTests
                 new Folder()
                 {
                     Name = "Folder1",
-                    FullPath = "Tests\\Folder1\\"
+                    FullName = "Tests\\Folder1\\"
                 };
 
             var directoriesList = new List<Directory>()
@@ -131,7 +131,7 @@ namespace PictureLibraryViewModel.Tests.ViewModelTests
                 new Folder()
                 {
                     Name = "Folder2",
-                    FullPath = path + "Folder2"
+                    FullName = path + "Folder2"
                 };
 
             var directoriesList = new List<Directory>()

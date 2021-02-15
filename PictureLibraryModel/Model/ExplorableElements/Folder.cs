@@ -16,7 +16,7 @@ namespace PictureLibraryModel.Model
         public Folder(IDirectoryService directoryService, DirectoryInfo directoryInfo) : base(directoryService)
         {
             Name = directoryInfo.Name;
-            FullPath = directoryInfo.FullName;
+            FullName = directoryInfo.FullName;
             Origin = Origin.Local;
         }
 

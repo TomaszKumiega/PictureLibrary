@@ -75,7 +75,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
 
                 var imageFileElement = new XElement("imageFile", new XAttribute("name", i.Name), new XAttribute("extension", i.Extension),
-                    new XAttribute("source", i.FullPath), new XAttribute("creationTime", i.CreationTime.ToString()), new XAttribute("lastAccessTime", i.LastAccessTime.ToString()),
+                    new XAttribute("source", i.FullName), new XAttribute("creationTime", i.CreationTime.ToString()), new XAttribute("lastAccessTime", i.LastAccessTime.ToString()),
                     new XAttribute("lastWriteTime", i.LastWriteTime.ToString()), new XAttribute("size", i.Size.ToString()), new XAttribute("tags", tags));
 
                 imagesElement.Add(imageFileElement);
@@ -153,7 +153,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
                                     var imageFile = new ImageFile();
                                     imageFile.Name = imageElement.Attribute("name").Value;
                                     imageFile.Extension = ImageExtensionHelper.GetExtension(imageElement.Attribute("extension").Value);
-                                    imageFile.FullPath = imageElement.Attribute("source").Value;
+                                    imageFile.FullName = imageElement.Attribute("source").Value;
                                     imageFile.CreationTime = DateTime.Parse(imageElement.Attribute("creationTime").Value);
                                     imageFile.LastAccessTime = DateTime.Parse(imageElement.Attribute("lastAccessTime").Value);
                                     imageFile.LastWriteTime = DateTime.Parse(imageElement.Attribute("lastWriteTime").Value);
@@ -181,8 +181,8 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public async Task AddAsync(Library library)
         {
-            await Task.Run(() => _fileService.Create(library.FullPath));
-            var fileStream = await Task.Run(() => _fileService.OpenFile(library.FullPath));
+            await Task.Run(() => _fileService.Create(library.FullName));
+            var fileStream = await Task.Run(() => _fileService.OpenFile(library.FullName));
 
             await WriteLibraryToStreamAsync(fileStream, library);
         }
@@ -208,7 +208,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             {
                 var stream = await Task.Run(() => _fileService.OpenFile(f));
                 var library = await ReadLibraryFromStreamAsync(stream);
-                library.FullPath = f;
+                library.FullName = f;
                 libraries.Add(library);
             }
 
@@ -230,7 +230,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public async Task RemoveAsync(Library library)
         {
-            await Task.Run(() => _fileService.Remove(library.FullPath));
+            await Task.Run(() => _fileService.Remove(library.FullName));
         }
 
         public async Task RemoveRangeAsync(IEnumerable<Library> libraries)
@@ -244,26 +244,26 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
         public async Task UpdateAsync(Library library)
         {
             if (library == null) throw new ArgumentException();
-            if (!System.IO.File.Exists(library.FullPath)) throw new ArgumentException();
+            if (!System.IO.File.Exists(library.FullName)) throw new ArgumentException();
 
             // Load file for eventual recovery
             XmlDocument document = new XmlDocument();
-            await Task.Run(() => document.Load(library.FullPath));
+            await Task.Run(() => document.Load(library.FullName));
 
             // Remove contents of the file
             string[] text = { "" };
-            await Task.Run(() => System.IO.File.WriteAllLines(library.FullPath, text));
+            await Task.Run(() => System.IO.File.WriteAllLines(library.FullName, text));
 
             try
             {
                 // Write library to the file
-                var stream = _fileService.OpenFile(library.FullPath);
+                var stream = _fileService.OpenFile(library.FullName);
                 await WriteLibraryToStreamAsync(stream, library);
             }
             catch (Exception e)
             {
                 _logger.Error(e, e.Message);
-                await Task.Run(() => document.Save(library.FullPath));
+                await Task.Run(() => document.Save(library.FullName));
             }
         }
     }
