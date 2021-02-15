@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
-    public class FileTreeViewModel : IFileTreeViewModel
+    public class FileTreeViewModel : IExplorableElementsTreeViewModel
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IExplorableElement _selectedNode;
@@ -22,7 +22,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             set
             {
                 _selectedNode = value;
-                (CommonViewModel as IFileExplorerViewModel).CurrentlyOpenedElement = _selectedNode;
+                CommonViewModel.CurrentlyOpenedElement = _selectedNode;
             }
         }
 

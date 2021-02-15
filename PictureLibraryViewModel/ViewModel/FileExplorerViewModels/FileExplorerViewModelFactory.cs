@@ -21,12 +21,12 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             return new FileExplorerToolboxViewModel(_commonVM, new FileService(), new DirectoryService(), clipboard, new CommandFactory());
         }
 
-        public IFileTreeViewModel GetFileTreeViewModel()
+        public IExplorableElementsTreeViewModel GetFileTreeViewModel()
         {
             return new FileTreeViewModel(_commonVM, new DirectoryService());
         }
 
-        public IFilesViewViewModel GetFilesViewViewModel()
+        public IExplorableElementsViewViewModel GetFilesViewViewModel()
         {
             return new FilesViewViewModel(_commonVM);
         }
