@@ -14,9 +14,9 @@ namespace PictureLibraryWPF.CustomControls
 {
     public class MainWindowControlsFactory : IMainWindowControlsFactory
     {
-        private IFilesViewViewModel _filesViewViewModel;
+        private IExplorableElementsViewViewModel _filesViewViewModel;
         private IFileExplorerToolboxViewModel _filesToolboxViewModel;
-        private IFileTreeViewModel _filesTreeViewModel;
+        private IExplorableElementsTreeViewModel _filesTreeViewModel;
 
         public MainWindowControlsFactory(IFileExplorerViewModelFactory factory)
         {
