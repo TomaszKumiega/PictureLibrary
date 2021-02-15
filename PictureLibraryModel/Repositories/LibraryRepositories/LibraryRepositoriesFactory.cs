@@ -10,7 +10,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
     {
         public IRepository<Library> GetLocalLibraryRepository()
         {
-            return new LocalLibraryRepository(new FileService());
+            return new LocalLibraryRepository(new FileService(), new DirectoryService());
         }
     }
 }

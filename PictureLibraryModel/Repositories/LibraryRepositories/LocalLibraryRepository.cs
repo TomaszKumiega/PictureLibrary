@@ -16,12 +16,14 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IFileService _fileService;
+        private IDirectoryService _directoryService;
 
         public static Logger Logger => _logger;
 
-        public LocalLibraryRepository(IFileService fileService)
+        public LocalLibraryRepository(IFileService fileService, IDirectoryService directoryService)
         {
             _fileService = fileService;
+            _directoryService = directoryService;
         }
 
         #region Private methods
@@ -204,7 +206,14 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public async Task<IEnumerable<Library>> GetAllAsync()
         {
-            var filePaths = await Task.Run(() => _fileService.FindFiles("*.plib"));
+            var rootDirectories = _directoryService.GetRootDirectories();
+            var filePaths = new List<string>();
+            
+            foreach(var t in rootDirectories)
+            {
+                filePaths.AddRange(await Task.Run(() => _fileService.FindFiles("*.plib", t.FullName)));
+            }
+
             var libraries = new List<Library>();
 
             foreach (var f in filePaths)
