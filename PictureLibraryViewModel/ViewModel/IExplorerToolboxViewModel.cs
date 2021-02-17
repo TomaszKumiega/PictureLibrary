@@ -13,20 +13,14 @@ namespace PictureLibraryViewModel.ViewModel
         IExplorerViewModel CommonViewModel { get; }
         IClipboardService Clipboard { get; }
         ICommand CopyCommand { get; }
-        ICommand PasteCommand { get; }
-        ICommand CutCommand { get; }
-        ICommand CopyPathCommand { get; }
         ICommand RemoveCommand { get; }
         ICommand RenameCommand { get; }
         ICommand RefreshCommand { get; }
         string SearchText { get; set; }
 
         Task Copy();
-        Task Paste();
-        Task CopyPath();
         Task Remove();
         Task Rename();
         Task Refresh();
-        Task Cut();
     }
 }

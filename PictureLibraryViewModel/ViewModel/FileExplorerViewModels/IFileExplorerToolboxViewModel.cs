@@ -13,8 +13,14 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         ICommand GoToParentDirectoryCommand { get; }
         ICommand BackCommand { get; }
         ICommand ForwardCommand { get; }
+        ICommand PasteCommand { get; }
+        ICommand CutCommand { get; }
+        ICommand CopyPathCommand { get; }
 
         Task CreateDirectory();
         void GoToParentDirectory();
+        Task Paste();
+        Task CopyPath();
+        Task Cut();
     }
 }
