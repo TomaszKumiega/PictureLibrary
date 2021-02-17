@@ -14,17 +14,17 @@ namespace PictureLibraryViewModel.Commands
             return new CopyCommand(viewModel);
         }
 
-        public ICommand GetPasteCommand(IExplorerToolboxViewModel viewModel)
+        public ICommand GetPasteCommand(IFileExplorerToolboxViewModel viewModel)
         {
             return new PasteCommand(viewModel);
         }
 
-        public ICommand GetCutCommand(IExplorerToolboxViewModel viewModel)
+        public ICommand GetCutCommand(IFileExplorerToolboxViewModel viewModel)
         {
             return new CutCommand(viewModel);
         }
 
-        public ICommand GetCopyPathCommand(IExplorerToolboxViewModel viewModel)
+        public ICommand GetCopyPathCommand(IFileExplorerToolboxViewModel viewModel)
         {
             return new CopyPathCommand(viewModel);
         }

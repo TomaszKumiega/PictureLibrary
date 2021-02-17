@@ -1,4 +1,5 @@
 ﻿using PictureLibraryViewModel.ViewModel;
+using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace PictureLibraryViewModel.Commands
     public class CopyPathCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private IExplorerToolboxViewModel _viewModel;
+        private IFileExplorerToolboxViewModel _viewModel;
 
-        public CopyPathCommand(IExplorerToolboxViewModel viewModel)
+        public CopyPathCommand(IFileExplorerToolboxViewModel viewModel)
         {
             _viewModel = viewModel;
         }
