@@ -12,13 +12,11 @@ namespace PictureLibraryViewModel.ViewModel
     { 
         IExplorerViewModel CommonViewModel { get; }
         IClipboardService Clipboard { get; }
-        ICommand CopyCommand { get; }
         ICommand RemoveCommand { get; }
         ICommand RenameCommand { get; }
         ICommand RefreshCommand { get; }
         string SearchText { get; set; }
 
-        Task Copy();
         Task Remove();
         Task Rename();
         Task Refresh();
