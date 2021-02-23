@@ -53,7 +53,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
             foreach (var t in library.Tags)
             {
-                var tagElement = new XElement("tag", new XAttribute("name", t.Name), new XAttribute("description", t.Description));
+                var tagElement = new XElement("tag", new XAttribute("name", t.Name), new XAttribute("description", t.Description), new XAttribute("color", t.Color));
 
                 tagsElement.Add(tagElement);
             }
@@ -147,7 +147,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
                                     tag.Origin = Origin.Local;
                                     tag.ParentLibrary = library;
                                     tag.FullName = "Local\\" + library.Name + "\\" + tag.Name + "\\";
-
+                                    tag.Color = tagElement.Attribute("color").Value;
                                     tags.Add(tag);
                                 }
                                 break;
