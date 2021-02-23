@@ -156,4 +156,7 @@
   <data name="Search" xml:space="preserve">
     <value>Search...</value>
   </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags:</value>
+  </data>
 </root>

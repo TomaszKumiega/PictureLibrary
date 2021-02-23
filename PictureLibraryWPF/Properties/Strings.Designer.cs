@@ -176,5 +176,14 @@ namespace PublicResXFileCodeGenerator {
                 return ResourceManager.GetString("Search", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags:.
+        /// </summary>
+        public static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
     }
 }
