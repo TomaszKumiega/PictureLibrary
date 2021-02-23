@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icons\AddIcon.png" />
     <None Remove="Icons\AddToLibraryIcon.png" />
     <None Remove="Icons\BackIcon.png" />
     <None Remove="Icons\CloseIcon.png" />
@@ -44,6 +45,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icons\AddIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Icons\AddToLibraryIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
