@@ -62,7 +62,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             }
         }
 
-        public async Task LoadCurrentlyShownElements(Tag tag)
+        public async Task LoadCurrentlyShownElements(IEnumerable<Tag> tags)
         {
             if (CurrentlyOpenedElement == null) return;
             if (!(CurrentlyOpenedElement is Library)) return;
@@ -71,9 +71,12 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             if(CurrentlyOpenedElement.Origin == Origin.Local)
             {
-                foreach (var t in (CurrentlyOpenedElement as Library).Images)
+                foreach (var i in (CurrentlyOpenedElement as Library).Images)
                 {
-                    await Task.Run(() => CurrentlyShownElements.Add(t));
+                    foreach(var t in tags)
+                    {
+                        if(i.Tags.Contains(t)) await Task.Run(() => CurrentlyShownElements.Add(i));
+                    }
                 }
             }
 

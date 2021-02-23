@@ -8,6 +8,6 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
     public interface ILibraryExplorerViewModel : IExplorerViewModel
     {
-        Task LoadCurrentlyShownElements(Tag tag);
+        Task LoadCurrentlyShownElements(IEnumerable<Tag> tags);
     }
 }
