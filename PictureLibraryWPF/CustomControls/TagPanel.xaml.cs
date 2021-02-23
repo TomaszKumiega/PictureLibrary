@@ -31,7 +31,10 @@ namespace PictureLibraryWPF.CustomControls
         {
             var viewModel = DataContext as ITagPanelViewModel;
 
-            viewModel.SelectedTag = TagsListView.SelectedItem as Tag;
+            foreach(var t in TagsListView.SelectedItems)
+            {
+                viewModel.SelectedTags.Add((t as ListViewItem).DataContext as Tag);
+            }
         }
 
         private void AddTagButton_Click(object sender, RoutedEventArgs e)
