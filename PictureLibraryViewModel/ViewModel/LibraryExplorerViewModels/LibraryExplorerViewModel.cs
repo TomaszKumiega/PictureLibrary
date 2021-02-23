@@ -49,24 +49,37 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             }
             else if (CurrentlyOpenedElement is Library)
             {
-                foreach (var t in (CurrentlyOpenedElement as Library).Tags)
+                if(CurrentlyOpenedElement.Origin == Origin.Local)
                 {
-                    CurrentlyShownElements.Add(t);
-                }
-            }
-            else if (CurrentlyOpenedElement is Tag)
-            {
-                if((CurrentlyOpenedElement as Tag).Origin == Origin.Local)
-                {
-                    foreach(var t in (CurrentlyOpenedElement as Tag).ParentLibrary.Images)
+                    foreach (var t in (CurrentlyOpenedElement as Library).Images)
                     {
                         CurrentlyShownElements.Add(t);
                     }
                 }
 
-                //TODO: Add images from diffrent origins
+                //TODO: Add icons to imageFiles from diffrent origins than local
+
             }
         }
+
+        public async Task LoadCurrentlyShownElements(Tag tag)
+        {
+            if (CurrentlyOpenedElement == null) return;
+            if (!(CurrentlyOpenedElement is Library)) return;
+
+            CurrentlyShownElements.Clear();
+
+            if(CurrentlyOpenedElement.Origin == Origin.Local)
+            {
+                foreach (var t in (CurrentlyOpenedElement as Library).Images)
+                {
+                    await Task.Run(() => CurrentlyShownElements.Add(t));
+                }
+            }
+
+            //TODO: Add icons to imageFiles from diffrent origins than local
+        }
+    
 
         public void Back()
         {
