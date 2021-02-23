@@ -9,7 +9,7 @@ namespace PictureLibraryViewModel.Commands
 {
     public class CommandFactory : ICommandFactory
     {
-        public ICommand GetCopyCommand(IExplorerToolboxViewModel viewModel)
+        public ICommand GetCopyCommand(IFileExplorerToolboxViewModel viewModel)
         {
             return new CopyCommand(viewModel);
         }
