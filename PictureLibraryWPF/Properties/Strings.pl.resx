@@ -123,6 +123,9 @@
   <data name="AddTagTitle" xml:space="preserve">
     <value>Dodaj Tag</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
   <data name="Copy" xml:space="preserve">
     <value>Kopiuj</value>
   </data>
