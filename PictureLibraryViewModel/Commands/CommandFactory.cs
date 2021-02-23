@@ -1,4 +1,5 @@
 ﻿using PictureLibraryViewModel.ViewModel;
+using PictureLibraryViewModel.ViewModel.DialogViewModels;
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,11 @@ namespace PictureLibraryViewModel.Commands
         public ICommand GetRefreshCommand(IExplorerToolboxViewModel viewModel)
         {
             return new RefreshCommand(viewModel);
+        }
+
+        public ICommand GetAddTagCommand(IAddTagDialogViewModel viewModel)
+        {
+            return new AddTagCommand(viewModel);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PictureLibraryViewModel.ViewModel;
+using PictureLibraryViewModel.ViewModel.DialogViewModels;
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,5 +21,6 @@ namespace PictureLibraryViewModel.Commands
         ICommand GetForwardCommand(IFileExplorerToolboxViewModel viewModel);
         ICommand GetGoToParentDirectoryCommand(IFileExplorerToolboxViewModel viewModel);
         ICommand GetRefreshCommand(IExplorerToolboxViewModel viewModel);
+        ICommand GetAddTagCommand(IAddTagDialogViewModel viewModel);
     }
 }
