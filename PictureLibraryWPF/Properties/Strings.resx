@@ -120,6 +120,9 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="AddTagTitle" xml:space="preserve">
+    <value>Add Tag</value>
+  </data>
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
@@ -155,6 +158,12 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search...</value>
+  </data>
+  <data name="TagColor" xml:space="preserve">
+    <value>Color:</value>
+  </data>
+  <data name="TagName" xml:space="preserve">
+    <value>Name:</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Tags:</value>
