@@ -101,5 +101,13 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             _currentlyOpenedElement = ExplorerHistory.ForwardStack.Pop();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
         }
+
+        public async Task AddTagAsync(Tag tag)
+        {
+            var library = (CurrentlyOpenedElement as Library);
+            library.Tags.Add(tag);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
+            await _libraryRepository.UpdateAsync(library);
+        }
     }
 }
