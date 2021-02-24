@@ -18,10 +18,12 @@
     <None Remove="Icons\CopyPathIcon.png" />
     <None Remove="Icons\CutIcon.png" />
     <None Remove="Icons\DiskIcon.png" />
+    <None Remove="Icons\ExportImagesIcon.png" />
     <None Remove="Icons\FolderIcon.png" />
     <None Remove="Icons\ForwardIcon.png" />
     <None Remove="Icons\GrayFolderIcon.png" />
     <None Remove="Icons\HomeIcon.png" />
+    <None Remove="Icons\ImportImagesIcon.png" />
     <None Remove="Icons\LibraryIcon.png" />
     <None Remove="Icons\MaximizeIcon.png" />
     <None Remove="Icons\MinimizeIcon.png" />
@@ -73,6 +75,9 @@
     <Resource Include="Icons\DiskIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icons\ExportImagesIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Icons\FolderIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -83,6 +88,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\HomeIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\ImportImagesIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\LibraryIcon.png">
