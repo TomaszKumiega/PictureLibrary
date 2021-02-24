@@ -22,9 +22,9 @@ namespace PictureLibraryViewModel.Commands
             return true;
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
-            _viewModel.Add();
+            await _viewModel.AddAsync();
         }
     }
 }
