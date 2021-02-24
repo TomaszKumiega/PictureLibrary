@@ -205,6 +205,15 @@ namespace PublicResXFileCodeGenerator {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        public static string TagDescription {
+            get {
+                return ResourceManager.GetString("TagDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name:.
         /// </summary>
         public static string TagName {

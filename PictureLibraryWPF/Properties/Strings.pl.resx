@@ -165,6 +165,9 @@
   <data name="TagColor" xml:space="preserve">
     <value>Kolor:</value>
   </data>
+  <data name="TagDescription" xml:space="preserve">
+    <value>Opis:</value>
+  </data>
   <data name="TagName" xml:space="preserve">
     <value>Nazwa:</value>
   </data>
