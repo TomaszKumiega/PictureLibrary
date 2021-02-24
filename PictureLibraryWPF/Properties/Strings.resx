@@ -135,11 +135,17 @@
   <data name="Cut" xml:space="preserve">
     <value>Cut</value>
   </data>
+  <data name="ExportImages" xml:space="preserve">
+    <value>Export images</value>
+  </data>
   <data name="Files" xml:space="preserve">
     <value>Files</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="ImportImages" xml:space="preserve">
+    <value>Import images</value>
   </data>
   <data name="Library" xml:space="preserve">
     <value>Library</value>
@@ -161,6 +167,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search...</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Share</value>
   </data>
   <data name="TagColor" xml:space="preserve">
     <value>Color:</value>

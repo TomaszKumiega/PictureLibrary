@@ -115,6 +115,15 @@ namespace PublicResXFileCodeGenerator {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export images.
+        /// </summary>
+        public static string ExportImages {
+            get {
+                return ResourceManager.GetString("ExportImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Files.
         /// </summary>
         public static string Files {
@@ -129,6 +138,15 @@ namespace PublicResXFileCodeGenerator {
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import images.
+        /// </summary>
+        public static string ImportImages {
+            get {
+                return ResourceManager.GetString("ImportImages", resourceCulture);
             }
         }
         
@@ -192,6 +210,15 @@ namespace PublicResXFileCodeGenerator {
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share.
+        /// </summary>
+        public static string Share {
+            get {
+                return ResourceManager.GetString("Share", resourceCulture);
             }
         }
         
