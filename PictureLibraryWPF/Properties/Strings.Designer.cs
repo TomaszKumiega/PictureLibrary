@@ -70,6 +70,15 @@ namespace PublicResXFileCodeGenerator {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Images.
+        /// </summary>
+        public static string AddImages {
+            get {
+                return ResourceManager.GetString("AddImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Tag.
         /// </summary>
         public static string AddTagTitle {

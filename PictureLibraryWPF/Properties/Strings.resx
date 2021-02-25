@@ -120,6 +120,9 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="AddImages" xml:space="preserve">
+    <value>Add Images</value>
+  </data>
   <data name="AddTagTitle" xml:space="preserve">
     <value>Add Tag</value>
   </data>

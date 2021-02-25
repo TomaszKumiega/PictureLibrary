@@ -120,6 +120,9 @@
   <data name="Add" xml:space="preserve">
     <value>Dodaj</value>
   </data>
+  <data name="AddImages" xml:space="preserve">
+    <value>Dodaj Obrazy</value>
+  </data>
   <data name="AddTagTitle" xml:space="preserve">
     <value>Dodaj Tag</value>
   </data>
