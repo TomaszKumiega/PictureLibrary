@@ -27,7 +27,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             Libraries = Task.Run(() => LibraryRepository.GetAllAsync()).Result.ToList();
         }
 
-        public async Task Add()
+        public async Task AddAsync()
         {
             // Add images to library folder
 

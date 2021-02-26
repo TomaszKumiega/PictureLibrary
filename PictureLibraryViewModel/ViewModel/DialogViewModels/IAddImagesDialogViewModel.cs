@@ -9,7 +9,8 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
     public interface IAddImagesDialogViewModel
     {
         List<Library> Libraries { get; }
+        Library SelectedLibrary { get; set; }
 
-        Task Add();
+        Task AddAsync();
     }
 }
