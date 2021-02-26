@@ -22,5 +22,6 @@ namespace PictureLibraryViewModel.Commands
         ICommand GetGoToParentDirectoryCommand(IFileExplorerToolboxViewModel viewModel);
         ICommand GetRefreshCommand(IExplorerToolboxViewModel viewModel);
         ICommand GetAddTagCommand(IAddTagDialogViewModel viewModel);
+        ICommand GetAddImagesCommand(IAddImagesDialogViewModel viewModel);
     }
 }

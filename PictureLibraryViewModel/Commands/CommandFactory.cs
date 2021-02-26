@@ -69,5 +69,10 @@ namespace PictureLibraryViewModel.Commands
         {
             return new AddTagCommand(viewModel);
         }
+
+        public ICommand GetAddImagesCommand(IAddImagesDialogViewModel viewModel)
+        {
+            return new AddImagesCommand(viewModel);
+        }
     }
 }
