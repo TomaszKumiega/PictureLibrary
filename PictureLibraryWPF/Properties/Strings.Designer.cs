@@ -79,6 +79,15 @@ namespace PublicResXFileCodeGenerator {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Library.
+        /// </summary>
+        public static string AddLibrary {
+            get {
+                return ResourceManager.GetString("AddLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Tag.
         /// </summary>
         public static string AddTagTitle {

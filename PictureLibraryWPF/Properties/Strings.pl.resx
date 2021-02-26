@@ -123,6 +123,9 @@
   <data name="AddImages" xml:space="preserve">
     <value>Dodaj Obrazy</value>
   </data>
+  <data name="AddLibrary" xml:space="preserve">
+    <value>Dodaj Bibliotekę</value>
+  </data>
   <data name="AddTagTitle" xml:space="preserve">
     <value>Dodaj Tag</value>
   </data>
