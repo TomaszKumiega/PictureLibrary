@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryViewModel.Commands;
+using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,6 @@ using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
-    public class InvalidInputEventArgs :EventArgs
-    {
-        public string PropertyName { get; set; }
-
-        public InvalidInputEventArgs(string propertyName)
-        {
-            PropertyName = propertyName;
-        }
-    }
-
-    public delegate void InvalidInputEventHandler(object sender, InvalidInputEventArgs args);
-
     public class AddTagDialogViewModel : IAddTagDialogViewModel
     {
         private string _name;
