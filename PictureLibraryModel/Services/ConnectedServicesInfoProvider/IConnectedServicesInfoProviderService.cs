@@ -1,4 +1,6 @@
-﻿using PictureLibraryModel.Model.ConnectedServices;
+﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.ConnectedServices;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
@@ -8,6 +10,7 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
         ConnectedServiceInfo GoogleDriveInfo { get; set; }
         ConnectedServiceInfo RemoteServerInfo { get; set; }
 
+        List<Origin> GetAllAvailableOrigins();
         void LoadServicesInfo();
         Task SaveServicesInfoAsync();
     }

@@ -1,4 +1,5 @@
 ﻿using NLog;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.ConnectedServices;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryModel.Services.StringEncryption;
@@ -124,6 +125,15 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
                 _logger.Error(e, e.Message);
                 throw new Exception("Couldn't save the settings");
             }
+        }
+
+        public List<Origin> GetAllAvailableOrigins()
+        {
+            return new List<Origin>()
+            {
+                Origin.Local,
+                Origin.RemoteServer
+            };
         }
     }
 }
