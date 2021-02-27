@@ -156,6 +156,9 @@
   <data name="Library" xml:space="preserve">
     <value>Biblioteka</value>
   </data>
+  <data name="Location" xml:space="preserve">
+    <value>Lokalizacja:</value>
+  </data>
   <data name="NewFolder" xml:space="preserve">
     <value>Nowy folder</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="Properties" xml:space="preserve">
     <value>Właściwości</value>
+  </data>
+  <data name="RemoteServer" xml:space="preserve">
+    <value>Serwer Zdalny</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Usuń</value>
@@ -188,5 +194,8 @@
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Tagi:</value>
+  </data>
+  <data name="ThisComputer" xml:space="preserve">
+    <value>Ten Komputer</value>
   </data>
 </root>

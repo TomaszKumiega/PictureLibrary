@@ -178,6 +178,15 @@ namespace PublicResXFileCodeGenerator {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location:.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New folder.
         /// </summary>
         public static string NewFolder {
@@ -201,6 +210,15 @@ namespace PublicResXFileCodeGenerator {
         public static string Properties {
             get {
                 return ResourceManager.GetString("Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote Server.
+        /// </summary>
+        public static string RemoteServer {
+            get {
+                return ResourceManager.GetString("RemoteServer", resourceCulture);
             }
         }
         
@@ -273,6 +291,15 @@ namespace PublicResXFileCodeGenerator {
         public static string Tags {
             get {
                 return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This Computer.
+        /// </summary>
+        public static string ThisComputer {
+            get {
+                return ResourceManager.GetString("ThisComputer", resourceCulture);
             }
         }
     }
