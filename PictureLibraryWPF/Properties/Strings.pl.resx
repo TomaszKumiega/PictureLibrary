@@ -144,6 +144,9 @@
   <data name="ExportImages" xml:space="preserve">
     <value>Eksportuj obrazy</value>
   </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>Ścieżka pliku:</value>
+  </data>
   <data name="Files" xml:space="preserve">
     <value>Pliki</value>
   </data>
