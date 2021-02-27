@@ -1,4 +1,5 @@
-﻿using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
+﻿using PictureLibraryViewModel.ViewModel.Events;
+using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
