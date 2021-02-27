@@ -20,6 +20,7 @@
     <None Remove="Icons\DiskIcon.png" />
     <None Remove="Icons\ExportImagesIcon.png" />
     <None Remove="Icons\FolderIcon.png" />
+    <None Remove="Icons\FolderIconDark.png" />
     <None Remove="Icons\ForwardIcon.png" />
     <None Remove="Icons\GrayFolderIcon.png" />
     <None Remove="Icons\HomeIcon.png" />
@@ -79,6 +80,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\FolderIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\FolderIconDark.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\ForwardIcon.png">
