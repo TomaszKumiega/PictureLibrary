@@ -9,7 +9,7 @@ namespace PictureLibraryWPF.CustomControls
     {
         ElementsTree GetLibrariesTree();
         ElementsView GetLibrariesView();
-        LibraryExplorerToolbar GetLibraryExplorerToolbar(IClipboardService clipboard);
+        LibraryExplorerToolbar GetLibraryExplorerToolbar();
         TagPanel GetTagPanel();
     }
 }

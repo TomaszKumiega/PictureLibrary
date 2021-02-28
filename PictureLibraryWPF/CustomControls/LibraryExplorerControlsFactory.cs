@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
+using PictureLibraryWPF.Clipboard;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,9 +27,9 @@ namespace PictureLibraryWPF.CustomControls
             return new ElementsView(_viewModelFactory.GetLibraryViewViewModel());
         }
 
-        public LibraryExplorerToolbar GetLibraryExplorerToolbar(IClipboardService clipboard)
+        public LibraryExplorerToolbar GetLibraryExplorerToolbar()
         {
-            return new LibraryExplorerToolbar(_viewModelFactory.GetLibraryExplorerToolboxViewModel(clipboard));
+            return new LibraryExplorerToolbar(_viewModelFactory.GetLibraryExplorerToolboxViewModel(new WPFClipboard()));
         }
 
         public TagPanel GetTagPanel()
