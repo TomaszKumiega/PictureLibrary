@@ -57,9 +57,8 @@ namespace PictureLibraryViewModel
 
             #region View
             builder.RegisterType<WPFClipboard>().As<IClipboardService>();
-
             builder.RegisterType<DialogFactory>().As<IDialogFactory>();
-
+            builder.RegisterType<LibraryExplorerControlsFactory>().As<ILibraryExplorerControlsFactory>();
             builder.RegisterType<FileExplorerControlsFactory>().As<IFileExplorerControlsFactory>();
             builder.RegisterType<MainWindow>().AsSelf();
             #endregion
