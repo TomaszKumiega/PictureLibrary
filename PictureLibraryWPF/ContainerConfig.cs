@@ -14,6 +14,9 @@ using PictureLibraryModel.Services.SettingsProvider;
 using PictureLibraryModel.Model.ConnectedServices;
 using PictureLibraryModel.Services.ConnectedServicesInfoProvider;
 using PictureLibraryModel.Services.StringEncryption;
+using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
+using PictureLibraryViewModel.ViewModel.DialogViewModels;
+using PictureLibraryWPF.Dialogs;
 
 namespace PictureLibraryViewModel
 {
@@ -46,10 +49,16 @@ namespace PictureLibraryViewModel
 
             builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
             builder.RegisterType<FileExplorerViewModelFactory>().As<IFileExplorerViewModelFactory>();
+
+            builder.RegisterType<LibraryExplorerViewModel>().As<ILibraryExplorerViewModel>().SingleInstance();
+            builder.RegisterType<DialogViewModelFactory>().As<IDialogViewModelFactory>();
+            builder.RegisterType<LibraryExplorerViewModelFactory>().As<ILibraryExplorerViewModelFactory>();
             #endregion
 
             #region View
             builder.RegisterType<WPFClipboard>().As<IClipboardService>();
+
+            builder.RegisterType<DialogFactory>().As<IDialogFactory>();
 
             builder.RegisterType<MainWindowControlsFactory>().As<IMainWindowControlsFactory>();
             builder.RegisterType<MainWindow>().AsSelf();
