@@ -17,6 +17,7 @@ using PictureLibraryModel.Services.StringEncryption;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using PictureLibraryViewModel.ViewModel.DialogViewModels;
 using PictureLibraryWPF.Dialogs;
+using PictureLibraryModel.Repositories;
 
 namespace PictureLibraryViewModel
 {
@@ -34,7 +35,7 @@ namespace PictureLibraryViewModel
 
             #region Model 
             builder.RegisterType<LibraryRepositoriesFactory>().As<ILibraryRepositoriesFactory>();
-
+            builder.RegisterType<LibraryRepository>().As<IRepository<Library>>();
             builder.RegisterType<SettingsProviderService>().As<ISettingsProviderService>().SingleInstance();
             builder.RegisterType<ConnectedServicesInfoProviderService>().As<IConnectedServicesInfoProviderService>().SingleInstance();
             builder.RegisterType<StringEncryptionService>().As<IStringEncryptionService>();
