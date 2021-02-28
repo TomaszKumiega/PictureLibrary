@@ -61,7 +61,7 @@ namespace PictureLibraryModel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 7A6DEF7EDC685B4787E727EFA2E675740C16771B6BAB72E1.
+        ///   Looks up a localized string similar to 9F0DE131245024E886CB1E2E00FB58F8.
         /// </summary>
         internal static string EncryptionPrivateKey {
             get {
