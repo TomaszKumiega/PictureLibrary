@@ -12,13 +12,13 @@ using System.Windows.Controls;
 
 namespace PictureLibraryWPF.CustomControls
 {
-    public class MainWindowControlsFactory : IMainWindowControlsFactory
+    public class FileExplorerControlsFactory : IFileExplorerControlsFactory
     {
         private IExplorableElementsViewViewModel _filesViewViewModel;
         private IFileExplorerToolboxViewModel _filesToolboxViewModel;
         private IExplorableElementsTreeViewModel _filesTreeViewModel;
 
-        public MainWindowControlsFactory(IFileExplorerViewModelFactory factory)
+        public FileExplorerControlsFactory(IFileExplorerViewModelFactory factory)
         {
             _filesViewViewModel = factory.GetFilesViewViewModel();
             _filesToolboxViewModel = factory.GetFileToolboxViewModel(new WPFClipboard());

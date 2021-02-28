@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace PictureLibraryWPF.CustomControls
 {
-    public interface IMainWindowControlsFactory
+    public interface IFileExplorerControlsFactory
     {
         ElementsTree GetFileElementsTree();
         ElementsView GetFileElementsView();

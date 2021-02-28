@@ -22,10 +22,10 @@ namespace PictureLibraryWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IMainWindowControlsFactory _controlsFactory;
+        private IFileExplorerControlsFactory _controlsFactory;
         private List<Control> CurrentPageControls { get; }
 
-        public MainWindow(IMainWindowControlsFactory controlsFactory)
+        public MainWindow(IFileExplorerControlsFactory controlsFactory)
         {
             _controlsFactory = controlsFactory;
             CurrentPageControls = new List<Control>();

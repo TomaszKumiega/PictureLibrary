@@ -60,7 +60,7 @@ namespace PictureLibraryViewModel
 
             builder.RegisterType<DialogFactory>().As<IDialogFactory>();
 
-            builder.RegisterType<MainWindowControlsFactory>().As<IMainWindowControlsFactory>();
+            builder.RegisterType<FileExplorerControlsFactory>().As<IFileExplorerControlsFactory>();
             builder.RegisterType<MainWindow>().AsSelf();
             #endregion
 
