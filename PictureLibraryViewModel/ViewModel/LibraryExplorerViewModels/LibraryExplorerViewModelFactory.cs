@@ -32,5 +32,10 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         {
             return new LibraryViewViewModel(CommonViewModel);
         }
+
+        public ITagPanelViewModel GetTagPanelViewModel()
+        {
+            return new TagPanelViewModel(CommonViewModel);
+        }
     }
 }

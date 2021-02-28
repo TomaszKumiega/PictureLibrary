@@ -10,5 +10,6 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         ILibraryExplorerToolboxViewModel GetLibraryExplorerToolboxViewModel(IClipboardService clipboard);
         IExplorableElementsTreeViewModel GetLibraryTreeViewModel();
         IExplorableElementsViewViewModel GetLibraryViewViewModel();
+        ITagPanelViewModel GetTagPanelViewModel();
     }
 }
