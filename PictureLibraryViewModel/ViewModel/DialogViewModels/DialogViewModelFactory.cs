@@ -17,7 +17,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         public DialogViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices)
         {
             _commonViewModel = commonVM;
-            _connectedServices = connectedServices
+            _connectedServices = connectedServices;
         }
 
         public IAddLibraryDialogViewModel GetAddLibraryDialogViewModel()
