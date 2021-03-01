@@ -25,7 +25,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
         public IExplorableElementsTreeViewModel GetLibraryTreeViewModel()
         {
-            return new LibraryTreeViewModel(new LibraryRepository(ConnectedServices, new LibraryRepositoriesFactory()));
+            return new LibraryTreeViewModel(new LibraryRepository(ConnectedServices, new LibraryRepositoriesFactory()), CommonViewModel);
         }
 
         public IExplorableElementsViewViewModel GetLibraryViewViewModel()

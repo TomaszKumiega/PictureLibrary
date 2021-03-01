@@ -29,10 +29,10 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             }
         }
 
-        public LibraryTreeViewModel(IRepository<Library> libraryRepository)
+        public LibraryTreeViewModel(IRepository<Library> libraryRepository, IExplorerViewModel commonVM)
         {
             _libraryRepository = libraryRepository;
-
+            CommonViewModel = commonVM;
             InitializeLibraryTree();
         }
 
