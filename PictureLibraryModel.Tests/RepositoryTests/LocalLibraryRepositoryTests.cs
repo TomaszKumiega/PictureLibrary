@@ -131,7 +131,7 @@ namespace PictureLibraryModel.Tests.RepositoryTests
                 .Returns(rootDirectories);
 
             var fileServiceMock = new Mock<IFileService>();
-            fileServiceMock.Setup(x => x.FindFiles("*.plib", rootDirectory.FullName))
+            fileServiceMock.Setup(x => x.FindFilesAsync("*.plib", rootDirectory.FullName))
                 .Returns(paths);
             fileServiceMock.Setup(x => x.OpenFile(paths[0]))
                 .Returns(memoryStream1);
@@ -180,7 +180,7 @@ namespace PictureLibraryModel.Tests.RepositoryTests
 
             var fileServiceMock = new Mock<IFileService>();
 
-            fileServiceMock.Setup(x => x.FindFiles("*.plib", rootDirectory.FullName))
+            fileServiceMock.Setup(x => x.FindFilesAsync("*.plib", rootDirectory.FullName))
                 .Returns(paths);
             fileServiceMock.Setup(x => x.OpenFile(paths[0]))
                 .Returns(memoryStream1);

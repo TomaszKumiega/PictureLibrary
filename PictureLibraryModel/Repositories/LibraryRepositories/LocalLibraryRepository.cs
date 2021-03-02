@@ -211,7 +211,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             
             foreach(var t in rootDirectories)
             {
-                filePaths.AddRange(await Task.Run(() => _fileService.FindFiles("*.plib", t.FullName)));
+                filePaths.AddRange(await _fileService.FindFilesAsync("*.plib", t.FullName));
             }
 
             var libraries = new List<Library>();

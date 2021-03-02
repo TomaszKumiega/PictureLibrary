@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {
     public interface IFileService : IFileSystemService
     {
         Stream OpenFile(string path);
-        List<string> FindFiles(string searchPattern, string directory);
+        Task<IEnumerable<string>> FindFilesAsync(string searchPattern, string directory);
     }
 }

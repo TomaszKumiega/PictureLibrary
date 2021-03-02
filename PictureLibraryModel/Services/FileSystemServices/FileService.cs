@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using File = System.IO.File;
 
 namespace PictureLibraryModel.Services.FileSystemServices
@@ -28,11 +29,24 @@ namespace PictureLibraryModel.Services.FileSystemServices
             return File.Exists(path);
         }
 
-        public List<string> FindFiles(string searchPattern, string directory)
+        public async Task<IEnumerable<string>> FindFilesAsync(string searchPattern, string directory)
         {
-            var files = System.IO.Directory.GetFiles(directory, searchPattern, SearchOption.AllDirectories);
+            var files = new List<string>();
+            string[] subDirectories = null;
 
-            return files.ToList();
+            try
+            {
+                files.AddRange((await Task.Run(() => System.IO.Directory.GetFiles(directory, searchPattern))));
+                subDirectories = await Task.Run(() => System.IO.Directory.GetDirectories(directory));
+            }
+            catch { }
+
+            foreach(var t in subDirectories)
+            {
+                files.AddRange(await FindFilesAsync(searchPattern, t));
+            }
+
+            return files;
         }
 
         public override FileSystemInfo GetInfo(string path)
