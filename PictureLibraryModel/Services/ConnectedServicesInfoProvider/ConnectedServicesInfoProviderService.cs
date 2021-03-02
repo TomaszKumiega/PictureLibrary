@@ -43,6 +43,15 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
 
                 var fileStream = _fileService.OpenFile("servicesInfo.xml");
 
+                try
+                {
+                    var document = XDocument.Load(fileStream);
+                }
+                catch
+                {
+                    return;
+                }
+
                 XmlReaderSettings xmlSettings = new XmlReaderSettings();
                 xmlSettings.DtdProcessing = DtdProcessing.Parse;
 
