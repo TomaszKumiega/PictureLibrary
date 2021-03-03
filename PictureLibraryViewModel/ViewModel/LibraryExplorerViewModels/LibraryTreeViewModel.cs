@@ -33,17 +33,16 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         {
             _libraryRepository = libraryRepository;
             CommonViewModel = commonVM;
-            InitializeLibraryTree();
         }
 
-        private void InitializeLibraryTree()
+        public async Task InitializeLibraryTree()
         {
             ExplorableElementsTree = new ObservableCollection<IExplorableElement>();
             IEnumerable<Library> libraries = new List<Library>();
 
             try
             {
-                libraries = Task.Run(() => _libraryRepository.GetAllAsync()).Result;
+                libraries = await _libraryRepository.GetAllAsync();
             }
             catch(Exception e)
             {

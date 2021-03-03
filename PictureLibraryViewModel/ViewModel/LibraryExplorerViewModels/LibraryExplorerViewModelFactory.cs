@@ -5,6 +5,7 @@ using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
@@ -23,9 +24,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             return new LibraryExplorerToolboxViewModel(CommonViewModel, new CommandFactory(), clipboard);
         }
 
-        public IExplorableElementsTreeViewModel GetLibraryTreeViewModel()
+        public async Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModel()
         {
-            return new LibraryTreeViewModel(new LibraryRepository(ConnectedServices, new LibraryRepositoriesFactory()), CommonViewModel);
+            var viewModel = new LibraryTreeViewModel(new LibraryRepository(ConnectedServices, new LibraryRepositoriesFactory()), CommonViewModel);
+            await viewModel.InitializeLibraryTree();
+            return viewModel;
         }
 
         public IExplorableElementsViewViewModel GetLibraryViewViewModel()

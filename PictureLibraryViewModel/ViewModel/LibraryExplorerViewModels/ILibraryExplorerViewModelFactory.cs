@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
     public interface ILibraryExplorerViewModelFactory
     {
         ILibraryExplorerToolboxViewModel GetLibraryExplorerToolboxViewModel(IClipboardService clipboard);
-        IExplorableElementsTreeViewModel GetLibraryTreeViewModel();
+        Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModel();
         IExplorableElementsViewViewModel GetLibraryViewViewModel();
         ITagPanelViewModel GetTagPanelViewModel();
     }

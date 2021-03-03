@@ -4,6 +4,7 @@ using PictureLibraryWPF.Clipboard;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryWPF.CustomControls
 {
@@ -17,9 +18,9 @@ namespace PictureLibraryWPF.CustomControls
         }
 
 
-        public ElementsTree GetLibrariesTree()
+        public async Task<ElementsTree> GetLibrariesTree()
         {
-            return new ElementsTree(_viewModelFactory.GetLibraryTreeViewModel());
+            return new ElementsTree(await _viewModelFactory.GetLibraryTreeViewModel());
         }
 
         public ElementsView GetLibrariesView()

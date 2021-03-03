@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryWPF.CustomControls
 {
     public interface ILibraryExplorerControlsFactory
     {
-        ElementsTree GetLibrariesTree();
+        Task<ElementsTree> GetLibrariesTree();
         ElementsView GetLibrariesView();
         LibraryExplorerToolbar GetLibraryExplorerToolbar();
         TagPanel GetTagPanel();
