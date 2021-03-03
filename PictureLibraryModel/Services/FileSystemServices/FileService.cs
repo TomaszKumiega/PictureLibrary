@@ -41,6 +41,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             }
             catch { }
 
+            if(subDirectories != null)
             foreach(var t in subDirectories)
             {
                 files.AddRange(await FindFilesAsync(searchPattern, t));
