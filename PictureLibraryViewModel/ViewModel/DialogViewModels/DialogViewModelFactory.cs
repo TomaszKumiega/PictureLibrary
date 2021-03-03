@@ -6,6 +6,7 @@ using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
@@ -30,9 +31,12 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             return new AddTagDialogViewModel(_commonViewModel, new CommandFactory());
         }
 
-        public IAddImagesDialogViewModel GetImagesDialogViewModel(List<ImageFile> selectedImages)
+        public async Task<IAddImagesDialogViewModel> GetImagesDialogViewModel(List<ImageFile> selectedImages)
         {
-            return new AddImagesDialogViewModel(_commonViewModel, new LibraryRepository(_connectedServices, new LibraryRepositoriesFactory()), selectedImages, new CommandFactory());
+            var viewModel = new AddImagesDialogViewModel(_commonViewModel, new LibraryRepository(_connectedServices, new LibraryRepositoriesFactory()), selectedImages, new CommandFactory());
+            await viewModel.Initialize();
+
+            return viewModel;
         }
     }
 }

@@ -3,6 +3,7 @@ using PictureLibraryViewModel.ViewModel.DialogViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryWPF.Dialogs
 {
@@ -15,9 +16,9 @@ namespace PictureLibraryWPF.Dialogs
             _viewModelFactory = viewModelFactory;
         }
 
-        public AddImagesDialog GetAddImagesDialog(List<ImageFile> selectedImages)
+        public async Task<AddImagesDialog> GetAddImagesDialog(List<ImageFile> selectedImages)
         {
-            return new AddImagesDialog(_viewModelFactory.GetImagesDialogViewModel(selectedImages));
+            return new AddImagesDialog(await _viewModelFactory.GetImagesDialogViewModel(selectedImages));
         }
 
         public AddLibraryDialog GetAddLibraryDialog()

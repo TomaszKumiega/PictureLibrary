@@ -22,7 +22,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand AddImagesCommand { get; }
-        public List<Library> Libraries { get; }
+        public List<Library> Libraries { get; private set; }
         public Library SelectedLibrary 
         {
             get => _selectedLibrary; 
@@ -41,13 +41,16 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             AddImagesCommand = commandFactory.GetAddImagesCommand(this);
 
             PropertyChanged += OnSelectedLibraryChanged;
-
-            Libraries = Task.Run(() => LibraryRepository.GetAllAsync()).Result.ToList();
         }
 
         private void OnSelectedLibraryChanged(object sender, PropertyChangedEventArgs args)
         {
             (AddImagesCommand as AddImagesCommand).RaiseCanExecuteChanged(this, EventArgs.Empty);
+        }
+
+        public async Task Initialize()
+        {
+            Libraries = (await LibraryRepository.GetAllAsync()).ToList();
         }
 
         public async Task AddAsync()

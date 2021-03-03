@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
@@ -9,6 +10,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
     {
         IAddTagDialogViewModel GetAddTagDialogViewModel();
         IAddLibraryDialogViewModel GetAddLibraryDialogViewModel();
-        IAddImagesDialogViewModel GetImagesDialogViewModel(List<ImageFile> selectedImages);
+        Task<IAddImagesDialogViewModel> GetImagesDialogViewModel(List<ImageFile> selectedImages);
     }
 }

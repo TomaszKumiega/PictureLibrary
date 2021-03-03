@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryWPF.Dialogs
 {
     public interface IDialogFactory
     {
-        AddImagesDialog GetAddImagesDialog(List<ImageFile> selectedFiles);
+        Task<AddImagesDialog> GetAddImagesDialog(List<ImageFile> selectedFiles);
         AddLibraryDialog GetAddLibraryDialog();
         AddTagDialog GetAddTagDialog();
     }
