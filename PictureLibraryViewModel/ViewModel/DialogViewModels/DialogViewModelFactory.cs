@@ -12,30 +12,30 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
     public class DialogViewModelFactory : IDialogViewModelFactory
     {
-        private ILibraryExplorerViewModel _commonViewModel;
-        private IConnectedServicesInfoProviderService _connectedServices;
-        public ILibraryRepositoriesFactory LibraryRepositoriesFactory { get; }
+        private ILibraryExplorerViewModel CommonViewModel { get; }
+        private IConnectedServicesInfoProviderService ConnectedServices { get; }
+        private ILibraryRepositoriesFactory LibraryRepositoriesFactory { get; }
 
         public DialogViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoriesFactory libraryRepositoriesFactory)
         {
-            _commonViewModel = commonVM;
-            _connectedServices = connectedServices;
+            CommonViewModel = commonVM;
+            ConnectedServices = connectedServices;
             LibraryRepositoriesFactory = libraryRepositoriesFactory;
         }
 
         public IAddLibraryDialogViewModel GetAddLibraryDialogViewModel()
         {
-            return new AddLibraryDialogViewModel(_commonViewModel, new LibraryRepository(_connectedServices, LibraryRepositoriesFactory), _connectedServices);
+            return new AddLibraryDialogViewModel(CommonViewModel, new LibraryRepository(ConnectedServices, LibraryRepositoriesFactory), ConnectedServices);
         }
 
         public IAddTagDialogViewModel GetAddTagDialogViewModel()
         {
-            return new AddTagDialogViewModel(_commonViewModel, new CommandFactory());
+            return new AddTagDialogViewModel(CommonViewModel, new CommandFactory());
         }
 
         public async Task<IAddImagesDialogViewModel> GetImagesDialogViewModel(List<ImageFile> selectedImages)
         {
-            var viewModel = new AddImagesDialogViewModel(_commonViewModel, new LibraryRepository(_connectedServices, LibraryRepositoriesFactory), selectedImages, new CommandFactory());
+            var viewModel = new AddImagesDialogViewModel(CommonViewModel, new LibraryRepository(ConnectedServices, LibraryRepositoriesFactory), selectedImages, new CommandFactory());
             await viewModel.Initialize();
 
             return viewModel;
