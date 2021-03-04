@@ -1,5 +1,7 @@
-﻿using PictureLibraryViewModel.ViewModel;
+﻿using PictureLibraryModel.Model;
+using PictureLibraryViewModel.ViewModel;
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
+using PictureLibraryWPF.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,10 +22,27 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class FileExplorerToolbar : UserControl
     {
-        public FileExplorerToolbar(IFileExplorerToolboxViewModel viewModel)
+        private IDialogFactory DialogFactory { get; }
+
+        public FileExplorerToolbar(IFileExplorerToolboxViewModel viewModel, IDialogFactory dialogFactory)
         {
+            DialogFactory = dialogFactory;
             DataContext = viewModel;
             InitializeComponent();
+        }
+
+        private async void AddToLibraryButton_Click(object sender, RoutedEventArgs e)
+        {
+            var viewModel = DataContext as IFileExplorerToolboxViewModel;
+            var images = new List<ImageFile>();
+
+            foreach(var t in viewModel.CommonViewModel.SelectedElements)
+            {
+                if (t is ImageFile) images.Add(t as ImageFile);
+            }
+
+            var dialog = await DialogFactory.GetAddImagesDialog(images);
+            dialog.Show();
         }
     }
 }
