@@ -36,7 +36,8 @@ namespace PictureLibraryModel.Services.SettingsProvider
                     {
                         AccentColor = "#0066ff",
                         Language = CultureInfo.CurrentCulture.Name,
-                        LightMode = true
+                        LightMode = true,
+                        ImportedLibraries = new List<string>()
                     };
 
                 Task.Run(() => SaveSettingsAsync()).Wait();
@@ -62,19 +63,26 @@ namespace PictureLibraryModel.Services.SettingsProvider
                                 case "accent_color":
                                     {
                                         var accentColorElement = XNode.ReadFrom(reader) as XElement;
-                                        settings.AccentColor = accentColorElement.Value;
+                                        settings.AccentColor = accentColorElement.Attribute("value").Value;
                                     }
                                     break;
                                 case "language":
                                     {
                                         var languageElement = XNode.ReadFrom(reader) as XElement;
-                                        settings.Language = languageElement.Value;
+                                        settings.Language = languageElement.Attribute("value").Value;
                                     }
                                     break;
                                 case "light_mode":
                                     {
                                         var lightModeElement = XNode.ReadFrom(reader) as XElement;
-                                        settings.LightMode = Convert.ToBoolean(lightModeElement.Value);
+                                        settings.LightMode = Convert.ToBoolean(lightModeElement.Attribute("value").Value);
+                                    }
+                                    break;
+                                case "library":
+                                    {
+                                        if (settings.ImportedLibraries == null) settings.ImportedLibraries = new List<string>();
+                                        var libraryElement = XNode.ReadFrom(reader) as XElement;
+                                        settings.ImportedLibraries.Add(libraryElement.Attribute("path").Value);
                                     }
                                     break;
                             }
@@ -95,10 +103,18 @@ namespace PictureLibraryModel.Services.SettingsProvider
             var accentColor = new XElement("accent_color", new XAttribute("value", Settings.AccentColor));
             var language = new XElement("language", new XAttribute("value", Settings.Language));
             var lightMode = new XElement("light_mode", new XAttribute("value", Settings.LightMode));
+            var importedLibraries = new XElement("imported_libraries");
+
+            foreach (var t in Settings.ImportedLibraries)
+            {
+                var libraryElement = new XElement("library", new XAttribute("path", t));
+                importedLibraries.Add(libraryElement);
+            }
 
             settings.Add(accentColor);
             settings.Add(language);
             settings.Add(lightMode);
+            settings.Add(importedLibraries);
 
             var fileStream = _fileService.OpenFile("settings.xml");
 
