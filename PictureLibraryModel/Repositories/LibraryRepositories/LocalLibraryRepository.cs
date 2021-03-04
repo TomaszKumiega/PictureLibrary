@@ -1,6 +1,7 @@
 ﻿using NLog;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.FileSystemServices;
+using PictureLibraryModel.Services.SettingsProvider;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,13 +18,15 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IFileService _fileService;
         private IDirectoryService _directoryService;
+        private ISettingsProviderService _settingsProvider;
 
         public static Logger Logger => _logger;
 
-        public LocalLibraryRepository(IFileService fileService, IDirectoryService directoryService)
+        public LocalLibraryRepository(IFileService fileService, IDirectoryService directoryService, ISettingsProviderService settingsProvider)
         {
             _fileService = fileService;
             _directoryService = directoryService;
+            _settingsProvider = settingsProvider;
         }
 
         #region Private methods
@@ -189,6 +192,9 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             await Task.Run(() => _fileService.Create(library.FullName));
             var fileStream = await Task.Run(() => _fileService.OpenFile(library.FullName));
 
+            _settingsProvider.Settings.ImportedLibraries.Add(library.FullName);
+            await _settingsProvider.SaveSettingsAsync();
+
             await WriteLibraryToStreamAsync(fileStream, library);
         }
 
@@ -206,22 +212,27 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public async Task<IEnumerable<Library>> GetAllAsync()
         {
-            var rootDirectories = _directoryService.GetRootDirectories();
-            var filePaths = new List<string>();
-            
-            foreach(var t in rootDirectories)
-            {
-                filePaths.AddRange(await _fileService.FindFilesAsync("*.plib", t.FullName));
-            }
+            if (_settingsProvider.Settings.ImportedLibraries == null) throw new Exception("Error loading libraries. Imported libraries are null.");
 
             var libraries = new List<Library>();
 
-            foreach (var f in filePaths)
+            foreach (var t in _settingsProvider.Settings.ImportedLibraries)
             {
-                var stream = await Task.Run(() => _fileService.OpenFile(f));
-                var library = await ReadLibraryFromStreamAsync(stream);
-                library.FullName = f;
-                libraries.Add(library);
+                try
+                {
+                    var stream = await Task.Run(() => _fileService.OpenFile(t));
+                    var library = await ReadLibraryFromStreamAsync(stream);
+                    library.FullName = t;
+                    libraries.Add(library);
+                }
+                catch(FileNotFoundException e)
+                {
+                    _logger.Debug(e, "Library file not found.");
+                }
+                catch(Exception e)
+                {
+                    _logger.Debug(e, "Couldnt read " + t);
+                }
             }
 
             return libraries;
