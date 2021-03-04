@@ -1,6 +1,7 @@
 ﻿using PictureLibraryModel.Repositories.LibraryRepositories;
 using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryModel.Services.ConnectedServicesInfoProvider;
+using PictureLibraryModel.Services.SettingsProvider;
 using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,13 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     {
         private ILibraryExplorerViewModel CommonViewModel { get; }
         private IConnectedServicesInfoProviderService ConnectedServices { get; }
-        public LibraryExplorerViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices)
+        private ILibraryRepositoriesFactory LibraryRepositoriesFactory { get; }
+
+        public LibraryExplorerViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoriesFactory libraryRepositoriesFactory)
         {
             CommonViewModel = commonVM;
             ConnectedServices = connectedServices;
+            LibraryRepositoriesFactory = libraryRepositoriesFactory;
         }
 
         public ILibraryExplorerToolboxViewModel GetLibraryExplorerToolboxViewModel(IClipboardService clipboard)
@@ -26,7 +30,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
         public async Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModel()
         {
-            var viewModel = new LibraryTreeViewModel(new LibraryRepository(ConnectedServices, new LibraryRepositoriesFactory()), CommonViewModel);
+            var viewModel = new LibraryTreeViewModel(new LibraryRepository(ConnectedServices, LibraryRepositoriesFactory), CommonViewModel);
             await viewModel.InitializeLibraryTree();
             return viewModel;
         }
