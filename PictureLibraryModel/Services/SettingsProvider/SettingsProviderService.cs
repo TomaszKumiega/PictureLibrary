@@ -29,8 +29,6 @@ namespace PictureLibraryModel.Services.SettingsProvider
         {
             if (!_fileService.Exists("settings.xml"))
             {
-                _fileService.Create("settings.xml");
-
                 Settings =
                     new Settings()
                     {
@@ -39,10 +37,6 @@ namespace PictureLibraryModel.Services.SettingsProvider
                         LightMode = true,
                         ImportedLibraries = new List<string>()
                     };
-
-                Task.Run(() => SaveSettingsAsync()).Wait();
-
-                _logger.Info("Settings file created");
             }
             else
             {
@@ -116,10 +110,11 @@ namespace PictureLibraryModel.Services.SettingsProvider
             settings.Add(lightMode);
             settings.Add(importedLibraries);
 
-            var fileStream = _fileService.OpenFile("settings.xml");
-
             try
             {
+               if(_fileService.Exists("settings.xml")) _fileService.Create("settings.xml");
+                var fileStream = _fileService.OpenFile("settings.xml");
+
                 using (var streamWriter = new StreamWriter(fileStream))
                 {
                     var xmlWriter = new XmlTextWriter(streamWriter);
@@ -129,6 +124,8 @@ namespace PictureLibraryModel.Services.SettingsProvider
 
                     await Task.Run(() => settings.Save(xmlWriter));
                 }
+
+                fileStream.Close();
             }
             catch (Exception e)
             {

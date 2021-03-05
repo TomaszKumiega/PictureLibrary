@@ -32,11 +32,7 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
 
         public void LoadServicesInfo()
         {
-            if (!_fileService.Exists("servicesInfo.xml"))
-            {
-                _fileService.Create("servicesInfo.xml");
-            }
-            else
+            if (_fileService.Exists("servicesInfo.xml"))
             {
                 var remoteServerInfo = new ConnectedServiceInfo();
                 var googleDriveInfo = new ConnectedServiceInfo();
@@ -114,7 +110,6 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
             }
 
             if (!_fileService.Exists("servicesInfo.xml")) _fileService.Create("servicesInfo.xml");
-
             var fileStream = _fileService.OpenFile("servicesInfo.xml");
 
             try
