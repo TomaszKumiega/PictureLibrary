@@ -1,6 +1,8 @@
 ﻿using PictureLibraryModel.Services.Clipboard;
+using PictureLibraryViewModel.ViewModel.DialogViewModels;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using PictureLibraryWPF.Clipboard;
+using PictureLibraryWPF.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,32 +12,34 @@ namespace PictureLibraryWPF.CustomControls
 {
     public class LibraryExplorerControlsFactory : ILibraryExplorerControlsFactory
     {
-        public ILibraryExplorerViewModelFactory _viewModelFactory;
+        private ILibraryExplorerViewModelFactory ViewModelFactory { get; }
+        private IDialogFactory DialogFactory { get; }
 
-        public LibraryExplorerControlsFactory(ILibraryExplorerViewModelFactory viewModelFactory)
+        public LibraryExplorerControlsFactory(ILibraryExplorerViewModelFactory viewModelFactory, IDialogFactory dialogFactory)
         {
-            _viewModelFactory = viewModelFactory;
+            ViewModelFactory = viewModelFactory;
+            DialogFactory = dialogFactory;
         }
 
 
         public async Task<ElementsTree> GetLibrariesTree()
         {
-            return new ElementsTree(await _viewModelFactory.GetLibraryTreeViewModel());
+            return new ElementsTree(await ViewModelFactory.GetLibraryTreeViewModel());
         }
 
         public ElementsView GetLibrariesView()
         {
-            return new ElementsView(_viewModelFactory.GetLibraryViewViewModel());
+            return new ElementsView(ViewModelFactory.GetLibraryViewViewModel());
         }
 
         public LibraryExplorerToolbar GetLibraryExplorerToolbar()
         {
-            return new LibraryExplorerToolbar(_viewModelFactory.GetLibraryExplorerToolboxViewModel(new WPFClipboard()));
+            return new LibraryExplorerToolbar(ViewModelFactory.GetLibraryExplorerToolboxViewModel(new WPFClipboard()), DialogFactory);
         }
 
         public TagPanel GetTagPanel()
         {
-            return new TagPanel(_viewModelFactory.GetTagPanelViewModel());
+            return new TagPanel(ViewModelFactory.GetTagPanelViewModel());
         }
     }
 }
