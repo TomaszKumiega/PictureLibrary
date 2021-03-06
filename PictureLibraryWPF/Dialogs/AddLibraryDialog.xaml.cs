@@ -24,8 +24,8 @@ namespace PictureLibraryWPF.Dialogs
         public AddLibraryDialog(IAddLibraryDialogViewModel viewModel)
         {
             DataContext = viewModel;
-            LocationComboBox.DataContext = viewModel.Origins;
             InitializeComponent();
+            LocationComboBox.DataContext = viewModel.Origins;
             InitializeLocationComboBox();
         }
 
