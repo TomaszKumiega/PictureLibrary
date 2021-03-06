@@ -19,6 +19,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         event InvalidInputEventHandler InvalidInput;
 
+        bool CanAdd();
         Task AddAsync();
     }
 }

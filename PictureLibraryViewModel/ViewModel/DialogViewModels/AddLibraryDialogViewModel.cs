@@ -50,6 +50,18 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             else return true;
         }
 
+        public bool CanAdd()
+        {
+            if(IsNameValid() && IsOriginValid())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public async Task AddAsync()
         {
             if(!IsNameValid()) InvalidInput?.Invoke(this, new InvalidInputEventArgs("Name"));
