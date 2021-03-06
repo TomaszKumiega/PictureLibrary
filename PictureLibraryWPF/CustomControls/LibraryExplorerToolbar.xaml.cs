@@ -1,4 +1,5 @@
 ﻿using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
+using PictureLibraryWPF.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,10 +20,19 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class LibraryExplorerToolbar : UserControl
     {
-        public LibraryExplorerToolbar(ILibraryExplorerToolboxViewModel viewModel)
+        private IDialogFactory DialogFactory { get; }
+
+        public LibraryExplorerToolbar(ILibraryExplorerToolboxViewModel viewModel, IDialogFactory dialogFactory)
         {
             DataContext = viewModel;
+            DialogFactory = dialogFactory;
             InitializeComponent();
+        }
+
+        private void AddLibraryButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = DialogFactory.GetAddLibraryDialog();
+            dialog.Show();
         }
     }
 }
