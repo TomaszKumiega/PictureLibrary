@@ -50,7 +50,16 @@ namespace PictureLibraryWPF.Dialogs
 
         private void LocationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var viewModel = DataContext as IAddLibraryDialogViewModel;
 
+            if(LocationComboBox.SelectedIndex == -1)
+            {
+                viewModel.Origin = null;
+            }
+            else
+            {
+                viewModel.Origin = viewModel.Origins[LocationComboBox.SelectedIndex];
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
