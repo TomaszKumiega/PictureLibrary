@@ -2,6 +2,7 @@
 using PictureLibraryModel.Model.RemoteServer;
 using PictureLibraryModel.Repositories;
 using PictureLibraryModel.Services.ConnectedServicesInfoProvider;
+using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
@@ -24,6 +26,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         public Origin? Origin { get; set; }
         public List<Origin> Origins { get => _connectedServices.GetAllAvailableOrigins(); }
         public List<User> Owners { get; }
+        public ICommand AddLibraryCommand { get; }
 
         public event InvalidInputEventHandler InvalidInput;
 
@@ -48,18 +51,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         {
             if (Origin == null) return false;
             else return true;
-        }
-
-        public bool CanAdd()
-        {
-            if(IsNameValid() && IsOriginValid())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         public async Task AddAsync()

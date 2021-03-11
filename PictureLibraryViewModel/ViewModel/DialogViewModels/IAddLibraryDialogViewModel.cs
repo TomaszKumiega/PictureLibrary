@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
@@ -16,10 +17,10 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         Origin? Origin { get; set; }
         List<Origin> Origins { get; }
         List<User> Owners { get; }
+        ICommand AddLibraryCommand { get; }
 
         event InvalidInputEventHandler InvalidInput;
 
-        bool CanAdd();
         Task AddAsync();
     }
 }
