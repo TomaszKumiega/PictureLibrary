@@ -24,7 +24,7 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            return ViewModel.CanAdd();
+            return true;
         }
 
         public async void Execute(object parameter)
