@@ -75,7 +75,7 @@ namespace PictureLibraryModel.Model
             }
         }
 
-        public virtual async Task Expand()
+        protected virtual async Task Expand()
         {
             foreach(var t in SubDirectories)
             {
@@ -83,7 +83,7 @@ namespace PictureLibraryModel.Model
             }
         }
 
-        public virtual void Collapse()
+        protected virtual void Collapse()
         {
             foreach(var t in SubDirectories)
             {
