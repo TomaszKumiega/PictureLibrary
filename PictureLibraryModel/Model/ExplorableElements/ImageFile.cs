@@ -83,9 +83,8 @@ namespace PictureLibraryModel.Model
 
         }
 
-        public static bool IsFileAnImage(string path)
+        public static bool IsFileAnImage(FileInfo fileInfo)
         {
-            var fileInfo = new FileInfo(path);
             var extension = ImageExtensionHelper.GetExtension(fileInfo.Extension);
 
             if (extension == ImageExtension.NONE) return false;

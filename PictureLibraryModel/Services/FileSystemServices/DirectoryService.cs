@@ -50,9 +50,10 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
             foreach (string t in filePaths)
             {
-                if (ImageFile.IsFileAnImage(t) && UserHasAccessToTheFile(t))
+                var fileInfo = new FileInfo(t);
+
+                if (ImageFile.IsFileAnImage(fileInfo) && UserHasAccessToTheFile(t))
                 {
-                    var fileInfo = new FileInfo(t);
                     var imageFileBuilder = new LocalFileSystemImageFileBuilder(fileInfo);
                     var imageFileDirector = new ImageFileDirector(imageFileBuilder);
                     imageFileDirector.MakeImageFile();
