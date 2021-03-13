@@ -1,5 +1,6 @@
 ﻿using Moq;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.Settings;
 using PictureLibraryModel.Repositories.LibraryRepositories;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryModel.Services.SettingsProvider;
@@ -74,11 +75,21 @@ namespace PictureLibraryModel.Tests.RepositoryTests
 
         #region AddAsync Tests
         [Fact]
-        public async void AddAsync_ShouldWriteLibraryToTheStream_WhenLibraryIsInitialized()
+        public async void AddAsync_ShouldWriteLibraryToTheStreamAndSaveLibraryPathToSettings()
         {
             var fileServiceMock = new Mock<IFileService>();
             var directoryServiceMock = new Mock<IDirectoryService>();
             var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var settings = new Settings()
+            {
+                ImportedLibraries = new List<string>()
+            };
+
+
+            settingsProviderMock.Setup(x => x.Settings)
+                .Returns(settings);
+            settingsProviderMock.Setup(x => x.SaveSettingsAsync())
+                .Verifiable();
 
             var memoryStream = new MemoryStream();
             var library = GetLibrary();
@@ -100,6 +111,8 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             var name = doc.Element("library").Attribute("name");
             var description = doc.Element("library").Attribute("description");
 
+            settingsProviderMock.Verify(x => x.SaveSettingsAsync());
+            settings.ImportedLibraries.Contains(library.FullName);
             Assert.True(name.Value == library.Name);
             Assert.True(description.Value == library.Description);
         }
@@ -120,7 +133,15 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             byte[] buffer2 = Encoding.UTF8.GetBytes(xml[1]);
             var memoryStream1 = new MemoryStream(buffer);
             var memoryStream2 = new MemoryStream(buffer2);
+
+            var settings = new Settings()
+            {
+                ImportedLibraries = paths.ToList()
+            };
+
             var settingsProviderMock = new Mock<ISettingsProviderService>();
+            settingsProviderMock.Setup(x => x.Settings)
+                .Returns(settings);
 
             var rootDirectory =
                 new Folder()
@@ -139,8 +160,6 @@ namespace PictureLibraryModel.Tests.RepositoryTests
                 .Returns(rootDirectories);
 
             var fileServiceMock = new Mock<IFileService>();
-            fileServiceMock.Setup(x => x.FindFilesAsync("*.plib", rootDirectory.FullName))
-                .Returns(Task.FromResult(paths));
             fileServiceMock.Setup(x => x.OpenFile(paths.ToList()[0]))
                 .Returns(memoryStream1);
             fileServiceMock.Setup(x => x.OpenFile(paths.ToList()[1]))
@@ -171,7 +190,15 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             byte[] buffer2 = Encoding.UTF8.GetBytes(xml[1]);
             var memoryStream1 = new MemoryStream(buffer);
             var memoryStream2 = new MemoryStream(buffer2);
+
+            var settings = new Settings()
+            {
+                ImportedLibraries = paths.ToList()
+            };
+
             var settingsProviderMock = new Mock<ISettingsProviderService>();
+            settingsProviderMock.Setup(x => x.Settings)
+                .Returns(settings);
 
             var rootDirectory =
                 new Folder()
@@ -180,7 +207,6 @@ namespace PictureLibraryModel.Tests.RepositoryTests
                     FullName = "\\"
                 };
     
-
             var rootDirectories = new List<Model.Directory>
             {
                 rootDirectory
@@ -192,8 +218,6 @@ namespace PictureLibraryModel.Tests.RepositoryTests
 
             var fileServiceMock = new Mock<IFileService>();
 
-            fileServiceMock.Setup(x => x.FindFilesAsync("*.plib", rootDirectory.FullName))
-                .Returns(Task.FromResult(paths));
             fileServiceMock.Setup(x => x.OpenFile(paths.ToList()[0]))
                 .Returns(memoryStream1);
             fileServiceMock.Setup(x => x.OpenFile(paths.ToList()[1]))
