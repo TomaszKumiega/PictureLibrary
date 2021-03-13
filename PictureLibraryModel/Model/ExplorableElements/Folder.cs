@@ -13,6 +13,11 @@ namespace PictureLibraryModel.Model
 
         }
 
+        public Folder(IDirectoryService directoryService) : base(directoryService)
+        {
+
+        }
+
         public Folder(IDirectoryService directoryService, DirectoryInfo directoryInfo) : base(directoryService)
         {
             Name = directoryInfo.Name;
