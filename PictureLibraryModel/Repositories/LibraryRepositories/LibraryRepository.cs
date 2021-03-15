@@ -65,16 +65,6 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             return libraries;
         }
 
-        public Task<Library> GetByPathAsync(string path)
-        {
-            throw new NotSupportedException();
-        }
-
-        public Task RemoveAsync(string path)
-        {
-            throw new NotSupportedException();
-        }
-
         public async Task RemoveAsync(Library entity)
         {
             switch (entity.Origin)
