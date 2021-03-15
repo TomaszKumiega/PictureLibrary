@@ -42,7 +42,7 @@ namespace PictureLibraryWPF.CustomControls
             }
 
             var dialog = await DialogFactory.GetAddImagesDialog(images);
-            dialog.Show();
+            dialog.ShowDialog();
         }
     }
 }

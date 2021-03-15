@@ -32,7 +32,7 @@ namespace PictureLibraryWPF.CustomControls
         private void AddLibraryButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = DialogFactory.GetAddLibraryDialog();
-            dialog.Show();
+            dialog.ShowDialog();
         }
     }
 }
