@@ -79,5 +79,10 @@ namespace PictureLibraryWPF.Dialogs
                 viewModel.FullName = dialog.SelectedPath;
             }
         }
+
+        private void TitleBarRectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
     }
 }
