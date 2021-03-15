@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.FileSystemServices;
+using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryModel.Services.SettingsProvider;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public IRepository<Library> GetLocalLibraryRepository()
         {
-            return new LocalLibraryRepository(new FileService(), new DirectoryService(), SettingsProvider);
+            return new LocalLibraryRepository(new FileService(), new DirectoryService(), SettingsProvider, new LibraryFileService());
         }
     }
 }
