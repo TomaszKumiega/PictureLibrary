@@ -37,5 +37,10 @@ namespace PictureLibraryWPF.Dialogs
         {
             this.Close();
         }
+
+        private void TitleBarRectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
     }
 }
