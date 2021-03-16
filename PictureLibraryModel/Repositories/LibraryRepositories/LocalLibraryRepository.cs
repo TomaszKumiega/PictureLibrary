@@ -18,17 +18,14 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IFileService _fileService;
-        private IDirectoryService _directoryService;
         private ISettingsProviderService _settingsProvider;
         private ILibraryFileService _libraryFileService;
 
         public static Logger Logger => _logger;
 
-        public LocalLibraryRepository(IFileService fileService, IDirectoryService directoryService, 
-            ISettingsProviderService settingsProvider, ILibraryFileService libraryFileService)
+        public LocalLibraryRepository(IFileService fileService, ISettingsProviderService settingsProvider, ILibraryFileService libraryFileService)
         {
             _fileService = fileService;
-            _directoryService = directoryService;
             _settingsProvider = settingsProvider;
             _libraryFileService = libraryFileService;
         }

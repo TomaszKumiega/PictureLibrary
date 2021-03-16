@@ -19,7 +19,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public IRepository<Library> GetLocalLibraryRepository()
         {
-            return new LocalLibraryRepository(new FileService(), new DirectoryService(), SettingsProvider, new LibraryFileService());
+            return new LocalLibraryRepository(new FileService(), SettingsProvider, new LibraryFileService());
         }
     }
 }
