@@ -9,12 +9,12 @@ namespace PictureLibraryViewModel.Commands
 {
     public class ForwardCommand : ICommand
     {
-        private IFileExplorerToolboxViewModel _viewModel;
+        private IFileExplorerToolboxViewModel ViewModel { get; }
         public event EventHandler CanExecuteChanged;
 
         public ForwardCommand(IFileExplorerToolboxViewModel viewModel)
         {
-            _viewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         public void OnExecuteChanged()
@@ -24,12 +24,12 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            return (_viewModel.CommonViewModel as IFileExplorerViewModel).ExplorerHistory.ForwardStack.Count > 0;
+            return (ViewModel.CommonViewModel as IFileExplorerViewModel).ExplorerHistory.ForwardStack.Count > 0;
         }
 
         public void Execute(object parameter)
         {
-            (_viewModel.CommonViewModel as IFileExplorerViewModel).Forward();
+            (ViewModel.CommonViewModel as IFileExplorerViewModel).Forward();
         }
     }
 }

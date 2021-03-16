@@ -15,19 +15,19 @@ namespace PictureLibraryModel.Services.SettingsProvider
     public class SettingsProviderService : ISettingsProviderService
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private IFileService _fileService;
+        private IFileService FileService { get; }
 
         public Settings Settings { get; private set; }
 
         public SettingsProviderService(IFileService fileService)
         {
-            _fileService = fileService;
+            FileService = fileService;
             LoadSettings();
         }
 
         private void LoadSettings()
         {
-            if (!_fileService.Exists("settings.xml"))
+            if (!FileService.Exists("settings.xml"))
             {
                 Settings =
                     new Settings()
@@ -41,7 +41,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
             else
             {
                 var settings = new Settings();
-                var fileStream = _fileService.OpenFile("settings.xml");
+                var fileStream = FileService.OpenFile("settings.xml");
 
                 XmlReaderSettings xmlSettings = new XmlReaderSettings();
                 xmlSettings.DtdProcessing = DtdProcessing.Parse;
@@ -112,8 +112,8 @@ namespace PictureLibraryModel.Services.SettingsProvider
 
             try
             {
-               if(_fileService.Exists("settings.xml")) _fileService.Create("settings.xml");
-                var fileStream = _fileService.OpenFile("settings.xml");
+               if(FileService.Exists("settings.xml")) FileService.Create("settings.xml");
+                var fileStream = FileService.OpenFile("settings.xml");
 
                 using (var streamWriter = new StreamWriter(fileStream))
                 {

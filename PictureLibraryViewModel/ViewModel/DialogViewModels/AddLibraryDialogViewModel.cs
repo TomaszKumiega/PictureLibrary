@@ -16,15 +16,15 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
     public class AddLibraryDialogViewModel : IAddLibraryDialogViewModel
     {
-        private ILibraryExplorerViewModel _commonViewModel;
-        private IRepository<Library> _libraryRepository;
-        private IConnectedServicesInfoProviderService _connectedServices;
+        private ILibraryExplorerViewModel CommonViewModel { get; }
+        private IRepository<Library> LibraryRepository { get; }
+        private IConnectedServicesInfoProviderService ConnectedServices { get; }
 
         public string Name { get; set; }
         public string Description { get; set; }
         public string FullName { get; set; }
         public Origin? Origin { get; set; }
-        public List<Origin> Origins { get => _connectedServices.GetAllAvailableOrigins(); }
+        public List<Origin> Origins { get => ConnectedServices.GetAllAvailableOrigins(); }
         public List<User> Owners { get; }
         public ICommand AddLibraryCommand { get; }
 
@@ -32,9 +32,9 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         public AddLibraryDialogViewModel(ILibraryExplorerViewModel commonVM, IRepository<Library> libraryRepository, IConnectedServicesInfoProviderService connectedServices)
         {
-            _commonViewModel = commonVM;
-            _libraryRepository = libraryRepository;
-            _connectedServices = connectedServices;
+            CommonViewModel = commonVM;
+            LibraryRepository = libraryRepository;
+            ConnectedServices = connectedServices;
         }
 
         private bool IsNameValid()
@@ -67,8 +67,8 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
             if (Origin == PictureLibraryModel.Model.Origin.Local) library.FullName = FullName;
 
-            await _libraryRepository.AddAsync(library);
-            await _commonViewModel.LoadCurrentlyShownElements();
+            await LibraryRepository.AddAsync(library);
+            await CommonViewModel.LoadCurrentlyShownElements();
         }
     }
 }

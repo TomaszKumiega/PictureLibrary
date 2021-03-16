@@ -8,12 +8,12 @@ namespace PictureLibraryViewModel.Commands
 {
     public class AddImagesCommand : ICommand
     {
-        private IAddImagesDialogViewModel _viewModel;
+        private IAddImagesDialogViewModel ViewModel { get; }
         public event EventHandler CanExecuteChanged;
 
         public AddImagesCommand(IAddImagesDialogViewModel viewModel)
         {
-            _viewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         public void RaiseCanExecuteChanged(object sender, EventArgs args)
@@ -23,12 +23,12 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            return _viewModel.SelectedLibrary != null;
+            return ViewModel.SelectedLibrary != null;
         }
 
         public async void Execute(object parameter)
         {
-            await _viewModel.AddAsync();
+            await ViewModel.AddAsync();
         }
     }
 }

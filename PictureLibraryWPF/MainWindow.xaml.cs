@@ -23,14 +23,14 @@ namespace PictureLibraryWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IFileExplorerControlsFactory _fileExplorerControlsFactory;
-        private ILibraryExplorerControlsFactory _libraryExplorerControlsFactory;
+        private IFileExplorerControlsFactory FileExplorerControlsFactory { get; }
+        private ILibraryExplorerControlsFactory LibraryExplorerControlsFactory { get; }
         private List<Control> CurrentPageControls { get; }
 
         public MainWindow(IFileExplorerControlsFactory fileExplorerControlsFactory, ILibraryExplorerControlsFactory libraryExplorerControlsFactory)
         {
-            _fileExplorerControlsFactory = fileExplorerControlsFactory;
-            _libraryExplorerControlsFactory = libraryExplorerControlsFactory;
+            FileExplorerControlsFactory = fileExplorerControlsFactory;
+            LibraryExplorerControlsFactory = libraryExplorerControlsFactory;
             CurrentPageControls = new List<Control>();
 
             InitializeComponent();
@@ -57,7 +57,7 @@ namespace PictureLibraryWPF
             ToolBarShadow.Fill = new SolidColorBrush(Color.FromArgb(29, 31, 33, 1)); // change rectangle color to #2b2d30
 
             // Add files tree to the grid
-            var filesTree = _fileExplorerControlsFactory.GetFileElementsTree();
+            var filesTree = FileExplorerControlsFactory.GetFileElementsTree();
             Grid.Children.Add(filesTree);
             filesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
             filesTree.VerticalAlignment = VerticalAlignment.Stretch;
@@ -65,7 +65,7 @@ namespace PictureLibraryWPF
             Grid.SetRow(filesTree, 8);
 
             // Add files view to the grid
-            var filesView = _fileExplorerControlsFactory.GetFileElementsView();
+            var filesView = FileExplorerControlsFactory.GetFileElementsView();
             MainPanelGrid.Children.Add(filesView);
             filesView.HorizontalAlignment = HorizontalAlignment.Stretch;
             filesView.VerticalAlignment = VerticalAlignment.Stretch;
@@ -74,7 +74,7 @@ namespace PictureLibraryWPF
             Grid.SetColumnSpan(filesView, 2);
 
             // Add file explorer toolbar to the grid
-            var toolbar = _fileExplorerControlsFactory.GetFileExplorerToolbar();
+            var toolbar = FileExplorerControlsFactory.GetFileExplorerToolbar();
             MainPanelGrid.Children.Add(toolbar);
             toolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
             toolbar.VerticalAlignment = VerticalAlignment.Stretch;
@@ -98,7 +98,7 @@ namespace PictureLibraryWPF
 
 
             // Add libraries tree to the grid
-            var librariesTree = await _libraryExplorerControlsFactory.GetLibrariesTree();
+            var librariesTree = await LibraryExplorerControlsFactory.GetLibrariesTree();
             Grid.Children.Add(librariesTree);
             librariesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
             librariesTree.VerticalAlignment = VerticalAlignment.Stretch;
@@ -106,7 +106,7 @@ namespace PictureLibraryWPF
             Grid.SetRow(librariesTree, 8);
 
             // Add libraries view to the grid
-            var librariesView = _libraryExplorerControlsFactory.GetLibrariesView();
+            var librariesView = LibraryExplorerControlsFactory.GetLibrariesView();
             MainPanelGrid.Children.Add(librariesView);
             librariesView.HorizontalAlignment = HorizontalAlignment.Stretch;
             librariesView.VerticalAlignment = VerticalAlignment.Stretch;
@@ -115,7 +115,7 @@ namespace PictureLibraryWPF
             Grid.SetColumnSpan(librariesView, 2);
 
             // Add libraries toolbar to the grid
-            var librariesToolbar = _libraryExplorerControlsFactory.GetLibraryExplorerToolbar();
+            var librariesToolbar = LibraryExplorerControlsFactory.GetLibraryExplorerToolbar();
             MainPanelGrid.Children.Add(librariesToolbar);
             librariesToolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
             librariesToolbar.VerticalAlignment = VerticalAlignment.Stretch;

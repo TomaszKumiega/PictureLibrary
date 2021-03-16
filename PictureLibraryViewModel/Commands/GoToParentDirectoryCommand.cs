@@ -9,12 +9,12 @@ namespace PictureLibraryViewModel.Commands
 {
     public class GoToParentDirectoryCommand : ICommand
     {
-        private IFileExplorerToolboxViewModel _viewModel;
+        private IFileExplorerToolboxViewModel ViewModel { get; }
         public event EventHandler CanExecuteChanged;
 
         public GoToParentDirectoryCommand(IFileExplorerToolboxViewModel viewModel)
         {
-            _viewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         public void OnExecuteChanged()
@@ -24,8 +24,8 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            if (_viewModel.CommonViewModel.CurrentlyOpenedElement == null) return false;
-            var parent = System.IO.Directory.GetParent(_viewModel.CommonViewModel.CurrentlyOpenedElement.FullName);
+            if (ViewModel.CommonViewModel.CurrentlyOpenedElement == null) return false;
+            var parent = System.IO.Directory.GetParent(ViewModel.CommonViewModel.CurrentlyOpenedElement.FullName);
 
             if (parent != null) return true;
             else return false;
@@ -33,7 +33,7 @@ namespace PictureLibraryViewModel.Commands
 
         public void Execute(object parameter)
         {
-            _viewModel.GoToParentDirectory();
+            ViewModel.GoToParentDirectory();
         }
     }
 }

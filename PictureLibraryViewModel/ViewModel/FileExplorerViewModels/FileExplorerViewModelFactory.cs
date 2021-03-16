@@ -9,26 +9,26 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
     public class FileExplorerViewModelFactory : IFileExplorerViewModelFactory
     {
-        private IFileExplorerViewModel _commonVM;
+        private IFileExplorerViewModel CommonVM { get; }
 
         public FileExplorerViewModelFactory(IFileExplorerViewModel commonVM)
         {
-            _commonVM = commonVM;
+            CommonVM = commonVM;
         }
 
         public IFileExplorerToolboxViewModel GetFileToolboxViewModel(IClipboardService clipboard)
         {
-            return new FileExplorerToolboxViewModel(_commonVM, new FileService(), new DirectoryService(), clipboard, new CommandFactory());
+            return new FileExplorerToolboxViewModel(CommonVM, new FileService(), new DirectoryService(), clipboard, new CommandFactory());
         }
 
         public IExplorableElementsTreeViewModel GetFileTreeViewModel()
         {
-            return new FileTreeViewModel(_commonVM, new DirectoryService());
+            return new FileTreeViewModel(CommonVM, new DirectoryService());
         }
 
         public IExplorableElementsViewViewModel GetFilesViewViewModel()
         {
-            return new FilesViewViewModel(_commonVM);
+            return new FilesViewViewModel(CommonVM);
         }
     }
 }

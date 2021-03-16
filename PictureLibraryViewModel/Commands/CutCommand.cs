@@ -11,11 +11,11 @@ namespace PictureLibraryViewModel.Commands
     public class CutCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private IFileExplorerToolboxViewModel _viewModel;
+        private IFileExplorerToolboxViewModel ViewModel { get; }
 
         public CutCommand(IFileExplorerToolboxViewModel viewModel)
         {
-            _viewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         public void OnExecuteChanged()
@@ -25,14 +25,14 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            if (_viewModel.CommonViewModel.SelectedElements == null) return false;
-            else if (_viewModel.CommonViewModel.SelectedElements.Any()) return true;
+            if (ViewModel.CommonViewModel.SelectedElements == null) return false;
+            else if (ViewModel.CommonViewModel.SelectedElements.Any()) return true;
             else return false;
         }
 
         public async void Execute(object parameter)
         {
-            await _viewModel.Cut();
+            await ViewModel.Cut();
         }
     }
 }

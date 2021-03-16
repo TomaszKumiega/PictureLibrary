@@ -9,12 +9,12 @@ namespace PictureLibraryViewModel.Commands
 {
     public class BackCommand : ICommand
     {
-        private IFileExplorerToolboxViewModel _viewModel;
+        private IFileExplorerToolboxViewModel ViewModel { get; }
         public event EventHandler CanExecuteChanged;
 
         public BackCommand(IFileExplorerToolboxViewModel viewModel)
         {
-            _viewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         public void OnExecuteChanged()
@@ -24,12 +24,12 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            return (_viewModel.CommonViewModel as IFileExplorerViewModel).ExplorerHistory.BackStack.Count > 1;
+            return (ViewModel.CommonViewModel as IFileExplorerViewModel).ExplorerHistory.BackStack.Count > 1;
         }
 
         public void Execute(object parameter)
         {
-            (_viewModel.CommonViewModel as IFileExplorerViewModel).Back();
+            (ViewModel.CommonViewModel as IFileExplorerViewModel).Back();
         }
     }
 }

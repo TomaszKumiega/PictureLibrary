@@ -8,12 +8,12 @@ namespace PictureLibraryViewModel.Commands
 {
     public class RemoveCommand : ICommand
     {
-        private IExplorerToolboxViewModel _viewModel;
+        private IExplorerToolboxViewModel ViewModel { get; }
         public event EventHandler CanExecuteChanged;
 
         public RemoveCommand(IExplorerToolboxViewModel viewModel)
         {
-            _viewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         public void OnExecuteChanged()
@@ -23,14 +23,14 @@ namespace PictureLibraryViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            if (_viewModel.CommonViewModel.SelectedElements == null) return false;
-            else if (_viewModel.CommonViewModel.SelectedElements.Count > 0) return true;
+            if (ViewModel.CommonViewModel.SelectedElements == null) return false;
+            else if (ViewModel.CommonViewModel.SelectedElements.Count > 0) return true;
             else return false;
         }
 
         public async void Execute(object parameter)
         {
-            await _viewModel.Remove();
+            await ViewModel.Remove();
         }
     }
 }

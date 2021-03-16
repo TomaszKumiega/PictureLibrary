@@ -17,28 +17,26 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
     public class LocalLibraryRepository : IRepository<Library>
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private IFileService _fileService;
-        private ISettingsProviderService _settingsProvider;
-        private ILibraryFileService _libraryFileService;
-
-        public static Logger Logger => _logger;
+        private IFileService FileService { get; }
+        private ISettingsProviderService SettingsProvider { get; }
+        private ILibraryFileService LibraryFileService { get; }
 
         public LocalLibraryRepository(IFileService fileService, ISettingsProviderService settingsProvider, ILibraryFileService libraryFileService)
         {
-            _fileService = fileService;
-            _settingsProvider = settingsProvider;
-            _libraryFileService = libraryFileService;
+            FileService = fileService;
+            SettingsProvider = settingsProvider;
+            LibraryFileService = libraryFileService;
         }
 
         public async Task AddAsync(Library library)
         {
-            await Task.Run(() => _fileService.Create(library.FullName));
-            var fileStream = await Task.Run(() => _fileService.OpenFile(library.FullName));
+            await Task.Run(() => FileService.Create(library.FullName));
+            var fileStream = await Task.Run(() => FileService.OpenFile(library.FullName));
 
-            _settingsProvider.Settings.ImportedLibraries.Add(library.FullName);
-            await _settingsProvider.SaveSettingsAsync();
+            SettingsProvider.Settings.ImportedLibraries.Add(library.FullName);
+            await SettingsProvider.SaveSettingsAsync();
 
-            await _libraryFileService.WriteLibraryToStreamAsync(fileStream, library);
+            await LibraryFileService.WriteLibraryToStreamAsync(fileStream, library);
         }
 
         public async Task AddRangeAsync(IEnumerable<Library> libraries)
@@ -55,16 +53,16 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public async Task<IEnumerable<Library>> GetAllAsync()
         {
-            if (_settingsProvider.Settings.ImportedLibraries == null) throw new Exception("Error loading libraries. Imported libraries are null.");
+            if (SettingsProvider.Settings.ImportedLibraries == null) throw new Exception("Error loading libraries. Imported libraries are null.");
 
             var libraries = new List<Library>();
 
-            foreach (var t in _settingsProvider.Settings.ImportedLibraries)
+            foreach (var t in SettingsProvider.Settings.ImportedLibraries)
             {
                 try
                 {
-                    var stream = await Task.Run(() => _fileService.OpenFile(t));
-                    var library = await _libraryFileService.ReadLibraryFromStreamAsync(stream);
+                    var stream = await Task.Run(() => FileService.OpenFile(t));
+                    var library = await LibraryFileService.ReadLibraryFromStreamAsync(stream);
                     library.FullName = t;
                     libraries.Add(library);
                 }
@@ -83,20 +81,20 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public async Task<Library> GetByPathAsync(string path)
         {
-            var stream = await Task.Run(() => _fileService.OpenFile(path));
-            var library = await _libraryFileService.ReadLibraryFromStreamAsync(stream);
+            var stream = await Task.Run(() => FileService.OpenFile(path));
+            var library = await LibraryFileService.ReadLibraryFromStreamAsync(stream);
 
             return library;
         }
 
         public async Task RemoveAsync(string path)
         {
-            await Task.Run(() => _fileService.Remove(path));
+            await Task.Run(() => FileService.Remove(path));
         }
 
         public async Task RemoveAsync(Library library)
         {
-            await Task.Run(() => _fileService.Remove(library.FullName));
+            await Task.Run(() => FileService.Remove(library.FullName));
         }
 
         public async Task RemoveRangeAsync(IEnumerable<Library> libraries)
@@ -123,8 +121,8 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             try
             {
                 // Write library to the file
-                var stream = _fileService.OpenFile(library.FullName);
-                await _libraryFileService.WriteLibraryToStreamAsync(stream, library);
+                var stream = FileService.OpenFile(library.FullName);
+                await LibraryFileService.WriteLibraryToStreamAsync(stream, library);
             }
             catch (Exception e)
             {

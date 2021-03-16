@@ -13,8 +13,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
     public class FileExplorerToolboxViewModel : IFileExplorerToolboxViewModel
     {
-        private IDirectoryService _directoryService;
-        private IFileService _fileService;
+        private IDirectoryService DirectoryService { get; }
+        private IFileService FileService { get; }
 
         public IExplorerViewModel CommonViewModel { get; }
         public IClipboardService Clipboard { get; }
@@ -47,8 +47,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         public FileExplorerToolboxViewModel(IFileExplorerViewModel viewModel, IFileService fileService, IDirectoryService directoryService, IClipboardService clipboard, ICommandFactory commandFactory)
         {
             CommonViewModel = viewModel;
-            _fileService = fileService;
-            _directoryService = directoryService;
+            FileService = fileService;
+            DirectoryService = directoryService;
             Clipboard = clipboard;
 
             #region Command Initialization
@@ -131,7 +131,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public void GoToParentDirectory()
         {
-            var parent = _directoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.FullName);
+            var parent = DirectoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.FullName);
             if (parent != null) CommonViewModel.CurrentlyOpenedElement = parent;
         }
 
@@ -145,30 +145,30 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             foreach (var t in paths)
             {
-                if (_directoryService.IsDirectory(t))
+                if (DirectoryService.IsDirectory(t))
                 {
-                    var directoryName = _directoryService.GetInfo(t).Name;
+                    var directoryName = DirectoryService.GetInfo(t).Name;
 
                     if (Clipboard.FilesState == ClipboardFilesState.Copied)
                     {
-                        await Task.Run(() => _directoryService.Copy(t, directoryPath + directoryName));
+                        await Task.Run(() => DirectoryService.Copy(t, directoryPath + directoryName));
                     }
                     else if (Clipboard.FilesState == ClipboardFilesState.Cut)
                     {
-                        await Task.Run(() => _directoryService.Move(t, directoryPath + directoryName));
+                        await Task.Run(() => DirectoryService.Move(t, directoryPath + directoryName));
                     }
                 }
                 else
                 {
-                    var fileName = _fileService.GetInfo(t).Name;
+                    var fileName = FileService.GetInfo(t).Name;
 
                     if (Clipboard.FilesState == ClipboardFilesState.Copied)
                     {
-                        await Task.Run(() => _fileService.Copy(t, directoryPath + fileName));
+                        await Task.Run(() => FileService.Copy(t, directoryPath + fileName));
                     }
                     else if (Clipboard.FilesState == ClipboardFilesState.Cut)
                     {
-                        await Task.Run(() => _fileService.Move(t, directoryPath + fileName));
+                        await Task.Run(() => FileService.Move(t, directoryPath + fileName));
                     }
                 }
             }
@@ -189,11 +189,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             {
                 if (t is File)
                 {
-                    _fileService.Remove(t.FullName);
+                    FileService.Remove(t.FullName);
                 }
                 else if (t is Directory)
                 {
-                    _directoryService.Remove(t.FullName);
+                    DirectoryService.Remove(t.FullName);
                 }
             }
 

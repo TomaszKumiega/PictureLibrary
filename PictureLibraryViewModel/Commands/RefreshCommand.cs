@@ -8,12 +8,12 @@ namespace PictureLibraryViewModel.Commands
 {
     public class RefreshCommand : ICommand
     {
-        private IExplorerToolboxViewModel _viewModel;
+        private IExplorerToolboxViewModel ViewModel { get; }
         public event EventHandler CanExecuteChanged;
 
         public RefreshCommand(IExplorerToolboxViewModel viewModel)
         {
-            _viewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         public bool CanExecute(object parameter)
@@ -23,7 +23,7 @@ namespace PictureLibraryViewModel.Commands
 
         public async void Execute(object parameter)
         {
-            await _viewModel.Refresh();
+            await ViewModel.Refresh();
         }
     }
 }

@@ -9,24 +9,24 @@ namespace PictureLibraryViewModel.Commands
 {
     public class RenameCommand : ICommand
     {
-        private IExplorerToolboxViewModel _viewModel;
+        private IExplorerToolboxViewModel ViewModel { get; }
         public event EventHandler CanExecuteChanged;
 
         public RenameCommand(IExplorerToolboxViewModel viewModel)
         {
-            _viewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         public bool CanExecute(object parameter)
         {
-            if (_viewModel.CommonViewModel.SelectedElements == null) return false;
-            else if (_viewModel.CommonViewModel.SelectedElements.Count > 0) return true;
+            if (ViewModel.CommonViewModel.SelectedElements == null) return false;
+            else if (ViewModel.CommonViewModel.SelectedElements.Count > 0) return true;
             else return false;
         }
 
         public async void Execute(object parameter)
         {
-            await _viewModel.Rename();
+            await ViewModel.Rename();
         }
     }
 }

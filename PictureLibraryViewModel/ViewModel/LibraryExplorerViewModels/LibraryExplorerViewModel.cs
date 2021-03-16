@@ -13,8 +13,8 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
     public class LibraryExplorerViewModel : ILibraryExplorerViewModel
     {
-        private IRepository<Library> _libraryRepository;
         private IExplorableElement _currentlyOpenedElement;
+        private IRepository<Library> LibraryRepository { get; }
 
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; set; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
@@ -30,7 +30,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         {
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
             SelectedElements = new ObservableCollection<IExplorableElement>();
-            _libraryRepository = libraryRepository;
+            LibraryRepository = libraryRepository;
         }
 
         public async Task LoadCurrentlyShownElements()
@@ -41,7 +41,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             if (CurrentlyOpenedElement == null)
             {
-                var libraries = await _libraryRepository.GetAllAsync();
+                var libraries = await LibraryRepository.GetAllAsync();
                 foreach (IExplorableElement t in libraries)
                 {
                     CurrentlyShownElements.Add(t);
@@ -107,7 +107,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             var library = (CurrentlyOpenedElement as Library);
             library.Tags.Add(tag);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
-            await _libraryRepository.UpdateAsync(library);
+            await LibraryRepository.UpdateAsync(library);
         }
     }
 }

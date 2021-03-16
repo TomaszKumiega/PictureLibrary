@@ -17,9 +17,10 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private string _infoText;
         private bool _isProcessing;
-        private IDirectoryService _directoryService;
         private IExplorableElement _currentlyOpenedElement;
 
+        private IDirectoryService DirectoryService{get;}
+  
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
@@ -60,7 +61,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public FileExplorerViewModel(IDirectoryService directoryService, IExplorerHistory explorerHistory)
         {
-            _directoryService = directoryService;
+            DirectoryService = directoryService;
             ExplorerHistory = explorerHistory;
 
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
@@ -99,11 +100,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             {
                 if (CurrentlyOpenedElement == null)
                 {
-                    content = await Task.Run(() => _directoryService.GetRootDirectories());
+                    content = await Task.Run(() => DirectoryService.GetRootDirectories());
                 }
                 else
                 {
-                    content = await Task.Run(() => _directoryService.GetDirectoryContent(CurrentlyOpenedElement.FullName));
+                    content = await Task.Run(() => DirectoryService.GetDirectoryContent(CurrentlyOpenedElement.FullName));
                 }
             }
             catch(Exception e)

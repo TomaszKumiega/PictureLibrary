@@ -16,28 +16,28 @@ namespace PictureLibraryWPF.CustomControls
 {
     public class FileExplorerControlsFactory : IFileExplorerControlsFactory
     {
-        private IFileExplorerViewModelFactory _fileExplorerViewModelFactory;
-        private IDialogViewModelFactory _dialogViewModelFactory;
+        private IFileExplorerViewModelFactory FileExplorerViewModelFactory { get; }
+        private IDialogViewModelFactory DialogViewModelFactory { get; }
 
         public FileExplorerControlsFactory(IFileExplorerViewModelFactory fileExplorerViewModelFactory, IDialogViewModelFactory dialogViewModelFactory)
         {
-            _fileExplorerViewModelFactory = fileExplorerViewModelFactory;
-            _dialogViewModelFactory = dialogViewModelFactory;
+            FileExplorerViewModelFactory = fileExplorerViewModelFactory;
+            DialogViewModelFactory = dialogViewModelFactory;
         }
 
         public ElementsTree GetFileElementsTree()
         {
-            return new ElementsTree(_fileExplorerViewModelFactory.GetFileTreeViewModel());
+            return new ElementsTree(FileExplorerViewModelFactory.GetFileTreeViewModel());
         }
 
         public ElementsView GetFileElementsView()
         {
-            return new ElementsView(_fileExplorerViewModelFactory.GetFilesViewViewModel());
+            return new ElementsView(FileExplorerViewModelFactory.GetFilesViewViewModel());
         }
 
         public FileExplorerToolbar GetFileExplorerToolbar()
         {
-            return new FileExplorerToolbar(_fileExplorerViewModelFactory.GetFileToolboxViewModel(new WPFClipboard()), new DialogFactory(_dialogViewModelFactory));
+            return new FileExplorerToolbar(FileExplorerViewModelFactory.GetFileToolboxViewModel(new WPFClipboard()), new DialogFactory(DialogViewModelFactory));
         }
     }
 }

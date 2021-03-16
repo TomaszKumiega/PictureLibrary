@@ -9,26 +9,26 @@ namespace PictureLibraryWPF.Dialogs
 {
     public class DialogFactory : IDialogFactory
     {
-        private IDialogViewModelFactory _viewModelFactory;
+        private IDialogViewModelFactory ViewModelFactory;
 
         public DialogFactory(IDialogViewModelFactory viewModelFactory)
         {
-            _viewModelFactory = viewModelFactory;
+            ViewModelFactory = viewModelFactory;
         }
 
         public async Task<AddImagesDialog> GetAddImagesDialog(List<ImageFile> selectedImages)
         {
-            return new AddImagesDialog(await _viewModelFactory.GetImagesDialogViewModel(selectedImages));
+            return new AddImagesDialog(await ViewModelFactory.GetImagesDialogViewModel(selectedImages));
         }
 
         public AddLibraryDialog GetAddLibraryDialog()
         {
-            return new AddLibraryDialog(_viewModelFactory.GetAddLibraryDialogViewModel());
+            return new AddLibraryDialog(ViewModelFactory.GetAddLibraryDialogViewModel());
         }
 
         public AddTagDialog GetAddTagDialog()
         {
-            return new AddTagDialog(_viewModelFactory.GetAddTagDialogViewModel());
+            return new AddTagDialog(ViewModelFactory.GetAddTagDialogViewModel());
         }
     }
 }

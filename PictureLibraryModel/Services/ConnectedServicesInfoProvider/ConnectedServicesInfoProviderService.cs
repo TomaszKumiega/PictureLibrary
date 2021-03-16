@@ -16,28 +16,28 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
     public class ConnectedServicesInfoProviderService : IConnectedServicesInfoProviderService
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private IFileService _fileService;
-        private IStringEncryptionService _encryptionService;
+        private IFileService FileService { get; }
+        private IStringEncryptionService EncryptionService { get; }
 
         public ConnectedServiceInfo RemoteServerInfo { get; set; }
         public ConnectedServiceInfo GoogleDriveInfo { get; set; }
 
         public ConnectedServicesInfoProviderService(IFileService fileService, IStringEncryptionService encryptionService)
         {
-            _fileService = fileService;
-            _encryptionService = encryptionService;
+            FileService = fileService;
+            EncryptionService = encryptionService;
 
             LoadServicesInfo();
         }
 
         public void LoadServicesInfo()
         {
-            if (_fileService.Exists("servicesInfo.xml"))
+            if (FileService.Exists("servicesInfo.xml"))
             {
                 var remoteServerInfo = new ConnectedServiceInfo();
                 var googleDriveInfo = new ConnectedServiceInfo();
 
-                var fileStream = _fileService.OpenFile("servicesInfo.xml");
+                var fileStream = FileService.OpenFile("servicesInfo.xml");
 
                 try
                 {
@@ -64,8 +64,8 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
                                         var remoteServerElement = XNode.ReadFrom(reader) as XElement;
 
                                         remoteServerInfo.Type = ConnectedServiceType.RemoteServer;
-                                        remoteServerInfo.Token = _encryptionService.Decrypt(remoteServerElement.Attribute("token").Value);
-                                        remoteServerInfo.RefreshToken = _encryptionService.Decrypt(remoteServerElement.Attribute("refreshToken").Value);
+                                        remoteServerInfo.Token = EncryptionService.Decrypt(remoteServerElement.Attribute("token").Value);
+                                        remoteServerInfo.RefreshToken = EncryptionService.Decrypt(remoteServerElement.Attribute("refreshToken").Value);
                                     }
                                     break;
                                 case "googleDrive":
@@ -73,8 +73,8 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
                                         var googleDriveElement = XNode.ReadFrom(reader) as XElement;
 
                                         googleDriveInfo.Type = ConnectedServiceType.GoogleDrive;
-                                        googleDriveInfo.Token = _encryptionService.Decrypt(googleDriveElement.Attribute("token").Value);
-                                        googleDriveInfo.RefreshToken = _encryptionService.Decrypt(googleDriveElement.Attribute("refreshToken").Value);
+                                        googleDriveInfo.Token = EncryptionService.Decrypt(googleDriveElement.Attribute("token").Value);
+                                        googleDriveInfo.RefreshToken = EncryptionService.Decrypt(googleDriveElement.Attribute("refreshToken").Value);
                                     }
                                     break;
                             }
@@ -93,8 +93,8 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
 
             if (RemoteServerInfo != null)
             {
-                var encryptedToken = _encryptionService.Encrypt(RemoteServerInfo.Token);
-                var encryptedRefreshToken = _encryptionService.Encrypt(RemoteServerInfo.RefreshToken);
+                var encryptedToken = EncryptionService.Encrypt(RemoteServerInfo.Token);
+                var encryptedRefreshToken = EncryptionService.Encrypt(RemoteServerInfo.RefreshToken);
 
                 var remoteServerElement = new XElement("remoteServer", new XAttribute("token", encryptedToken), new XAttribute("refreshToken", encryptedRefreshToken));
                 rootElement.Add(remoteServerElement);
@@ -102,15 +102,15 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
 
             if (GoogleDriveInfo != null)
             {
-                var encryptedToken = _encryptionService.Encrypt(GoogleDriveInfo.Token);
-                var encryptedRefreshToken = _encryptionService.Encrypt(GoogleDriveInfo.RefreshToken);
+                var encryptedToken = EncryptionService.Encrypt(GoogleDriveInfo.Token);
+                var encryptedRefreshToken = EncryptionService.Encrypt(GoogleDriveInfo.RefreshToken);
 
                 var googleDriveElement = new XElement("googleDrive", new XAttribute("token", encryptedToken), new XAttribute("refreshToken", encryptedRefreshToken));
                 rootElement.Add(googleDriveElement);
             }
 
-            if (!_fileService.Exists("servicesInfo.xml")) _fileService.Create("servicesInfo.xml");
-            var fileStream = _fileService.OpenFile("servicesInfo.xml");
+            if (!FileService.Exists("servicesInfo.xml")) FileService.Create("servicesInfo.xml");
+            var fileStream = FileService.OpenFile("servicesInfo.xml");
 
             try
             {

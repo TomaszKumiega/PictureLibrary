@@ -14,7 +14,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IExplorableElement _selectedNode;
-        IRepository<Library> _libraryRepository;
+        private IRepository<Library> LibraryRepository { get; }
 
         public IExplorerViewModel CommonViewModel { get; }
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
@@ -31,7 +31,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
         public LibraryTreeViewModel(IRepository<Library> libraryRepository, IExplorerViewModel commonVM)
         {
-            _libraryRepository = libraryRepository;
+            LibraryRepository = libraryRepository;
             CommonViewModel = commonVM;
         }
 
@@ -42,7 +42,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             try
             {
-                libraries = await _libraryRepository.GetAllAsync();
+                libraries = await LibraryRepository.GetAllAsync();
             }
             catch(Exception e)
             {

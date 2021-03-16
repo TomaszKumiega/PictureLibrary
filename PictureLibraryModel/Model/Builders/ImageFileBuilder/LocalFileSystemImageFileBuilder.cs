@@ -7,43 +7,43 @@ namespace PictureLibraryModel.Model.Builders
 {
     public class LocalFileSystemImageFileBuilder : IImageFileBuilder
     {
-        private FileInfo _fileInfo;
+        private FileInfo FileInfo { get; }
         public ImageFile ImageFile { get; private set; }
 
         public LocalFileSystemImageFileBuilder(FileInfo fileInfo)
         {
             ImageFile = new ImageFile();
-            _fileInfo = fileInfo;
+            FileInfo = fileInfo;
         }
 
         public void BuildCreationTime()
         {
-            ImageFile.CreationTime = _fileInfo.CreationTimeUtc;
+            ImageFile.CreationTime = FileInfo.CreationTimeUtc;
         }
 
         public void BuildExtension()
         {
-            ImageFile.Extension = ImageExtensionHelper.GetExtension(_fileInfo.Extension);
+            ImageFile.Extension = ImageExtensionHelper.GetExtension(FileInfo.Extension);
         }
 
         public void BuildFullPath()
         {
-            ImageFile.FullName = _fileInfo.FullName;
+            ImageFile.FullName = FileInfo.FullName;
         }
 
         public void BuildIconSource()
         {
-            ImageFile.IconSource = _fileInfo.FullName;
+            ImageFile.IconSource = FileInfo.FullName;
         }
 
         public void BuildLastAccessTime()
         {
-            ImageFile.LastAccessTime = _fileInfo.LastAccessTimeUtc;
+            ImageFile.LastAccessTime = FileInfo.LastAccessTimeUtc;
         }
 
         public void BuildLastWriteTime()
         {
-            ImageFile.LastWriteTime = _fileInfo.LastWriteTimeUtc;
+            ImageFile.LastWriteTime = FileInfo.LastWriteTimeUtc;
         }
 
         public void BuildLibraryFullPath()
@@ -53,7 +53,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public void BuildName()
         {
-            ImageFile.Name = _fileInfo.Name;
+            ImageFile.Name = FileInfo.Name;
         }
 
         public void BuildOrigin()
@@ -63,7 +63,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public void BuildSize()
         {
-            ImageFile.Size = _fileInfo.Length;
+            ImageFile.Size = FileInfo.Length;
         }
 
         public void BuildTags()

@@ -9,12 +9,12 @@ namespace PictureLibraryViewModel.Commands
 {
     public class CreateFolderCommand : ICommand
     {
-        private IFileExplorerToolboxViewModel _viewModel;
+        private IFileExplorerToolboxViewModel ViewModel { get; }
         public event EventHandler CanExecuteChanged;
 
         public CreateFolderCommand(IFileExplorerToolboxViewModel viewModel)
         {
-            _viewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         public bool CanExecute(object parameter)
@@ -26,7 +26,7 @@ namespace PictureLibraryViewModel.Commands
 
         public async void Execute(object parameter)
         {
-            await _viewModel.CreateDirectory();
+            await ViewModel.CreateDirectory();
         }
     }
 }

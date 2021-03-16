@@ -17,6 +17,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         private ILibraryExplorerViewModel CommonViewModel { get; }
         private List<ImageFile> SelectedImages { get; }
         private IRepository<Library> LibraryRepository { get; }
+
         private Library _selectedLibrary;
 
         public event PropertyChangedEventHandler PropertyChanged;
