@@ -53,9 +53,9 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public async Task<IEnumerable<Library>> GetAllAsync()
         {
-            if (SettingsProvider.Settings.ImportedLibraries == null) throw new Exception("Error loading libraries. Imported libraries are null.");
-
             var libraries = new List<Library>();
+
+            if (SettingsProvider.Settings.ImportedLibraries == null) return libraries;
 
             foreach (var t in SettingsProvider.Settings.ImportedLibraries)
             {
@@ -107,7 +107,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public async Task UpdateAsync(Library library)
         {
-            if (library == null) throw new ArgumentException();
+            if (library == null) throw new ArgumentNullException();
             if (!System.IO.File.Exists(library.FullName)) throw new ArgumentException();
 
             // Load file for eventual recovery
