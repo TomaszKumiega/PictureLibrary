@@ -3,6 +3,7 @@ using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Settings;
 using PictureLibraryModel.Repositories.LibraryRepositories;
 using PictureLibraryModel.Services.FileSystemServices;
+using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryModel.Services.SettingsProvider;
 using System;
 using System.Collections.Generic;
@@ -74,188 +75,380 @@ namespace PictureLibraryModel.Tests.RepositoryTests
         #endregion
 
         #region AddAsync Tests
+
         [Fact]
-        public async void AddAsync_ShouldWriteLibraryToTheStreamAndSaveLibraryPathToSettings()
+        public async void AddAsync_ShouldCallFileCreateMethod()
         {
             var fileServiceMock = new Mock<IFileService>();
-            var directoryServiceMock = new Mock<IDirectoryService>();
             var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
             var settings = new Settings()
             {
                 ImportedLibraries = new List<string>()
             };
 
+            settingsProviderMock.Setup(x => x.Settings)
+                .Returns(settings);
+
+            var library = GetLibrary();
+
+            fileServiceMock.Setup(x => x.Create(library.FullName))
+                .Verifiable();
+            
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+
+            await repository.AddAsync(library);
+
+            fileServiceMock.Verify(x => x.Create(library.FullName));
+        }
+
+        [Fact]
+        public async void AddAsync_ShouldCallOpenFileMethod_ForPreviouslyCreatedFile()
+        {
+            var fileServiceMock = new Mock<IFileService>();
+            var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
+            var settings = new Settings()
+            {
+                ImportedLibraries = new List<string>()
+            };
+
+            settingsProviderMock.Setup(x => x.Settings)
+                .Returns(settings);
+
+            var library = GetLibrary();
+
+            fileServiceMock.Setup(x => x.OpenFile(library.FullName))
+                .Verifiable();
+
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+
+            await repository.AddAsync(library);
+
+            fileServiceMock.Verify(x => x.OpenFile(library.FullName));
+        }
+
+        [Fact]
+        public async void AddAsync_ShouldAddLibraryFullNameToSettings_AndSaveSettings()
+        {
+            var fileServiceMock = new Mock<IFileService>();
+            var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
+            var settings = new Settings()
+            {
+                ImportedLibraries = new List<string>()
+            };
 
             settingsProviderMock.Setup(x => x.Settings)
                 .Returns(settings);
             settingsProviderMock.Setup(x => x.SaveSettingsAsync())
                 .Verifiable();
 
-            var memoryStream = new MemoryStream();
             var library = GetLibrary();
-            
-            fileServiceMock.Setup(x => x.OpenFile(library.FullName))
-                .Returns(memoryStream);
 
-            var repository = new LocalLibraryRepository(fileServiceMock.Object, directoryServiceMock.Object, settingsProviderMock.Object);
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+
             await repository.AddAsync(library);
 
-            // convert memory stream buffer to string
-            var buffer = memoryStream.GetBuffer();
-            var text = System.Text.Encoding.UTF8.GetString(buffer);
-            text = text.Replace('\0', ' ');
-            text = text.TrimEnd();
-
-            // read attributes from the string
-            var doc = XDocument.Parse(text);
-            var name = doc.Element("library").Attribute("name");
-            var description = doc.Element("library").Attribute("description");
-
+            Assert.Contains(library.FullName, settings.ImportedLibraries);
             settingsProviderMock.Verify(x => x.SaveSettingsAsync());
-            settings.ImportedLibraries.Contains(library.FullName);
-            Assert.True(name.Value == library.Name);
-            Assert.True(description.Value == library.Description);
         }
+
+        [Fact]
+        public async void AddAsync_ShouldCallWriteLibraryToStreamAsyncMethod()
+        {
+            var fileServiceMock = new Mock<IFileService>();
+            var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
+            var settings = new Settings()
+            {
+                ImportedLibraries = new List<string>()
+            };
+
+            settingsProviderMock.Setup(x => x.Settings)
+                .Returns(settings);
+
+            var library = GetLibrary();
+
+            libraryFileServiceMock.Setup(x => x.WriteLibraryToStreamAsync(It.IsAny<FileStream>(), library))
+                .Verifiable();
+
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+
+            await repository.AddAsync(library);
+
+            libraryFileServiceMock.Verify(x => x.WriteLibraryToStreamAsync(It.IsAny<FileStream>(), library));
+        }
+       
         #endregion
 
         #region GetAllAsync Tests
         [Fact]
-        public async void GetAllAsync_ShouldReturnLibraries()
+        public async void GetAllAsync_ShouldReturnEmptyList_WhenImportedLibrariesListIsNull()
         {
-            var xml = GetLibraryXmlSamples();
-            IEnumerable<string> paths = new List<string>()
-            {
-                "Folder1\\library1.plib",
-                "Folder2\\library2.plib"
-            };
-
-            byte[] buffer = Encoding.UTF8.GetBytes(xml[0]);
-            byte[] buffer2 = Encoding.UTF8.GetBytes(xml[1]);
-            var memoryStream1 = new MemoryStream(buffer);
-            var memoryStream2 = new MemoryStream(buffer2);
-
+            var fileServiceMock = new Mock<IFileService>();
+            var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
             var settings = new Settings()
             {
-                ImportedLibraries = paths.ToList()
+                ImportedLibraries = null
             };
 
-            var settingsProviderMock = new Mock<ISettingsProviderService>();
             settingsProviderMock.Setup(x => x.Settings)
                 .Returns(settings);
 
-            var rootDirectory =
-                new Folder()
-                {
-                    Name = "\\",
-                    FullName = "\\"
-                };
-
-            var rootDirectories = new List<Model.Directory>
-            {
-                rootDirectory
-            };
-
-            var directoryServiceMock = new Mock<IDirectoryService>();
-            directoryServiceMock.Setup(x => x.GetRootDirectories())
-                .Returns(rootDirectories);
-
-            var fileServiceMock = new Mock<IFileService>();
-            fileServiceMock.Setup(x => x.OpenFile(paths.ToList()[0]))
-                .Returns(memoryStream1);
-            fileServiceMock.Setup(x => x.OpenFile(paths.ToList()[1]))
-                .Returns(memoryStream2);
-
-            var repository = new LocalLibraryRepository(fileServiceMock.Object, directoryServiceMock.Object, settingsProviderMock.Object);
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
 
             var libraries = await repository.GetAllAsync();
 
-            Assert.True(libraries.ToList().Count > 1);
-            Assert.Contains(libraries, x => x.Name == "library1" && x.Description == "picture library1");
-            Assert.Contains(libraries, x => x.Name == "library2" && x.Description == "picture library2");
+            Assert.Empty(libraries);
+        }
+
+        [Fact]
+        public async void GetAllAsync_ShouldOpenFileAndReadFromIt_ForeachFilePathInImportedLibraries()
+        {
+            var fileServiceMock = new Mock<IFileService>();
+            var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
+            var settings = new Settings()
+            {
+                ImportedLibraries = new List<string>()
+                {
+                    "Tests\\path1.plib",
+                    "Tests\\path2.plib",
+                    "Tests\\path3.plib"
+                }
+            };
+
+            settingsProviderMock.Setup(x => x.Settings)
+                .Returns(settings);
+
+            int openFileCallCounter = 0;
+            int readLibraryCallCounter = 0;
+
+            fileServiceMock.Setup(x => x.OpenFile(It.IsAny<string>()))
+                .Callback(() => { openFileCallCounter++; });
+            libraryFileServiceMock.Setup(x => x.ReadLibraryFromStreamAsync(It.IsAny<Stream>()))
+                .Callback(() => { readLibraryCallCounter++; });
+
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+            var libraries = await repository.GetAllAsync();
+
+            Assert.True(openFileCallCounter == settings.ImportedLibraries.Count && readLibraryCallCounter == settings.ImportedLibraries.Count);
+        }
+
+        [Fact]
+        public async void GetAllAsync_ShouldReturnListOfLibraries_WithAsManyElementsAsImportedLibrariesList()
+        {
+            var fileServiceMock = new Mock<IFileService>();
+            var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
+            var settings = new Settings()
+            {
+                ImportedLibraries = new List<string>()
+                {
+                    "Tests\\path1.plib",
+                    "Tests\\path2.plib",
+                    "Tests\\path3.plib"
+                }
+            };
+
+            settingsProviderMock.Setup(x => x.Settings)
+                .Returns(settings);
+
+            libraryFileServiceMock.Setup(x => x.ReadLibraryFromStreamAsync(It.IsAny<Stream>()))
+                .Returns(Task.FromResult(GetLibrary()));
+
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+            var libraries = await repository.GetAllAsync();
+
+            Assert.True(libraries.ToList().Count == settings.ImportedLibraries.Count);
         }
         #endregion
 
         #region FindAsync Tests
         [Fact]
-        public void FindAsync_ShouldFindLibraryLibrariesMatchingThePredicate()
+        public async void FindAsync_ShouldReturnPartOfLibrariesListReturnedFromGetAllAsync_MatchingGivenPredicate()
         {
-            var xml = GetLibraryXmlSamples();
-            IEnumerable<string> paths = new List<string>()
-            {
-                "Folder1\\library1.plib",
-                "Folder2\\library2.plib"
-            };
+            var fileServiceMock = new Mock<IFileService>();
+            var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
 
-            byte[] buffer = Encoding.UTF8.GetBytes(xml[0]);
-            byte[] buffer2 = Encoding.UTF8.GetBytes(xml[1]);
-            var memoryStream1 = new MemoryStream(buffer);
-            var memoryStream2 = new MemoryStream(buffer2);
+            var libraries =
+                new List<Library>()
+                {
+                    new Library()
+                    {
+                        FullName = "Tests\\path1.plib"
+                    },
+
+                    new Library()
+                    { 
+                        FullName = "Tests\\path2.plib"
+                    },
+
+                    new Library()
+                    {
+                        FullName = "Tests\\path3.plib"
+                    }
+                };
+
+            var fileStreams =
+                new List<Stream>()
+                {
+                    new MemoryStream(),
+                    new MemoryStream(),
+                    new MemoryStream()
+                };
 
             var settings = new Settings()
             {
-                ImportedLibraries = paths.ToList()
+                ImportedLibraries = new List<string>()
+                {
+                    libraries[0].FullName,
+                    libraries[1].FullName,
+                    libraries[2].FullName
+                }
             };
 
-            var settingsProviderMock = new Mock<ISettingsProviderService>();
             settingsProviderMock.Setup(x => x.Settings)
                 .Returns(settings);
 
-            var rootDirectory =
-                new Folder()
-                {
-                    Name = "\\",
-                    FullName = "\\"
-                };
-    
-            var rootDirectories = new List<Model.Directory>
-            {
-                rootDirectory
-            };
+            fileServiceMock.Setup(x => x.OpenFile(libraries[0].FullName))
+                .Returns(fileStreams[0]);
+            fileServiceMock.Setup(x => x.OpenFile(libraries[1].FullName))
+                .Returns(fileStreams[1]);
+            fileServiceMock.Setup(x => x.OpenFile(libraries[2].FullName))
+                .Returns(fileStreams[2]);
 
-            var directoryServiceMock = new Mock<IDirectoryService>();
-            directoryServiceMock.Setup(x => x.GetRootDirectories())
-                .Returns(rootDirectories);
+            libraryFileServiceMock.Setup(x => x.ReadLibraryFromStreamAsync(fileStreams[0]))
+                .Returns(Task.FromResult(libraries[0]));
+            libraryFileServiceMock.Setup(x => x.ReadLibraryFromStreamAsync(fileStreams[1]))
+                .Returns(Task.FromResult(libraries[1]));
+            libraryFileServiceMock.Setup(x => x.ReadLibraryFromStreamAsync(fileStreams[2]))
+                .Returns(Task.FromResult(libraries[2]));
 
-            var fileServiceMock = new Mock<IFileService>();
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+            var result = await repository.FindAsync(x => x.FullName == libraries[0].FullName || x.FullName == libraries[1].FullName);
 
-            fileServiceMock.Setup(x => x.OpenFile(paths.ToList()[0]))
-                .Returns(memoryStream1);
-            fileServiceMock.Setup(x => x.OpenFile(paths.ToList()[1]))
-                .Returns(memoryStream2);
-
-            var repository = new LocalLibraryRepository(fileServiceMock.Object, directoryServiceMock.Object, settingsProviderMock.Object);
-
-            var libraries = repository.FindAsync(x => x.Name == "library2").Result;
-
-            Assert.True(libraries != null);
-            Assert.True(libraries.Any());
-            Assert.Contains(libraries, x => x.Name == "library2" && x.Description == "picture library2");
+            Assert.Contains(libraries[0], result);
+            Assert.Contains(libraries[1], result);
         }
         #endregion
 
         #region RemoveAsync Tests
         [Fact]
-        public async void RemoveAsync_ShouldCallRemoveMethod_ForLibraryFullPath()
+        public async void RemoveAsync_ShouldCallRemoveMethod()
         {
             var fileServiceMock = new Mock<IFileService>();
-            var directoryServiceMock = new Mock<IDirectoryService>();
             var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
+
+            fileServiceMock.Setup(x => x.Remove(It.IsAny<string>()))
+                .Verifiable();
+
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+            await repository.RemoveAsync("Tests\\path1.plib");
+
+            fileServiceMock.Verify(x => x.Remove(It.IsAny<string>()));
+
+        }
+
+        [Fact]
+        public async void RemoveRangeAsync_ShouldCallRemoveMethod_ForeachLibraryInACollection()
+        {
+            var fileServiceMock = new Mock<IFileService>();
+            var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
+
+            var libraries =
+                new List<Library>()
+                {
+                    new Library()
+                    {
+                        FullName = "Tests\\path1.plib"
+                    },
+
+                    new Library()
+                    {
+                        FullName = "Tests\\path2.plib"
+                    }
+                };
+
+            fileServiceMock.Setup(x => x.Remove(libraries[0].FullName))
+                .Verifiable();
+            fileServiceMock.Setup(x => x.Remove(libraries[1].FullName))
+                .Verifiable();
+
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+            await repository.RemoveRangeAsync(libraries);
+
+            fileServiceMock.Verify(x => x.Remove(libraries[0].FullName));
+            fileServiceMock.Verify(x => x.Remove(libraries[1].FullName));
+
+        }
+        #endregion
+
+        #region GetByPathAsync
+        [Fact]
+        public async void GetByPathAsync_ShouldOpenAndReadFromASpecifiedFile()
+        {
+            var fileServiceMock = new Mock<IFileService>();
+            var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
+
+            var filePath = "Tests\\path1.plib";
+            var memoryStream = new MemoryStream();
+
+            fileServiceMock.Setup(x => x.OpenFile(filePath))
+                .Returns(memoryStream);
+            libraryFileServiceMock.Setup(x => x.ReadLibraryFromStreamAsync(memoryStream))
+                .Verifiable();
+
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+            var library = await repository.GetByPathAsync(filePath);
+
+            fileServiceMock.Verify(x => x.OpenFile(filePath));
+            libraryFileServiceMock.Verify(x => x.ReadLibraryFromStreamAsync(memoryStream));
+        }
+
+        [Fact]
+        public async void GetByPathAsync_ShouldReturnLibrary()
+        {
+            var fileServiceMock = new Mock<IFileService>();
+            var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
 
             var library =
                 new Library()
                 {
-                    Name = "library1",
-                    FullName = "Tests\\Folder1\\library1.plib"
+                    FullName = "Tests\\path1.plib"
                 };
 
-            fileServiceMock.Setup(x => x.Remove(library.FullName))
-                .Verifiable();
+            libraryFileServiceMock.Setup(x => x.ReadLibraryFromStreamAsync(It.IsAny<Stream>()))
+                .Returns(Task.FromResult(library));
 
-            var repository = new LocalLibraryRepository(fileServiceMock.Object, directoryServiceMock.Object, settingsProviderMock.Object);
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+            var result = await repository.GetByPathAsync(It.IsAny<string>());
 
-            await repository.RemoveAsync(library);
+            Assert.True(result.FullName == library.FullName);
+        }
+        #endregion
 
-            fileServiceMock.Verify(x => x.Remove(library.FullName));  
+        #region UpdateAsync 
+        [Fact]
+        public async void UpdateAsync_ShouldThrowArgumentNullException_WhenLibraryIsNull()
+        {
+            var fileServiceMock = new Mock<IFileService>();
+            var settingsProviderMock = new Mock<ISettingsProviderService>();
+            var libraryFileServiceMock = new Mock<ILibraryFileService>();
+
+            Library library = null;
+
+            var repository = new LocalLibraryRepository(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => repository.UpdateAsync(library));
+
         }
         #endregion
     }
