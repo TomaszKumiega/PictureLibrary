@@ -18,31 +18,6 @@ namespace PictureLibraryModel.Tests.RepositoryTests
 {
     public class LocalLibraryRepositoryTests
     {
-        #region Setup
-        private string TestFolder = "Tests\\";
-
-        public LocalLibraryRepositoryTests()
-        {
-            CleanupFiles();
-        }
-
-        ~LocalLibraryRepositoryTests()
-        {
-            CleanupFiles();
-        }
-
-        private void CleanupFiles()
-        {
-            try
-            {
-                System.IO.Directory.Delete(TestFolder, true);
-            }
-            catch
-            {
-                return;
-            }
-        }
-        #endregion
 
         #region Helper methods
         private Library GetLibrary()
@@ -50,7 +25,7 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             var library =
                 new Library()
                 {
-                    FullName = TestFolder + "library.plib",
+                    FullName = "Tests\\library.plib",
                     Name = "library",
                     Description = "picture library",
                     Tags = new List<Tag>(),
