@@ -11,7 +11,6 @@ namespace PictureLibraryModel.Model
         public string Description { get; set; }
         public List<Tag> Tags { get; set; }
         public List<ImageFile> Images { get; set; }
-        public List<Guid> Owners { get; set; }
         public Origin Origin { get; set; }
         public string IconSource { get; }
 

@@ -93,22 +93,9 @@ namespace PictureLibraryModel.Services.LibraryFileService
         {
             if (fileStream == null) throw new Exception("File creation error");
 
-            // write all owners in one string
-            string owners = "";
-
-            if (library.Owners.Count > 0)
-            {
-                for (int i = 0; i < library.Owners.Count - 1; i++)
-                {
-                    owners += library.Owners[i].ToString() + ',';
-                }
-
-                owners += library.Owners[library.Owners.Count - 1].ToString();
-            }
-
             // create library element
             var libraryElement = new XElement("library", new XAttribute("name", library.Name),
-                new XAttribute("description", library.Description), new XAttribute("owners", owners));
+                new XAttribute("description", library.Description));
 
             // create tags elements
             var tagsElement = new XElement("tags");

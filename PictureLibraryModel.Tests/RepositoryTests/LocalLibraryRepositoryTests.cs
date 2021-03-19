@@ -30,7 +30,6 @@ namespace PictureLibraryModel.Tests.RepositoryTests
                     Description = "picture library",
                     Tags = new List<Tag>(),
                     Images = new List<ImageFile>(),
-                    Owners = new List<Guid>(),
                     Origin = Origin.Local,
                 };
 
