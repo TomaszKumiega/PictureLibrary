@@ -63,7 +63,6 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
                 {
                     var stream = await Task.Run(() => FileService.OpenFile(t));
                     var library = await LibraryFileService.ReadLibraryFromStreamAsync(stream);
-                    library.FullName = t;
                     libraries.Add(library);
                 }
                 catch(FileNotFoundException e)

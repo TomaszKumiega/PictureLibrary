@@ -39,13 +39,9 @@ namespace PictureLibraryModel.Services.LibraryFileService
 
                                     library.Name = libraryElement.Attribute("name").Value;
                                     library.Description = libraryElement.Attribute("description").Value;
+                                    library.Origin = Origin.Local;
 
-                                    if (libraryElement.Attribute("owners").Value.Trim() == String.Empty) break;
-
-                                    foreach (var t in libraryElement.Attribute("owners").Value.Split(','))
-                                    {
-                                        library.Owners.Add(Guid.Parse(t));
-                                    }
+                                    if (fileStream is FileStream) library.FullName = (fileStream as FileStream).Name;
                                 }
                                 break;
                             case "tag":
