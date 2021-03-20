@@ -25,27 +25,33 @@ namespace PictureLibraryWPF.Dialogs
         {
             DataContext = viewModel;
             InitializeComponent();
-            LocationComboBox.DataContext = viewModel.Origins;
             InitializeLocationComboBox();
+            DisablePathSelectionControls();
+        }
+
+        private void DisablePathSelectionControls()
+        {
+            PathTextBlock.IsEnabled = false;
+            PathTitleTextBlock.IsEnabled = false;
+            PathTextBlock.IsEnabled = false;
+            PickFolderPathButton.IsEnabled = false;
+        }
+
+        private void EnablePathSelectionControls()
+        {
+            PathTextBlock.IsEnabled = true;
+            PathTitleTextBlock.IsEnabled = true;
+            PathTextBlock.IsEnabled = true;
+            PickFolderPathButton.IsEnabled = true;
         }
 
         private void InitializeLocationComboBox()
         {
             var locationList = new List<string>();
-            var viewModel = DataContext as IAddLibraryDialogViewModel;
-            locationList.Add(Strings.ThisComputer);
-
-            foreach(var t in viewModel.Origins)
-            {
-                switch(t)
-                {
-                    case PictureLibraryModel.Model.Origin.RemoteServer:
-                        {
-                            locationList.Add(Strings.RemoteServer);
-                        }
-                        break;
-                }
-            }
+            locationList.Add("Local");
+            locationList.Add("Remote Server");
+            foreach (var t in locationList)
+                LocationComboBox.Items.Add(t);
         }
 
         private void LocationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -61,8 +67,7 @@ namespace PictureLibraryWPF.Dialogs
                 viewModel.SelectedOrigin = viewModel.Origins[LocationComboBox.SelectedIndex];
                 if(viewModel.SelectedOrigin == PictureLibraryModel.Model.Origin.Local)
                 {
-                    PathTextBlock.IsEnabled = true;
-                    PathTitleTextBlock.IsEnabled = true;
+                    EnablePathSelectionControls();
                 }
             }
         }

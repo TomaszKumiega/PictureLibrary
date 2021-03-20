@@ -50,8 +50,8 @@
         <ComboBox x:Name="LocationComboBox" Grid.Row="7" Grid.Column="1" Margin="10,0,20,0" SelectionChanged="LocationComboBox_SelectionChanged"/>
 
         <!--Path-->
-        <TextBlock x:Name="PathTitleTextBlock" IsEnabled="False"  Grid.Row="9" Margin="0,0,10,0" VerticalAlignment="Top" TextAlignment="Right" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="19" Text="{x:Static res:Strings.FilePath}"/>
-        <StackPanel x:Name="PathStackPanel" IsEnabled="False" Grid.Row="9" Grid.Column="1" Margin="10,0,20,0" Orientation="Horizontal">
+        <TextBlock x:Name="PathTitleTextBlock" Grid.Row="9" Margin="0,0,10,0" VerticalAlignment="Top" TextAlignment="Right" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="19" Text="{x:Static res:Strings.FilePath}"/>
+        <StackPanel x:Name="PathStackPanel" Grid.Row="9" Grid.Column="1" Margin="10,0,20,0" Orientation="Horizontal">
             <TextBlock x:Name="PathTextBlock" Width="145" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="14"/>
             <Button x:Name="PickFolderPathButton" Width="25" Click="PickFolderPathButton_Click">
                 <Image Width="20" Height="20" Source="pack://application:,,,/Icons/FolderIconDark.png"/>
