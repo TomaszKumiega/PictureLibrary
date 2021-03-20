@@ -23,9 +23,8 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         public string Name { get; set; }
         public string Description { get; set; }
         public string FullName { get; set; }
-        public Origin? Origin { get; set; }
+        public Origin? SelectedOrigin { get; set; }
         public List<Origin> Origins { get => ConnectedServices.GetAllAvailableOrigins(); }
-        public List<User> Owners { get; }
         public ICommand AddLibraryCommand { get; }
 
         public event InvalidInputEventHandler InvalidInput;
@@ -49,7 +48,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         private bool IsOriginValid()
         {
-            if (Origin == null) return false;
+            if (SelectedOrigin == null) return false;
             else return true;
         }
 
@@ -63,9 +62,9 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             library.Name = Name;
             if (Description == null) library.Description = "";
             else library.Description = Description;
-            library.Origin = Origin.Value;
+            library.Origin = SelectedOrigin.Value;
 
-            if (Origin == PictureLibraryModel.Model.Origin.Local) library.FullName = FullName;
+            if (SelectedOrigin == PictureLibraryModel.Model.Origin.Local) library.FullName = FullName;
 
             await LibraryRepository.AddAsync(library);
             await CommonViewModel.LoadCurrentlyShownElements();

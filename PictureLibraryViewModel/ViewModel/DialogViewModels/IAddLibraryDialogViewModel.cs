@@ -14,9 +14,8 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         string Name { get; set; }
         string Description { get; set; }
         string FullName { get; set; }
-        Origin? Origin { get; set; }
+        Origin? SelectedOrigin { get; set; }
         List<Origin> Origins { get; }
-        List<User> Owners { get; }
         ICommand AddLibraryCommand { get; }
 
         event InvalidInputEventHandler InvalidInput;
