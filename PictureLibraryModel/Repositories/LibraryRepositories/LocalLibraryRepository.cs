@@ -61,13 +61,17 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             {
                 try
                 {
-                    var stream = await Task.Run(() => FileService.OpenFile(t));
+                    var openFileTask = Task.Run(() => FileService.OpenFile(t));
+                    var stream = await openFileTask;
                     var library = await LibraryFileService.ReadLibraryFromStreamAsync(stream);
                     libraries.Add(library);
                 }
                 catch(FileNotFoundException e)
                 {
                     _logger.Debug(e, "Library file not found.");
+                    SettingsProvider.Settings.ImportedLibraries.Remove(t);
+                    await SettingsProvider.SaveSettingsAsync();
+                    _logger.Info("Removed library entry: " + t + " from settings");
                 }
                 catch(Exception e)
                 {
