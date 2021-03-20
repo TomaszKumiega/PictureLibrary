@@ -59,6 +59,11 @@ namespace PictureLibraryWPF.Dialogs
             else
             {
                 viewModel.SelectedOrigin = viewModel.Origins[LocationComboBox.SelectedIndex];
+                if(viewModel.SelectedOrigin == PictureLibraryModel.Model.Origin.Local)
+                {
+                    PathTextBlock.IsEnabled = true;
+                    PathTitleTextBlock.IsEnabled = true;
+                }
             }
         }
 
