@@ -29,11 +29,12 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         public event InvalidInputEventHandler InvalidInput;
 
-        public AddLibraryDialogViewModel(ILibraryExplorerViewModel commonVM, IRepository<Library> libraryRepository, IConnectedServicesInfoProviderService connectedServices)
+        public AddLibraryDialogViewModel(ILibraryExplorerViewModel commonVM, IRepository<Library> libraryRepository, IConnectedServicesInfoProviderService connectedServices, ICommandFactory commandFactory)
         {
             CommonViewModel = commonVM;
             LibraryRepository = libraryRepository;
             ConnectedServices = connectedServices;
+            AddLibraryCommand = commandFactory.GetAddLibraryCommand(this);
         }
 
         private bool IsNameValid()

@@ -25,7 +25,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         public IAddLibraryDialogViewModel GetAddLibraryDialogViewModel()
         {
-            return new AddLibraryDialogViewModel(CommonViewModel, new LibraryRepository(ConnectedServices, LibraryRepositoriesFactory), ConnectedServices);
+            return new AddLibraryDialogViewModel(CommonViewModel, new LibraryRepository(ConnectedServices, LibraryRepositoriesFactory), ConnectedServices, new CommandFactory());
         }
 
         public IAddTagDialogViewModel GetAddTagDialogViewModel()
