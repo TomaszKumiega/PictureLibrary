@@ -46,6 +46,8 @@ namespace PictureLibraryModel.Services.SettingsProvider
                 XmlReaderSettings xmlSettings = new XmlReaderSettings();
                 xmlSettings.DtdProcessing = DtdProcessing.Parse;
 
+                settings.ImportedLibraries = new List<string>();
+
                 using (var reader = XmlReader.Create(fileStream, xmlSettings))
                 {
                     while (reader.Read())
@@ -74,7 +76,6 @@ namespace PictureLibraryModel.Services.SettingsProvider
                                     break;
                                 case "library":
                                     {
-                                        if (settings.ImportedLibraries == null) settings.ImportedLibraries = new List<string>();
                                         var libraryElement = XNode.ReadFrom(reader) as XElement;
                                         settings.ImportedLibraries.Add(libraryElement.Attribute("path").Value);
                                     }
