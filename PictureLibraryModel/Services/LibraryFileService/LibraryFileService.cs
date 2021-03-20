@@ -98,13 +98,17 @@ namespace PictureLibraryModel.Services.LibraryFileService
                 new XAttribute("description", library.Description));
 
             // create tags elements
+           
             var tagsElement = new XElement("tags");
 
-            foreach (var t in library.Tags)
+            if (library.Tags != null)
             {
-                var tagElement = new XElement("tag", new XAttribute("name", t.Name), new XAttribute("description", t.Description), new XAttribute("color", t.Color));
+                foreach (var t in library.Tags)
+                {
+                    var tagElement = new XElement("tag", new XAttribute("name", t.Name), new XAttribute("description", t.Description), new XAttribute("color", t.Color));
 
-                tagsElement.Add(tagElement);
+                    tagsElement.Add(tagElement);
+                }
             }
 
             libraryElement.Add(tagsElement);
@@ -112,24 +116,27 @@ namespace PictureLibraryModel.Services.LibraryFileService
             // create images elements
             var imagesElement = new XElement("images");
 
-            foreach (var i in library.Images)
+            if(library.Images != null)
             {
-                // write all tags to one string
-                string tags = "";
-
-                for (int it = 0; it < i.Tags.Count - 1; it++)
+                foreach (var i in library.Images)
                 {
-                    tags += i.Tags[it].Name + ',';
+                    // write all tags to one string
+                    string tags = "";
+
+                    for (int it = 0; it < i.Tags.Count - 1; it++)
+                    {
+                        tags += i.Tags[it].Name + ',';
+                    }
+
+                    tags += i.Tags[i.Tags.Count - 1].Name;
+
+
+                    var imageFileElement = new XElement("imageFile", new XAttribute("name", i.Name), new XAttribute("extension", i.Extension),
+                        new XAttribute("source", i.FullName), new XAttribute("creationTime", i.CreationTime.ToString()), new XAttribute("lastAccessTime", i.LastAccessTime.ToString()),
+                        new XAttribute("lastWriteTime", i.LastWriteTime.ToString()), new XAttribute("size", i.Size.ToString()), new XAttribute("tags", tags));
+
+                    imagesElement.Add(imageFileElement);
                 }
-
-                tags += i.Tags[i.Tags.Count - 1].Name;
-
-
-                var imageFileElement = new XElement("imageFile", new XAttribute("name", i.Name), new XAttribute("extension", i.Extension),
-                    new XAttribute("source", i.FullName), new XAttribute("creationTime", i.CreationTime.ToString()), new XAttribute("lastAccessTime", i.LastAccessTime.ToString()),
-                    new XAttribute("lastWriteTime", i.LastWriteTime.ToString()), new XAttribute("size", i.Size.ToString()), new XAttribute("tags", tags));
-
-                imagesElement.Add(imageFileElement);
             }
 
             libraryElement.Add(imagesElement);
