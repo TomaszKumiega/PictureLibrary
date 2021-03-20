@@ -112,7 +112,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
 
             try
             {
-               if(FileService.Exists("settings.xml")) FileService.Create("settings.xml");
+                if(!FileService.Exists("settings.xml")) FileService.Create("settings.xml");
                 var fileStream = FileService.OpenFile("settings.xml");
 
                 using (var streamWriter = new StreamWriter(fileStream))
