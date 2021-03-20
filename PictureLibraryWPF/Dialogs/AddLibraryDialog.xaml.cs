@@ -54,11 +54,11 @@ namespace PictureLibraryWPF.Dialogs
 
             if(LocationComboBox.SelectedIndex == -1)
             {
-                viewModel.Origin = null;
+                viewModel.SelectedOrigin = null;
             }
             else
             {
-                viewModel.Origin = viewModel.Origins[LocationComboBox.SelectedIndex];
+                viewModel.SelectedOrigin = viewModel.Origins[LocationComboBox.SelectedIndex];
             }
         }
 
