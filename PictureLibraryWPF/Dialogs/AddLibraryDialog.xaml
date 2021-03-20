@@ -59,7 +59,7 @@
         </StackPanel>
        
         
-        <Button x:Name="AddButton" Grid.Row="11" Grid.ColumnSpan="2" Width="100">
+        <Button x:Name="AddButton" Grid.Row="11" Grid.ColumnSpan="2" Width="100" Command="{Binding Path=AddLibraryCommand}">
             <TextBlock x:Name="AddButtonTextBlock" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Segoe UI" FontSize="15" Text="{x:Static res:Strings.Add}"/>
         </Button>
 
