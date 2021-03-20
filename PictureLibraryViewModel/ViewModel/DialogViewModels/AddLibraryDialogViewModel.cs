@@ -59,12 +59,18 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
             var library = new Library();
 
-            library.Name = Name;
-            if (Description == null) library.Description = "";
-            else library.Description = Description;
-            library.Origin = SelectedOrigin.Value;
-
-            if (SelectedOrigin == PictureLibraryModel.Model.Origin.Local) library.FullName = FullName;
+            switch(SelectedOrigin)
+            {
+                case Origin.Local:
+                    {
+                        library.Name = Name;
+                        if (Description == null) library.Description = "";
+                        else library.Description = Description;
+                        library.Origin = SelectedOrigin.Value;
+                        if (SelectedOrigin == PictureLibraryModel.Model.Origin.Local) library.FullName = FullName;
+                    }
+                    break;
+            }
 
             await LibraryRepository.AddAsync(library);
             await CommonViewModel.LoadCurrentlyShownElements();
