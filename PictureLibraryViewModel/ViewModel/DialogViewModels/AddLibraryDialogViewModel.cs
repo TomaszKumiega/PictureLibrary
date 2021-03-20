@@ -22,7 +22,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         public string Name { get; set; }
         public string Description { get; set; }
-        public string FullName { get; set; }
+        public string Directory { get; set; }
         public Origin? SelectedOrigin { get; set; }
         public List<Origin> Origins { get => ConnectedServices.GetAllAvailableOrigins(); }
         public ICommand AddLibraryCommand { get; }
@@ -53,6 +53,12 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             else return true;
         }
 
+        private bool IsDirectoryValid()
+        {
+            if (Directory == null) return false;
+            else return true;
+        }
+
         public async Task AddAsync()
         {
             if(!IsNameValid()) InvalidInput?.Invoke(this, new InvalidInputEventArgs("Name"));
@@ -68,7 +74,12 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                         if (Description == null) library.Description = "";
                         else library.Description = Description;
                         library.Origin = SelectedOrigin.Value;
-                        if (SelectedOrigin == PictureLibraryModel.Model.Origin.Local) library.FullName = FullName;
+                        if (!IsDirectoryValid()) InvalidInput?.Invoke(this, new InvalidInputEventArgs("Directory"));
+                        if(!Directory.EndsWith("\\"))
+                        {
+                            Directory += "\\";
+                        }
+                        if (SelectedOrigin == PictureLibraryModel.Model.Origin.Local) library.FullName = Directory + library.Name + ".plib";
                     }
                     break;
             }

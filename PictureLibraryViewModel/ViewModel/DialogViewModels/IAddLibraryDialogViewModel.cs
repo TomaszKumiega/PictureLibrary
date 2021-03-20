@@ -13,7 +13,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
     {
         string Name { get; set; }
         string Description { get; set; }
-        string FullName { get; set; }
+        string Directory { get; set; }
         Origin? SelectedOrigin { get; set; }
         List<Origin> Origins { get; }
         ICommand AddLibraryCommand { get; }

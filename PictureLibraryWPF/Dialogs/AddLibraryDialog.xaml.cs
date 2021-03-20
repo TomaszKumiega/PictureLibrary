@@ -86,7 +86,7 @@ namespace PictureLibraryWPF.Dialogs
             if(result == System.Windows.Forms.DialogResult.OK)
             {
                 PathTextBlock.Text = dialog.SelectedPath;
-                viewModel.FullName = dialog.SelectedPath;
+                viewModel.Directory = dialog.SelectedPath;
             }
         }
 
