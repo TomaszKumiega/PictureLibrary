@@ -28,7 +28,7 @@ namespace PictureLibraryWPF.Dialogs
         private void LibrariesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var viewModel = DataContext as IAddImagesDialogViewModel;
-            var library = (LibrariesListView.SelectedItem as ListViewItem).DataContext as Library;
+            var library = LibrariesListView.SelectedItem as Library;
 
             viewModel.SelectedLibrary = library;
         }
