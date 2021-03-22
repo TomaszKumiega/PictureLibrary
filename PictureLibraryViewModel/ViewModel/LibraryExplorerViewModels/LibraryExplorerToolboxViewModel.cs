@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Services.Clipboard;
+﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,22 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         public Task Rename()
         {
             throw new NotImplementedException();
+        }
+
+        public bool IsDriveSelected()
+        {
+            bool isDriveSelected = false;
+
+            foreach (var t in CommonViewModel.SelectedElements)
+            {
+                if (t is Drive)
+                {
+                    isDriveSelected = true;
+                    break;
+                }
+            }
+
+            return isDriveSelected;
         }
     }
 }

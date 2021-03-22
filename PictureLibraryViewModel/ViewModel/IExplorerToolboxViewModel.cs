@@ -20,5 +20,6 @@ namespace PictureLibraryViewModel.ViewModel
         Task Remove();
         Task Rename();
         Task Refresh();
+        bool IsDriveSelected();
     }
 }

@@ -1,4 +1,5 @@
-﻿using PictureLibraryViewModel.ViewModel;
+﻿using PictureLibraryModel.Model;
+using PictureLibraryViewModel.ViewModel;
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace PictureLibraryViewModel.Commands
         public bool CanExecute(object parameter)
         {
             if (ViewModel.CommonViewModel.SelectedElements == null) return false;
-            else if (ViewModel.CommonViewModel.SelectedElements.Any()) return true;
+            else if (ViewModel.CommonViewModel.SelectedElements.Any() && !ViewModel.IsDriveSelected()) return true;
             else return false;
         }
 

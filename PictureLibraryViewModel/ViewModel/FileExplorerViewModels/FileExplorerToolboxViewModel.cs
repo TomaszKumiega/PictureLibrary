@@ -216,6 +216,22 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             await Task.Run(() => Clipboard.SetFiles(paths, ClipboardFilesState.Cut));
         }
+
+        public bool IsDriveSelected()
+        {
+            bool isDriveSelected = false;
+
+            foreach (var t in CommonViewModel.SelectedElements)
+            {
+                if (t is PictureLibraryModel.Model.Drive)
+                {
+                    isDriveSelected = true;
+                    break;
+                }
+            }
+
+            return isDriveSelected;
+        }
         #endregion
     }
 }

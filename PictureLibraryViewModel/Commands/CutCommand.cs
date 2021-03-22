@@ -26,7 +26,7 @@ namespace PictureLibraryViewModel.Commands
         public bool CanExecute(object parameter)
         {
             if (ViewModel.CommonViewModel.SelectedElements == null) return false;
-            else if (ViewModel.CommonViewModel.SelectedElements.Any()) return true;
+            else if (ViewModel.CommonViewModel.SelectedElements.Any() && !ViewModel.IsDriveSelected()) return true;
             else return false;
         }
 
