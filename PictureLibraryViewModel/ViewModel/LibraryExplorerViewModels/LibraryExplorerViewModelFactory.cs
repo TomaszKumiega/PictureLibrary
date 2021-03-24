@@ -31,7 +31,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         public async Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModelAsync()
         {
             var viewModel = new LibraryTreeViewModel(new LibraryRepository(ConnectedServices, LibraryRepositoriesFactory), CommonViewModel);
-            await viewModel.InitializeLibraryTree();
+            await viewModel.InitializeLibraryTreeAsync();
             return viewModel;
         }
 

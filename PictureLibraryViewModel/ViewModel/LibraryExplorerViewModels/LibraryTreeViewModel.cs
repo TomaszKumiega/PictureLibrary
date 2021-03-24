@@ -35,7 +35,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             CommonViewModel = commonVM;
         }
 
-        public async Task InitializeLibraryTree()
+        public async Task InitializeLibraryTreeAsync()
         {
             ExplorableElementsTree = new ObservableCollection<IExplorableElement>();
             IEnumerable<Library> libraries = new List<Library>();
