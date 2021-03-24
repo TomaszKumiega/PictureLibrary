@@ -47,7 +47,7 @@ namespace PictureLibraryWPF
             HomeButtonClickedRectangle.Fill = new SolidColorBrush(Color.FromArgb(0,102,255,1)); // change rectangle color to #0066ff
         }
 
-        private void LoadFileExplorerPage()
+        private async Task LoadFileExplorerPageAsync()
         {
             // Reset window to default state
             ResetButtonClickedRectangles();
@@ -57,7 +57,7 @@ namespace PictureLibraryWPF
             ToolBarShadow.Fill = new SolidColorBrush(Color.FromArgb(29, 31, 33, 1)); // change rectangle color to #2b2d30
 
             // Add files tree to the grid
-            var filesTree = FileExplorerControlsFactory.GetFileElementsTreeAsync();
+            var filesTree = await FileExplorerControlsFactory.GetFileElementsTreeAsync();
             Grid.Children.Add(filesTree);
             filesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
             filesTree.VerticalAlignment = VerticalAlignment.Stretch;
@@ -193,9 +193,9 @@ namespace PictureLibraryWPF
             LoadHomePage();
         }
 
-        private void FilesButton_Click(object sender, RoutedEventArgs e)
+        private async void FilesButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadFileExplorerPage();
+            await LoadFileExplorerPageAsync();
         }
 
         private async void LibrariesButton_Click(object sender, RoutedEventArgs e)
