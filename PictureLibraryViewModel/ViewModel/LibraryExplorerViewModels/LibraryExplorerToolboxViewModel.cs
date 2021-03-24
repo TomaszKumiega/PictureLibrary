@@ -30,7 +30,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
         public async Task Refresh()
         {
-            await CommonViewModel.LoadCurrentlyShownElements();
+            await CommonViewModel.LoadCurrentlyShownElementsAsync();
         }
 
         public Task Remove()

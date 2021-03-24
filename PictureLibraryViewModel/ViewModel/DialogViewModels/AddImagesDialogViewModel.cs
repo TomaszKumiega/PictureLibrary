@@ -60,7 +60,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
             SelectedLibrary.Images.AddRange(SelectedImages);
             await LibraryRepository.UpdateAsync(SelectedLibrary);
-            await CommonViewModel.LoadCurrentlyShownElements();
+            await CommonViewModel.LoadCurrentlyShownElementsAsync();
         }
     }
 }

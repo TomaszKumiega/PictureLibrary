@@ -175,12 +175,12 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             await Task.Run(() => Clipboard.Clear());
             
-            await CommonViewModel.LoadCurrentlyShownElements();
+            await CommonViewModel.LoadCurrentlyShownElementsAsync();
         }
 
         public async Task Refresh()
         {
-            await CommonViewModel.LoadCurrentlyShownElements();
+            await CommonViewModel.LoadCurrentlyShownElementsAsync();
         }
 
         public async Task Remove()
@@ -197,7 +197,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 }
             }
 
-            await CommonViewModel.LoadCurrentlyShownElements();
+            await CommonViewModel.LoadCurrentlyShownElementsAsync();
         }
 
         public async Task Rename()

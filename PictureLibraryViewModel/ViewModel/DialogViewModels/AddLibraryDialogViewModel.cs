@@ -85,7 +85,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             }
 
             await LibraryRepository.AddAsync(library);
-            await CommonViewModel.LoadCurrentlyShownElements();
+            await CommonViewModel.LoadCurrentlyShownElementsAsync();
         }
     }
 }

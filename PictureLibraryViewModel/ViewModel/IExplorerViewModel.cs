@@ -21,6 +21,6 @@ namespace PictureLibraryViewModel.ViewModel
 
         void Back();
         void Forward();
-        Task LoadCurrentlyShownElements();
+        Task LoadCurrentlyShownElementsAsync();
     }
 }

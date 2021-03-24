@@ -33,7 +33,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             LibraryRepository = libraryRepository;
         }
 
-        public async Task LoadCurrentlyShownElements()
+        public async Task LoadCurrentlyShownElementsAsync()
         {
             if (CurrentlyShownElements == null) return;
 

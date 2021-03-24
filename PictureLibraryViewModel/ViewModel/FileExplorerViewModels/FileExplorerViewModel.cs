@@ -72,12 +72,12 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             _currentlyOpenedElement = null;
 
-            Task.Run(() => LoadCurrentlyShownElements()).Wait();
+            Task.Run(() => LoadCurrentlyShownElementsAsync()).Wait();
         }
 
         public async void OnCurrentlyOpenedElementChanged(object sender, PropertyChangedEventArgs args)
         {
-            if(args.PropertyName == "CurrentlyOpenedElement") await LoadCurrentlyShownElements();
+            if(args.PropertyName == "CurrentlyOpenedElement") await LoadCurrentlyShownElementsAsync();
         }
 
         public void OnSelectedElementsChanged(object sender, EventArgs args)
@@ -85,7 +85,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             InfoText = Strings.SelectedElements + ' ' + SelectedElements.Count;
         }
 
-        public async Task LoadCurrentlyShownElements()
+        public async Task LoadCurrentlyShownElementsAsync()
         {
             if (CurrentlyShownElements == null) return;
 
