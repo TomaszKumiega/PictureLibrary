@@ -29,8 +29,9 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             return viewModel;
         }
 
-        public IExplorableElementsViewViewModel GetFilesViewViewModel()
-        {
+        public async Task<IExplorableElementsViewViewModel> GetFilesViewViewModelAsync()
+        { 
+            await CommonVM.LoadCurrentlyShownElementsAsync();
             return new FilesViewViewModel(CommonVM);
         }
     }

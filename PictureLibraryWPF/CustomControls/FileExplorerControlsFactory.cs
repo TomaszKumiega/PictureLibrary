@@ -33,7 +33,7 @@ namespace PictureLibraryWPF.CustomControls
 
         public ElementsView GetFileElementsView()
         {
-            return new ElementsView(FileExplorerViewModelFactory.GetFilesViewViewModel());
+            return new ElementsView(FileExplorerViewModelFactory.GetFilesViewViewModelAsync());
         }
 
         public FileExplorerToolbar GetFileExplorerToolbar()

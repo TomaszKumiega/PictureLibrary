@@ -8,7 +8,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
     public interface IFileExplorerViewModelFactory
     {
-        IExplorableElementsViewViewModel GetFilesViewViewModel();
+        Task<IExplorableElementsViewViewModel> GetFilesViewViewModelAsync();
         Task<IExplorableElementsTreeViewModel> GetFileTreeViewModelAsync();
         IFileExplorerToolboxViewModel GetFileToolboxViewModel(IClipboardService clipboard);
     }
