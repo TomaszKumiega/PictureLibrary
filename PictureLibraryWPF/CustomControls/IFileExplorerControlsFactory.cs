@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace PictureLibraryWPF.CustomControls
 {
     public interface IFileExplorerControlsFactory
     {
-        ElementsTree GetFileElementsTree();
+        Task<ElementsTree> GetFileElementsTreeAsync();
         ElementsView GetFileElementsView();
         FileExplorerToolbar GetFileExplorerToolbar();
     }

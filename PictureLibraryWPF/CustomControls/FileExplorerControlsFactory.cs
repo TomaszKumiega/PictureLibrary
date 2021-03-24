@@ -10,6 +10,7 @@ using PictureLibraryWPF.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace PictureLibraryWPF.CustomControls
@@ -25,9 +26,9 @@ namespace PictureLibraryWPF.CustomControls
             DialogViewModelFactory = dialogViewModelFactory;
         }
 
-        public ElementsTree GetFileElementsTree()
+        public async Task<ElementsTree> GetFileElementsTreeAsync()
         {
-            return new ElementsTree(FileExplorerViewModelFactory.GetFileTreeViewModelAsync());
+            return new ElementsTree(await FileExplorerViewModelFactory.GetFileTreeViewModelAsync());
         }
 
         public ElementsView GetFileElementsView()

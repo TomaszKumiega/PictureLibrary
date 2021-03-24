@@ -57,7 +57,7 @@ namespace PictureLibraryWPF
             ToolBarShadow.Fill = new SolidColorBrush(Color.FromArgb(29, 31, 33, 1)); // change rectangle color to #2b2d30
 
             // Add files tree to the grid
-            var filesTree = FileExplorerControlsFactory.GetFileElementsTree();
+            var filesTree = FileExplorerControlsFactory.GetFileElementsTreeAsync();
             Grid.Children.Add(filesTree);
             filesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
             filesTree.VerticalAlignment = VerticalAlignment.Stretch;
