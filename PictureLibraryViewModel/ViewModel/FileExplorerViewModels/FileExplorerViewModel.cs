@@ -71,8 +71,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             SelectedElements.CollectionChanged += OnSelectedElementsChanged;
 
             _currentlyOpenedElement = null;
-
-            Task.Run(() => LoadCurrentlyShownElementsAsync()).Wait();
         }
 
         public async void OnCurrentlyOpenedElementChanged(object sender, PropertyChangedEventArgs args)
