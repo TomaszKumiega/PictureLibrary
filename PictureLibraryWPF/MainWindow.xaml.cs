@@ -98,7 +98,7 @@ namespace PictureLibraryWPF
 
 
             // Add libraries tree to the grid
-            var librariesTree = await LibraryExplorerControlsFactory.GetLibrariesTree();
+            var librariesTree = await LibraryExplorerControlsFactory.GetLibrariesTreeAsync();
             Grid.Children.Add(librariesTree);
             librariesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
             librariesTree.VerticalAlignment = VerticalAlignment.Stretch;
