@@ -33,10 +33,9 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         {
             CommonViewModel = viewModel;
             DirectoryService = directoryService;
-            InitializeDirectoryTree();
         }
 
-        private void InitializeDirectoryTree()
+        public async Task InitializeDirectoryTreeAsync()
         {
             ExplorableElementsTree = new ObservableCollection<IExplorableElement>();
 
@@ -44,7 +43,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             try
             {
-                rootDirectories = DirectoryService.GetRootDirectories();
+                rootDirectories = await Task.Run(() => DirectoryService.GetRootDirectories());
             }
             catch (Exception e)
             {
@@ -54,7 +53,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             foreach (var t in rootDirectories)
             {
-                Task.Run(() => t.LoadSubDirectoriesAsync()).Wait();
+                await t.LoadSubDirectoriesAsync();
                 ExplorableElementsTree.Add(t);
             }
 
