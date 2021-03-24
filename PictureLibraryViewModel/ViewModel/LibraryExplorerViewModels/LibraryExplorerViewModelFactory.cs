@@ -35,9 +35,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             return viewModel;
         }
 
-        public IExplorableElementsViewViewModel GetLibraryViewViewModel()
+        public async Task<IExplorableElementsViewViewModel> GetLibraryViewViewModelAsync()
         {
-            return new LibraryViewViewModel(CommonViewModel);
+            var viewModel = new LibraryViewViewModel(CommonViewModel);
+            await viewModel.CommonViewModel.LoadCurrentlyShownElements();
+            return viewModel;
         }
 
         public ITagPanelViewModel GetTagPanelViewModel()

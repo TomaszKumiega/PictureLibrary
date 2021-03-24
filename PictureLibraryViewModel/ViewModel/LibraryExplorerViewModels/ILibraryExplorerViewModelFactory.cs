@@ -10,7 +10,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     {
         ILibraryExplorerToolboxViewModel GetLibraryExplorerToolboxViewModel(IClipboardService clipboard);
         Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModelAsync();
-        IExplorableElementsViewViewModel GetLibraryViewViewModel();
+        Task<IExplorableElementsViewViewModel> GetLibraryViewViewModelAsync();
         ITagPanelViewModel GetTagPanelViewModel();
     }
 }

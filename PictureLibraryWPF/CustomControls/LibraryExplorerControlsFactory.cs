@@ -29,7 +29,7 @@ namespace PictureLibraryWPF.CustomControls
 
         public ElementsView GetLibrariesView()
         {
-            return new ElementsView(ViewModelFactory.GetLibraryViewViewModel());
+            return new ElementsView(ViewModelFactory.GetLibraryViewViewModelAsync());
         }
 
         public LibraryExplorerToolbar GetLibraryExplorerToolbar()
