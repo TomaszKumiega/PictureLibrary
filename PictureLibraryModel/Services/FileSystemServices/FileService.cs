@@ -63,7 +63,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public Stream OpenFile(string path)
         {
-            return File.Open(path, FileMode.Open);
+            return File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         public override void Remove(string path)
