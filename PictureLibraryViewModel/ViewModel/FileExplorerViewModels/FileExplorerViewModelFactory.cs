@@ -4,6 +4,7 @@ using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
@@ -21,9 +22,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             return new FileExplorerToolboxViewModel(CommonVM, new FileService(), new DirectoryService(), clipboard, new CommandFactory());
         }
 
-        public IExplorableElementsTreeViewModel GetFileTreeViewModel()
+        public async Task<IExplorableElementsTreeViewModel> GetFileTreeViewModelAsync()
         {
-            return new FileTreeViewModel(CommonVM, new DirectoryService());
+            var viewModel = new FileTreeViewModel(CommonVM, new DirectoryService());
+            await viewModel.InitializeDirectoryTreeAsync();
+            return viewModel;
         }
 
         public IExplorableElementsViewViewModel GetFilesViewViewModel()

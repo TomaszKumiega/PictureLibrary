@@ -27,7 +27,7 @@ namespace PictureLibraryWPF.CustomControls
 
         public ElementsTree GetFileElementsTree()
         {
-            return new ElementsTree(FileExplorerViewModelFactory.GetFileTreeViewModel());
+            return new ElementsTree(FileExplorerViewModelFactory.GetFileTreeViewModelAsync());
         }
 
         public ElementsView GetFileElementsView()
