@@ -9,7 +9,7 @@ namespace PictureLibraryWPF.CustomControls
     public interface ILibraryExplorerControlsFactory
     {
         Task<ElementsTree> GetLibrariesTreeAsync();
-        ElementsView GetLibrariesView();
+        Task<ElementsView> GetLibrariesViewAsync();
         LibraryExplorerToolbar GetLibraryExplorerToolbar();
         TagPanel GetTagPanel();
     }
