@@ -124,7 +124,7 @@ namespace PictureLibraryWPF
             Grid.SetColumnSpan(librariesToolbar, 2);
 
             CurrentPageControls.Add(librariesTree);
-            CurrentPageControls.Add(librariesToolbar);
+            CurrentPageControls.Add(librariesView);
             CurrentPageControls.Add(librariesToolbar);
         }
 
