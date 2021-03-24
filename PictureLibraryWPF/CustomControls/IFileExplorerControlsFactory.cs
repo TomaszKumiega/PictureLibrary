@@ -10,7 +10,7 @@ namespace PictureLibraryWPF.CustomControls
     public interface IFileExplorerControlsFactory
     {
         Task<ElementsTree> GetFileElementsTreeAsync();
-        ElementsView GetFileElementsView();
+        Task<ElementsView> GetFileElementsViewAsync();
         FileExplorerToolbar GetFileExplorerToolbar();
     }
 }

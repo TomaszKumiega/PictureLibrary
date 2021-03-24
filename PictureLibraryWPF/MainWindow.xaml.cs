@@ -65,7 +65,7 @@ namespace PictureLibraryWPF
             Grid.SetRow(filesTree, 8);
 
             // Add files view to the grid
-            var filesView = FileExplorerControlsFactory.GetFileElementsView();
+            var filesView = await FileExplorerControlsFactory.GetFileElementsViewAsync();
             MainPanelGrid.Children.Add(filesView);
             filesView.HorizontalAlignment = HorizontalAlignment.Stretch;
             filesView.VerticalAlignment = VerticalAlignment.Stretch;
