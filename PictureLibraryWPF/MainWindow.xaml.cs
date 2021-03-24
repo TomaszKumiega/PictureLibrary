@@ -87,7 +87,7 @@ namespace PictureLibraryWPF
             CurrentPageControls.Add(toolbar);
         }
 
-        private async Task LoadLibraryExplorerPage()
+        private async Task LoadLibraryExplorerPageAsync()
         {
             // Reset window to default state
             ResetButtonClickedRectangles();
@@ -200,7 +200,7 @@ namespace PictureLibraryWPF
 
         private async void LibrariesButton_Click(object sender, RoutedEventArgs e)
         {
-            await LoadLibraryExplorerPage();
+            await LoadLibraryExplorerPageAsync();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
