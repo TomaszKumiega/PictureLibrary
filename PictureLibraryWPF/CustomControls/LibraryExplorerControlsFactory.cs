@@ -24,7 +24,7 @@ namespace PictureLibraryWPF.CustomControls
 
         public async Task<ElementsTree> GetLibrariesTree()
         {
-            return new ElementsTree(await ViewModelFactory.GetLibraryTreeViewModel());
+            return new ElementsTree(await ViewModelFactory.GetLibraryTreeViewModelAsync());
         }
 
         public ElementsView GetLibrariesView()

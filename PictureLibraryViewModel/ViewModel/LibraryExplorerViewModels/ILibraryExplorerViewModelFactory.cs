@@ -9,7 +9,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     public interface ILibraryExplorerViewModelFactory
     {
         ILibraryExplorerToolboxViewModel GetLibraryExplorerToolboxViewModel(IClipboardService clipboard);
-        Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModel();
+        Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModelAsync();
         IExplorableElementsViewViewModel GetLibraryViewViewModel();
         ITagPanelViewModel GetTagPanelViewModel();
     }

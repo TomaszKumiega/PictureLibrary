@@ -28,7 +28,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             return new LibraryExplorerToolboxViewModel(CommonViewModel, new CommandFactory(), clipboard);
         }
 
-        public async Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModel()
+        public async Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModelAsync()
         {
             var viewModel = new LibraryTreeViewModel(new LibraryRepository(ConnectedServices, LibraryRepositoriesFactory), CommonViewModel);
             await viewModel.InitializeLibraryTree();
