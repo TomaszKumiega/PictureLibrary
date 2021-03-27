@@ -28,7 +28,7 @@ namespace PictureLibraryModel.Services.ImageProviderService
 
         public Task LoadImagesIconsAsync(IEnumerable<ImageFile> imageFiles)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task RemoveImageAsync(ImageFile imageFile)
