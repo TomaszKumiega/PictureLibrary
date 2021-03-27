@@ -48,7 +48,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public void BuildLibraryFullPath()
         {
-            ImageFile.LibraryFullPath = null;
+            ImageFile.LibraryFullName = null;
         }
 
         public void BuildName()

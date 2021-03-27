@@ -75,7 +75,7 @@ namespace PictureLibraryModel.Model
     public class ImageFile : File
     {
         public ImageExtension Extension { get; set; }
-        public string LibraryFullPath { get; set; }
+        public string LibraryFullName { get; set; }
         public List<Tag> Tags { get; set; }
 
         public ImageFile() : base()
