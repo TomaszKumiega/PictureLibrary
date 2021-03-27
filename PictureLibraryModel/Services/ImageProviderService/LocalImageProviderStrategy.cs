@@ -21,9 +21,9 @@ namespace PictureLibraryModel.Services.ImageProviderService
             throw new NotImplementedException();
         }
 
-        public Task<byte[]> GetImageAsync(ImageFile imageFile)
+        public async Task<byte[]> GetImageAsync(ImageFile imageFile)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() => FileService.ReadAllBytes(imageFile.FullName));
         }
 
         public Task LoadImagesIconsAsync(IEnumerable<ImageFile> imageFiles)
