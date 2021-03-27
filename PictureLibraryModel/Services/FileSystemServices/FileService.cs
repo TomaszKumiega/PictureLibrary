@@ -78,5 +78,10 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
             File.Move(path, directoryPath + "\\" + name + extension);
         }
+
+        public byte[] ReadAllBytes(string path)
+        {
+            return File.ReadAllBytes(path);
+        }
     }
 }

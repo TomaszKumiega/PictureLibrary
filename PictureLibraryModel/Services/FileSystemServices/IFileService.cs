@@ -10,5 +10,6 @@ namespace PictureLibraryModel.Services.FileSystemServices
     {
         Stream OpenFile(string path);
         Task<IEnumerable<string>> FindFilesAsync(string searchPattern, string directory);
+        byte[] ReadAllBytes(string path);
     }
 }
