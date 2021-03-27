@@ -31,9 +31,9 @@ namespace PictureLibraryModel.Services.ImageProviderService
             throw new NotSupportedException();
         }
 
-        public Task RemoveImageAsync(ImageFile imageFile)
+        public async Task RemoveImageAsync(ImageFile imageFile)
         {
-            throw new NotImplementedException();
+            await Task.Run(() => FileService.Remove(imageFile.FullName));
         }
 
         public Task UpdateImageAsync(ImageFile imageFile, byte[] image)
