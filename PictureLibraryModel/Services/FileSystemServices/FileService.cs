@@ -83,5 +83,10 @@ namespace PictureLibraryModel.Services.FileSystemServices
         {
             return File.ReadAllBytes(path);
         }
+
+        public void WriteAllBytes(string path, byte[] bytes)
+        {
+            File.WriteAllBytes(path, bytes);
+        }
     }
 }
