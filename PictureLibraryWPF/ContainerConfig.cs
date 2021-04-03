@@ -48,6 +48,8 @@ namespace PictureLibraryViewModel
             builder.RegisterType<ImageProviderContext>().As<IImageProviderContext>();
             builder.RegisterType<ImageProviderStrategyFactory>().As<IImageProviderStrategyFactory>();
             builder.RegisterType<ImageProviderService>().As<IImageProviderService>();
+
+            builder.RegisterType<LibraryRepositoryContext>().As<ILibraryRepositoryContext>();
             #endregion
 
             #region ViewModel 
