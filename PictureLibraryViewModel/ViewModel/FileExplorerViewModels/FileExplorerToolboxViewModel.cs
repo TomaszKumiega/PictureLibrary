@@ -108,7 +108,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             await Task.Run(() => Clipboard.SetFiles(paths, ClipboardFilesState.Copied));
         }
 
-        public async Task CopyPath()
+        public void CopyPath()
         {
             var text = "";
 
@@ -121,7 +121,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 }
             }
 
-            await Task.Run(() => Clipboard.SetText(text));
+            Clipboard.SetText(text);
         }
 
         public async Task CreateDirectory()
@@ -173,7 +173,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 }
             }
 
-            await Task.Run(() => Clipboard.Clear());
+            Clipboard.Clear();
             
             await CommonViewModel.LoadCurrentlyShownElementsAsync();
         }

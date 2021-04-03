@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text;
+using System.Threading;
 
 namespace PictureLibraryWPF.Clipboard
 {
@@ -16,6 +17,7 @@ namespace PictureLibraryWPF.Clipboard
         public void Clear()
         {
             FilesState = ClipboardFilesState.NoFiles;
+            Thread.CurrentThread.TrySetApartmentState(ApartmentState.STA);
             System.Windows.Clipboard.Clear();
         }
 

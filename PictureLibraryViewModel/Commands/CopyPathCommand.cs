@@ -30,9 +30,9 @@ namespace PictureLibraryViewModel.Commands
             else return false;
         }
 
-        public async void Execute(object parameter)
+        public void Execute(object parameter)
         {
-            await ViewModel.CopyPath();
+            ViewModel.CopyPath();
         }
     }
 }

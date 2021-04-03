@@ -21,7 +21,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         Task CreateDirectory();
         void GoToParentDirectory();
         Task Paste();
-        Task CopyPath();
+        void CopyPath();
         Task Cut();
         Task Copy();
     }
