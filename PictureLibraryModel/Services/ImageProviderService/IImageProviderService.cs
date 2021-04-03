@@ -8,7 +8,7 @@ namespace PictureLibraryModel.Services.ImageProviderService
 {
     public interface IImageProviderService
     {
-        Task AddImageToLibraryAsync(ImageFile imageFile, byte[] image);
+        Task<ImageFile> AddImageToLibraryAsync(ImageFile imageFile, string libraryFullName);
         Task<byte[]> GetImageAsync(ImageFile imageFile);
         Task UpdateImageAsync(ImageFile imageFile, byte[] image);
         Task LoadImagesIconsAsync(IEnumerable<ImageFile> imageFiles);
