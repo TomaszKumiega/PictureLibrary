@@ -10,7 +10,7 @@ namespace PictureLibraryModel.Services.ImageProviderService
     {
         IImageProviderStrategy Strategy { get; set; }
 
-        Task<ImageFile> AddImageToLibraryAsync(ImageFile imageFile, string libraryDirectory);
+        Task<ImageFile> AddImageToLibraryAsync(ImageFile imageFile, string libraryFullName);
         Task<byte[]> GetImageAsync(ImageFile imageFile);
         Task UpdateImageAsync(ImageFile imageFile, byte[] image);
         Task LoadImagesIconsAsync(IEnumerable<ImageFile> imageFiles);

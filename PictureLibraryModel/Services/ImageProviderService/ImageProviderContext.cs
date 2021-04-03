@@ -10,9 +10,9 @@ namespace PictureLibraryModel.Services.ImageProviderService
     {
         public IImageProviderStrategy Strategy { get; set; }
 
-        public async Task<ImageFile> AddImageToLibraryAsync(ImageFile imageFile, string libraryDirectory)
+        public async Task<ImageFile> AddImageToLibraryAsync(ImageFile imageFile, string libraryFullName)
         {
-            return await Strategy.AddImageToLibraryAsync(imageFile, libraryDirectory);
+            return await Strategy.AddImageToLibraryAsync(imageFile, libraryFullName);
         }
 
         public async Task<byte[]> GetImageAsync(ImageFile imageFile)
