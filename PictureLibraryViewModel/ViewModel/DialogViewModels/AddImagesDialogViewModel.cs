@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Repositories;
+using PictureLibraryModel.Services.ImageProviderService;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System;
@@ -17,6 +18,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         private ILibraryExplorerViewModel CommonViewModel { get; }
         private List<ImageFile> SelectedImages { get; }
         private IRepository<Library> LibraryRepository { get; }
+        private IImageProviderService ImageProviderService { get; }
 
         private Library _selectedLibrary;
 
@@ -34,12 +36,13 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             }
         }
 
-        public AddImagesDialogViewModel(ILibraryExplorerViewModel commonVM, IRepository<Library> libraryRepository, List<ImageFile> selectedImages, ICommandFactory commandFactory)
+        public AddImagesDialogViewModel(ILibraryExplorerViewModel commonVM, IRepository<Library> libraryRepository, List<ImageFile> selectedImages, ICommandFactory commandFactory, IImageProviderService imageProviderService)
         {
             LibraryRepository = libraryRepository;
             CommonViewModel = commonVM;
             SelectedImages = selectedImages;
             AddImagesCommand = commandFactory.GetAddImagesCommand(this);
+            ImageProviderService = imageProviderService;
 
             PropertyChanged += OnSelectedLibraryChanged;
         }
@@ -56,7 +59,10 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         public async Task AddAsync()
         {
-            // Add images to library folder
+            foreach(var t in SelectedImages)
+            {
+                await ImageProviderService.AddImageToLibraryAsync(t, SelectedLibrary.FullName);
+            }
 
             SelectedLibrary.Images.AddRange(SelectedImages);
             await LibraryRepository.UpdateAsync(SelectedLibrary);
