@@ -10,12 +10,14 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
     public class LibraryRepository : IRepository<Library>
     {
         private IConnectedServicesInfoProviderService ConnectedServices { get; }
-        private ILibraryRepositoryStrategyFactory RepositoriesFactory { get; }
+        private ILibraryRepositoryStrategyFactory RepositoryStrategyFactory { get; }
+        private ILibraryRepositoryContext Context { get; }
 
-        public LibraryRepository(IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoryStrategyFactory repositoriesFactory)
+        public LibraryRepository(IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoryStrategyFactory repositoryStrategyFactory, ILibraryRepositoryContext libraryRepositoryContext)
         {
             ConnectedServices = connectedServices;
-            RepositoriesFactory = repositoriesFactory;
+            RepositoryStrategyFactory = repositoryStrategyFactory;
+            Context = libraryRepositoryContext;
         }
 
         public async Task AddAsync(Library entity)
@@ -24,11 +26,12 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             {
                 case Origin.Local:
                     {
-                        var repository = RepositoriesFactory.GetLocalLibraryRepository();
-                        await repository.AddAsync(entity);
+                        Context.Strategy = RepositoryStrategyFactory.GetLocalLibraryRepository();
                     }
                     break;
             }
+
+            await Context.AddAsync(entity);
         }
 
         public async Task AddRangeAsync(IEnumerable<Library> entities)
@@ -47,20 +50,20 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             {
                 case Origin.Local:
                     {
-                        var repository = RepositoriesFactory.GetLocalLibraryRepository();
-                        return await repository.FindAsync(predicate);
-                    };
+                        Context.Strategy = RepositoryStrategyFactory.GetLocalLibraryRepository();   
+                    }
+                    break;
             }
 
-            return null;
+            return await Context.FindAsync(predicate);
         }
 
         public async Task<IEnumerable<Library>> GetAllAsync()
         {
             var libraries = new List<Library>();
 
-            var localRepository = RepositoriesFactory.GetLocalLibraryRepository();
-            libraries.AddRange(await localRepository.GetAllAsync());
+            Context.Strategy = RepositoryStrategyFactory.GetLocalLibraryRepository();
+            libraries.AddRange(await Context.GetAllAsync());
 
             return libraries;
         }
@@ -71,8 +74,8 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             {
                 case Origin.Local:
                     {
-                        var repository = RepositoriesFactory.GetLocalLibraryRepository();
-                        await repository.RemoveAsync(entity);
+                        Context.Strategy = RepositoryStrategyFactory.GetLocalLibraryRepository();
+                        await Context.RemoveAsync(entity);
                     }
                     break;
             }
@@ -92,8 +95,8 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             {
                 case Origin.Local:
                     {
-                        var repository = RepositoriesFactory.GetLocalLibraryRepository();
-                        await repository.UpdateAsync(entity);
+                        Context.Strategy = RepositoryStrategyFactory.GetLocalLibraryRepository();
+                        await Context.UpdateAsync(entity);
                     }
                     break;
             }
