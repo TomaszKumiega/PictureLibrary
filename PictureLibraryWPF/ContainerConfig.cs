@@ -18,6 +18,7 @@ using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using PictureLibraryViewModel.ViewModel.DialogViewModels;
 using PictureLibraryWPF.Dialogs;
 using PictureLibraryModel.Repositories;
+using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 
 namespace PictureLibraryViewModel
 {
@@ -39,7 +40,7 @@ namespace PictureLibraryViewModel
             builder.RegisterType<SettingsProviderService>().As<ISettingsProviderService>().SingleInstance();
             builder.RegisterType<ConnectedServicesInfoProviderService>().As<IConnectedServicesInfoProviderService>().SingleInstance();
             builder.RegisterType<StringEncryptionService>().As<IStringEncryptionService>();
-
+            builder.RegisterType<ImageFileBuilder>().As<IImageFileBuilder>();
             builder.RegisterType<DirectoryService>().As<IDirectoryService>();
             builder.RegisterType<FileService>().As<IFileService>();
             #endregion
