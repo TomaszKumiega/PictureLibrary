@@ -6,18 +6,18 @@ namespace PictureLibraryModel.Model.Builders
 {
     public interface IImageFileBuilder
     {
-        ImageFile ImageFile { get; }
-
-        void BuildName();
-        void BuildExtension();
-        void BuildFullPath();
-        void BuildLibraryFullPath();
-        void BuildCreationTime();
-        void BuildLastAccessTime();
-        void BuildLastWriteTime();
-        void BuildSize();
-        void BuildTags();
-        void BuildIconSource();
-        void BuildOrigin();
+        IImageFileBuilder StartBuilding();
+        IImageFileBuilder WithName(string name);
+        IImageFileBuilder WithExtension(ImageExtension extension);
+        IImageFileBuilder WithExtension(string extension);
+        IImageFileBuilder WithFullName(string fullName);
+        IImageFileBuilder WithLibraryFullName(string libraryFullName);
+        IImageFileBuilder WithCreationTime(DateTime creationTime);
+        IImageFileBuilder WithLastAccessTime(DateTime lastAccessTime);
+        IImageFileBuilder WithLastWriteTime(DateTime lastWriteTime);
+        IImageFileBuilder WithSize(long bytes);
+        IImageFileBuilder WithTags(IEnumerable<Tag> tags);
+        IImageFileBuilder From(Origin origin);
+        ImageFile Build();
     }
 }
