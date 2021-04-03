@@ -62,7 +62,7 @@ namespace PictureLibraryModel.Services.ImageProviderService
             return await Task.Run(() => FileService.ReadAllBytes(imageFile.FullName));
         }
 
-        public Task LoadImagesIconsAsync(IEnumerable<ImageFile> imageFiles)
+        public Task LoadImageIcon(ImageFile imageFile)
         {
             throw new NotSupportedException();
         }

@@ -11,7 +11,7 @@ namespace PictureLibraryModel.Services.ImageProviderService
         Task<ImageFile> AddImageToLibraryAsync(ImageFile imageFile, string libraryFullName);
         Task<byte[]> GetImageAsync(ImageFile imageFile);
         Task UpdateImageAsync(ImageFile imageFile, byte[] image);
-        Task LoadImagesIconsAsync(IEnumerable<ImageFile> imageFiles);
+        Task LoadImageIcon(ImageFile imageFile);
         Task RemoveImageAsync(ImageFile imageFile);
     }
 }

@@ -20,9 +20,9 @@ namespace PictureLibraryModel.Services.ImageProviderService
             return await Strategy.GetImageAsync(imageFile);
         }
 
-        public async Task LoadImagesIconsAsync(IEnumerable<ImageFile> imageFiles)
+        public async Task LoadImageIcon(ImageFile imageFile)
         {
-            await Strategy.LoadImagesIconsAsync(imageFiles);
+            await Strategy.LoadImageIcon(imageFile);
         }
 
         public async Task RemoveImageAsync(ImageFile imageFile)
