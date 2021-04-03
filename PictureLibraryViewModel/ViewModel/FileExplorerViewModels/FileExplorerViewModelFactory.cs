@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Services.Clipboard;
+﻿using PictureLibraryModel.Model.Builders.ImageFileBuilder;
+using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryViewModel.Commands;
 using System;
@@ -19,12 +20,12 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public IFileExplorerToolboxViewModel GetFileToolboxViewModel(IClipboardService clipboard)
         {
-            return new FileExplorerToolboxViewModel(CommonVM, new FileService(), new DirectoryService(), clipboard, new CommandFactory());
+            return new FileExplorerToolboxViewModel(CommonVM, new FileService(), new DirectoryService(new ImageFileBuilder()), clipboard, new CommandFactory());
         }
 
         public async Task<IExplorableElementsTreeViewModel> GetFileTreeViewModelAsync()
         {
-            var viewModel = new FileTreeViewModel(CommonVM, new DirectoryService());
+            var viewModel = new FileTreeViewModel(CommonVM, new DirectoryService(new ImageFileBuilder()));
             await viewModel.InitializeDirectoryTreeAsync();
             return viewModel;
         }

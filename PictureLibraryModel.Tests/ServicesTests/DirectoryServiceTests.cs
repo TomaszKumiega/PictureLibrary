@@ -1,4 +1,6 @@
-﻿using PictureLibraryModel.Model;
+﻿using Moq;
+using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.Generic;
@@ -42,12 +44,13 @@ namespace PictureLibraryModel.Tests.ServicesTests
         [Fact]
         public void Copy_ShouldThrowArgumentNullException_WhenSourcePathIsNull()
         {
+            var imageFileBuilderMock = new Mock<IImageFileBuilder>();
             string sourcePath = null;
             var destinationDirectoryPath = TestFolder + "0972F3EA-7C52-43A0-8139-C9862D1F34EA";
 
             Directory.CreateDirectory(destinationDirectoryPath);
 
-            var service = new DirectoryService();
+            var service = new DirectoryService(imageFileBuilderMock.Object);
 
             Assert.Throws<ArgumentNullException>(() => service.Copy(sourcePath, destinationDirectoryPath));
         }
@@ -55,12 +58,13 @@ namespace PictureLibraryModel.Tests.ServicesTests
         [Fact]
         public void Copy_ShouldThrowArgumentNullException_WhenDestinationDirectoryPathIsNull()
         {
+            var imageFileBuilderMock = new Mock<IImageFileBuilder>();
             var sourcePath = TestFolder + "0972F3EA-7C52-43A0-8139-C9862D1F34EA";
             string destinationDirectoryPath = null;
 
             Directory.CreateDirectory(sourcePath);
 
-            var service = new DirectoryService();
+            var service = new DirectoryService(imageFileBuilderMock.Object);
 
             Assert.Throws<ArgumentNullException>(() => service.Copy(sourcePath, destinationDirectoryPath));
         }
@@ -68,6 +72,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
         [Fact]
         public void Copy_ShouldCopyFolder_WithItsContent()
         {
+            var imageFileBuilderMock = new Mock<IImageFileBuilder>();
             var sourcePath = TestFolder + "FB51D97B-5106-45EC-8EA6-A8ACE3EA7558\\";
             var destinationDirectoryPath = TestFolder + "E5C698D6-C470-412C-8F3E-703100AD2A79\\";
             var subFolder1 = "folder1\\";
@@ -82,7 +87,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
             var fileStream = File.Create(sourcePath + subFolder2 + file1);
             fileStream.Close();
 
-            var service = new DirectoryService();
+            var service = new DirectoryService(imageFileBuilderMock.Object);
 
             service.Copy(sourcePath, destinationDirectoryPath);
 
@@ -95,6 +100,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
         [Fact]
         public void GetDirectoryContent_ShouldReturnContentOfTheDirectory()
         {
+            var imageFileBuilderMock = new Mock<IImageFileBuilder>();
             var subFolder1 = "folder1";
             var subFolder2 = "folder2";
             var fileName = "testFile1.jpg";
@@ -106,7 +112,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
             var fileStream = File.Create(sourcePath + fileName);
             fileStream.Close();
 
-            var service = new DirectoryService();
+            var service = new DirectoryService(imageFileBuilderMock.Object);
             var content = service.GetDirectoryContent(sourcePath);
 
             Assert.Contains(content, x => x.Name == subFolder1);
@@ -117,9 +123,10 @@ namespace PictureLibraryModel.Tests.ServicesTests
         [Fact]
         public void GetDirectoryContent_ShouldThrowArgumentNullException_WhenPathIsNull()
         {
+            var imageFileBuilderMock = new Mock<IImageFileBuilder>();
             string path = null;
 
-            var service = new DirectoryService();
+            var service = new DirectoryService(imageFileBuilderMock.Object);
 
             Assert.Throws<ArgumentNullException>(() => service.GetDirectoryContent(path));
         }
@@ -129,6 +136,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
         [Fact]
         public void GetSubFolders_ShouldReturnSubFolders_WhenPathIsCorrect()
         {
+            var imageFileBuilderMock = new Mock<IImageFileBuilder>();
             var directory = "3D2DCE88-3524-4CB7-9311-47864BC0DAEE\\";
             var subFolder1 = "Folder1";
             var subFolder2 = "Folder2";
@@ -136,7 +144,7 @@ namespace PictureLibraryModel.Tests.ServicesTests
             Directory.CreateDirectory(TestFolder + directory + subFolder1);
             Directory.CreateDirectory(TestFolder + directory + subFolder2);
 
-            var service = new DirectoryService();
+            var service = new DirectoryService(imageFileBuilderMock.Object);
             var folders = service.GetSubFolders(TestFolder + directory);
 
             Assert.Contains(folders, x => x.Name == subFolder1);
@@ -146,7 +154,8 @@ namespace PictureLibraryModel.Tests.ServicesTests
         [Fact]
         public void GetSubFolders_ShouldThrowArgumentNullException_WhenPathIsNull()
         {
-            var service = new DirectoryService();
+            var imageFileBuilderMock = new Mock<IImageFileBuilder>();
+            var service = new DirectoryService(imageFileBuilderMock.Object);
 
             Assert.Throws<ArgumentNullException>(() => service.GetSubFolders(null));
         }
@@ -154,7 +163,8 @@ namespace PictureLibraryModel.Tests.ServicesTests
         [Fact]
         public void GetSubFolders_ShouldThrowArgumentException_WhenPathIsEmpty()
         {
-            var service = new DirectoryService();
+            var imageFileBuilderMock = new Mock<IImageFileBuilder>();
+            var service = new DirectoryService(imageFileBuilderMock.Object);
 
             Assert.Throws<ArgumentException>(() => service.GetSubFolders(String.Empty));
         }
@@ -162,7 +172,8 @@ namespace PictureLibraryModel.Tests.ServicesTests
         [Fact]
         public void GetSubFolders_ShouldThrowDirectoryNotFoundException_WhenPathDoesntExist()
         {
-            var service = new DirectoryService();
+            var imageFileBuilderMock = new Mock<IImageFileBuilder>();
+            var service = new DirectoryService(imageFileBuilderMock.Object);
 
             Assert.Throws<DirectoryNotFoundException>(() => service.GetSubFolders(TestFolder + "randomString"));
         }

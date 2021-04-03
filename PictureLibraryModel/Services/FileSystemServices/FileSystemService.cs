@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +20,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
         {
             var directoryInfo = System.IO.Directory.GetParent(path);
 
-            var parentDirectory = new Folder(new DirectoryService(), directoryInfo);
+            var parentDirectory = new Folder(new DirectoryService(new ImageFileBuilder()), directoryInfo);
 
             return parentDirectory;
         }

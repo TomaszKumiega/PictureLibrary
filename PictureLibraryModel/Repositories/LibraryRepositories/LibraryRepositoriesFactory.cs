@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryModel.Services.SettingsProvider;
@@ -19,7 +20,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public IRepository<Library> GetLocalLibraryRepository()
         {
-            return new LocalLibraryRepository(new FileService(), SettingsProvider, new LibraryFileService());
+            return new LocalLibraryRepository(new FileService(), SettingsProvider, new LibraryFileService(new ImageFileBuilder()));
         }
     }
 }
