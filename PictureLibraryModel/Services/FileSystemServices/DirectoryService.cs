@@ -1,6 +1,7 @@
 ﻿using NLog;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders;
+using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,12 @@ namespace PictureLibraryModel.Services.FileSystemServices
     public class DirectoryService : FileSystemService, IDirectoryService
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private IImageFileBuilder ImageFileBuilder { get; }
+
+        public DirectoryService(IImageFileBuilder imageFileBuilder)
+        {
+            ImageFileBuilder = imageFileBuilder;
+        }
 
         public override void Copy(string sourcePath, string destinationPath)
         {
@@ -54,11 +61,20 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
                 if (ImageFile.IsFileAnImage(fileInfo) && UserHasAccessToTheFile(t))
                 {
-                    var imageFileBuilder = new LocalFileSystemImageFileBuilder(fileInfo);
-                    var imageFileDirector = new ImageFileDirector(imageFileBuilder);
-                    imageFileDirector.MakeImageFile();
-
-                    var imageFile = imageFileDirector.GetImageFile();
+                    var imageFile =
+                        ImageFileBuilder
+                        .StartBuilding()
+                        .WithName(fileInfo.Name)
+                        .WithFullName(fileInfo.FullName)
+                        .WithExtension(fileInfo.Extension)
+                        .WithLibraryFullName(null)
+                        .WithLastAccessTime(fileInfo.LastAccessTime)
+                        .WithLastWriteTime(fileInfo.LastWriteTime)
+                        .WithCreationTime(fileInfo.CreationTime)
+                        .WithSize(fileInfo.Length)
+                        .WithTags(new List<Tag>())
+                        .From(Origin.Local)
+                        .Build();
 
                     content.Add(imageFile);
                 }
