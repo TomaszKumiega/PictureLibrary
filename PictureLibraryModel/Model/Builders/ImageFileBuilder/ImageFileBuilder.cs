@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PictureLibraryModel.Model.Builders.ImageFileBuilder
@@ -76,7 +77,7 @@ namespace PictureLibraryModel.Model.Builders.ImageFileBuilder
 
         public IImageFileBuilder WithTags(IEnumerable<Tag> tags)
         {
-            ImageFile.Tags = tags;
+            ImageFile.Tags = tags.ToList();
             return this;
         }
 
