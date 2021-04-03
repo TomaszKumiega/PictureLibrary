@@ -14,9 +14,9 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     {
         private ILibraryExplorerViewModel CommonViewModel { get; }
         private IConnectedServicesInfoProviderService ConnectedServices { get; }
-        private ILibraryRepositoriesFactory LibraryRepositoriesFactory { get; }
+        private ILibraryRepositoryStrategyFactory LibraryRepositoriesFactory { get; }
 
-        public LibraryExplorerViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoriesFactory libraryRepositoriesFactory)
+        public LibraryExplorerViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoryStrategyFactory libraryRepositoriesFactory)
         {
             CommonViewModel = commonVM;
             ConnectedServices = connectedServices;

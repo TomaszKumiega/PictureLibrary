@@ -36,7 +36,7 @@ namespace PictureLibraryViewModel
             var builder = new ContainerBuilder();
 
             #region Model 
-            builder.RegisterType<LibraryRepositoriesFactory>().As<ILibraryRepositoriesFactory>();
+            builder.RegisterType<LibraryRepositoryStrategyFactory>().As<ILibraryRepositoryStrategyFactory>();
             builder.RegisterType<LibraryRepository>().As<IRepository<Library>>();
             builder.RegisterType<SettingsProviderService>().As<ISettingsProviderService>().SingleInstance();
             builder.RegisterType<ConnectedServicesInfoProviderService>().As<IConnectedServicesInfoProviderService>().SingleInstance();

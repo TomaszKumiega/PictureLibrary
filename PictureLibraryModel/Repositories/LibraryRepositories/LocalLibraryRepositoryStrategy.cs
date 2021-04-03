@@ -14,14 +14,14 @@ using System.Xml.Linq;
 
 namespace PictureLibraryModel.Repositories.LibraryRepositories
 {
-    public class LocalLibraryRepository : IRepository<Library>
+    public class LocalLibraryRepositoryStrategy : ILibraryRepositoryStrategy
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IFileService FileService { get; }
         private ISettingsProviderService SettingsProvider { get; }
         private ILibraryFileService LibraryFileService { get; }
 
-        public LocalLibraryRepository(IFileService fileService, ISettingsProviderService settingsProvider, ILibraryFileService libraryFileService)
+        public LocalLibraryRepositoryStrategy(IFileService fileService, ISettingsProviderService settingsProvider, ILibraryFileService libraryFileService)
         {
             FileService = fileService;
             SettingsProvider = settingsProvider;

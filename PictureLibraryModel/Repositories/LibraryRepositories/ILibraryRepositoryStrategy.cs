@@ -5,8 +5,7 @@ using System.Text;
 
 namespace PictureLibraryModel.Repositories.LibraryRepositories
 {
-    public interface ILibraryRepositoriesFactory
+    public interface ILibraryRepositoryStrategy : IRepository<Library>
     {
-        IRepository<Library> GetLocalLibraryRepository();
     }
 }

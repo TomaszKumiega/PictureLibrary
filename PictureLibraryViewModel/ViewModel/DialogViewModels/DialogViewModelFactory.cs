@@ -18,9 +18,9 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         private ILibraryExplorerViewModel CommonViewModel { get; }
         private IConnectedServicesInfoProviderService ConnectedServices { get; }
-        private ILibraryRepositoriesFactory LibraryRepositoriesFactory { get; }
+        private ILibraryRepositoryStrategyFactory LibraryRepositoriesFactory { get; }
 
-        public DialogViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoriesFactory libraryRepositoriesFactory, 
+        public DialogViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoryStrategyFactory libraryRepositoriesFactory, 
             IImageProviderService imageProviderService, ICommandFactory commandFactory)
         {
             CommonViewModel = commonVM;

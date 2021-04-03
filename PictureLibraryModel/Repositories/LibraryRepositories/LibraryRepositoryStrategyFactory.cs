@@ -9,18 +9,18 @@ using System.Text;
 
 namespace PictureLibraryModel.Repositories.LibraryRepositories
 {
-    public class LibraryRepositoriesFactory : ILibraryRepositoriesFactory
+    public class LibraryRepositoryStrategyFactory : ILibraryRepositoryStrategyFactory
     {
         private ISettingsProviderService SettingsProvider { get; }
 
-        public LibraryRepositoriesFactory(ISettingsProviderService settingsProvider)
+        public LibraryRepositoryStrategyFactory(ISettingsProviderService settingsProvider)
         {
             SettingsProvider = settingsProvider;
         }
 
         public IRepository<Library> GetLocalLibraryRepository()
         {
-            return new LocalLibraryRepository(new FileService(), SettingsProvider, new LibraryFileService(new ImageFileBuilder()));
+            return new LocalLibraryRepositoryStrategy(new FileService(), SettingsProvider, new LibraryFileService(new ImageFileBuilder()));
         }
     }
 }

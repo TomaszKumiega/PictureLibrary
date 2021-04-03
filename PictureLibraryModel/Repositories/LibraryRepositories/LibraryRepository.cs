@@ -10,9 +10,9 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
     public class LibraryRepository : IRepository<Library>
     {
         private IConnectedServicesInfoProviderService ConnectedServices { get; }
-        private ILibraryRepositoriesFactory RepositoriesFactory { get; }
+        private ILibraryRepositoryStrategyFactory RepositoriesFactory { get; }
 
-        public LibraryRepository(IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoriesFactory repositoriesFactory)
+        public LibraryRepository(IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoryStrategyFactory repositoriesFactory)
         {
             ConnectedServices = connectedServices;
             RepositoriesFactory = repositoriesFactory;
