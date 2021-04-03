@@ -18,7 +18,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             SettingsProvider = settingsProvider;
         }
 
-        public IRepository<Library> GetLocalLibraryRepository()
+        public ILibraryRepositoryStrategy GetLocalLibraryRepository()
         {
             return new LocalLibraryRepositoryStrategy(new FileService(), SettingsProvider, new LibraryFileService(new ImageFileBuilder()));
         }

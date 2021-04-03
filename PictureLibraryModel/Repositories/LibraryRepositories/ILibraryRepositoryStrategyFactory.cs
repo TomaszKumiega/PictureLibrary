@@ -7,6 +7,6 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 {
     public interface ILibraryRepositoryStrategyFactory
     {
-        IRepository<Library> GetLocalLibraryRepository();
+        ILibraryRepositoryStrategy GetLocalLibraryRepository();
     }
 }
