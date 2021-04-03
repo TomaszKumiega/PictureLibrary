@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Repositories;
 using PictureLibraryModel.Repositories.LibraryRepositories;
 using PictureLibraryModel.Services.ConnectedServicesInfoProvider;
 using PictureLibraryModel.Services.ImageProviderService;
@@ -15,25 +16,25 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
     {
         private IImageProviderService ImageProviderService { get; }
         private ICommandFactory CommandFactory { get; }
+        private IRepository<Library> LibraryRepository { get; }
 
         private ILibraryExplorerViewModel CommonViewModel { get; }
         private IConnectedServicesInfoProviderService ConnectedServices { get; }
-        private ILibraryRepositoryStrategyFactory LibraryRepositoriesFactory { get; }
 
-        public DialogViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoryStrategyFactory libraryRepositoriesFactory, 
-            IImageProviderService imageProviderService, ICommandFactory commandFactory)
+        public DialogViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices, 
+            IImageProviderService imageProviderService, ICommandFactory commandFactory, IRepository<Library> libraryRepository)
         {
             CommonViewModel = commonVM;
             ConnectedServices = connectedServices;
-            LibraryRepositoriesFactory = libraryRepositoriesFactory;
             ImageProviderService = imageProviderService;
             CommandFactory = commandFactory;
+            LibraryRepository = libraryRepository;
 
         }
 
         public IAddLibraryDialogViewModel GetAddLibraryDialogViewModel()
         {
-            return new AddLibraryDialogViewModel(CommonViewModel, new LibraryRepository(ConnectedServices, LibraryRepositoriesFactory), ConnectedServices, CommandFactory);
+            return new AddLibraryDialogViewModel(CommonViewModel, LibraryRepository, ConnectedServices, CommandFactory);
         }
 
         public IAddTagDialogViewModel GetAddTagDialogViewModel()
@@ -43,7 +44,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         public async Task<IAddImagesDialogViewModel> GetImagesDialogViewModel(List<ImageFile> selectedImages)
         {
-            var viewModel = new AddImagesDialogViewModel(CommonViewModel, new LibraryRepository(ConnectedServices, LibraryRepositoriesFactory), selectedImages, CommandFactory, ImageProviderService);
+            var viewModel = new AddImagesDialogViewModel(CommonViewModel, LibraryRepository, selectedImages, CommandFactory, ImageProviderService);
             await viewModel.Initialize();
 
             return viewModel;

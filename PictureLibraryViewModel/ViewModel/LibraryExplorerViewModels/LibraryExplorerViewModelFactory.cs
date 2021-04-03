@@ -1,4 +1,6 @@
-﻿using PictureLibraryModel.Repositories.LibraryRepositories;
+﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Repositories;
+using PictureLibraryModel.Repositories.LibraryRepositories;
 using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryModel.Services.ConnectedServicesInfoProvider;
 using PictureLibraryModel.Services.SettingsProvider;
@@ -13,24 +15,24 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     public class LibraryExplorerViewModelFactory : ILibraryExplorerViewModelFactory
     {
         private ILibraryExplorerViewModel CommonViewModel { get; }
-        private IConnectedServicesInfoProviderService ConnectedServices { get; }
-        private ILibraryRepositoryStrategyFactory LibraryRepositoriesFactory { get; }
+        private IRepository<Library> LibraryRepository { get; }
+        private ICommandFactory CommandFactory { get; }
 
-        public LibraryExplorerViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices, ILibraryRepositoryStrategyFactory libraryRepositoriesFactory)
+        public LibraryExplorerViewModelFactory(ILibraryExplorerViewModel commonVM, IRepository<Library> libraryRepository, ICommandFactory commandFactory)
         {
             CommonViewModel = commonVM;
-            ConnectedServices = connectedServices;
-            LibraryRepositoriesFactory = libraryRepositoriesFactory;
+            LibraryRepository = libraryRepository;
+            CommandFactory = commandFactory;
         }
 
         public ILibraryExplorerToolboxViewModel GetLibraryExplorerToolboxViewModel(IClipboardService clipboard)
         {
-            return new LibraryExplorerToolboxViewModel(CommonViewModel, new CommandFactory(), clipboard);
+            return new LibraryExplorerToolboxViewModel(CommonViewModel, CommandFactory, clipboard);
         }
 
         public async Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModelAsync()
         {
-            var viewModel = new LibraryTreeViewModel(new LibraryRepository(ConnectedServices, LibraryRepositoriesFactory), CommonViewModel);
+            var viewModel = new LibraryTreeViewModel(LibraryRepository, CommonViewModel);
             await viewModel.InitializeLibraryTreeAsync();
             return viewModel;
         }
