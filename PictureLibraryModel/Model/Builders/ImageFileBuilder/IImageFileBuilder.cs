@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PictureLibraryModel.Model.Builders
+namespace PictureLibraryModel.Model.Builders.ImageFileBuilder
 {
     public interface IImageFileBuilder
     {
