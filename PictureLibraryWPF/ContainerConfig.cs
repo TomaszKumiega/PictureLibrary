@@ -19,6 +19,7 @@ using PictureLibraryViewModel.ViewModel.DialogViewModels;
 using PictureLibraryWPF.Dialogs;
 using PictureLibraryModel.Repositories;
 using PictureLibraryModel.Model.Builders.ImageFileBuilder;
+using PictureLibraryModel.Services.ImageProviderService;
 
 namespace PictureLibraryViewModel
 {
@@ -43,6 +44,10 @@ namespace PictureLibraryViewModel
             builder.RegisterType<ImageFileBuilder>().As<IImageFileBuilder>();
             builder.RegisterType<DirectoryService>().As<IDirectoryService>();
             builder.RegisterType<FileService>().As<IFileService>();
+
+            builder.RegisterType<ImageProviderContext>().As<IImageProviderContext>();
+            builder.RegisterType<ImageProviderStrategyFactory>().As<IImageProviderStrategyFactory>();
+            builder.RegisterType<ImageProviderService>().As<IImageProviderService>();
             #endregion
 
             #region ViewModel 
