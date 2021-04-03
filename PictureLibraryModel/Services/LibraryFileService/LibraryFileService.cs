@@ -1,5 +1,6 @@
 ﻿using NLog;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,12 @@ namespace PictureLibraryModel.Services.LibraryFileService
     public class LibraryFileService : ILibraryFileService
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private IImageFileBuilder ImageFileBuilder { get; }
+
+        public LibraryFileService(IImageFileBuilder imageFileBuilder)
+        {
+            ImageFileBuilder = imageFileBuilder;
+        }
 
         public async Task<Library> ReadLibraryFromStreamAsync(Stream fileStream)
         {
@@ -62,14 +69,17 @@ namespace PictureLibraryModel.Services.LibraryFileService
                                 {
                                     var imageElement = await Task.Run(() => XNode.ReadFrom(reader)) as XElement;
 
-                                    var imageFile = new ImageFile();
-                                    imageFile.Name = imageElement.Attribute("name").Value;
-                                    imageFile.Extension = ImageExtensionHelper.GetExtension(imageElement.Attribute("extension").Value);
-                                    imageFile.FullName = imageElement.Attribute("source").Value;
-                                    imageFile.CreationTime = DateTime.Parse(imageElement.Attribute("creationTime").Value);
-                                    imageFile.LastAccessTime = DateTime.Parse(imageElement.Attribute("lastAccessTime").Value);
-                                    imageFile.LastWriteTime = DateTime.Parse(imageElement.Attribute("lastWriteTime").Value);
-                                    imageFile.Size = long.Parse(imageElement.Attribute("size").Value);
+                                    var imageFile =
+                                        ImageFileBuilder
+                                        .StartBuilding()
+                                        .WithName(imageElement.Attribute("name").Value)
+                                        .WithExtension(ImageExtensionHelper.GetExtension(imageElement.Attribute("extension").Value))
+                                        .WithFullName(imageElement.Attribute("source").Value)
+                                        .WithCreationTime(DateTime.Parse(imageElement.Attribute("creationTime").Value))
+                                        .WithLastAccessTime(DateTime.Parse(imageElement.Attribute("lastAccessTime").Value))
+                                        .WithLastWriteTime(DateTime.Parse(imageElement.Attribute("lastWriteTime").Value))
+                                        .WithSize(long.Parse(imageElement.Attribute("size").Value))
+                                        .Build();
 
                                     foreach (var t in imageElement.Attribute("tags").Value.Split(','))
                                     {
