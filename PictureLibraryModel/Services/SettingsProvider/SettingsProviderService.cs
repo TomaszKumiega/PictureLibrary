@@ -27,7 +27,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
 
         private void LoadSettings()
         {
-            if (!FileService.Exists("settings.xml"))
+            if (!FileService.Exists("settings.xml") || !IsFileXml("settings.xml"))
             {
                 Settings =
                     new Settings()
@@ -113,7 +113,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
 
             try
             {
-                if(!FileService.Exists("settings.xml")) FileService.Create("settings.xml");
+                FileService.Create("settings.xml");
                 var fileStream = FileService.OpenFile("settings.xml");
 
                 using (var streamWriter = new StreamWriter(fileStream))
@@ -133,6 +133,20 @@ namespace PictureLibraryModel.Services.SettingsProvider
                 _logger.Error(e, e.Message);
                 throw new Exception("Couldn't save the settings");
             }
+        }
+
+        private bool IsFileXml(string path)
+        {
+            try
+            {
+                var doc = XDocument.Load(path);
+            }
+            catch(XmlException)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
