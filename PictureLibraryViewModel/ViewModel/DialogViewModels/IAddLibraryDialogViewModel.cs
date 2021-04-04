@@ -19,7 +19,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         ICommand AddLibraryCommand { get; }
 
         event InvalidInputEventHandler InvalidInput;
-
+        event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
         Task AddAsync();
     }
 }

@@ -28,6 +28,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         public ICommand AddLibraryCommand { get; }
 
         public event InvalidInputEventHandler InvalidInput;
+        public event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
 
         public AddLibraryDialogViewModel(ILibraryExplorerViewModel commonVM, IRepository<Library> libraryRepository, IConnectedServicesInfoProviderService connectedServices, ICommandFactory commandFactory)
         {
@@ -84,8 +85,20 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                     break;
             }
 
-            await LibraryRepository.AddAsync(library);
+            try
+            {
+                await LibraryRepository.AddAsync(library);
+                
+            }
+            catch
+            {
+                ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Failed));
+                return;
+            }
+
+
             await CommonViewModel.LoadCurrentlyShownElementsAsync();
+            ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Finished));
         }
     }
 }
