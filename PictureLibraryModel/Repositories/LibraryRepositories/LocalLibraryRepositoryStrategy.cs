@@ -63,7 +63,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
                 {
                     var openFileTask = Task.Run(() => FileService.OpenFile(t));
                     var stream = await openFileTask;
-                    var library = await LibraryFileService.ReadLibraryFromStreamAsync(stream);
+                    var library = await LibraryFileService.ReadLibraryFromStreamAsync(stream, Origin.Local);
                     libraries.Add(library);
                 }
                 catch(FileNotFoundException e)
@@ -85,7 +85,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
         public async Task<Library> GetByPathAsync(string path)
         {
             var stream = await Task.Run(() => FileService.OpenFile(path));
-            var library = await LibraryFileService.ReadLibraryFromStreamAsync(stream);
+            var library = await LibraryFileService.ReadLibraryFromStreamAsync(stream, Origin.Local);
 
             return library;
         }
