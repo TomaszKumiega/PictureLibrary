@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using PublicResXFileCodeGenerator;
 using System.Windows.Forms;
 using PictureLibraryWPF.Helpers;
+using PictureLibraryViewModel.ViewModel.Events;
 
 namespace PictureLibraryWPF.Dialogs
 {
@@ -27,6 +28,7 @@ namespace PictureLibraryWPF.Dialogs
             InitializeComponent();
             InitializeLocationComboBox();
             DisablePathSelectionControls();
+            viewModel.ProcessingStatusChanged += OnProcessingStatusChanged;
         }
 
         private void DisablePathSelectionControls()
@@ -52,6 +54,11 @@ namespace PictureLibraryWPF.Dialogs
             locationList.Add("Remote Server");
             foreach (var t in locationList)
                 LocationComboBox.Items.Add(t);
+        }
+
+        private void OnProcessingStatusChanged(object sender, ProcessingStatusChangedEventArgs args)
+        {
+            if (args.Status == ProcessingStatus.Finished) this.Close();
         }
 
         private void LocationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
