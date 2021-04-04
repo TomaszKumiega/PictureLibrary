@@ -41,7 +41,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
             else
             {
                 var settings = new Settings();
-                var fileStream = FileService.OpenFile("settings.xml");
+                var fileStream = FileService.OpenFile("settings.xml", FileMode.Open, FileAccess.Read, FileShare.Read);
 
                 XmlReaderSettings xmlSettings = new XmlReaderSettings();
                 xmlSettings.DtdProcessing = DtdProcessing.Parse;
@@ -114,7 +114,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
             try
             {
                 FileService.Create("settings.xml");
-                var fileStream = FileService.OpenFile("settings.xml");
+                var fileStream = FileService.OpenFile("settings.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
 
                 using (var streamWriter = new StreamWriter(fileStream))
                 {

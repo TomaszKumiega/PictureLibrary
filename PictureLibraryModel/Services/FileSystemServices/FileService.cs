@@ -61,9 +61,14 @@ namespace PictureLibraryModel.Services.FileSystemServices
             File.Move(sourcePath, destinationPath);
         }
 
-        public Stream OpenFile(string path)
+        public Stream OpenFile(string path, FileMode fileMode)
         {
-            return File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return File.Open(path, FileMode.Open);
+        }
+
+        public Stream OpenFile(string path, FileMode mode, FileAccess access, FileShare fileShare)
+        {
+            return File.Open(path, mode, access, fileShare);
         }
 
         public override void Remove(string path)

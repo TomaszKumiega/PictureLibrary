@@ -8,7 +8,8 @@ namespace PictureLibraryModel.Services.FileSystemServices
 {
     public interface IFileService : IFileSystemService
     {
-        Stream OpenFile(string path);
+        Stream OpenFile(string path, FileMode fileMode);
+        Stream OpenFile(string path, FileMode fileMode, FileAccess fileAccess, FileShare fileShare);
         Task<IEnumerable<string>> FindFilesAsync(string searchPattern, string directory);
         byte[] ReadAllBytes(string path);
         void WriteAllBytes(string path, byte[] bytes);

@@ -37,7 +37,7 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
                 var remoteServerInfo = new ConnectedServiceInfo();
                 var googleDriveInfo = new ConnectedServiceInfo();
 
-                var fileStream = FileService.OpenFile("servicesInfo.xml");
+                var fileStream = FileService.OpenFile("servicesInfo.xml", FileMode.Open, FileAccess.Read, FileShare.Read);
 
                 try
                 {
@@ -110,7 +110,7 @@ namespace PictureLibraryModel.Services.ConnectedServicesInfoProvider
             }
 
             if (!FileService.Exists("servicesInfo.xml")) FileService.Create("servicesInfo.xml");
-            var fileStream = FileService.OpenFile("servicesInfo.xml");
+            var fileStream = FileService.OpenFile("servicesInfo.xml", FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
 
             try
             {

@@ -92,14 +92,14 @@ namespace PictureLibraryModel.Tests.RepositoryTests
 
             var library = GetLibrary();
 
-            fileServiceMock.Setup(x => x.OpenFile(library.FullName))
+            fileServiceMock.Setup(x => x.OpenFile(library.FullName, It.IsAny<FileMode>(), It.IsAny<FileAccess>(), It.IsAny<FileShare>()))
                 .Verifiable();
 
             var repository = new LocalLibraryRepositoryStrategy(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
 
             await repository.AddAsync(library);
 
-            fileServiceMock.Verify(x => x.OpenFile(library.FullName));
+            fileServiceMock.Verify(x => x.OpenFile(library.FullName, It.IsAny<FileMode>(), It.IsAny<FileAccess>(), It.IsAny<FileShare>()));
         }
 
         [Fact]
@@ -200,7 +200,7 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             int openFileCallCounter = 0;
             int readLibraryCallCounter = 0;
 
-            fileServiceMock.Setup(x => x.OpenFile(It.IsAny<string>()))
+            fileServiceMock.Setup(x => x.OpenFile(It.IsAny<string>(), It.IsAny<FileMode>(), It.IsAny<FileAccess>(), It.IsAny<FileShare>()))
                 .Callback(() => { openFileCallCounter++; });
             libraryFileServiceMock.Setup(x => x.ReadLibraryFromStreamAsync(It.IsAny<Stream>(), It.IsAny<Origin>()))
                 .Callback(() => { readLibraryCallCounter++; });
@@ -288,11 +288,11 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             settingsProviderMock.Setup(x => x.Settings)
                 .Returns(settings);
 
-            fileServiceMock.Setup(x => x.OpenFile(libraries[0].FullName))
+            fileServiceMock.Setup(x => x.OpenFile(libraries[0].FullName, It.IsAny<FileMode>(), It.IsAny<FileAccess>(), It.IsAny<FileShare>()))
                 .Returns(fileStreams[0]);
-            fileServiceMock.Setup(x => x.OpenFile(libraries[1].FullName))
+            fileServiceMock.Setup(x => x.OpenFile(libraries[1].FullName, It.IsAny<FileMode>(), It.IsAny<FileAccess>(), It.IsAny<FileShare>()))
                 .Returns(fileStreams[1]);
-            fileServiceMock.Setup(x => x.OpenFile(libraries[2].FullName))
+            fileServiceMock.Setup(x => x.OpenFile(libraries[2].FullName, It.IsAny<FileMode>(), It.IsAny<FileAccess>(), It.IsAny<FileShare>()))
                 .Returns(fileStreams[2]);
 
             libraryFileServiceMock.Setup(x => x.ReadLibraryFromStreamAsync(fileStreams[0], It.IsAny<Origin>()))
@@ -374,7 +374,7 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             var filePath = "Tests\\path1.plib";
             var memoryStream = new MemoryStream();
 
-            fileServiceMock.Setup(x => x.OpenFile(filePath))
+            fileServiceMock.Setup(x => x.OpenFile(filePath, It.IsAny<FileMode>(), It.IsAny<FileAccess>(), It.IsAny<FileShare>()))
                 .Returns(memoryStream);
             libraryFileServiceMock.Setup(x => x.ReadLibraryFromStreamAsync(memoryStream, It.IsAny<Origin>()))
                 .Verifiable();
@@ -382,7 +382,7 @@ namespace PictureLibraryModel.Tests.RepositoryTests
             var repository = new LocalLibraryRepositoryStrategy(fileServiceMock.Object, settingsProviderMock.Object, libraryFileServiceMock.Object);
             var library = await repository.GetByPathAsync(filePath);
 
-            fileServiceMock.Verify(x => x.OpenFile(filePath));
+            fileServiceMock.Verify(x => x.OpenFile(filePath, It.IsAny<FileMode>(), It.IsAny<FileAccess>(), It.IsAny<FileShare>()));
             libraryFileServiceMock.Verify(x => x.ReadLibraryFromStreamAsync(memoryStream, It.IsAny<Origin>()));
         }
 

@@ -31,7 +31,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
         public async Task AddAsync(Library library)
         {
             await Task.Run(() => FileService.Create(library.FullName));
-            var fileStream = await Task.Run(() => FileService.OpenFile(library.FullName));
+            var fileStream = await Task.Run(() => FileService.OpenFile(library.FullName, FileMode.Open, FileAccess.Write, FileShare.ReadWrite));
 
             SettingsProvider.Settings.ImportedLibraries.Add(library.FullName);
             await SettingsProvider.SaveSettingsAsync();
@@ -61,7 +61,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             {
                 try
                 {
-                    var openFileTask = Task.Run(() => FileService.OpenFile(t));
+                    var openFileTask = Task.Run(() => FileService.OpenFile(t, FileMode.Open, FileAccess.Read, FileShare.Read));
                     var stream = await openFileTask;
                     var library = await LibraryFileService.ReadLibraryFromStreamAsync(stream, Origin.Local);
                     libraries.Add(library);
@@ -84,7 +84,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
 
         public async Task<Library> GetByPathAsync(string path)
         {
-            var stream = await Task.Run(() => FileService.OpenFile(path));
+            var stream = await Task.Run(() => FileService.OpenFile(path, FileMode.Open, FileAccess.Read, FileShare.Read));
             var library = await LibraryFileService.ReadLibraryFromStreamAsync(stream, Origin.Local);
 
             return library;
@@ -124,7 +124,7 @@ namespace PictureLibraryModel.Repositories.LibraryRepositories
             try
             {
                 // Write library to the file
-                var stream = FileService.OpenFile(library.FullName);
+                var stream = FileService.OpenFile(library.FullName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
                 await LibraryFileService.WriteLibraryToStreamAsync(stream, library);
             }
             catch (Exception e)
