@@ -23,4 +23,3 @@ namespace PictureLibraryViewModel.ViewModel.Events
 
     public delegate void ProcessingStatusChangedEventHandler(object sender, ProcessingStatusChangedEventArgs args);
 }
-}
