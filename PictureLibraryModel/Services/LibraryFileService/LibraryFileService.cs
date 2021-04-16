@@ -59,7 +59,6 @@ namespace PictureLibraryModel.Services.LibraryFileService
                                     tag.Name = tagElement.Attribute("name").Value;
                                     tag.Description = tagElement.Attribute("description").Value;
                                     tag.Origin = origin;
-                                    tag.ParentLibrary = library;
                                     tag.FullName = "Local\\" + library.Name + "\\" + tag.Name + "\\";
                                     tag.Color = tagElement.Attribute("color").Value;
                                     tags.Add(tag);
