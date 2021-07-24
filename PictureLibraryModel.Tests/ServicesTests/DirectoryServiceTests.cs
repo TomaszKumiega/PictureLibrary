@@ -97,49 +97,49 @@ namespace PictureLibraryModel.Tests.ServicesTests
         #endregion
 
         #region GetDirectoryContent Tests
-        [Fact]
-        public void GetDirectoryContent_ShouldReturnContentOfTheDirectory()
-        {
-            var imageFileBuilderMock = new Mock<IImageFileBuilder>();
-            var subFolder1 = "folder1";
-            var subFolder2 = "folder2";
-            var fileName = "testFile1.jpg";
-            var sourcePath = TestFolder + "6589E232-641A-48FC-B4F7-48F421B8CBCF\\";
+        //[Fact]
+        //public void GetDirectoryContent_ShouldReturnContentOfTheDirectory()
+        //{
+        //    var imageFileBuilderMock = new Mock<IImageFileBuilder>();
+        //    var subFolder1 = "folder1";
+        //    var subFolder2 = "folder2";
+        //    var fileName = "testFile1.jpg";
+        //    var sourcePath = TestFolder + "6589E232-641A-48FC-B4F7-48F421B8CBCF\\";
 
-            var imageFile =
-                new ImageFileBuilder()
-                .StartBuilding()
-                .WithName(fileName)
-                .WithFullName(sourcePath + fileName)
-                .Build();
+        //    var imageFile =
+        //        new ImageFileBuilder()
+        //        .StartBuilding()
+        //        .WithName(fileName)
+        //        .WithFullName(sourcePath + fileName)
+        //        .Build();
 
-            imageFileBuilderMock.Setup(x => x.StartBuilding()).Returns(imageFileBuilderMock.Object);
-            imageFileBuilderMock.Setup(x => x.WithName(It.IsAny<string>())).Returns(imageFileBuilderMock.Object);
-            imageFileBuilderMock.Setup(x => x.WithFullName(It.IsAny<string>())).Returns(imageFileBuilderMock.Object);
-            imageFileBuilderMock.Setup(x => x.WithExtension(It.IsAny<string>())).Returns(imageFileBuilderMock.Object);
-            imageFileBuilderMock.Setup(x => x.WithLibraryFullName(It.IsAny<string>())).Returns(imageFileBuilderMock.Object);
-            imageFileBuilderMock.Setup(x => x.WithLastAccessTime(It.IsAny<DateTime>())).Returns(imageFileBuilderMock.Object);
-            imageFileBuilderMock.Setup(x => x.WithLastWriteTime(It.IsAny<DateTime>())).Returns(imageFileBuilderMock.Object);
-            imageFileBuilderMock.Setup(x => x.WithCreationTime(It.IsAny<DateTime>())).Returns(imageFileBuilderMock.Object);
-            imageFileBuilderMock.Setup(x => x.WithSize(It.IsAny<long>())).Returns(imageFileBuilderMock.Object);
-            imageFileBuilderMock.Setup(x => x.WithTags(It.IsAny<IEnumerable<Tag>>())).Returns(imageFileBuilderMock.Object);
-            imageFileBuilderMock.Setup(x => x.From(It.IsAny<Origin>())).Returns(imageFileBuilderMock.Object);
-            imageFileBuilderMock.Setup(x => x.Build())
-                .Returns(imageFile);
+        //    imageFileBuilderMock.Setup(x => x.StartBuilding()).Returns(imageFileBuilderMock.Object);
+        //    imageFileBuilderMock.Setup(x => x.WithName(It.IsAny<string>())).Returns(imageFileBuilderMock.Object);
+        //    imageFileBuilderMock.Setup(x => x.WithFullName(It.IsAny<string>())).Returns(imageFileBuilderMock.Object);
+        //    imageFileBuilderMock.Setup(x => x.WithExtension(It.IsAny<string>())).Returns(imageFileBuilderMock.Object);
+        //    imageFileBuilderMock.Setup(x => x.WithLibraryFullName(It.IsAny<string>())).Returns(imageFileBuilderMock.Object);
+        //    imageFileBuilderMock.Setup(x => x.WithLastAccessTime(It.IsAny<DateTime>())).Returns(imageFileBuilderMock.Object);
+        //    imageFileBuilderMock.Setup(x => x.WithLastWriteTime(It.IsAny<DateTime>())).Returns(imageFileBuilderMock.Object);
+        //    imageFileBuilderMock.Setup(x => x.WithCreationTime(It.IsAny<DateTime>())).Returns(imageFileBuilderMock.Object);
+        //    imageFileBuilderMock.Setup(x => x.WithSize(It.IsAny<long>())).Returns(imageFileBuilderMock.Object);
+        //    imageFileBuilderMock.Setup(x => x.WithTags(It.IsAny<IEnumerable<Tag>>())).Returns(imageFileBuilderMock.Object);
+        //    imageFileBuilderMock.Setup(x => x.From(It.IsAny<Origin>())).Returns(imageFileBuilderMock.Object);
+        //    imageFileBuilderMock.Setup(x => x.Build())
+        //        .Returns(imageFile);
 
-            Directory.CreateDirectory(sourcePath);
-            Directory.CreateDirectory(sourcePath+subFolder1);
-            Directory.CreateDirectory(sourcePath+subFolder2);
-            var fileStream = File.Create(sourcePath + fileName);
-            fileStream.Close();
+        //    Directory.CreateDirectory(sourcePath);
+        //    Directory.CreateDirectory(sourcePath+subFolder1);
+        //    Directory.CreateDirectory(sourcePath+subFolder2);
+        //    var fileStream = File.Create(sourcePath + fileName);
+        //    fileStream.Close();
 
-            var service = new DirectoryService(imageFileBuilderMock.Object);
-            var content = service.GetDirectoryContent(sourcePath);
+        //    var service = new DirectoryService(imageFileBuilderMock.Object);
+        //    var content = service.GetDirectoryContent(sourcePath);
 
-            Assert.Contains(content, x => x.Name == subFolder1);
-            Assert.Contains(content, x => x.Name == subFolder2);
-            Assert.Contains(content, x => x.Name == fileName);
-        }
+        //    Assert.Contains(content, x => x.Name == subFolder1);
+        //    Assert.Contains(content, x => x.Name == subFolder2);
+        //    Assert.Contains(content, x => x.Name == fileName);
+        //}
 
         [Fact]
         public void GetDirectoryContent_ShouldThrowArgumentNullException_WhenPathIsNull()
