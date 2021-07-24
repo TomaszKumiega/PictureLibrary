@@ -41,6 +41,7 @@ namespace PictureLibraryModel.Model.Builders.ImageFileBuilder
 
         public IImageFileBuilder WithFullName(string fullName)
         {
+            ImageFile.IconSource = fullName;
             ImageFile.FullName = fullName;
             return this;
         }

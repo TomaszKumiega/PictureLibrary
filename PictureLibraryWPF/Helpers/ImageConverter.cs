@@ -12,11 +12,13 @@ namespace PictureLibraryWPF.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) return null;
+
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.UriSource = new Uri(value.ToString());
-            bitmap.DecodePixelWidth = 50;
+            bitmap.DecodePixelWidth = 30;
             bitmap.EndInit();
 
             return bitmap;
