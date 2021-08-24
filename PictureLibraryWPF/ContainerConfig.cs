@@ -35,42 +35,13 @@ namespace PictureLibraryViewModel
         {
             var builder = new ContainerBuilder();
 
-            #region Model 
-            builder.RegisterType<LibraryRepositoryStrategyFactory>().As<ILibraryRepositoryStrategyFactory>();
-            builder.RegisterType<LibraryRepository>().As<IRepository<Library>>();
-            builder.RegisterType<SettingsProviderService>().As<ISettingsProviderService>().SingleInstance();
-            builder.RegisterType<ConnectedServicesInfoProviderService>().As<IConnectedServicesInfoProviderService>().SingleInstance();
-            builder.RegisterType<StringEncryptionService>().As<IStringEncryptionService>();
-            builder.RegisterType<ImageFileBuilder>().As<IImageFileBuilder>();
-            builder.RegisterType<DirectoryService>().As<IDirectoryService>();
-            builder.RegisterType<FileService>().As<IFileService>();
+            builder.RegisterModule<ViewModelDIModule>();
 
-            builder.RegisterType<ImageProviderContext>().As<IImageProviderContext>();
-            builder.RegisterType<ImageProviderStrategyFactory>().As<IImageProviderStrategyFactory>();
-            builder.RegisterType<ImageProviderService>().As<IImageProviderService>();
-
-            builder.RegisterType<LibraryRepositoryContext>().As<ILibraryRepositoryContext>();
-            #endregion
-
-            #region ViewModel 
-            builder.RegisterType<CommandFactory>().As<ICommandFactory>();
-            builder.RegisterType<ExplorerHistory>().As<IExplorerHistory>();
-
-            builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
-            builder.RegisterType<FileExplorerViewModelFactory>().As<IFileExplorerViewModelFactory>();
-
-            builder.RegisterType<LibraryExplorerViewModel>().As<ILibraryExplorerViewModel>().SingleInstance();
-            builder.RegisterType<DialogViewModelFactory>().As<IDialogViewModelFactory>();
-            builder.RegisterType<LibraryExplorerViewModelFactory>().As<ILibraryExplorerViewModelFactory>();
-            #endregion
-
-            #region View
             builder.RegisterType<WPFClipboard>().As<IClipboardService>();
             builder.RegisterType<DialogFactory>().As<IDialogFactory>();
             builder.RegisterType<LibraryExplorerControlsFactory>().As<ILibraryExplorerControlsFactory>();
             builder.RegisterType<FileExplorerControlsFactory>().As<IFileExplorerControlsFactory>();
             builder.RegisterType<MainWindow>().AsSelf();
-            #endregion
 
             return builder.Build();
         }
