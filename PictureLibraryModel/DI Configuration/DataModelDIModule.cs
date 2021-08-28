@@ -3,7 +3,6 @@ using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using PictureLibraryModel.Repositories;
 using PictureLibraryModel.Repositories.LibraryRepositories;
-using PictureLibraryModel.Services.ConnectedServicesInfoProvider;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryModel.Services.ImageProviderService;
 using PictureLibraryModel.Services.SettingsProvider;
@@ -18,7 +17,6 @@ namespace PictureLibraryModel
             builder.RegisterType<LibraryRepositoryStrategyFactory>().As<ILibraryRepositoryStrategyFactory>();
             builder.RegisterType<LibraryRepository>().As<IRepository<Library>>();
             builder.RegisterType<SettingsProviderService>().As<ISettingsProviderService>().SingleInstance();
-            builder.RegisterType<ConnectedServicesInfoProviderService>().As<IConnectedServicesInfoProviderService>().SingleInstance();
             builder.RegisterType<StringEncryptionService>().As<IStringEncryptionService>();
             builder.RegisterType<ImageFileBuilder>().As<IImageFileBuilder>();
             builder.RegisterType<DirectoryService>().As<IDirectoryService>();
