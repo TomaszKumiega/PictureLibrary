@@ -23,7 +23,7 @@ namespace PictureLibraryModel.Model
         public string Name { get; set; }
         public string IconSource { get; protected set; }
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
-        public Origin Origin { get; set; }
+        public Guid Origin { get; set; }
 
         public Directory()
         {
@@ -42,7 +42,7 @@ namespace PictureLibraryModel.Model
             PropertyChanged += OnIsExpandedChanged;
         }
 
-        public Directory(string path, string name, IDirectoryService directoryService, Origin origin)
+        public Directory(string path, string name, IDirectoryService directoryService, Guid origin)
         {
             FullName = path;
             Name = name;

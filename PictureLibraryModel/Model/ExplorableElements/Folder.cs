@@ -22,10 +22,10 @@ namespace PictureLibraryModel.Model
         {
             Name = directoryInfo.Name;
             FullName = directoryInfo.FullName;
-            Origin = Origin.Local;
+            Origin = Guid.Empty;
         }
 
-        public Folder(string path, string name, IDirectoryService directoryService, Origin origin) : base(path, name, directoryService, origin)
+        public Folder(string path, string name, IDirectoryService directoryService, Guid origin) : base(path, name, directoryService, origin)
         {
 
         }

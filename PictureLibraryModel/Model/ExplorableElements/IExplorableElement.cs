@@ -4,16 +4,10 @@ using System.Text;
 
 namespace PictureLibraryModel.Model
 {
-    public enum Origin
-    {
-        Local,
-        RemoteServer
-    }
-
     public interface IExplorableElement
     {
         string Name { get; set; }
-        Origin Origin { get; set; }
+        Guid Origin { get; set; }
         string FullName { get; set; }
         string IconSource { get; }
     }

@@ -7,7 +7,7 @@ namespace PictureLibraryModel.Model
     public abstract class File : IExplorableElement
     {
         public string Name { get; set; }
-        public Origin Origin { get; set; }
+        public Guid Origin { get; set; }
         public string FullName { get; set; }
         public string IconSource { get; set; }
         public DateTime CreationTime { get; set; }
