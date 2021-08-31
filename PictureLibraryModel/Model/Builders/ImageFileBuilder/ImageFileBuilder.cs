@@ -15,7 +15,7 @@ namespace PictureLibraryModel.Model.Builders.ImageFileBuilder
             return this;
         }
 
-        public IImageFileBuilder From(Origin origin)
+        public IImageFileBuilder From(Guid origin)
         {
             ImageFile.Origin = origin;
             return this;

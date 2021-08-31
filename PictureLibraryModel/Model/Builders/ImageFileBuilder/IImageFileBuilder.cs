@@ -17,7 +17,7 @@ namespace PictureLibraryModel.Model.Builders.ImageFileBuilder
         IImageFileBuilder WithLastWriteTime(DateTime lastWriteTime);
         IImageFileBuilder WithSize(long bytes);
         IImageFileBuilder WithTags(IEnumerable<Tag> tags);
-        IImageFileBuilder From(Origin origin);
+        IImageFileBuilder From(Guid origin);
         ImageFile Build();
     }
 }

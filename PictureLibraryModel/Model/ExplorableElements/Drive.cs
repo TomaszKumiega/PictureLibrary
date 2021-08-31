@@ -21,7 +21,7 @@ namespace PictureLibraryModel.Model
 
         }
 
-        public Drive(string path, string name, IDirectoryService directoryService, Origin origin) : base(path, name, directoryService, origin)
+        public Drive(string path, string name, IDirectoryService directoryService, Guid origin) : base(path, name, directoryService, origin)
         {
             IconSource = "pack://application:,,,/Icons/DiskIcon.png";
         }

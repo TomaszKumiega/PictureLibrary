@@ -21,7 +21,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
             ImageFileBuilder = imageFileBuilder;
         }
 
-        public async Task<Library> ReadLibraryFromStreamAsync(Stream fileStream, Origin origin)
+        public async Task<Library> ReadLibraryFromStreamAsync(Stream fileStream, Guid origin)
         {
             var tags = new List<Tag>();
             var images = new List<ImageFile>();
