@@ -4,9 +4,8 @@ using System.Text;
 
 namespace PictureLibraryModel.Model.RemoteStorages
 {
-    public enum StorageTypes
+    public enum RemoteStorageTypes
     {
-        Local,
         PictureLibraryAPI,
         GoogleDrive
     }
