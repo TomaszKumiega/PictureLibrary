@@ -13,5 +13,6 @@ namespace PictureLibraryModel.Services.FileSystemServices
         Task<IEnumerable<string>> FindFilesAsync(string searchPattern, string directory);
         byte[] ReadAllBytes(string path);
         void WriteAllBytes(string path, byte[] bytes);
+        void WriteAllLines(string path, string[] text);
     }
 }

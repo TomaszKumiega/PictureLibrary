@@ -93,5 +93,10 @@ namespace PictureLibraryModel.Services.FileSystemServices
         {
             File.WriteAllBytes(path, bytes);
         }
+
+        public void WriteAllLines(string path, string[] text)
+        {
+            File.WriteAllLines(path, text);
+        }
     }
 }
