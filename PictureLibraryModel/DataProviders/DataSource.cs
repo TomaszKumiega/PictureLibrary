@@ -9,7 +9,7 @@ namespace PictureLibraryModel.DataProviders
     {
         public bool IsLocalDataSource { get; }
         public IRemoteStorageInfo RemoteStorageInfo { get; }
-        public IImageProvider ImageProvider { get; }
+        public IImageFileProvider ImageProvider { get; }
         public ILibraryProvider LibraryProvider { get; }
     }
 }

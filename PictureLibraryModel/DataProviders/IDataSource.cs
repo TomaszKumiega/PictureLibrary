@@ -4,7 +4,7 @@ namespace PictureLibraryModel.DataProviders
 {
     public interface IDataSource
     {
-        IImageProvider ImageProvider { get; }
+        IImageFileProvider ImageProvider { get; }
         bool IsLocalDataSource { get; }
         ILibraryProvider LibraryProvider { get; }
         IRemoteStorageInfo RemoteStorageInfo { get; }

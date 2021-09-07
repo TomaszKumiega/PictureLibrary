@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace PictureLibraryModel.DataProviders
 {
-    public interface IImageProvider
+    public interface IImageFileProvider
     {
         ImageFile AddImageToLibrary(ImageFile imageFile, string libraryFullName);
         byte[] GetImageAsync(ImageFile imageFile);

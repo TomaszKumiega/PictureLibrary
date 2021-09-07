@@ -10,12 +10,12 @@ using Directory = PictureLibraryModel.Model.Directory;
 
 namespace PictureLibraryModel.DataProviders
 {
-    public class LocalImageProvider : IImageProvider
+    public class LocalImageFileProvider : IImageFileProvider
     {
         private IFileService FileService { get; }
         private IImageFileBuilder ImageFileBuilder { get; }
 
-        public LocalImageProvider(IFileService fileService, IImageFileBuilder imageFileBuilder)
+        public LocalImageFileProvider(IFileService fileService, IImageFileBuilder imageFileBuilder)
         {
             FileService = fileService;
             ImageFileBuilder = imageFileBuilder;
