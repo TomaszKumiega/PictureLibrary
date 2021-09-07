@@ -80,7 +80,7 @@ namespace PictureLibraryModel.Model
 
         public ImageFile() : base()
         {
-
+            Tags = new List<Tag>();
         }
 
         public static bool IsFileAnImage(FileInfo fileInfo)
