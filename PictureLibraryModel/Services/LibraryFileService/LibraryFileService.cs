@@ -21,7 +21,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
             ImageFileBuilder = imageFileBuilder;
         }
 
-        public async Task<Library> ReadLibraryFromStreamAsync(Stream fileStream, Guid origin)
+        public async Task<Library> ReadLibraryFromStreamAsync(Stream fileStream, Guid remoteStorageId)
         {
             var tags = new List<Tag>();
             var images = new List<ImageFile>();
@@ -46,7 +46,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
 
                                     library.Name = libraryElement.Attribute("name").Value;
                                     library.Description = libraryElement.Attribute("description").Value;
-                                    library.Origin = origin;
+                                    library.RemoteStorageInfoId = remoteStorageId;
 
                                     if (fileStream is FileStream) library.FullName = (fileStream as FileStream).Name;
                                 }
@@ -58,7 +58,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
                                     var tag = new Tag();
                                     tag.Name = tagElement.Attribute("name").Value;
                                     tag.Description = tagElement.Attribute("description").Value;
-                                    tag.Origin = origin;
+                                    tag.RemoteStorageInfoId = remoteStorageId;
                                     tag.FullName = "Local\\" + library.Name + "\\" + tag.Name + "\\";
                                     tag.Color = tagElement.Attribute("color").Value;
                                     tags.Add(tag);
@@ -78,7 +78,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
                                         .WithLastAccessTime(DateTime.Parse(imageElement.Attribute("lastAccessTime").Value))
                                         .WithLastWriteTime(DateTime.Parse(imageElement.Attribute("lastWriteTime").Value))
                                         .WithSize(long.Parse(imageElement.Attribute("size").Value))
-                                        .From(origin)
+                                        .From(remoteStorageId)
                                         .Build();
 
                                     foreach (var t in imageElement.Attribute("tags").Value.Split(','))

@@ -85,7 +85,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
                 if (UserHasAccessToTheFolder(t))
                 {
                     var directoryInfo = new DirectoryInfo(t);
-                    content.Add(new Folder(directoryInfo.FullName, directoryInfo.Name, this, Guid.Empty));
+                    content.Add(new Folder(directoryInfo.FullName, directoryInfo.Name, this));
                 }
             }
 
@@ -107,7 +107,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
                 {
                     if (System.IO.Directory.Exists(driveinfo.Name))
                     {
-                        rootDirectories.Add(new Drive(driveinfo.Name, driveinfo.Name, this, Guid.Empty));
+                        rootDirectories.Add(new Drive(driveinfo.Name, driveinfo.Name, this));
                     }
                 }
 
@@ -138,7 +138,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             {
                 foreach (var t in fullPaths)
                 {
-                    directories.Add(new Folder(t, (new System.IO.DirectoryInfo(t)).Name, this, Guid.Empty));
+                    directories.Add(new Folder(t, (new System.IO.DirectoryInfo(t)).Name, this));
                 }
             }
 

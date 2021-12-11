@@ -4,6 +4,7 @@ using PictureLibraryModel.DataProviders.Builders;
 using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using PictureLibraryModel.Services.FileSystemServices;
+using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryModel.Services.SettingsProvider;
 using PictureLibraryModel.Services.StringEncryption;
 using System;
@@ -19,8 +20,10 @@ namespace PictureLibraryModel
             builder.RegisterType<ImageFileBuilder>().As<IImageFileBuilder>();
             builder.RegisterType<DirectoryService>().As<IDirectoryService>();
             builder.RegisterType<FileService>().As<IFileService>();
+            builder.RegisterType<DataSource>().As<IDataSource>();
             builder.RegisterType<LocalImageFileProvider>().AsSelf();
             builder.RegisterType<LocalLibraryProvider>().AsSelf();
+            builder.RegisterType<LibraryFileService>().As<ILibraryFileService>();
 
             builder.Register<Func<LocalImageFileProvider>>((context) =>
             {
@@ -33,7 +36,7 @@ namespace PictureLibraryModel
                 return () => { return value; };
             });
 
-            builder.RegisterType<LocalDataSourceBuilder>().As<IDataSourceBuilder>().Keyed<int>(-1);
+            builder.RegisterType<LocalDataSourceBuilder>().Keyed<IDataSourceBuilder>(-1);
             builder.RegisterType<DataSourceCreator>().As<IDataSourceCreator>();
             builder.RegisterType<DataSourceCollection>().As<IDataSourceCollection>();
 

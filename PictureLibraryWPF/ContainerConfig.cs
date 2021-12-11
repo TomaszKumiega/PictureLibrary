@@ -1,25 +1,9 @@
 ﻿using Autofac;
-using PictureLibraryModel.Services.FileSystemServices;
-using PictureLibraryViewModel.Commands;
-using PictureLibraryViewModel.ViewModel;
-using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.Clipboard;
-using PictureLibraryWPF.CustomControls;
 using PictureLibraryWPF;
 using PictureLibraryWPF.Clipboard;
-using PictureLibraryViewModel.Helpers;
-using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
-using PictureLibraryModel.Repositories.LibraryRepositories;
-using PictureLibraryModel.Services.SettingsProvider;
-using PictureLibraryModel.Model.ConnectedServices;
-using PictureLibraryModel.Services.ConnectedServicesInfoProvider;
-using PictureLibraryModel.Services.StringEncryption;
-using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
-using PictureLibraryViewModel.ViewModel.DialogViewModels;
+using PictureLibraryWPF.CustomControls;
 using PictureLibraryWPF.Dialogs;
-using PictureLibraryModel.Repositories;
-using PictureLibraryModel.Model.Builders.ImageFileBuilder;
-using PictureLibraryModel.Services.ImageProviderService;
 
 namespace PictureLibraryViewModel
 {

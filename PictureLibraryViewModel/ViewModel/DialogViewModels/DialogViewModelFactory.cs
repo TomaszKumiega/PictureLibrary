@@ -1,40 +1,32 @@
-﻿using PictureLibraryModel.Model;
-using PictureLibraryModel.Repositories;
-using PictureLibraryModel.Repositories.LibraryRepositories;
-using PictureLibraryModel.Services.ConnectedServicesInfoProvider;
-using PictureLibraryModel.Services.ImageProviderService;
+﻿using PictureLibraryModel.DataProviders;
+using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
+    //TODO: REFACTOR
     public class DialogViewModelFactory : IDialogViewModelFactory
     {
-        private IImageProviderService ImageProviderService { get; }
         private ICommandFactory CommandFactory { get; }
-        private IRepository<Library> LibraryRepository { get; }
-
         private ILibraryExplorerViewModel CommonViewModel { get; }
-        private IConnectedServicesInfoProviderService ConnectedServices { get; }
+        private IDataSourceCollection DataSourceCollection { get; }
 
-        public DialogViewModelFactory(ILibraryExplorerViewModel commonVM, IConnectedServicesInfoProviderService connectedServices, 
-            IImageProviderService imageProviderService, ICommandFactory commandFactory, IRepository<Library> libraryRepository)
+        public DialogViewModelFactory(ILibraryExplorerViewModel commonVM, ICommandFactory commandFactory, IDataSourceCollection dataSourceCollection)
         {
             CommonViewModel = commonVM;
-            ConnectedServices = connectedServices;
-            ImageProviderService = imageProviderService;
             CommandFactory = commandFactory;
-            LibraryRepository = libraryRepository;
+            DataSourceCollection = dataSourceCollection;
 
+            DataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
         }
 
         public IAddLibraryDialogViewModel GetAddLibraryDialogViewModel()
         {
-            return new AddLibraryDialogViewModel(CommonViewModel, LibraryRepository, ConnectedServices, CommandFactory);
+            return new AddLibraryDialogViewModel(CommonViewModel, CommandFactory);
         }
 
         public IAddTagDialogViewModel GetAddTagDialogViewModel()
@@ -44,7 +36,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         public async Task<IAddImagesDialogViewModel> GetImagesDialogViewModel(List<ImageFile> selectedImages)
         {
-            var viewModel = new AddImagesDialogViewModel(CommonViewModel, LibraryRepository, selectedImages, CommandFactory, ImageProviderService);
+            var viewModel = new AddImagesDialogViewModel(CommonViewModel, DataSourceCollection, selectedImages, CommandFactory);
             await viewModel.Initialize();
 
             return viewModel;

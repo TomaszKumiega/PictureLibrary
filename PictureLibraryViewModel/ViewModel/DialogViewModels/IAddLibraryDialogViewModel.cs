@@ -1,6 +1,4 @@
-﻿using PictureLibraryModel.Model;
-using PictureLibraryModel.Model.RemoteServer;
-using PictureLibraryViewModel.ViewModel.Events;
+﻿using PictureLibraryViewModel.ViewModel.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,8 +12,8 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         string Name { get; set; }
         string Description { get; set; }
         string Directory { get; set; }
-        Origin? SelectedOrigin { get; set; }
-        List<Origin> Origins { get; }
+        string SelectedStorage { get; set; }
+        List<string> Storages { get; }
         ICommand AddLibraryCommand { get; }
 
         event InvalidInputEventHandler InvalidInput;

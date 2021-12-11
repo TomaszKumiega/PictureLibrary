@@ -2,9 +2,6 @@
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -57,7 +54,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             tag.Description = Description;
             tag.Color = Color;
             tag.FullName = CommonVM.CurrentlyOpenedElement.Name + "\\" + tag.Name;
-            tag.Origin = CommonVM.CurrentlyOpenedElement.Origin;
+            tag.RemoteStorageInfoId = (CommonVM.CurrentlyOpenedElement as Tag).RemoteStorageInfoId;
 
             await CommonVM.AddTagAsync(tag);
         }

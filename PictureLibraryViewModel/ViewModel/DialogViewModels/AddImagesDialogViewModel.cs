@@ -1,13 +1,12 @@
-﻿using PictureLibraryModel.Model;
-using PictureLibraryModel.Repositories;
-using PictureLibraryModel.Services.ImageProviderService;
+﻿using PictureLibraryModel.DataProviders;
+using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -17,10 +16,9 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
     {
         private ILibraryExplorerViewModel CommonViewModel { get; }
         private List<ImageFile> SelectedImages { get; }
-        private IRepository<Library> LibraryRepository { get; }
-        private IImageProviderService ImageProviderService { get; }
-
+        private IDataSourceCollection DataSourceCollection { get; }
         private Library _selectedLibrary;
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -36,13 +34,14 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             }
         }
 
-        public AddImagesDialogViewModel(ILibraryExplorerViewModel commonVM, IRepository<Library> libraryRepository, List<ImageFile> selectedImages, ICommandFactory commandFactory, IImageProviderService imageProviderService)
+        public AddImagesDialogViewModel(ILibraryExplorerViewModel commonVM, IDataSourceCollection dataSourceCollection, List<ImageFile> selectedImages, ICommandFactory commandFactory)
         {
-            LibraryRepository = libraryRepository;
             CommonViewModel = commonVM;
             SelectedImages = selectedImages;
             AddImagesCommand = commandFactory.GetAddImagesCommand(this);
-            ImageProviderService = imageProviderService;
+            DataSourceCollection = dataSourceCollection;
+
+            DataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
 
             PropertyChanged += OnSelectedLibraryChanged;
         }
@@ -54,18 +53,22 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         public async Task Initialize()
         {
-            Libraries = (await LibraryRepository.GetAllAsync()).ToList();
+            Libraries = await Task.Run(() => DataSourceCollection.GetAllLibraries());
         }
 
         public async Task AddAsync()
         {
             foreach(var t in SelectedImages)
             {
-                await ImageProviderService.AddImageToLibraryAsync(t, SelectedLibrary.FullName);
+                var dataSource = DataSourceCollection.GetDataSourceByRemoteStorageId(t.RemoteStorageInfoId);
+                await Task.Run(() => dataSource.ImageProvider.AddImageToLibrary(t, SelectedLibrary.FullName));
             }
 
             SelectedLibrary.Images.AddRange(SelectedImages);
-            await LibraryRepository.UpdateAsync(SelectedLibrary);
+
+            var libraryDataSource = DataSourceCollection.GetDataSourceByRemoteStorageId(SelectedLibrary.RemoteStorageInfoId);
+            await Task.Run(() => libraryDataSource.LibraryProvider.UpdateLibrary(SelectedLibrary));
+
             await CommonViewModel.LoadCurrentlyShownElementsAsync();
         }
     }

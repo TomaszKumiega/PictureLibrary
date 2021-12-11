@@ -1,11 +1,9 @@
 ﻿using NLog;
+using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.Model;
-using PictureLibraryModel.Repositories;
-using PictureLibraryModel.Repositories.LibraryRepositories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
@@ -14,7 +12,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IExplorableElement _selectedNode;
-        private IRepository<Library> LibraryRepository { get; }
+        private IDataSourceCollection DataSourceCollection { get; set; }
 
         public IExplorerViewModel CommonViewModel { get; }
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
@@ -29,9 +27,9 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             }
         }
 
-        public LibraryTreeViewModel(IRepository<Library> libraryRepository, IExplorerViewModel commonVM)
+        public LibraryTreeViewModel(IDataSourceCollection dataSourceCollection, IExplorerViewModel commonVM)
         {
-            LibraryRepository = libraryRepository;
+            DataSourceCollection = dataSourceCollection;
             CommonViewModel = commonVM;
         }
 
@@ -42,7 +40,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             try
             {
-                libraries = await LibraryRepository.GetAllAsync();
+                libraries = await Task.Run(() => DataSourceCollection.GetAllLibraries());
             }
             catch(Exception e)
             {

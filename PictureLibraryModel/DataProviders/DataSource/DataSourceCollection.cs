@@ -15,6 +15,7 @@ namespace PictureLibraryModel.DataProviders
 
         public DataSourceCollection(IDataSourceCreator dataSourceCreator)
         {
+            DataSources = new List<IDataSource>();
             DataSourceCreator = dataSourceCreator;
         }
 

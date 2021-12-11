@@ -15,9 +15,9 @@ namespace PictureLibraryModel.Model.Builders.ImageFileBuilder
             return this;
         }
 
-        public IImageFileBuilder From(Guid origin)
+        public IImageFileBuilder From(Guid id)
         {
-            ImageFile.Origin = origin;
+            ImageFile.RemoteStorageInfoId = id;
             return this;
         }
 

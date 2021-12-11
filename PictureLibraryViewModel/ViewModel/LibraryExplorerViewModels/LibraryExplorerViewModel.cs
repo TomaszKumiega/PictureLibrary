@@ -1,36 +1,37 @@
-﻿using PictureLibraryModel.Model;
-using PictureLibraryModel.Repositories;
+﻿using PictureLibraryModel.DataProviders;
+using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryViewModel.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
+    //TODO: REFACTOR
     public class LibraryExplorerViewModel : ILibraryExplorerViewModel
     {
         private IExplorableElement _currentlyOpenedElement;
-        private IRepository<Library> LibraryRepository { get; }
 
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; set; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public string InfoText { get; set; }
         public bool IsProcessing { get; set; }
         public IExplorableElement CurrentlyOpenedElement { get; set; }
+        public IDataSourceCollection DataSourceCollection { get; } 
 
         public IExplorerHistory ExplorerHistory { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public LibraryExplorerViewModel(IRepository<Library> libraryRepository)
+        public LibraryExplorerViewModel(IDataSourceCollection dataSourceCollection)
         {
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
             SelectedElements = new ObservableCollection<IExplorableElement>();
-            LibraryRepository = libraryRepository;
+            DataSourceCollection = dataSourceCollection;
+
+            DataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
         }
 
         public async Task LoadCurrentlyShownElementsAsync()
@@ -41,17 +42,17 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             if (CurrentlyOpenedElement == null)
             {
-                var libraries = await LibraryRepository.GetAllAsync();
+                var libraries = await Task.Run(() => DataSourceCollection.GetAllLibraries());
                 foreach (IExplorableElement t in libraries)
                 {
                     CurrentlyShownElements.Add(t);
                 }
             }
-            else if (CurrentlyOpenedElement is Library)
+            else if (CurrentlyOpenedElement is Library library)
             {
-                if(CurrentlyOpenedElement.Origin == Origin.Local)
+                if(library.RemoteStorageInfoId == null)
                 {
-                    foreach (var t in (CurrentlyOpenedElement as Library).Images)
+                    foreach (var t in library.Images)
                     {
                         CurrentlyShownElements.Add(t);
                     }
@@ -69,9 +70,9 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             CurrentlyShownElements.Clear();
 
-            if(CurrentlyOpenedElement.Origin == Origin.Local)
+            if(CurrentlyOpenedElement is Library library && library.RemoteStorageInfoId == null)
             {
-                foreach (var i in (CurrentlyOpenedElement as Library).Images)
+                foreach (var i in library.Images)
                 {
                     foreach(var t in tags)
                     {
@@ -104,10 +105,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
         public async Task AddTagAsync(Tag tag)
         {
-            var library = (CurrentlyOpenedElement as Library);
+            var library = CurrentlyOpenedElement as Library;
             library.Tags.Add(tag);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
-            await LibraryRepository.UpdateAsync(library);
+            var dataSource = DataSourceCollection.GetDataSourceByRemoteStorageId(library.RemoteStorageInfoId);
+            await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(library));
         }
     }
 }

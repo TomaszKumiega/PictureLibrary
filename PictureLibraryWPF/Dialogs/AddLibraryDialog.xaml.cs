@@ -17,6 +17,7 @@ using PictureLibraryViewModel.ViewModel.Events;
 
 namespace PictureLibraryWPF.Dialogs
 {
+    //TODO: REFACTOR
     /// <summary>
     /// Interaction logic for AddLibraryDialog.xaml
     /// </summary>
@@ -65,18 +66,18 @@ namespace PictureLibraryWPF.Dialogs
         {
             var viewModel = DataContext as IAddLibraryDialogViewModel;
 
-            if(LocationComboBox.SelectedIndex == -1)
-            {
-                viewModel.SelectedOrigin = null;
-            }
-            else
-            {
-                viewModel.SelectedOrigin = viewModel.Origins[LocationComboBox.SelectedIndex];
-                if(viewModel.SelectedOrigin == PictureLibraryModel.Model.Origin.Local)
-                {
-                    EnablePathSelectionControls();
-                }
-            }
+            //if(LocationComboBox.SelectedIndex == -1)
+            //{
+            //    viewModel.SelectedOrigin = null;
+            //}
+            //else
+            //{
+            //    viewModel.SelectedOrigin = viewModel.Origins[LocationComboBox.SelectedIndex];
+            //    if(viewModel.SelectedOrigin == PictureLibraryModel.Model.Origin.Local)
+            //    {
+            //        EnablePathSelectionControls();
+            //    }
+            //}
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using PictureLibraryModel.Resources;
+using System;
 using System.Security.Cryptography;
-using System.Reflection;
-using System.IO;
-using PictureLibraryModel;
+using System.Text;
 
 namespace PictureLibraryModel.Services.StringEncryption
 {
