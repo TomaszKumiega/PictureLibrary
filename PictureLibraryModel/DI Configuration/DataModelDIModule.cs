@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using PictureLibraryModel.DataProviders;
+using PictureLibraryModel.DataProviders.Builders;
 using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using PictureLibraryModel.Services.FileSystemServices;
@@ -31,6 +32,9 @@ namespace PictureLibraryModel
                 var value = context.Resolve<LocalLibraryProvider>();
                 return () => { return value; };
             });
+
+            builder.RegisterType<LocalDataSourceBuilder>().As<IDataSourceBuilder>().Keyed<int>(-1);
+            builder.RegisterType<DataSourceCreator>().As<IDataSourceCreator>();
 
             builder.RegisterGeneric(typeof(ImplementationSelector<,>)).As(typeof(IImplementationSelector<,>));
 
