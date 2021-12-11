@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.DataProviders.Builders;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.RemoteStorages;
 using System.Collections.Generic;
 
@@ -24,6 +25,18 @@ namespace PictureLibraryModel.DataProviders
             {
                 DataSources.Add(DataSourceCreator.CreateDataSource(remoteStorageInfo));
             }
+        }
+
+        public List<Library> GetAllLibraries()
+        {
+            var libraries = new List<Library>();
+
+            foreach (var dataSource in DataSources)
+            {
+                libraries.AddRange(dataSource.LibraryProvider.GetAllLibraries());
+            }
+
+            return libraries;
         }
     }
 }

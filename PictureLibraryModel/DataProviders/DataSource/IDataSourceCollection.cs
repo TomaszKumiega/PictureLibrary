@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Model.RemoteStorages;
+﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.RemoteStorages;
 using System.Collections.Generic;
 
 namespace PictureLibraryModel.DataProviders
@@ -8,5 +9,6 @@ namespace PictureLibraryModel.DataProviders
         IList<IDataSource> DataSources { get; }
 
         void Initialize(IEnumerable<IRemoteStorageInfo> remoteStorageInfos);
+        List<Library> GetAllLibraries();
     }
 }
