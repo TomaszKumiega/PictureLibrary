@@ -1,14 +1,11 @@
 ﻿using NLog;
-using PictureLibraryModel.Exceptions.DataAccessExceptions;
 using PictureLibraryModel.Model;
-using PictureLibraryModel.Resources;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryModel.Services.SettingsProvider;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml;
 
 namespace PictureLibraryModel.DataProviders

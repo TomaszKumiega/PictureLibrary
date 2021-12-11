@@ -2,10 +2,8 @@
 using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using Directory = PictureLibraryModel.Model.Directory;
 
 namespace PictureLibraryModel.DataProviders
