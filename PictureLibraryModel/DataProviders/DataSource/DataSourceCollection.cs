@@ -1,7 +1,9 @@
 ﻿using PictureLibraryModel.DataProviders.Builders;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.RemoteStorages;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PictureLibraryModel.DataProviders
 {
@@ -37,6 +39,11 @@ namespace PictureLibraryModel.DataProviders
             }
 
             return libraries;
+        }
+
+        public IDataSource GetDataSourceByRemoteStorageId(Guid? remoteStorageId)
+        {
+            return DataSources.FirstOrDefault(x => x.RemoteStorageInfo?.Id == remoteStorageId);
         }
     }
 }
