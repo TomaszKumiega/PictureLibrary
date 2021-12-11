@@ -35,6 +35,7 @@ namespace PictureLibraryModel
 
             builder.RegisterType<LocalDataSourceBuilder>().As<IDataSourceBuilder>().Keyed<int>(-1);
             builder.RegisterType<DataSourceCreator>().As<IDataSourceCreator>();
+            builder.RegisterType<DataSourceCollection>().As<IDataSourceCollection>();
 
             builder.RegisterGeneric(typeof(ImplementationSelector<,>)).As(typeof(IImplementationSelector<,>));
 
