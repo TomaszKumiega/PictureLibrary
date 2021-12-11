@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PictureLibraryModel.Model.RemoteStorages
+﻿namespace PictureLibraryModel.Model.RemoteStorages
 {
-    public enum RemoteStorageTypes
+    public enum RemoteStorageTypes : int
     {
-        PictureLibraryAPI,
-        GoogleDrive
+        PictureLibraryAPI = 0,
+        GoogleDrive = 1
     }
 }
