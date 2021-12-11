@@ -1,14 +1,13 @@
 ﻿using Autofac;
-using PictureLibraryModel.Model;
+using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using PictureLibraryModel.Services.FileSystemServices;
-using PictureLibraryModel.Services.ImageProviderService;
 using PictureLibraryModel.Services.SettingsProvider;
 using PictureLibraryModel.Services.StringEncryption;
 
 namespace PictureLibraryModel
 {
-    public class DataModelDIModule : Autofac.Module
+    public class DataModelDIModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -18,9 +17,7 @@ namespace PictureLibraryModel
             builder.RegisterType<DirectoryService>().As<IDirectoryService>();
             builder.RegisterType<FileService>().As<IFileService>();
 
-            builder.RegisterType<ImageProviderContext>().As<IImageProviderContext>();
-            builder.RegisterType<ImageProviderStrategyFactory>().As<IImageProviderStrategyFactory>();
-            builder.RegisterType<ImageProviderService>().As<IImageProviderService>();
+            builder.RegisterGeneric(typeof(ImplementationSelector<,>)).As(typeof(IImplementationSelector<,>));
 
         }
     }
