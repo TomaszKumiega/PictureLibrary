@@ -23,7 +23,6 @@ namespace PictureLibraryModel.Model
         public string Name { get; set; }
         public string IconSource { get; protected set; }
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
-        public Guid Origin { get; set; }
 
         public Directory()
         {
@@ -42,12 +41,11 @@ namespace PictureLibraryModel.Model
             PropertyChanged += OnIsExpandedChanged;
         }
 
-        public Directory(string path, string name, IDirectoryService directoryService, Guid origin)
+        public Directory(string path, string name, IDirectoryService directoryService)
         {
             FullName = path;
             Name = name;
             DirectoryService = directoryService;
-            Origin = origin;
             SubDirectories = new ObservableCollection<Directory>();
 
             PropertyChanged += OnIsExpandedChanged;
@@ -104,7 +102,7 @@ namespace PictureLibraryModel.Model
             catch(Exception e)
             {
                 _logger.Error(e, e.Message);
-                throw new Exception("Application failed loading sub directories of: " + this.FullName + " directory.");
+                throw new Exception("Application failed loading sub directories of: " + FullName + " directory.");
             }
 
             foreach (var t in directories)
