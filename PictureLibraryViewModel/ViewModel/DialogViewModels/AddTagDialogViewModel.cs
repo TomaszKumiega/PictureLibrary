@@ -53,7 +53,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             tag.Name = Name;
             tag.Description = Description;
             tag.Color = Color;
-            tag.FullName = CommonVM.CurrentlyOpenedElement.Name + "\\" + tag.Name;
+            tag.Path = CommonVM.CurrentlyOpenedElement.Name + "\\" + tag.Name;
             tag.RemoteStorageInfoId = (CommonVM.CurrentlyOpenedElement as Tag).RemoteStorageInfoId;
 
             await CommonVM.AddTagAsync(tag);

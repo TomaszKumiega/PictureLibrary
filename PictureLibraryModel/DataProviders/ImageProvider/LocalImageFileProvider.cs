@@ -1,5 +1,4 @@
 ﻿using PictureLibraryModel.Model;
-using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Drawing;
@@ -11,12 +10,12 @@ namespace PictureLibraryModel.DataProviders
     public class LocalImageFileProvider : IImageFileProvider
     {
         private IFileService FileService { get; }
-        private IImageFileBuilder ImageFileBuilder { get; }
+        private Func<LocalImageFile> ImageFileLocator { get; }
 
-        public LocalImageFileProvider(IFileService fileService, IImageFileBuilder imageFileBuilder)
+        public LocalImageFileProvider(IFileService fileService, Func<LocalImageFile> imageFileLocator)
         {
             FileService = fileService;
-            ImageFileBuilder = imageFileBuilder;
+            ImageFileLocator = imageFileLocator;
         }
 
         public ImageFile AddImageToLibrary(ImageFile imageFile, string libraryFullName)
@@ -26,26 +25,19 @@ namespace PictureLibraryModel.DataProviders
             if (string.IsNullOrEmpty(libraryFullName))
                 throw new ArgumentException(nameof(libraryFullName));
 
-            Directory directory = FileService.GetParent(libraryFullName);
-            var path = directory.FullName + "icons\\" + imageFile.Name;
+            string directory = FileService.GetParent(libraryFullName);
+            var path = directory + "icons\\" + imageFile.Name;
 
-            FileService.Copy(imageFile.FullName, path);
+            FileService.Copy(imageFile.Path, path);
 
             var fileInfo = FileService.GetInfo(path);
 
-            var newImageFile =
-                ImageFileBuilder
-                    .StartBuilding()
-                    .WithName(fileInfo.Name)
-                    .WithFullName(fileInfo.FullName)
-                    .WithExtension(fileInfo.Extension)
-                    .WithCreationTime(fileInfo.CreationTime)
-                    .WithLastAccessTime(fileInfo.LastAccessTime)
-                    .WithLastWriteTime(fileInfo.LastWriteTime)
-                    .WithLibraryFullName(libraryFullName)
-                    .WithSize((fileInfo as FileInfo)?.Length ?? 0)
-                    .From(Guid.Empty)
-                    .Build();
+            var newImageFile = ImageFileLocator();
+
+            newImageFile.Name = fileInfo.Name;
+            newImageFile.Path = fileInfo.FullName;
+            newImageFile.Extension = ImageExtensionHelper.GetExtension(fileInfo.Extension);
+            newImageFile.LibraryFullName = libraryFullName;
 
             return newImageFile;
         }
@@ -55,12 +47,7 @@ namespace PictureLibraryModel.DataProviders
             if (imageFile == null)
                 throw new ArgumentNullException(nameof(imageFile));
 
-            return FileService.ReadAllBytes(imageFile.FullName);
-        }
-
-        public Icon LoadImageIcon(ImageFile imageFile)
-        {
-            throw new NotSupportedException();
+            return FileService.ReadAllBytes(imageFile.Path);
         }
 
         public void RemoveImage(ImageFile imageFile)
@@ -68,7 +55,7 @@ namespace PictureLibraryModel.DataProviders
             if (imageFile == null)
                 throw new ArgumentNullException(nameof(imageFile));
 
-            FileService.Remove(imageFile.FullName);
+            FileService.Remove(imageFile.Path);
         }
     }
 }

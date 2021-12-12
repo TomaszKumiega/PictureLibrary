@@ -1,10 +1,8 @@
 ﻿using NLog;
 using PictureLibraryModel.Model;
-using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -14,11 +12,11 @@ namespace PictureLibraryModel.Services.LibraryFileService
     public class LibraryFileService : ILibraryFileService
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private IImageFileBuilder ImageFileBuilder { get; }
+        private Func<LocalImageFile> LocalImageFileLocator { get; }
 
-        public LibraryFileService(IImageFileBuilder imageFileBuilder)
+        public LibraryFileService(Func<LocalImageFile> localImageFileLocator)
         {
-            ImageFileBuilder = imageFileBuilder;
+            LocalImageFileLocator = localImageFileLocator;
         }
 
         public async Task<Library> ReadLibraryFromStreamAsync(Stream fileStream, Guid remoteStorageId)
@@ -48,7 +46,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
                                     library.Description = libraryElement.Attribute("description").Value;
                                     library.RemoteStorageInfoId = remoteStorageId;
 
-                                    if (fileStream is FileStream) library.FullName = (fileStream as FileStream).Name;
+                                    if (fileStream is FileStream) library.Path = (fileStream as FileStream).Name;
                                 }
                                 break;
                             case "tag":
@@ -59,7 +57,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
                                     tag.Name = tagElement.Attribute("name").Value;
                                     tag.Description = tagElement.Attribute("description").Value;
                                     tag.RemoteStorageInfoId = remoteStorageId;
-                                    tag.FullName = "Local\\" + library.Name + "\\" + tag.Name + "\\";
+                                    tag.Path = "Local\\" + library.Name + "\\" + tag.Name + "\\";
                                     tag.Color = tagElement.Attribute("color").Value;
                                     tags.Add(tag);
                                 }
@@ -68,18 +66,10 @@ namespace PictureLibraryModel.Services.LibraryFileService
                                 {
                                     var imageElement = await Task.Run(() => XNode.ReadFrom(reader)) as XElement;
 
-                                    var imageFile =
-                                        ImageFileBuilder
-                                        .StartBuilding()
-                                        .WithName(imageElement.Attribute("name").Value)
-                                        .WithExtension(ImageExtensionHelper.GetExtension(imageElement.Attribute("extension").Value))
-                                        .WithFullName(imageElement.Attribute("source").Value)
-                                        .WithCreationTime(DateTime.Parse(imageElement.Attribute("creationTime").Value))
-                                        .WithLastAccessTime(DateTime.Parse(imageElement.Attribute("lastAccessTime").Value))
-                                        .WithLastWriteTime(DateTime.Parse(imageElement.Attribute("lastWriteTime").Value))
-                                        .WithSize(long.Parse(imageElement.Attribute("size").Value))
-                                        .From(remoteStorageId)
-                                        .Build();
+                                    var imageFile = LocalImageFileLocator();
+                                    imageFile.Name = imageElement.Attribute("name").Value;
+                                    imageFile.Extension = ImageExtensionHelper.GetExtension(imageElement.Attribute("extension").Value);
+                                    imageFile.Path = imageElement.Attribute("source").Value;
 
                                     foreach (var t in imageElement.Attribute("tags").Value.Split(','))
                                     {
@@ -142,8 +132,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
 
 
                     var imageFileElement = new XElement("imageFile", new XAttribute("name", i.Name), new XAttribute("extension", i.Extension),
-                        new XAttribute("source", i.FullName), new XAttribute("creationTime", i.CreationTime.ToString()), new XAttribute("lastAccessTime", i.LastAccessTime.ToString()),
-                        new XAttribute("lastWriteTime", i.LastWriteTime.ToString()), new XAttribute("size", i.Size.ToString()), new XAttribute("tags", tags));
+                        new XAttribute("source", i.Path), new XAttribute("tags", tags));
 
                     imagesElement.Add(imageFileElement);
                 }

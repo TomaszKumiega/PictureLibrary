@@ -5,28 +5,31 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Model
 {
-    public abstract class Directory : IExplorableElement, INotifyPropertyChanged
+    public abstract class Directory : IFileSystemElement, INotifyPropertyChanged
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private bool _isExpanded;
 
         protected IDirectoryService DirectoryService { get; set; }
+        protected string IconPath => ".\\Icon\\FolderIcon.png";
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string FullName { get; set; }
+        #region Public Properties
         public string Name { get; set; }
-        public string IconSource { get; protected set; }
+        public string Extension { get; set; }
+        public string Path { get; set; }
+        public Icon Icon { get; protected set; }
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
+        #endregion
 
+        #region Constructors
         public Directory()
         {
-            IconSource = "pack://application:,,,/Icons/FolderIcon.png";
             SubDirectories = new ObservableCollection<Directory>();
 
             PropertyChanged += OnIsExpandedChanged;
@@ -34,7 +37,6 @@ namespace PictureLibraryModel.Model
 
         public Directory(IDirectoryService directoryService)
         {
-            IconSource = "pack://application:,,,/Icons/FolderIcon.png";
             SubDirectories = new ObservableCollection<Directory>();
             DirectoryService = directoryService;
 
@@ -43,16 +45,16 @@ namespace PictureLibraryModel.Model
 
         public Directory(string path, string name, IDirectoryService directoryService)
         {
-            FullName = path;
+            Path = path;
             Name = name;
             DirectoryService = directoryService;
             SubDirectories = new ObservableCollection<Directory>();
 
             PropertyChanged += OnIsExpandedChanged;
-
-            IconSource = "pack://application:,,,/Icons/FolderIcon.png";
         }
+        #endregion
 
+        #region Expanding and collapsing
         public bool IsExpanded
         {
             get => _isExpanded;
@@ -88,6 +90,12 @@ namespace PictureLibraryModel.Model
                 t.SubDirectories.Clear();
             }
         }
+        #endregion
+
+        public virtual void LoadIcon()
+        {
+            Icon = Icon.ExtractAssociatedIcon(IconPath);
+        }
 
         public virtual async Task LoadSubDirectoriesAsync()
         {
@@ -97,12 +105,12 @@ namespace PictureLibraryModel.Model
 
             try
             {
-                directories = await Task.Run(() => DirectoryService.GetSubFolders(FullName));
+                directories = await Task.Run(() => DirectoryService.GetSubFolders(Path));
             }
             catch(Exception e)
             {
                 _logger.Error(e, e.Message);
-                throw new Exception("Application failed loading sub directories of: " + FullName + " directory.");
+                throw new Exception("Application failed loading sub directories of: " + Path + " directory.");
             }
 
             foreach (var t in directories)

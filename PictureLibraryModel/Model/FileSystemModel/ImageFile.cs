@@ -72,12 +72,12 @@ namespace PictureLibraryModel.Model
         }
     }
 
-    public class ImageFile : File
+    public abstract class ImageFile : File
     {
         public ImageExtension Extension { get; set; }
         public string LibraryFullName { get; set; }
         public List<Tag> Tags { get; set; }
-        public Guid RemoteStorageInfoId { get; set; }
+        public virtual Guid? RemoteStorageInfoId { get; }
 
         public ImageFile() : base()
         {

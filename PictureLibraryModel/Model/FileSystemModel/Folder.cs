@@ -21,12 +21,17 @@ namespace PictureLibraryModel.Model
         public Folder(IDirectoryService directoryService, DirectoryInfo directoryInfo) : base(directoryService)
         {
             Name = directoryInfo.Name;
-            FullName = directoryInfo.FullName;
+            Path = directoryInfo.FullName;
         }
 
         public Folder(string path, string name, IDirectoryService directoryService) : base(path, name, directoryService)
         {
 
+        }
+
+        ~Folder()
+        {
+            Icon?.Dispose();
         }
     }
 }

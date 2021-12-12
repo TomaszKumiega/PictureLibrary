@@ -102,13 +102,13 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 }
                 else
                 {
-                    content = await Task.Run(() => DirectoryService.GetDirectoryContent(CurrentlyOpenedElement.FullName));
+                    content = await Task.Run(() => DirectoryService.GetDirectoryContent(CurrentlyOpenedElement.Path));
                 }
             }
             catch(Exception e)
             {
                 _logger.Error(e, e.Message);
-                throw new Exception("Application failed loading the contents of: " + CurrentlyOpenedElement.FullName + " directory.");
+                throw new Exception("Application failed loading the contents of: " + CurrentlyOpenedElement.Path + " directory.");
             }
 
             foreach (var t in content)

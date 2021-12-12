@@ -1,9 +1,5 @@
 ﻿using PictureLibraryModel.Model;
-using PictureLibraryModel.Model.Builders.ImageFileBuilder;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {
@@ -16,13 +12,10 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public abstract FileSystemInfo GetInfo(string path);
 
-        public virtual Model.Directory GetParent(string path)
+        public virtual string GetParent(string path)
         {
             var directoryInfo = System.IO.Directory.GetParent(path);
-
-            var parentDirectory = new Folder(new DirectoryService(new ImageFileBuilder()), directoryInfo);
-
-            return parentDirectory;
+            return directoryInfo.FullName;
         }
 
         public abstract void Move(string sourcePath, string destinationPath);

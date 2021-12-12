@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Drawing;
 
 namespace PictureLibraryModel.Model
 {
@@ -9,13 +8,22 @@ namespace PictureLibraryModel.Model
         public string Name { get; set; }
         public string Description { get; set; }
         public Guid RemoteStorageInfoId { get; set; }
-        public string FullName { get; set; }
-        public string IconSource { get; }
+        public string Path { get; set; }
         public string Color { get; set; }
+        public Icon Icon { get; private set; }
 
         public Tag()
         {
-            IconSource = "pack://application:,,,/Icons/FolderIcon.png";
+        }
+
+        public void LoadIcon()
+        {
+            Icon = Icon.ExtractAssociatedIcon(".\\Icons\\FolderIcon.png");
+        }
+
+        ~Tag()
+        {
+            Icon?.Dispose();
         }
     }
 }

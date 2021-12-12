@@ -1,22 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Drawing;
 
 namespace PictureLibraryModel.Model
 {
     public class Library : IExplorableElement
     {
-        public string FullName { get; set; }
+        public string Path { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public List<Tag> Tags { get; set; }
         public List<ImageFile> Images { get; set; }
         public Guid RemoteStorageInfoId { get; set; }
-        public string IconSource { get; }
+        public Icon Icon { get; private set; }
 
         public Library()
         {
-            IconSource = "pack://application:,,,/Icons/LibraryIcon.png";
+            
+        }
+
+        public void LoadIcon()
+        {
+            Icon = Icon.ExtractAssociatedIcon(".\\Icons\\LibraryIcon.png");
+        }
+
+        ~Library()
+        {
+            Icon?.Dispose();
         }
     }
 }

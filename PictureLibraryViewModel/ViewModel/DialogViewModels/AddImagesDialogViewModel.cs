@@ -61,7 +61,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             foreach(var t in SelectedImages)
             {
                 var dataSource = DataSourceCollection.GetDataSourceByRemoteStorageId(t.RemoteStorageInfoId);
-                await Task.Run(() => dataSource.ImageProvider.AddImageToLibrary(t, SelectedLibrary.FullName));
+                await Task.Run(() => dataSource.ImageProvider.AddImageToLibrary(t, SelectedLibrary.Path));
             }
 
             SelectedLibrary.Images.AddRange(SelectedImages);

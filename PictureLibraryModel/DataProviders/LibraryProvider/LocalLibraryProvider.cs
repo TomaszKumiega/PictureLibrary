@@ -39,10 +39,10 @@ namespace PictureLibraryModel.DataProviders
             if (library == null)
                 throw new ArgumentNullException("library");
 
-            FileService.Create(library.FullName);
-            var fileStream = FileService.OpenFile(library.FullName, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
+            FileService.Create(library.Path);
+            var fileStream = FileService.OpenFile(library.Path, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
 
-            SettingsProvider.Settings.ImportedLibraries.Add(library.FullName);
+            SettingsProvider.Settings.ImportedLibraries.Add(library.Path);
             SettingsProvider.SaveSettingsAsync();
 
             LibraryFileService.WriteLibraryToStreamAsync(fileStream, library);
@@ -83,19 +83,19 @@ namespace PictureLibraryModel.DataProviders
             if (library == null) 
                 throw new ArgumentNullException(nameof(library));
 
-            FileService.Remove(library.FullName);
+            FileService.Remove(library.Path);
         }
 
         public void UpdateLibrary(Library library)
         {
             if (library == null) 
                 throw new ArgumentNullException(nameof(library));
-            if (!FileService.Exists(library.FullName)) 
+            if (!FileService.Exists(library.Path)) 
                 throw new ArgumentException(nameof(library));
 
             // load file for potential recovery
             XmlDocument document = new XmlDocument();
-            document.Load(library.FullName);
+            document.Load(library.Path);
 
             // remove contents of the file
             string[] text = { "" };
@@ -104,13 +104,13 @@ namespace PictureLibraryModel.DataProviders
             try
             {
                 // write updated library to the file
-                var stream = FileService.OpenFile(library.FullName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+                var stream = FileService.OpenFile(library.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
                 LibraryFileService.WriteLibraryToStreamAsync(stream, library);
             }
             catch (Exception e)
             {
                 Logger.Error(e, "Library update error:" + e.Message);
-                document.Save(library.FullName);
+                document.Save(library.Path);
             }
         }    
     }

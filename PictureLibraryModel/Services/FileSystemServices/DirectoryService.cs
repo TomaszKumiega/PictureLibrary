@@ -1,24 +1,21 @@
 ﻿using NLog;
 using PictureLibraryModel.Model;
-using PictureLibraryModel.Model.Builders;
-using PictureLibraryModel.Model.Builders.ImageFileBuilder;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {
     public class DirectoryService : FileSystemService, IDirectoryService
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private IImageFileBuilder ImageFileBuilder { get; }
+        private Func<LocalImageFile> LocalImageFileLocator { get; }
 
-        public DirectoryService(IImageFileBuilder imageFileBuilder)
+        public DirectoryService(Func<LocalImageFile> localImageFileLocator) 
         {
-            ImageFileBuilder = imageFileBuilder;
+            LocalImageFileLocator = localImageFileLocator;
         }
 
         public override void Copy(string sourcePath, string destinationPath)
@@ -61,20 +58,10 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
                 if (ImageFile.IsFileAnImage(fileInfo) && UserHasAccessToTheFile(t))
                 {
-                    var imageFile =
-                        ImageFileBuilder
-                        .StartBuilding()
-                        .WithName(fileInfo.Name)
-                        .WithFullName(fileInfo.FullName)
-                        .WithExtension(fileInfo.Extension)
-                        .WithLibraryFullName(null)
-                        .WithLastAccessTime(fileInfo.LastAccessTime)
-                        .WithLastWriteTime(fileInfo.LastWriteTime)
-                        .WithCreationTime(fileInfo.CreationTime)
-                        .WithSize(fileInfo.Length)
-                        .WithTags(new List<Tag>())
-                        .From(Guid.Empty)
-                        .Build();
+                    var imageFile = LocalImageFileLocator();
+                    imageFile.Name = fileInfo.Name;
+                    imageFile.Path = fileInfo.FullName;
+                    imageFile.Extension = ImageExtensionHelper.GetExtension(fileInfo.Extension);
 
                     content.Add(imageFile);
                 }

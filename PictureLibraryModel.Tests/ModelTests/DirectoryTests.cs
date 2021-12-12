@@ -22,7 +22,7 @@ namespace PictureLibraryModel.Tests.ModelTests
 
             Directory directory = new Folder(directoryServiceMock.Object)
             {
-                FullName = fullName
+                Path = fullName
             };
 
             await directory.LoadSubDirectoriesAsync();
@@ -45,7 +45,7 @@ namespace PictureLibraryModel.Tests.ModelTests
 
             Directory directory = new Folder(directoryServiceMock.Object)
             {
-                FullName = fullName
+                Path = fullName
             };
 
             await directory.LoadSubDirectoriesAsync();
@@ -64,7 +64,7 @@ namespace PictureLibraryModel.Tests.ModelTests
 
             Directory directory = new Folder(directoryServiceMock.Object)
             {
-                FullName = fullName
+                Path = fullName
             };
 
             await Assert.ThrowsAsync<Exception>(async () => await directory.LoadSubDirectoriesAsync());
@@ -78,14 +78,14 @@ namespace PictureLibraryModel.Tests.ModelTests
                 new Folder()
                 {
                     Name = "Folder1",
-                    FullName = "Tests\\Directory1\\Folder1\\"
+                    Path = "Tests\\Directory1\\Folder1\\"
                 };
 
             var folder2 =
                 new Folder()
                 {
                     Name = "Folder2",
-                    FullName = "Tests\\Directory1\\Folder2\\"
+                    Path = "Tests\\Directory1\\Folder2\\"
                 };
 
             list.Add(folder1);

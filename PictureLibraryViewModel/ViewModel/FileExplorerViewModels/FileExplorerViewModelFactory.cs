@@ -1,10 +1,6 @@
-﻿using PictureLibraryModel.Model.Builders.ImageFileBuilder;
-using PictureLibraryModel.Services.Clipboard;
+﻿using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryViewModel.Commands;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
@@ -12,20 +8,22 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
     public class FileExplorerViewModelFactory : IFileExplorerViewModelFactory
     {
         private IFileExplorerViewModel CommonVM { get; }
+        private IDirectoryService DirectoryService { get; }
 
-        public FileExplorerViewModelFactory(IFileExplorerViewModel commonVM)
+        public FileExplorerViewModelFactory(IFileExplorerViewModel commonVM, IDirectoryService directoryService)
         {
             CommonVM = commonVM;
+            DirectoryService = directoryService;
         }
 
         public IFileExplorerToolboxViewModel GetFileToolboxViewModel(IClipboardService clipboard)
         {
-            return new FileExplorerToolboxViewModel(CommonVM, new FileService(), new DirectoryService(new ImageFileBuilder()), clipboard, new CommandFactory());
+            return new FileExplorerToolboxViewModel(CommonVM, new FileService(), DirectoryService, clipboard, new CommandFactory());
         }
 
         public async Task<IExplorableElementsTreeViewModel> GetFileTreeViewModelAsync()
         {
-            var viewModel = new FileTreeViewModel(CommonVM, new DirectoryService(new ImageFileBuilder()));
+            var viewModel = new FileTreeViewModel(CommonVM, DirectoryService);
             await viewModel.InitializeDirectoryTreeAsync();
             return viewModel;
         }
