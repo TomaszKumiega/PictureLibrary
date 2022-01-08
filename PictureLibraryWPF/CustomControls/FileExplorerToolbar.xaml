@@ -166,7 +166,7 @@
         <Image x:Name="FolderImage" Grid.Row="1" Grid.Column="3" Margin="6,6,6,6" Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
         
         <!--Path TextBlock-->
-        <TextBox x:Name="PathTextBlock" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="13" FontFamily="Segoe UI" FontSize="11" Background="Transparent" BorderThickness="0" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{Binding Path=CommonViewModel.CurrentlyOpenedElement.FullName}"/>
+        <TextBox x:Name="PathTextBlock" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="13" FontFamily="Segoe UI" FontSize="11" Background="Transparent" BorderThickness="0" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{Binding Path=CommonViewModel.CurrentlyOpenedElement.Path}"/>
         
         <!--Refresh Button-->
         <Button x:Name="RefreshButton" Grid.Column="17" Grid.Row="1" BorderThickness="0" Style="{StaticResource CustomButton}" Command="{Binding RefreshCommand}">
