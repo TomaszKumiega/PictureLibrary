@@ -1,11 +1,12 @@
 ﻿using NLog;
+using PictureLibraryModel.DI_Configuration;
+using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryModel.Model.Settings;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -16,13 +17,26 @@ namespace PictureLibraryModel.Services.SettingsProvider
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IFileService FileService { get; }
+        private IImplementationSelector<RemoteStorageTypes, IRemoteStorageInfo> RemoteStorageImplementationSelector { get; }
 
-        public Settings Settings { get; private set; }
+        private Settings _settings;
+        public Settings Settings 
+        { 
+            get
+            {
+                if (_settings == null)
+                    LoadSettings();
 
-        public SettingsProviderService(IFileService fileService)
+                return _settings;
+            }
+
+            private set => _settings = value; 
+        }
+
+        public SettingsProviderService(IFileService fileService, IImplementationSelector<RemoteStorageTypes, IRemoteStorageInfo> implementationSelector)
         {
             FileService = fileService;
-            LoadSettings();
+            RemoteStorageImplementationSelector = implementationSelector;
         }
 
         private void LoadSettings()
@@ -80,6 +94,17 @@ namespace PictureLibraryModel.Services.SettingsProvider
                                         settings.ImportedLibraries.Add(libraryElement.Attribute("path").Value);
                                     }
                                     break;
+                                case "remote_storage_info":
+                                    {
+                                        var remoteStorageInfoElement = XNode.ReadFrom(reader) as XElement;
+                                        
+                                        if (int.TryParse(remoteStorageInfoElement.Attribute("type").Value, out int remoteStorageTypeInt))
+                                        {
+                                            var remoteStorageInfo = LoadRemoteStorageInfoFromString((RemoteStorageTypes)remoteStorageTypeInt, remoteStorageInfoElement.Value);
+                                            settings.RemoteStorageInfos.Add(remoteStorageInfo);
+                                        }
+                                    }
+                                    break;
                             }
                         }
                     }
@@ -99,6 +124,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
             var language = new XElement("language", new XAttribute("value", Settings.Language));
             var lightMode = new XElement("light_mode", new XAttribute("value", Settings.LightMode));
             var importedLibraries = new XElement("imported_libraries");
+            var remoteStorageInfos = new XElement("remote_storage_infos");
 
             foreach (var t in Settings.ImportedLibraries)
             {
@@ -106,10 +132,17 @@ namespace PictureLibraryModel.Services.SettingsProvider
                 importedLibraries.Add(libraryElement);
             }
 
+            foreach (var t in Settings.RemoteStorageInfos)
+            {
+                var remoteStorageInfoElement = new XElement("remote_storage_info", new XAttribute("type", (byte)t.StorageType));
+                remoteStorageInfos.Add(remoteStorageInfoElement);
+            }
+
             settings.Add(accentColor);
             settings.Add(language);
             settings.Add(lightMode);
             settings.Add(importedLibraries);
+            settings.Add(remoteStorageInfos);
 
             try
             {
@@ -147,6 +180,14 @@ namespace PictureLibraryModel.Services.SettingsProvider
             }
 
             return true;
+        }
+
+        private IRemoteStorageInfo LoadRemoteStorageInfoFromString(RemoteStorageTypes remoteStorageType, string serializedRemoteStorageInfo)
+        {
+            IRemoteStorageInfo remoteStorageInfo = RemoteStorageImplementationSelector.Select(remoteStorageType);
+            remoteStorageInfo.Deserialize(serializedRemoteStorageInfo);
+            
+            return remoteStorageInfo;
         }
     }
 }

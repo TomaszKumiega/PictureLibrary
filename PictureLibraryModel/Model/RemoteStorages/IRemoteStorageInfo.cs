@@ -10,7 +10,8 @@ namespace PictureLibraryModel.Model.RemoteStorages
         string Name { get; }
         RemoteStorageTypes StorageType { get; set; }
 
-        void LoadFromString(string serializedStorageInfo);
+        void Deserialize(string serializedStorageInfo);
+
         string ToString();
     }
 }
