@@ -10,7 +10,7 @@ namespace PictureLibraryModel.Model
         public Guid RemoteStorageInfoId { get; set; }
         public string Path { get; set; }
         public string Color { get; set; }
-        public Icon Icon { get; private set; }
+        public Image Icon { get; private set; }
 
         public Tag()
         {
@@ -18,7 +18,7 @@ namespace PictureLibraryModel.Model
 
         public void LoadIcon()
         {
-            Icon = Icon.ExtractAssociatedIcon(".\\Icons\\FolderIcon.png");
+            Icon = Image.FromFile(".\\Icons\\FolderIcon.png");
         }
 
         ~Tag()

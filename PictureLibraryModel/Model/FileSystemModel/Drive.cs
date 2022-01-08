@@ -11,7 +11,7 @@ namespace PictureLibraryModel.Model
 
         public override void LoadIcon()
         {
-            Icon = Icon.ExtractAssociatedIcon(".\\Icons\\DiskIcon.png");
+            Icon = Image.FromFile(".\\Icons\\DiskIcon.png");
         }
 
         ~Drive()

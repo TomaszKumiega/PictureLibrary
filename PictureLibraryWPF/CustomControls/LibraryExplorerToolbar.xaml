@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls"
+             xmlns:helpers="clr-namespace:PictureLibraryWPF.Helpers"
              xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="800" Background="#2b2d30">
@@ -37,6 +38,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <helpers:ImageConverter x:Key="ImageConverter"/>
     </UserControl.Resources>
     
     <Grid>
@@ -72,7 +74,7 @@
             <!--Add Library Button-->
             <Button x:Name="AddLibraryButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}" Click="AddLibraryButton_Click">
                 <StackPanel>
-                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/AddToLibraryIcon.png"/>
+                    <Image Width="40" Height="40" Source="{Binding Path=./Icons/AddToLibraryIcon.png, Converter=ImageConverter}"/>
                     <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Add}"/>
                 </StackPanel>
             </Button>
@@ -80,7 +82,7 @@
             <!--Remove Button-->
             <Button x:Name="RemoveButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}" Command="{Binding RemoveCommand}">
                 <StackPanel>
-                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/RemoveIcon.png"/>
+                    <Image Width="40" Height="40" Source="./Icons/RemoveIcon.png"/>
                     <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Remove}"/>
                 </StackPanel>
             </Button>
@@ -88,7 +90,7 @@
             <!--Import Button-->
             <Button x:Name="ImportButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}">
                 <StackPanel>
-                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/ImportImagesIcon.png"/>
+                    <Image Width="40" Height="40" Source="./Icons/ImportImagesIcon.png"/>
                     <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.ImportImages}"/>
                 </StackPanel>
             </Button>
@@ -96,7 +98,7 @@
             <!--Export Button-->
             <Button x:Name="ExportButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}">
                 <StackPanel>
-                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/ExportImagesIcon.png"/>
+                    <Image Width="40" Height="40" Source="./Icons/ExportImagesIcon.png"/>
                     <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.ExportImages}"/>
                 </StackPanel>
             </Button>
@@ -104,7 +106,7 @@
             <!--Share Button-->
             <Button x:Name="ShareButton" Margin="5,3,3,3" BorderThickness="0" VerticalContentAlignment="Top" Style="{StaticResource CustomButton}">
                 <StackPanel>
-                    <Image Width="40" Height="40" Source="pack://application:,,,/Icons/ShareIcon.png"/>
+                    <Image Width="40" Height="40" Source="./Icons/ShareIcon.png"/>
                     <TextBlock FontFamily="Segoe UI" FontSize="11" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Share}"/>
                 </StackPanel>
             </Button>
@@ -112,24 +114,24 @@
         
         <!--Back Button-->
         <Button x:Name="BackButton" Grid.Column="0" Grid.Row="1" BorderThickness="0"  Style="{StaticResource CustomButton}" Command="{Binding BackCommand}">
-            <Image Source="pack://application:,,,/Icons/BackIcon.png" Margin="4,4,4,4"/>
+            <Image Source="./Icons/BackIcon.png" Margin="4,4,4,4"/>
         </Button>
 
         <!--Up Button-->
         <Button x:Name="UpButton" Grid.Column="2" Grid.Row="1" BorderThickness="0" Style="{StaticResource CustomButton}" Command="{Binding GoToParentDirectoryCommand}">
-            <Image Source="pack://application:,,,/Icons/UpIcon.png" Margin="4,4,4,4"/>
+            <Image Source="./Icons/UpIcon.png" Margin="4,4,4,4"/>
         </Button>
 
         <!--Forward Button-->
         <Button x:Name="ForwardButton" Grid.Column="1" Grid.Row="1" BorderThickness="0" Style="{StaticResource CustomButton}" Command="{Binding ForwardCommand}">
-            <Image Source="pack://application:,,,/Icons/ForwardIcon.png" Margin="4,4,4,4"/>
+            <Image Source="./Icons/ForwardIcon.png" Margin="4,4,4,4"/>
         </Button>
 
         <!--Path Border-->
         <Border x:Name="PathBorderRectangle" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="18" BorderThickness="0.3" BorderBrush="WhiteSmoke"/>
 
         <!--Folder Image-->
-        <Image x:Name="FolderImage" Grid.Row="1" Grid.Column="3" Margin="6,6,6,6" Source="pack://application:,,,/Icons/GrayFolderIcon.png"/>
+        <Image x:Name="FolderImage" Grid.Row="1" Grid.Column="3" Margin="6,6,6,6" Source="./Icons/GrayFolderIcon.png"/>
 
         <!--Path TextBlock-->
         <TextBox x:Name="PathTextBlock" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="13" FontFamily="Segoe UI" FontSize="11" Background="Transparent" BorderThickness="0" Foreground="WhiteSmoke" VerticalAlignment="Center" Text="{Binding Path=CommonViewModel.CurrentlyOpenedElement.FullName}"/>

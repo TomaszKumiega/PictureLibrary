@@ -34,7 +34,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type src:IExplorableElement}">
                     <StackPanel>
-                        <Image x:Name="ElementImage" Width="50" Height="50" Source="{Binding Path=IconSource, Converter={StaticResource ImageConverter}, IsAsync=True}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <Image x:Name="ElementImage" Width="50" Height="50" Source="{Binding Path=Icon, Converter={StaticResource ImageConverter}, IsAsync=True}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         <TextBlock Width="100" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center"  Text="{Binding Name}" Foreground="#cdcdcd"/>
                     </StackPanel>
                 </DataTemplate>
@@ -42,7 +42,7 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <EventSetter Event="MouseDoubleClick" Handler="ItemMouseDoubleClick"/>
-                    <Setter Property="Tag" Value="{Binding FullName}"/>
+                    <Setter Property="Tag" Value="{Binding Name}"/>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>

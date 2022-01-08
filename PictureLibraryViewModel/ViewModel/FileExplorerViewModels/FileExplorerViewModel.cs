@@ -114,6 +114,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             foreach (var t in content)
             {
                 CurrentlyShownElements.Add(t);
+                t.LoadIcon();
             }
 
             InfoText = Strings.ElementsLoaded + ' ' + CurrentlyShownElements.Count.ToString();

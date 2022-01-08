@@ -55,6 +55,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             {
                 await t.LoadSubDirectoriesAsync();
                 ExplorableElementsTree.Add(t);
+                t.LoadIcon();
             }
 
             CommonViewModel.CurrentlyOpenedElement = null;

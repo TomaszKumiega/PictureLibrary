@@ -15,7 +15,7 @@ namespace PictureLibraryModel.Model
         private bool _isExpanded;
 
         protected IDirectoryService DirectoryService { get; set; }
-        protected string IconPath => ".\\Icon\\FolderIcon.png";
+        protected string IconPath => ".\\Icons\\FolderIcon.png";
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -23,7 +23,7 @@ namespace PictureLibraryModel.Model
         public string Name { get; set; }
         public string Extension { get; set; }
         public string Path { get; set; }
-        public Icon Icon { get; protected set; }
+        public Image Icon { get; protected set; }
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
         #endregion
 
@@ -94,7 +94,7 @@ namespace PictureLibraryModel.Model
 
         public virtual void LoadIcon()
         {
-            Icon = Icon.ExtractAssociatedIcon(IconPath);
+            Icon = Image.FromFile(IconPath); 
         }
 
         public virtual async Task LoadSubDirectoriesAsync()
@@ -116,6 +116,7 @@ namespace PictureLibraryModel.Model
             foreach (var t in directories)
             {
                 SubDirectories.Add(t);
+                t.LoadIcon();
             }
         }
     }

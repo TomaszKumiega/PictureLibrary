@@ -5,10 +5,15 @@
              xmlns:src="clr-namespace:PictureLibraryModel.Model;assembly=PictureLibraryModel"
              xmlns:vm="clr-namespace:PictureLibraryViewModel.ViewModel;assembly=PictureLibraryViewModel"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:helpers="clr-namespace:PictureLibraryWPF.Helpers"
              xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200" >
 
+    <UserControl.Resources>
+        <helpers:ImageConverter x:Key="ImageConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -21,13 +26,13 @@
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type src:Directory}" ItemsSource="{Binding SubDirectories}">
                     <WrapPanel Orientation="Horizontal">
-                        <Image Width="20" Height="20" Source="{Binding IconSource}"/>
+                        <Image Width="20" Height="20" Source="{Binding Icon, Converter={StaticResource ImageConverter}}"/>
                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="#cdcdcd"/>
                     </WrapPanel>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type src:Library}">
                     <WrapPanel>
-                        <Image Width="20" Height="20" Source="{Binding IconSource}"/>
+                        <Image Width="20" Height="20" Source="{Binding Icon, Converter={StaticResource ImageConverter}}"/>
                         <TextBlock Text="{Binding Name}" Margin="8,0,0,0" VerticalAlignment="Center" Foreground="#cdcdcd"/>
                     </WrapPanel>
                 </HierarchicalDataTemplate>

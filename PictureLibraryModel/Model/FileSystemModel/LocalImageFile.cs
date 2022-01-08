@@ -13,7 +13,7 @@ namespace PictureLibraryModel.Model
 
         public override void LoadIcon()
         {
-            Icon = Icon.ExtractAssociatedIcon(Path);
+            Icon = Image.FromFile(Path);
         }
 
         ~LocalImageFile()

@@ -6,7 +6,7 @@ namespace PictureLibraryModel.Model
     {
         string Name { get; set; }
         string Path { get; set; }
-        Icon Icon { get; }
+        Image Icon { get; }
 
         void LoadIcon();
     }
