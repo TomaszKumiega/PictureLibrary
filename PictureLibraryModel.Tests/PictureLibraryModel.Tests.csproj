@@ -24,4 +24,8 @@
     <ProjectReference Include="..\PictureLibraryModel\PictureLibraryModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ModelTests\" />
+  </ItemGroup>
+
 </Project>
