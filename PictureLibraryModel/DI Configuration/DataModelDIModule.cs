@@ -28,31 +28,36 @@ namespace PictureLibraryModel
             builder.RegisterType<Drive>().AsSelf();
             builder.Register<Func<Drive>>(context =>
             {
-                return () => { return context.Resolve<Drive>(); };
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<Drive>(); };
             });
 
             builder.RegisterType<LocalImageFile>().AsSelf();
             builder.Register<Func<LocalImageFile>>(context =>
             {
-                return () => { return context.Resolve<LocalImageFile>(); };
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<LocalImageFile>(); };
             });
 
             builder.RegisterType<Folder>().AsSelf();
             builder.Register<Func<Folder>>(context =>
             {
-                return () => { return context.Resolve<Folder>(); };
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<Folder>(); };
             });
 
             builder.RegisterType<Library>().AsSelf();
             builder.Register<Func<Library>>(context =>
             {
-                return () => { return context.Resolve<Library>(); };
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<Library>(); };
             });
 
             builder.RegisterType<Tag>().AsSelf();
             builder.Register<Func<Tag>>(context =>
             {
-                return () => { return context.Resolve<Tag>(); };
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<Tag>(); };
             });
         }
 
@@ -75,15 +80,15 @@ namespace PictureLibraryModel
             builder.RegisterType<LocalImageFileProvider>().AsSelf();
             builder.Register<Func<LocalImageFileProvider>>((context) =>
             {
-                var value = context.Resolve<LocalImageFileProvider>();
-                return () => { return value; };
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<LocalImageFileProvider>(); };
             });
 
             builder.RegisterType<LocalLibraryProvider>().AsSelf();
             builder.Register<Func<LocalLibraryProvider>>((context) =>
             {
-                var value = context.Resolve<LocalLibraryProvider>();
-                return () => { return value; };
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<LocalLibraryProvider>(); };
             });
 
             builder.RegisterType<DataSourceCreator>().As<IDataSourceCreator>();
