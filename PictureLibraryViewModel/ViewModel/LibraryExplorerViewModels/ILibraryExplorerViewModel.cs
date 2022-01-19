@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Model;
+﻿using PictureLibraryModel.DataProviders;
+using PictureLibraryModel.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
     public interface ILibraryExplorerViewModel : IExplorerViewModel
     {
+        IDataSourceCollection DataSourceCollection { get; }
         void LoadCurrentlyShownElements(IEnumerable<Tag> tags);
         Task AddTagAsync(Tag tag);
     }

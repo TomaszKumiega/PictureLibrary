@@ -62,7 +62,7 @@ namespace PictureLibraryModel.DataProviders
                 try
                 {
                     var stream = FileService.OpenFile(t, FileMode.Open, FileAccess.Read, FileShare.Read);
-                    var library = LibraryFileService.ReadLibraryFromStreamAsync(stream, Guid.Empty).Result;
+                    var library = LibraryFileService.ReadLibraryFromStreamAsync(stream, null).Result;
                     libraries.Add(library);
                 }
                 catch (FileNotFoundException e)
@@ -87,6 +87,8 @@ namespace PictureLibraryModel.DataProviders
                 throw new ArgumentNullException(nameof(library));
 
             FileService.Remove(library.Path);
+            SettingsProvider.Settings.ImportedLibraries.Remove(library.Path);
+            SettingsProvider.SaveSettingsAsync().Wait();
         }
 
         public void UpdateLibrary(Library library)

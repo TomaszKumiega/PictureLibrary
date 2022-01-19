@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Model;
+﻿using PictureLibraryModel.DataProviders;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryViewModel.Helpers;
 using System;

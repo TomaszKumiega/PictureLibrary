@@ -19,7 +19,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
             LocalImageFileLocator = localImageFileLocator;
         }
 
-        public async Task<Library> ReadLibraryFromStreamAsync(Stream fileStream, Guid remoteStorageId)
+        public async Task<Library> ReadLibraryFromStreamAsync(Stream fileStream, Guid? remoteStorageId)
         {
             var tags = new List<Tag>();
             var images = new List<ImageFile>();
