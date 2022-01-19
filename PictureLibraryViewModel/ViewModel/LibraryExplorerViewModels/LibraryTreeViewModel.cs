@@ -1,6 +1,7 @@
 ﻿using NLog;
 using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Services.SettingsProvider;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,10 +28,12 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             }
         }
 
-        public LibraryTreeViewModel(IDataSourceCollection dataSourceCollection, IExplorerViewModel commonVM)
+        public LibraryTreeViewModel(IDataSourceCollection dataSourceCollection, IExplorerViewModel commonVM, ISettingsProvider settingsProvider)
         {
             DataSourceCollection = dataSourceCollection;
             CommonViewModel = commonVM;
+
+            DataSourceCollection.Initialize(settingsProvider.Settings.RemoteStorageInfos);
         }
 
         public async Task InitializeLibraryTreeAsync()
@@ -51,6 +54,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             foreach(var t in libraries)
             {
                 ExplorableElementsTree.Add(t);
+                t.LoadIcon();
             }
 
             CommonViewModel.CurrentlyOpenedElement = null;
