@@ -62,6 +62,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
                 xmlSettings.DtdProcessing = DtdProcessing.Parse;
 
                 settings.ImportedLibraries = new List<string>();
+                settings.RemoteStorageInfos = new List<IRemoteStorageInfo>();
 
                 using (var reader = XmlReader.Create(fileStream, xmlSettings))
                 {
