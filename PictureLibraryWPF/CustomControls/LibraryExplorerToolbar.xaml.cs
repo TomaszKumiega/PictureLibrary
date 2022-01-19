@@ -21,17 +21,19 @@ namespace PictureLibraryWPF.CustomControls
     public partial class LibraryExplorerToolbar : UserControl
     {
         private IDialogFactory DialogFactory { get; }
+        private Func<AddLibraryDialog> AddLibraryDialogLocator { get; }
 
-        public LibraryExplorerToolbar(ILibraryExplorerToolboxViewModel viewModel, IDialogFactory dialogFactory)
+        public LibraryExplorerToolbar(ILibraryExplorerToolboxViewModel viewModel, IDialogFactory dialogFactory, Func<AddLibraryDialog> addLibraryDialogLocator)
         {
             DataContext = viewModel;
             DialogFactory = dialogFactory;
+            AddLibraryDialogLocator = addLibraryDialogLocator;
             InitializeComponent();
         }
 
         private void AddLibraryButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = DialogFactory.GetAddLibraryDialog();
+            var dialog = AddLibraryDialogLocator();
             dialog.ShowDialog();
         }
     }

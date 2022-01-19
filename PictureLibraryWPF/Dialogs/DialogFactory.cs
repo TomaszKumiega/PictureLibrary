@@ -21,11 +21,6 @@ namespace PictureLibraryWPF.Dialogs
             return new AddImagesDialog(await ViewModelFactory.GetImagesDialogViewModel(selectedImages));
         }
 
-        public AddLibraryDialog GetAddLibraryDialog()
-        {
-            return new AddLibraryDialog(ViewModelFactory.GetAddLibraryDialogViewModel());
-        }
-
         public AddTagDialog GetAddTagDialog()
         {
             return new AddTagDialog(ViewModelFactory.GetAddTagDialogViewModel());

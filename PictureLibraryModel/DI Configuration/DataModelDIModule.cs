@@ -3,6 +3,7 @@ using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.DataProviders.Builders;
 using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.Builders;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryModel.Services.SettingsProvider;
@@ -59,12 +60,14 @@ namespace PictureLibraryModel
                 var cc = context.Resolve<IComponentContext>();
                 return () => { return cc.Resolve<Tag>(); };
             });
+
+            builder.RegisterType<LocalLibraryBuilder>().Keyed<ILibraryBuilder>(-1);
         }
 
         private void RegisterServices(ContainerBuilder builder)
         {
             builder.RegisterType<LibraryFileService>().As<ILibraryFileService>();
-            builder.RegisterType<SettingsProviderService>().As<ISettingsProviderService>().SingleInstance();
+            builder.RegisterType<SettingsProvider>().As<ISettingsProvider>().SingleInstance();
             builder.RegisterType<StringEncryptionService>().As<IStringEncryptionService>();
             builder.RegisterType<DirectoryService>().As<IDirectoryService>();
             builder.RegisterType<FileService>().As<IFileService>();
@@ -72,10 +75,15 @@ namespace PictureLibraryModel
 
         private void RegisterDataAccess(ContainerBuilder builder)
         {
-            builder.RegisterType<DataSource>().As<IDataSource>();
             builder.RegisterType<LocalDataSourceBuilder>().Keyed<IDataSourceBuilder>(-1);
-
             builder.RegisterType<DataSourceCollection>().As<IDataSourceCollection>();
+
+            builder.RegisterType<DataSource>().As<IDataSource>();
+            builder.Register<Func<IDataSource>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<IDataSource>(); };
+            });
 
             builder.RegisterType<LocalImageFileProvider>().AsSelf();
             builder.Register<Func<LocalImageFileProvider>>((context) =>

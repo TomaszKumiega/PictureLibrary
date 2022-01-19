@@ -26,12 +26,14 @@ namespace PictureLibraryWPF
         private IFileExplorerControlsFactory FileExplorerControlsFactory { get; }
         private ILibraryExplorerControlsFactory LibraryExplorerControlsFactory { get; }
         private List<Control> CurrentPageControls { get; }
+        private Func<LibraryExplorerToolbar> LibraryExplorerToolbarLocator { get; }
 
-        public MainWindow(IFileExplorerControlsFactory fileExplorerControlsFactory, ILibraryExplorerControlsFactory libraryExplorerControlsFactory)
+        public MainWindow(IFileExplorerControlsFactory fileExplorerControlsFactory, ILibraryExplorerControlsFactory libraryExplorerControlsFactory, Func<LibraryExplorerToolbar> libraryExplorerToolbarLocator)
         {
             FileExplorerControlsFactory = fileExplorerControlsFactory;
             LibraryExplorerControlsFactory = libraryExplorerControlsFactory;
             CurrentPageControls = new List<Control>();
+            LibraryExplorerToolbarLocator = libraryExplorerToolbarLocator;
 
             InitializeComponent();
             LoadHomePage();
@@ -115,7 +117,7 @@ namespace PictureLibraryWPF
             Grid.SetColumnSpan(librariesView, 2);
 
             // Add libraries toolbar to the grid
-            var librariesToolbar = LibraryExplorerControlsFactory.GetLibraryExplorerToolbar();
+            var librariesToolbar = LibraryExplorerToolbarLocator();
             MainPanelGrid.Children.Add(librariesToolbar);
             librariesToolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
             librariesToolbar.VerticalAlignment = VerticalAlignment.Stretch;

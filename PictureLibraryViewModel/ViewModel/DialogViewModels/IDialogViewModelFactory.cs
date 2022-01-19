@@ -9,7 +9,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
     public interface IDialogViewModelFactory
     {
         IAddTagDialogViewModel GetAddTagDialogViewModel();
-        IAddLibraryDialogViewModel GetAddLibraryDialogViewModel();
         Task<IAddImagesDialogViewModel> GetImagesDialogViewModel(List<ImageFile> selectedImages);
     }
 }

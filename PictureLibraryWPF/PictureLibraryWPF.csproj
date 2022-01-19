@@ -19,6 +19,7 @@
     <None Remove="Icons\CopyPathIcon.png" />
     <None Remove="Icons\CutIcon.png" />
     <None Remove="Icons\ExportImagesIcon.png" />
+    <None Remove="Icons\FolderIconDark.png" />
     <None Remove="Icons\ForwardIcon.png" />
     <None Remove="Icons\GrayFolderIcon.png" />
     <None Remove="Icons\HomeIcon.png" />
@@ -72,6 +73,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\ExportImagesIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\FolderIconDark.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\ForwardIcon.png">
@@ -148,9 +152,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Icons\FolderIcon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\FolderIconDark.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

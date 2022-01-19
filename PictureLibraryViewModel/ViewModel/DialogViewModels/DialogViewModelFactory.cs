@@ -24,11 +24,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             DataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
         }
 
-        public IAddLibraryDialogViewModel GetAddLibraryDialogViewModel()
-        {
-            return new AddLibraryDialogViewModel(CommonViewModel, CommandFactory);
-        }
-
         public IAddTagDialogViewModel GetAddTagDialogViewModel()
         {
             return new AddTagDialogViewModel(CommonViewModel, CommandFactory);

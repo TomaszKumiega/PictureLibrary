@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Services.SettingsProvider
 {
-    public interface ISettingsProviderService
+    public interface ISettingsProvider
     {
         Settings Settings { get; }
 

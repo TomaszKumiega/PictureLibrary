@@ -27,57 +27,12 @@ namespace PictureLibraryWPF.Dialogs
         {
             DataContext = viewModel;
             InitializeComponent();
-            InitializeLocationComboBox();
-            DisablePathSelectionControls();
             viewModel.ProcessingStatusChanged += OnProcessingStatusChanged;
-        }
-
-        private void DisablePathSelectionControls()
-        {
-            PathTextBlock.IsEnabled = false;
-            PathTitleTextBlock.IsEnabled = false;
-            PathTextBlock.IsEnabled = false;
-            PickFolderPathButton.IsEnabled = false;
-        }
-
-        private void EnablePathSelectionControls()
-        {
-            PathTextBlock.IsEnabled = true;
-            PathTitleTextBlock.IsEnabled = true;
-            PathTextBlock.IsEnabled = true;
-            PickFolderPathButton.IsEnabled = true;
-        }
-
-        private void InitializeLocationComboBox()
-        {
-            var locationList = new List<string>();
-            locationList.Add("Local");
-            locationList.Add("Remote Server");
-            foreach (var t in locationList)
-                LocationComboBox.Items.Add(t);
         }
 
         private void OnProcessingStatusChanged(object sender, ProcessingStatusChangedEventArgs args)
         {
             if (args.Status == ProcessingStatus.Finished) this.Close();
-        }
-
-        private void LocationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var viewModel = DataContext as IAddLibraryDialogViewModel;
-
-            //if(LocationComboBox.SelectedIndex == -1)
-            //{
-            //    viewModel.SelectedOrigin = null;
-            //}
-            //else
-            //{
-            //    viewModel.SelectedOrigin = viewModel.Origins[LocationComboBox.SelectedIndex];
-            //    if(viewModel.SelectedOrigin == PictureLibraryModel.Model.Origin.Local)
-            //    {
-            //        EnablePathSelectionControls();
-            //    }
-            //}
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

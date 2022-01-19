@@ -11,7 +11,7 @@ namespace PictureLibraryModel.Model
         public string Description { get; set; }
         public List<Tag> Tags { get; set; }
         public List<ImageFile> Images { get; set; }
-        public Guid RemoteStorageInfoId { get; set; }
+        public Guid? RemoteStorageInfoId { get; set; }
         public Image Icon { get; private set; }
 
         public Library()

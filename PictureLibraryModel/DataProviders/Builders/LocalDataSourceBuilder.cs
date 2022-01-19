@@ -7,24 +7,32 @@ namespace PictureLibraryModel.DataProviders.Builders
 {
     public class LocalDataSourceBuilder : IDataSourceBuilder
     {
-        private IDataSource DataSource { get; }
+        private IDataSource DataSource { get; set; }
+        private Func<IDataSource> DataSourceLocator { get; }
         private Func<LocalLibraryProvider> LocalLibraryProviderLocator { get; }
         private Func<LocalImageFileProvider> LocalImageFileProviderLocator { get; }
 
-        public LocalDataSourceBuilder(IDataSource dataSource, Func<LocalImageFileProvider> localImageFileProviderLocator, Func<LocalLibraryProvider> localLibraryProviderLocator)
+        public LocalDataSourceBuilder(Func<IDataSource> dataSourceLocator, Func<LocalImageFileProvider> localImageFileProviderLocator, Func<LocalLibraryProvider> localLibraryProviderLocator)
         {
-            DataSource = dataSource;
+            DataSourceLocator = dataSourceLocator;
             LocalImageFileProviderLocator = localImageFileProviderLocator;
             LocalLibraryProviderLocator = localLibraryProviderLocator;
         }
 
-        public IDataSourceBuilder CreateImageFileProvider()
+        public IDataSourceBuilder CreateDataSource()
+        {
+            DataSource = DataSourceLocator();
+
+            return this;
+        }
+
+        public IDataSourceBuilder WithImageFileProvider()
         {
             DataSource.ImageProvider = LocalImageFileProviderLocator();
             return this;
         }
 
-        public IDataSourceBuilder CreateLibraryProvider()
+        public IDataSourceBuilder WithLibraryProvider()
         {
             DataSource.LibraryProvider = LocalLibraryProviderLocator();
             return this;

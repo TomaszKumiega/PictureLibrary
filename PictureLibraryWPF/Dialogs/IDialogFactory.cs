@@ -9,7 +9,6 @@ namespace PictureLibraryWPF.Dialogs
     public interface IDialogFactory
     {
         Task<AddImagesDialog> GetAddImagesDialog(List<ImageFile> selectedFiles);
-        AddLibraryDialog GetAddLibraryDialog();
         AddTagDialog GetAddTagDialog();
     }
 }

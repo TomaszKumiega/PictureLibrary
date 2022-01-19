@@ -4,8 +4,9 @@ namespace PictureLibraryModel.DataProviders.Builders
 {
     public interface IDataSourceBuilder
     {
-        IDataSourceBuilder CreateLibraryProvider();
-        IDataSourceBuilder CreateImageFileProvider();
+        IDataSourceBuilder CreateDataSource();
+        IDataSourceBuilder WithLibraryProvider();
+        IDataSourceBuilder WithImageFileProvider();
         IDataSourceBuilder WithRemoteStorageInfo(IRemoteStorageInfo remoteStorageInfo);
         IDataSource Build();
     }

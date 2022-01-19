@@ -1,17 +1,8 @@
-﻿using Autofac;
-using PictureLibraryModel.Services.FileSystemServices;
-using PictureLibraryViewModel;
-using PictureLibraryViewModel.Helpers;
-using PictureLibraryViewModel.ViewModel;
-using PictureLibraryViewModel.ViewModel.DialogViewModels;
+﻿using PictureLibraryViewModel.ViewModel.DialogViewModels;
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using PictureLibraryWPF.Clipboard;
 using PictureLibraryWPF.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace PictureLibraryWPF.CustomControls
 {

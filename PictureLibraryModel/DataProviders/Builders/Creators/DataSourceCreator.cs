@@ -22,8 +22,9 @@ namespace PictureLibraryModel.DataProviders.Builders
             var builder = BuildersImplementations.Select(storageType);
 
             return builder
-                .CreateImageFileProvider()
-                .CreateLibraryProvider()
+                .CreateDataSource()
+                .WithImageFileProvider()
+                .WithLibraryProvider()
                 .WithRemoteStorageInfo(remoteStorageInfo)
                 .Build();
         }

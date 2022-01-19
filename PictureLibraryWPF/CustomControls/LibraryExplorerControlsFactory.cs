@@ -1,11 +1,6 @@
-﻿using PictureLibraryModel.Services.Clipboard;
-using PictureLibraryViewModel.ViewModel.DialogViewModels;
-using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
+﻿using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using PictureLibraryWPF.Clipboard;
 using PictureLibraryWPF.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PictureLibraryWPF.CustomControls
@@ -31,11 +26,6 @@ namespace PictureLibraryWPF.CustomControls
         {
             var viewModel = new ElementsView(await ViewModelFactory.GetLibraryViewViewModelAsync());
             return viewModel;
-        }
-
-        public LibraryExplorerToolbar GetLibraryExplorerToolbar()
-        {
-            return new LibraryExplorerToolbar(ViewModelFactory.GetLibraryExplorerToolboxViewModel(new WPFClipboard()), DialogFactory);
         }
 
         public TagPanel GetTagPanel()

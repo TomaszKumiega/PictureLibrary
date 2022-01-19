@@ -33,7 +33,7 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <Rectangle x:Name="TitleBarRectangle" Grid.ColumnSpan="2" Grid.Row="0" Height="20" VerticalAlignment="Top" Fill="Transparent" MouseDown="TitleBarRectangle_MouseDown"/>
+        <Rectangle x:Name="TitleBarRectangle" Grid.ColumnSpan="2" Grid.Row="0" Height="15" VerticalAlignment="Top" Fill="#202225" MouseDown="TitleBarRectangle_MouseDown"/>
 
         <TextBlock x:Name="TitleTextBlock" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="22" Text="{x:Static res:Strings.AddLibrary}"/>
 
@@ -47,13 +47,13 @@
         
         <!--Location-->
         <TextBlock x:Name="LocationTextBlock" Grid.Row="7" Margin="0,0,10,0" VerticalAlignment="Top" TextAlignment="Right" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="19" Text="{x:Static res:Strings.Location}"/>
-        <ComboBox x:Name="LocationComboBox" Grid.Row="7" Grid.Column="1" Margin="10,0,20,0" SelectionChanged="LocationComboBox_SelectionChanged"/>
+        <ComboBox x:Name="LocationComboBox" Grid.Row="7" Grid.Column="1" Margin="10,0,20,0" SelectedItem="{Binding SelectedStorage}" ItemsSource="{Binding Storages}"/>
 
         <!--Path-->
         <TextBlock x:Name="PathTitleTextBlock" Grid.Row="9" Margin="0,0,10,0" VerticalAlignment="Top" TextAlignment="Right" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="19" Text="{x:Static res:Strings.FilePath}"/>
-        <StackPanel x:Name="PathStackPanel" Grid.Row="9" Grid.Column="1" Margin="10,0,20,0" Orientation="Horizontal">
-            <TextBlock x:Name="PathTextBlock" Width="145" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="14"/>
-            <Button x:Name="PickFolderPathButton" Width="25" Click="PickFolderPathButton_Click">
+        <StackPanel x:Name="PathStackPanel" Grid.Row="9" Grid.Column="1" Margin="10,0,20,0" Orientation="Horizontal" >
+            <TextBlock x:Name="PathTextBlock" Width="145" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="14" IsEnabled="{Binding IsPathSelectionEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button x:Name="PickFolderPathButton" Width="25" Click="PickFolderPathButton_Click" IsEnabled="{Binding IsPathSelectionEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <Image Width="20" Height="20" Source="pack://application:,,,/Icons/FolderIconDark.png"/>
             </Button>
         </StackPanel>

@@ -13,7 +13,7 @@ using System.Xml.Linq;
 
 namespace PictureLibraryModel.Services.SettingsProvider
 {
-    public class SettingsProviderService : ISettingsProviderService
+    public class SettingsProvider : ISettingsProvider
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IFileService FileService { get; }
@@ -33,7 +33,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
             private set => _settings = value; 
         }
 
-        public SettingsProviderService(IFileService fileService, IImplementationSelector<RemoteStorageTypes, IRemoteStorageInfo> implementationSelector)
+        public SettingsProvider(IFileService fileService, IImplementationSelector<RemoteStorageTypes, IRemoteStorageInfo> implementationSelector)
         {
             FileService = fileService;
             RemoteStorageImplementationSelector = implementationSelector;
@@ -49,7 +49,8 @@ namespace PictureLibraryModel.Services.SettingsProvider
                         AccentColor = "#0066ff",
                         Language = CultureInfo.CurrentCulture.Name,
                         LightMode = true,
-                        ImportedLibraries = new List<string>()
+                        ImportedLibraries = new List<string>(),
+                        RemoteStorageInfos = new List<IRemoteStorageInfo>()
                     };
             }
             else

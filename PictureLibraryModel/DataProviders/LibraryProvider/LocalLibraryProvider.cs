@@ -14,10 +14,10 @@ namespace PictureLibraryModel.DataProviders
     {
         private static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
         private IFileService FileService { get; }
-        private ISettingsProviderService SettingsProvider { get; }
+        private ISettingsProvider SettingsProvider { get; }
         private ILibraryFileService LibraryFileService { get; }
 
-        public LocalLibraryProvider(IFileService fileService, ISettingsProviderService settingsProvider, ILibraryFileService libraryFileService)
+        public LocalLibraryProvider(IFileService fileService, ISettingsProvider settingsProvider, ILibraryFileService libraryFileService)
         {
             FileService = fileService;
             SettingsProvider = settingsProvider;
@@ -37,7 +37,10 @@ namespace PictureLibraryModel.DataProviders
         public void AddLibrary(Library library)
         {
             if (library == null)
-                throw new ArgumentNullException("library");
+                throw new ArgumentNullException(nameof(library));
+
+            if (library.Path == null)
+                throw new ArgumentException(nameof(library.Path));
 
             FileService.Create(library.Path);
             var fileStream = FileService.OpenFile(library.Path, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);

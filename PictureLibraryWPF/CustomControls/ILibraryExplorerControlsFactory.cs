@@ -10,7 +10,6 @@ namespace PictureLibraryWPF.CustomControls
     {
         Task<ElementsTree> GetLibrariesTreeAsync();
         Task<ElementsView> GetLibrariesViewAsync();
-        LibraryExplorerToolbar GetLibraryExplorerToolbar();
         TagPanel GetTagPanel();
     }
 }
