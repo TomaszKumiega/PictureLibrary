@@ -21,6 +21,16 @@ namespace PictureLibraryModel.Model
             Icon = Image.FromFile(".\\Icons\\FolderIcon.png");
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is Tag tag)
+            {
+                return tag.Name == Name && tag.Description == Description && tag.Path == Path && tag.Color == Color && tag.RemoteStorageInfoId == RemoteStorageInfoId;
+            }
+
+            return false;
+        }
+
         ~Tag()
         {
             Icon?.Dispose();

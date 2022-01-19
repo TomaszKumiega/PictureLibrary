@@ -5,11 +5,11 @@ using PictureLibraryViewModel.Helpers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
-    //TODO: REFACTOR
     public class LibraryExplorerViewModel : ILibraryExplorerViewModel
     {
         private IExplorableElement _currentlyOpenedElement;
@@ -36,8 +36,6 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
         public async Task LoadCurrentlyShownElementsAsync()
         {
-            if (CurrentlyShownElements == null) return;
-
             CurrentlyShownElements.Clear();
 
             if (CurrentlyOpenedElement == null)
@@ -46,44 +44,37 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
                 foreach (IExplorableElement t in libraries)
                 {
                     CurrentlyShownElements.Add(t);
+                    t.LoadIcon();
                 }
             }
             else if (CurrentlyOpenedElement is Library library)
             {
-                if(library.RemoteStorageInfoId == null)
+                foreach (var t in library.Images)
                 {
-                    foreach (var t in library.Images)
-                    {
-                        CurrentlyShownElements.Add(t);
-                    }
+                    CurrentlyShownElements.Add(t);
+                    t.LoadIcon();
                 }
-
-                //TODO: Add icons to imageFiles from diffrent origins than local
-
             }
         }
 
-        public async Task LoadCurrentlyShownElements(IEnumerable<Tag> tags)
+        public void LoadCurrentlyShownElements(IEnumerable<Tag> tags)
         {
             if (CurrentlyOpenedElement == null) return;
-            if (!(CurrentlyOpenedElement is Library)) return;
 
             CurrentlyShownElements.Clear();
 
-            if(CurrentlyOpenedElement is Library library && library.RemoteStorageInfoId == null)
+            if(CurrentlyOpenedElement is Library library)
             {
                 foreach (var i in library.Images)
                 {
-                    foreach(var t in tags)
+                    if (i.Tags.Intersect(tags).Any())
                     {
-                        if(i.Tags.Contains(t)) await Task.Run(() => CurrentlyShownElements.Add(i));
+                        CurrentlyShownElements.Add(i);
+                        i.LoadIcon();
                     }
                 }
             }
-
-            //TODO: Add icons to imageFiles from diffrent origins than local
         }
-    
 
         public void Back()
         {
@@ -91,7 +82,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             ExplorerHistory.ForwardStack.Push(_currentlyOpenedElement);
             _currentlyOpenedElement = ExplorerHistory.BackStack.Pop();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
         }
 
         public void Forward()
@@ -100,14 +91,14 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             ExplorerHistory.BackStack.Push(_currentlyOpenedElement);
             _currentlyOpenedElement = ExplorerHistory.ForwardStack.Pop();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
         }
 
         public async Task AddTagAsync(Tag tag)
         {
             var library = CurrentlyOpenedElement as Library;
             library.Tags.Add(tag);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
             var dataSource = DataSourceCollection.GetDataSourceByRemoteStorageId(library.RemoteStorageInfoId);
             await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(library));
         }

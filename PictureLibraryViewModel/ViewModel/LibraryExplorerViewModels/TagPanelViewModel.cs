@@ -21,9 +21,9 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             CommonViewModel.PropertyChanged += OnCurrentlyOpenedElementChanged;
         }
 
-        private async void OnSelectedTagsChanged(object sender, EventArgs args)
+        private void OnSelectedTagsChanged(object sender, EventArgs args)
         {
-            await CommonViewModel.LoadCurrentlyShownElements(SelectedTags.ToList());
+            CommonViewModel.LoadCurrentlyShownElements(SelectedTags.ToList());
         }
 
         private void OnCurrentlyOpenedElementChanged(object sender, PropertyChangedEventArgs args)
