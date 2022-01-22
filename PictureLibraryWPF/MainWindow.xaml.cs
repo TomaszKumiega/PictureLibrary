@@ -28,7 +28,10 @@ namespace PictureLibraryWPF
         private List<Control> CurrentPageControls { get; }
         private Func<LibraryExplorerToolbar> LibraryExplorerToolbarLocator { get; }
 
-        public MainWindow(IFileExplorerControlsFactory fileExplorerControlsFactory, ILibraryExplorerControlsFactory libraryExplorerControlsFactory, Func<LibraryExplorerToolbar> libraryExplorerToolbarLocator)
+        public MainWindow(
+            IFileExplorerControlsFactory fileExplorerControlsFactory, 
+            ILibraryExplorerControlsFactory libraryExplorerControlsFactory, 
+            Func<LibraryExplorerToolbar> libraryExplorerToolbarLocator)
         {
             FileExplorerControlsFactory = fileExplorerControlsFactory;
             LibraryExplorerControlsFactory = libraryExplorerControlsFactory;

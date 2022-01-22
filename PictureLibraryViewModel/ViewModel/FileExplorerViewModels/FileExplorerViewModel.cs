@@ -55,7 +55,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 ExplorerHistory.ForwardStack.Clear();
 
                 _currentlyOpenedElement = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
             }
         }
 
@@ -75,7 +75,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public async void OnCurrentlyOpenedElementChanged(object sender, PropertyChangedEventArgs args)
         {
-            if(args.PropertyName == "CurrentlyOpenedElement") await LoadCurrentlyShownElementsAsync();
+            if(args.PropertyName == nameof(CurrentlyOpenedElement)) await LoadCurrentlyShownElementsAsync();
         }
 
         public void OnSelectedElementsChanged(object sender, EventArgs args)
@@ -120,7 +120,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             InfoText = Strings.ElementsLoaded + ' ' + CurrentlyShownElements.Count.ToString();
             IsProcessing = false;
 
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyShownElements"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyShownElements)));
         }
         public void Back()
         {
@@ -128,7 +128,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             ExplorerHistory.ForwardStack.Push(_currentlyOpenedElement);
             _currentlyOpenedElement = ExplorerHistory.BackStack.Pop();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
         }
 
         public void Forward()
@@ -137,7 +137,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             ExplorerHistory.BackStack.Push(_currentlyOpenedElement);
             _currentlyOpenedElement = ExplorerHistory.ForwardStack.Pop();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyOpenedElement"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
         }
     }
 }

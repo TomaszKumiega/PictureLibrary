@@ -7,7 +7,7 @@
              xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
              xmlns:src="clr-namespace:PictureLibraryModel.Model;assembly=PictureLibraryModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="150" Background="#2b2d30">
+             d:DesignHeight="450" d:DesignWidth="150" Background="Transparent">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>

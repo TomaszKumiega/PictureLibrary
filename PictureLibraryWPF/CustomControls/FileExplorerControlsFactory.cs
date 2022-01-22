@@ -2,6 +2,7 @@
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using PictureLibraryWPF.Clipboard;
 using PictureLibraryWPF.Dialogs;
+using System;
 using System.Threading.Tasks;
 
 namespace PictureLibraryWPF.CustomControls
@@ -10,11 +11,13 @@ namespace PictureLibraryWPF.CustomControls
     {
         private IFileExplorerViewModelFactory FileExplorerViewModelFactory { get; }
         private IDialogViewModelFactory DialogViewModelFactory { get; }
+        private Func<TagPanel> TagPanelLocator { get; }
 
-        public FileExplorerControlsFactory(IFileExplorerViewModelFactory fileExplorerViewModelFactory, IDialogViewModelFactory dialogViewModelFactory)
+        public FileExplorerControlsFactory(IFileExplorerViewModelFactory fileExplorerViewModelFactory, IDialogViewModelFactory dialogViewModelFactory, Func<TagPanel> tagPanelLocator)
         {
             FileExplorerViewModelFactory = fileExplorerViewModelFactory;
             DialogViewModelFactory = dialogViewModelFactory;
+            TagPanelLocator = tagPanelLocator;
         }
 
         public async Task<ElementsTree> GetFileElementsTreeAsync()
@@ -24,7 +27,7 @@ namespace PictureLibraryWPF.CustomControls
 
         public async Task<ElementsView> GetFileElementsViewAsync()
         {
-            return new ElementsView(await FileExplorerViewModelFactory.GetFilesViewViewModelAsync());
+            return new ElementsView(await FileExplorerViewModelFactory.GetFilesViewViewModelAsync(), TagPanelLocator);
         }
 
         public FileExplorerToolbar GetFileExplorerToolbar()

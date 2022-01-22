@@ -12,27 +12,51 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
     public class LibraryExplorerViewModel : ILibraryExplorerViewModel
     {
-        private IExplorableElement _currentlyOpenedElement;
-
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; set; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public string InfoText { get; set; }
         public bool IsProcessing { get; set; }
-        public IExplorableElement CurrentlyOpenedElement { get; set; }
         public IDataSourceCollection DataSourceCollection { get; } 
 
         public IExplorerHistory ExplorerHistory { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public LibraryExplorerViewModel(IDataSourceCollection dataSourceCollection)
+        public LibraryExplorerViewModel(IDataSourceCollection dataSourceCollection, IExplorerHistory explorerHistory)
         {
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
             SelectedElements = new ObservableCollection<IExplorableElement>();
             DataSourceCollection = dataSourceCollection;
+            ExplorerHistory = explorerHistory;
 
             DataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
+
+            PropertyChanged += OnCurrentlyOpenedElementChanged;
         }
+
+        private IExplorableElement _currentlyOpenedElement;
+        public IExplorableElement CurrentlyOpenedElement 
+        { 
+            get => _currentlyOpenedElement; 
+            set
+            {
+                ExplorerHistory.BackStack.Push(_currentlyOpenedElement);
+                ExplorerHistory.ForwardStack.Clear();
+
+                _currentlyOpenedElement = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
+            }
+        }
+
+        #region Event handlers
+        private async void OnCurrentlyOpenedElementChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(CurrentlyOpenedElement))
+            {
+                await LoadCurrentlyShownElementsAsync();
+            }
+        }
+        #endregion
 
         public async Task LoadCurrentlyShownElementsAsync()
         {

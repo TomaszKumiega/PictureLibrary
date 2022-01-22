@@ -25,6 +25,7 @@ namespace PictureLibraryViewModel
             builder.RegisterType<DialogViewModelFactory>().As<IDialogViewModelFactory>();
             builder.RegisterType<LibraryExplorerViewModelFactory>().As<ILibraryExplorerViewModelFactory>();
 
+            builder.RegisterType<TagPanelViewModel>().As<ITagPanelViewModel>();
             builder.RegisterType<AddLibraryDialogViewModel>().As<IAddLibraryDialogViewModel>();
 
             builder.Register<Func<IAddLibraryDialogViewModel>>((context) =>
