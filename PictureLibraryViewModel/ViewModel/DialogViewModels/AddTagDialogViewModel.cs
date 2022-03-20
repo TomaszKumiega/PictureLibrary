@@ -14,6 +14,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         private ILibraryExplorerViewModel CommonVM { get; }
 
         public event InvalidInputEventHandler InvalidInput;
+        public event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
 
         public ICommand AddTagCommand { get; }
         public string Color { get; set; }
@@ -37,7 +38,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         private bool IsNameValid()
         {
-            if(!Regex.Match(Name, "^[A-Z][a-zA-Z]*$").Success)
+            if(string.IsNullOrEmpty(Name))
             {
                 return false;
             }
@@ -49,14 +50,25 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         {
             if (!IsNameValid()) return;
 
-            var tag = new Tag();
-            tag.Name = Name;
-            tag.Description = Description;
-            tag.Color = Color;
-            tag.Path = CommonVM.CurrentlyOpenedElement.Name + "\\" + tag.Name;
-            tag.RemoteStorageInfoId = (CommonVM.CurrentlyOpenedElement as Tag).RemoteStorageInfoId;
+            var tag = new Tag
+            {
+                Name = Name,
+                Description = Description,
+                Color = Color,
+                Path = CommonVM.CurrentlyOpenedElement.Name + "\\" + Name,
+                RemoteStorageInfoId = (CommonVM.CurrentlyOpenedElement as Library).RemoteStorageInfoId
+            };
 
-            await CommonVM.AddTagAsync(tag);
+            var library = CommonVM.CurrentlyOpenedElement as Library;
+            library.Tags.Add(tag);
+            
+            CommonVM.LoadCurrentlyShownElements(library.Tags);
+
+            var dataSource = CommonVM.DataSourceCollection.GetDataSourceByRemoteStorageId(library.RemoteStorageInfoId);
+            await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(library));
+
+            CommonVM.InvokeTagsChanged();
+            ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Finished));
         }
     }
 }

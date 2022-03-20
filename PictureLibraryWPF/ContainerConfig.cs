@@ -49,6 +49,13 @@ namespace PictureLibraryViewModel
                 return () => { return cc.Resolve<TagPanel>(); };
             });
 
+            builder.RegisterType<AddTagDialog>().AsSelf();
+            builder.Register<Func<AddTagDialog>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<AddTagDialog>(); };
+            });
+
             return builder.Build();
         }
     }

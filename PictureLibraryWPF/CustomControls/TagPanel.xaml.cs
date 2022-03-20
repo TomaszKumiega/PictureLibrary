@@ -1,7 +1,9 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
+using PictureLibraryWPF.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,9 +22,11 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class TagPanel : UserControl
     {
-        public TagPanel(ITagPanelViewModel viewModel)
+        private Func<AddTagDialog> AddTagDialogLocator { get; }
+        public TagPanel(ITagPanelViewModel viewModel, Func<AddTagDialog> addTagDialogLocator)
         {
             DataContext = viewModel;
+            AddTagDialogLocator = addTagDialogLocator;
 
             InitializeComponent();
         }
@@ -39,7 +43,8 @@ namespace PictureLibraryWPF.CustomControls
 
         private void AddTagButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var addTagDialog = AddTagDialogLocator();
+            addTagDialog.ShowDialog();
         }
     }
 }

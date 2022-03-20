@@ -32,7 +32,7 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
-        <Rectangle x:Name="TitleBarRectangle" Grid.ColumnSpan="2" Grid.Row="0" Height="20" VerticalAlignment="Top" Fill="Transparent" MouseDown="TitleBarRectangle_MouseDown"/>
+        <Rectangle x:Name="TitleBarRectangle" Grid.ColumnSpan="2" Grid.Row="0" Height="15" VerticalAlignment="Top" Fill="#202225" MouseDown="TitleBarRectangle_MouseDown"/>
 
         <TextBlock x:Name="TitleTextBlock" Grid.Row="1" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="19" Text="{x:Static res:Strings.AddTagTitle}"/>
         <TextBlock x:Name="TagNameTextBlock" Grid.Row="3" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="17" Text="{x:Static res:Strings.TagName}"/>
@@ -40,7 +40,7 @@
         <TextBlock x:Name="TagColorTextBlock" Grid.Row="7" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="17" Text="{x:Static res:Strings.TagColor}"/>
         <tk:ColorPicker Name="ColorPicker" Grid.Row="9" Width="150" ColorMode="ColorCanvas" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
         <TextBlock x:Name="TagDescriptionTextBlock" Grid.Row="11" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="17" Text="{x:Static res:Strings.TagDescription}"/>
-        <TextBox x:Name="TagDescriptionTextBox" Grid.Row="13" Width="240" BorderThickness="0.5" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Segoe UI" FontSize="14" Text="{Binding Path=Description, Mode=OneWayToSource}"/>
+        <TextBox x:Name="TagDescriptionTextBox" Grid.Row="13" Width="200" Height="60" BorderThickness="0.5" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" FontFamily="Segoe UI" FontSize="14" Text="{Binding Path=Description, Mode=OneWayToSource}"/>
 
         <Button x:Name="AddButton" Grid.Row="15" Width="100" BorderThickness="0" Command="{Binding AddTagCommand}">
             <TextBlock x:Name="AddButtonTextBlock" Grid.Row="7" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Segoe UI" FontSize="15" Text="{x:Static res:Strings.Add}"/>

@@ -1,14 +1,14 @@
 ﻿using PictureLibraryModel.Model;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.ComponentModel;
 
 namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
-    public interface ITagPanelViewModel
+    public interface ITagPanelViewModel : INotifyPropertyChanged
     {
         ILibraryExplorerViewModel CommonViewModel { get; }
-        ObservableCollection<Tag> SelectedTags { get; }
+        ObservableCollection<Tag> SelectedTags { get; set; }
+        ObservableCollection<Tag> Tags { get; }
     }
 }

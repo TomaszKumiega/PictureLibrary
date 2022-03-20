@@ -27,10 +27,5 @@ namespace PictureLibraryWPF.CustomControls
             var viewModel = new ElementsView(await ViewModelFactory.GetLibraryViewViewModelAsync(), TagPanelLocator);
             return viewModel;
         }
-
-        public TagPanel GetTagPanel()
-        {
-            return new TagPanel(ViewModelFactory.GetTagPanelViewModel());
-        }
     }
 }

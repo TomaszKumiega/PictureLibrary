@@ -20,22 +20,22 @@
         <TextBlock x:Name="TagsTextBlock" Grid.Row="1" FontFamily="Segoe UI" FontSize="19" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Tags}"/>
 
         <ListView x:Name="TagsListView" Grid.Row="2" Background="Transparent" BorderThickness="0"
-                  ItemsSource="{Binding Path=CommonViewModel.CurrentlyOpenedElement.Tags, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding Tags}"
                   SelectionMode="Single" SelectionChanged="TagsListView_SelectionChanged">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel IsItemsHost="True" Orientation="Vertical"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type src:Tag}">
-                    <TextBlock Width="100" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" Text="{Binding Name}" Background="{Binding Color}"/>
+                    <TextBlock TextWrapping="NoWrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" Foreground="#cdcdcd" Text="{Binding Name}" Background="{Binding Color}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                 </Style>
             </ListView.ItemContainerStyle>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
         </ListView>
 
         <Button x:Name="AddTagButton" Grid.Row="3" Background="Transparent" BorderThickness="0" Click="AddTagButton_Click">

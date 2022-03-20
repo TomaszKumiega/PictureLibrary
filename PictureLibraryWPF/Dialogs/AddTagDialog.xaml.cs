@@ -1,15 +1,8 @@
 ﻿using PictureLibraryViewModel.ViewModel.DialogViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using PictureLibraryViewModel.ViewModel.Events;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PictureLibraryWPF.Dialogs
 {
@@ -22,6 +15,13 @@ namespace PictureLibraryWPF.Dialogs
         {
             DataContext = viewModel;
             InitializeComponent();
+
+            viewModel.ProcessingStatusChanged += OnProcessingStatusChanged;
+        }
+
+        private void OnProcessingStatusChanged(object sender, ProcessingStatusChangedEventArgs args)
+        {
+            if (args.Status == ProcessingStatus.Finished) this.Close();
         }
 
         private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)

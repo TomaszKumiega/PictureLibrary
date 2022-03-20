@@ -56,8 +56,9 @@ namespace PictureLibraryModel.DataProviders
             var libraries = new List<Library>();
 
             if (SettingsProvider.Settings.ImportedLibraries == null) return libraries;
+            var importedLibraries = SettingsProvider.Settings.ImportedLibraries.ToArray();
 
-            foreach (var t in SettingsProvider.Settings.ImportedLibraries)
+            foreach (var t in importedLibraries)
             {
                 try
                 {
@@ -74,7 +75,7 @@ namespace PictureLibraryModel.DataProviders
                 }
                 catch (Exception e)
                 {
-                    Logger.Debug(e, "Couldnt read " + t);
+                    Logger.Debug(e, "Couldn't read " + t);
                 }
             }
 

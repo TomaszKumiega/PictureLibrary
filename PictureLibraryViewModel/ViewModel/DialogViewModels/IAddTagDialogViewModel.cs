@@ -1,8 +1,4 @@
 ﻿using PictureLibraryViewModel.ViewModel.Events;
-using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -16,6 +12,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         ICommand AddTagCommand { get; }
 
         event InvalidInputEventHandler InvalidInput;
+        event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
 
         Task AddAsync();
     }
