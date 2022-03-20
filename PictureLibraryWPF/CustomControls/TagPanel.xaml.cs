@@ -37,7 +37,10 @@ namespace PictureLibraryWPF.CustomControls
 
             foreach(var t in TagsListView.SelectedItems)
             {
-                viewModel.SelectedTags.Add((t as ListViewItem).DataContext as Tag);
+                var tag = (t as ListViewItem)?.DataContext as Tag;
+                
+                if (tag != null)
+                    viewModel.SelectedTags.Add(tag);
             }
         }
 
@@ -45,6 +48,6 @@ namespace PictureLibraryWPF.CustomControls
         {
             var addTagDialog = AddTagDialogLocator();
             addTagDialog.ShowDialog();
-        }
+        } 
     }
 }
