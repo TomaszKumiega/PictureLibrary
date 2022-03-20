@@ -131,10 +131,10 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public void GoToParentDirectory()
         {
-            // TODO
-            //var parent = DirectoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.Path);
-            
-            //if (parent != null) CommonViewModel.CurrentlyOpenedElement = parent;
+            var parent = DirectoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.Path);
+           
+            if (parent != null) 
+                CommonViewModel.CurrentlyOpenedElement = parent;
         }
 
         public async Task Paste()

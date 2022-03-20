@@ -1,20 +1,19 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
-using System.Drawing;
-using System.IO;
-using Directory = PictureLibraryModel.Model.Directory;
 
 namespace PictureLibraryModel.DataProviders
 {
     public class LocalImageFileProvider : IImageFileProvider
     {
         private IFileService FileService { get; }
+        private IDirectoryService DirectoryService { get; }
         private Func<LocalImageFile> ImageFileLocator { get; }
 
-        public LocalImageFileProvider(IFileService fileService, Func<LocalImageFile> imageFileLocator)
+        public LocalImageFileProvider(IFileService fileService, IDirectoryService directoryService, Func<LocalImageFile> imageFileLocator)
         {
             FileService = fileService;
+            DirectoryService = directoryService;
             ImageFileLocator = imageFileLocator;
         }
 
@@ -25,8 +24,8 @@ namespace PictureLibraryModel.DataProviders
             if (string.IsNullOrEmpty(libraryFullName))
                 throw new ArgumentException(nameof(libraryFullName));
 
-            string directory = FileService.GetParent(libraryFullName);
-            var path = directory + "icons\\" + imageFile.Name;
+            var directory = DirectoryService.GetParent(libraryFullName);
+            var path = directory.Path + "icons\\" + imageFile.Name;
 
             FileService.Copy(imageFile.Path, path);
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {
@@ -13,7 +10,6 @@ namespace PictureLibraryModel.Services.FileSystemServices
         void Rename(string path, string name);
         void Remove(string path);
         bool Exists(string path);
-        string GetParent(string path);
         FileSystemInfo GetInfo(string path);
     }
 }

@@ -17,7 +17,6 @@ using PictureLibraryViewModel.ViewModel.Events;
 
 namespace PictureLibraryWPF.Dialogs
 {
-    //TODO: REFACTOR
     /// <summary>
     /// Interaction logic for AddLibraryDialog.xaml
     /// </summary>

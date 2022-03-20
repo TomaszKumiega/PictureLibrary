@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Directory = PictureLibraryModel.Model.Directory;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {
@@ -116,7 +117,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
             }
             catch (UnauthorizedAccessException e)
             {
-                _logger.Debug(e, "UnauthorizedAccessException directory wasn't added");
+                _logger.Debug(e, "Directory wasn't added");
             }
 
             var directories = new List<Folder>();
@@ -186,6 +187,15 @@ namespace PictureLibraryModel.Services.FileSystemServices
         public override bool Exists(string path)
         {
             return System.IO.Directory.Exists(path);
+        }
+
+        public Directory GetParent(string path)
+        {
+            var directoryInfo = System.IO.Directory.GetParent(path);
+
+            return directoryInfo.Parent == null
+                ? new Drive(directoryInfo.FullName, directoryInfo.Name, this)
+                : (Directory)new Folder(directoryInfo.FullName, directoryInfo.Name, this);
         }
     }
 }

@@ -12,12 +12,6 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public abstract FileSystemInfo GetInfo(string path);
 
-        public virtual string GetParent(string path)
-        {
-            var directoryInfo = System.IO.Directory.GetParent(path);
-            return directoryInfo.FullName;
-        }
-
         public abstract void Move(string sourcePath, string destinationPath);
 
         public abstract void Remove(string path);

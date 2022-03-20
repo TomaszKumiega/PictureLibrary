@@ -11,5 +11,6 @@ namespace PictureLibraryModel.Services.FileSystemServices
         IEnumerable<Directory> GetRootDirectories();
         IEnumerable<IExplorableElement> GetDirectoryContent(string path);
         bool IsDirectory(string path);
+        Directory GetParent(string path);
     }
 }
