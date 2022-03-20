@@ -2,6 +2,7 @@
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryViewModel.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -21,6 +22,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         public IExplorerHistory ExplorerHistory { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler RefreshViewEvent;
 
         public LibraryExplorerViewModel(IDataSourceCollection dataSourceCollection, IExplorerHistory explorerHistory)
         {
@@ -32,6 +34,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             DataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
 
             PropertyChanged += OnCurrentlyOpenedElementChanged;
+            RefreshViewEvent += OnRefreshView;
         }
 
         private IExplorableElement _currentlyOpenedElement;
@@ -54,9 +57,22 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             if (args.PropertyName == nameof(CurrentlyOpenedElement))
             {
                 await LoadCurrentlyShownElementsAsync();
+                
+                if (CurrentlyOpenedElement is Library)
+                    InvokeTagsChanged();
             }
         }
+
+        private async void OnRefreshView(object sender, EventArgs args)
+        {
+            await LoadCurrentlyShownElementsAsync();
+        }
         #endregion
+
+        private void InvokePropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public async Task LoadCurrentlyShownElementsAsync()
         {
@@ -106,7 +122,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             ExplorerHistory.ForwardStack.Push(_currentlyOpenedElement);
             _currentlyOpenedElement = ExplorerHistory.BackStack.Pop();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
+            InvokePropertyChanged(nameof(CurrentlyOpenedElement));
         }
 
         public void Forward()
@@ -115,16 +131,17 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             ExplorerHistory.BackStack.Push(_currentlyOpenedElement);
             _currentlyOpenedElement = ExplorerHistory.ForwardStack.Pop();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
+            InvokePropertyChanged(nameof(CurrentlyOpenedElement));
         }
 
-        public async Task AddTagAsync(Tag tag)
+        public void InvokeTagsChanged()
         {
-            var library = CurrentlyOpenedElement as Library;
-            library.Tags.Add(tag);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
-            var dataSource = DataSourceCollection.GetDataSourceByRemoteStorageId(library.RemoteStorageInfoId);
-            await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(library));
+            InvokePropertyChanged(nameof(Library.Tags));
+        }
+        
+        public void RefreshView(object sender, EventArgs args)
+        {
+            RefreshViewEvent?.Invoke(sender, args);
         }
     }
 }

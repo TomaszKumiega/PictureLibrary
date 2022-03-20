@@ -11,6 +11,9 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     {
         IDataSourceCollection DataSourceCollection { get; }
         void LoadCurrentlyShownElements(IEnumerable<Tag> tags);
-        Task AddTagAsync(Tag tag);
+        void InvokeTagsChanged();
+        void RefreshView(object sender, EventArgs args);
+
+        event EventHandler RefreshViewEvent;
     }
 }

@@ -167,12 +167,13 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             {
                 await Task.Run(() => dataSource.LibraryProvider.AddLibrary(library));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Failed));
             }
 
-            await CommonViewModel.LoadCurrentlyShownElementsAsync();
+            CommonViewModel.RefreshView(this, EventArgs.Empty);
+
             ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Finished));
         }
     }

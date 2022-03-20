@@ -34,11 +34,25 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             CommonViewModel = commonVM;
 
             DataSourceCollection.Initialize(settingsProvider.Settings.RemoteStorageInfos);
+            ((ILibraryExplorerViewModel)CommonViewModel).RefreshViewEvent += OnRefreshView;
+        }
+
+        private async void OnRefreshView(object sender, EventArgs e)
+        {
+            await InitializeLibraryTreeAsync();
         }
 
         public async Task InitializeLibraryTreeAsync()
         {
-            ExplorableElementsTree = new ObservableCollection<IExplorableElement>();
+            if (ExplorableElementsTree == null)
+            {
+                ExplorableElementsTree = new ObservableCollection<IExplorableElement>();
+            }
+            else
+            {
+                ExplorableElementsTree.Clear();
+            }
+            
             IEnumerable<Library> libraries = new List<Library>();
 
             try
