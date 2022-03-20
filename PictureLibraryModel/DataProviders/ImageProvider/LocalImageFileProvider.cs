@@ -1,6 +1,7 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
+using System.IO;
 
 namespace PictureLibraryModel.DataProviders
 {
@@ -25,7 +26,7 @@ namespace PictureLibraryModel.DataProviders
                 throw new ArgumentException(nameof(libraryFullName));
 
             var directory = DirectoryService.GetParent(libraryFullName);
-            var path = directory.Path + "icons\\" + imageFile.Name;
+            var path = directory.Path + "\\Images\\" + imageFile.Name;
 
             FileService.Copy(imageFile.Path, path);
 

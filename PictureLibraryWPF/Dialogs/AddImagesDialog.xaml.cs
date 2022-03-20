@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryViewModel.ViewModel.DialogViewModels;
+using PictureLibraryViewModel.ViewModel.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,7 +23,15 @@ namespace PictureLibraryWPF.Dialogs
         public AddImagesDialog(IAddImagesDialogViewModel viewModel)
         {
             DataContext = viewModel;
+            viewModel.ProcessingStatusChanged += OnProcessingStatusChanged;
+
             InitializeComponent();
+        }
+
+        private void OnProcessingStatusChanged(object sender, ProcessingStatusChangedEventArgs args)
+        {
+            if (args.Status == ProcessingStatus.Finished)
+                this.Close();
         }
 
         private void LibrariesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

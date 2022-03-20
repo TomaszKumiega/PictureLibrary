@@ -16,7 +16,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public override void Copy(string sourcePath, string destinationPath)
         {
-            File.Copy(sourcePath, destinationPath);
+            File.Copy(sourcePath, destinationPath, true);
         }
 
         public override void Create(string path)

@@ -158,7 +158,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
             if (storageType == -1)
             {
-                library.Path = Directory + Path.DirectorySeparatorChar + Name + ".plib";
+                library.Path = Directory + "\\" + Name + "\\" + Name + ".plib";
             }
 
             var dataSource = DataSourceCollection.GetDataSourceByRemoteStorageId(selectedStorage?.Id);

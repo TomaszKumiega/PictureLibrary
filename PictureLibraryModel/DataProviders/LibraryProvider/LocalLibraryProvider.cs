@@ -13,13 +13,19 @@ namespace PictureLibraryModel.DataProviders
     public class LocalLibraryProvider : ILibraryProvider
     {
         private static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
+        private IDirectoryService DirectoryService { get; }
         private IFileService FileService { get; }
         private ISettingsProvider SettingsProvider { get; }
         private ILibraryFileService LibraryFileService { get; }
 
-        public LocalLibraryProvider(IFileService fileService, ISettingsProvider settingsProvider, ILibraryFileService libraryFileService)
+        public LocalLibraryProvider(
+            IFileService fileService, 
+            IDirectoryService directoryService, 
+            ISettingsProvider settingsProvider, 
+            ILibraryFileService libraryFileService)
         {
             FileService = fileService;
+            DirectoryService = directoryService;
             SettingsProvider = settingsProvider;
             LibraryFileService = libraryFileService;
         }
@@ -42,13 +48,19 @@ namespace PictureLibraryModel.DataProviders
             if (library.Path == null)
                 throw new ArgumentException(nameof(library.Path));
 
+            var directory = DirectoryService.GetParent(library.Path);
+            
+            DirectoryService.Create(directory.Path + "\\Images");
             FileService.Create(library.Path);
+
             var fileStream = FileService.OpenFile(library.Path, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
 
             SettingsProvider.Settings.ImportedLibraries.Add(library.Path);
             SettingsProvider.SaveSettingsAsync();
 
             LibraryFileService.WriteLibraryToStreamAsync(fileStream, library);
+
+            fileStream.Close();
         }
 
         public IEnumerable<Library> GetAllLibraries()
@@ -60,9 +72,11 @@ namespace PictureLibraryModel.DataProviders
 
             foreach (var t in importedLibraries)
             {
+                Stream stream = null;
+
                 try
                 {
-                    var stream = FileService.OpenFile(t, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    stream = FileService.OpenFile(t, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
                     var library = LibraryFileService.ReadLibraryFromStreamAsync(stream, null).Result;
                     libraries.Add(library);
                 }
@@ -76,6 +90,10 @@ namespace PictureLibraryModel.DataProviders
                 catch (Exception e)
                 {
                     Logger.Debug(e, "Couldn't read " + t);
+                }
+                finally
+                {
+                    stream.Close();
                 }
             }
 
@@ -107,16 +125,22 @@ namespace PictureLibraryModel.DataProviders
             string[] text = { "" };
             FileService.WriteAllLines(library.Name, text);
 
+            Stream stream = null;
+
             try
             {
                 // write updated library to the file
-                var stream = FileService.OpenFile(library.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+                stream = FileService.OpenFile(library.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
                 LibraryFileService.WriteLibraryToStreamAsync(stream, library);
             }
             catch (Exception e)
             {
                 Logger.Error(e, "Library update error:" + e.Message);
                 document.Save(library.Path);
+            }
+            finally
+            {
+                stream.Close();
             }
         }    
     }

@@ -2,6 +2,7 @@
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryViewModel.Commands;
+using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
 
         public ICommand AddImagesCommand { get; }
         public List<Library> Libraries { get; private set; }
@@ -70,6 +72,8 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             await Task.Run(() => libraryDataSource.LibraryProvider.UpdateLibrary(SelectedLibrary));
 
             await CommonViewModel.LoadCurrentlyShownElementsAsync();
+
+            ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Finished));
         }
     }
 }
