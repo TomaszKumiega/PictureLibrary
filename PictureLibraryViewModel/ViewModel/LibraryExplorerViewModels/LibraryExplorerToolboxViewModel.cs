@@ -53,8 +53,9 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
                 {
                     var dataSource = LibraryCommonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(library.RemoteStorageInfoId);
                     await Task.Run(() => dataSource.LibraryProvider.RemoveLibrary(library));
-                    await CommonViewModel.LoadCurrentlyShownElementsAsync();
                 }
+
+                (CommonViewModel as ILibraryExplorerViewModel).RefreshView(this, EventArgs.Empty);
             }
             else if (CommonViewModel.SelectedElements.All(x => x is ImageFile))
             {
@@ -62,8 +63,9 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
                 {
                     var dataSource = LibraryCommonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(imageFile.RemoteStorageInfoId);
                     await Task.Run(() => dataSource.ImageProvider.RemoveImage(imageFile));
-                    await CommonViewModel.LoadCurrentlyShownElementsAsync();
                 }
+
+                (CommonViewModel as ILibraryExplorerViewModel).RefreshView(this, EventArgs.Empty);
             }
         }
 
