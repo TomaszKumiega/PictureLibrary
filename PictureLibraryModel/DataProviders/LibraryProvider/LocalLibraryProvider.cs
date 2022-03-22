@@ -59,8 +59,6 @@ namespace PictureLibraryModel.DataProviders
             SettingsProvider.SaveSettingsAsync();
 
             LibraryFileService.WriteLibraryToStreamAsync(fileStream, library);
-
-            fileStream.Close();
         }
 
         public IEnumerable<Library> GetAllLibraries()

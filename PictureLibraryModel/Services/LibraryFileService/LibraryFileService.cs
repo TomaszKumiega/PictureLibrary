@@ -89,9 +89,10 @@ namespace PictureLibraryModel.Services.LibraryFileService
 
             return library;
         }
-        public async Task WriteLibraryToStreamAsync(Stream fileStream, Library library)
+        public void WriteLibraryToStreamAsync(Stream fileStream, Library library)
         {
-            if (fileStream == null) throw new Exception("File creation error");
+            if (fileStream == null) 
+                throw new ArgumentNullException(nameof(fileStream));
 
             // create library element
             var libraryElement = new XElement("library", new XAttribute("name", library.Name),
@@ -123,13 +124,19 @@ namespace PictureLibraryModel.Services.LibraryFileService
                     // write all tags to one string
                     string tags = "";
 
-                    for (int it = 0; it < i.Tags.Count - 1; it++)
+                    if (i.Tags.Count == 1)
                     {
-                        tags += i.Tags[it].Name + ',';
+                        tags = i.Tags[0].Name;
                     }
-
-                    tags += i.Tags[i.Tags.Count - 1].Name;
-
+                    else
+                    {
+                        for (int it = 0; it < i.Tags.Count; ++it)
+                        {
+                            tags += it == (i.Tags.Count - 1)
+                                ? i.Tags[it].Name
+                                : i.Tags[it].Name + ',';
+                        }
+                    }
 
                     var imageFileElement = new XElement("imageFile", new XAttribute("name", i.Name), new XAttribute("extension", i.Extension),
                         new XAttribute("source", i.Path), new XAttribute("tags", tags));
@@ -150,12 +157,16 @@ namespace PictureLibraryModel.Services.LibraryFileService
                     xmlWriter.Formatting = Formatting.Indented;
                     xmlWriter.Indentation = 4;
 
-                    await Task.Run(() => libraryElement.Save(xmlWriter));
+                    libraryElement.Save(xmlWriter);
                 }
             }
             catch (Exception e)
             {
                 _logger.Error(e, e.Message);
+            }
+            finally
+            {
+                fileStream.Close();
             }
         }
     }
