@@ -1,6 +1,7 @@
 ﻿using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.RemoteStorages;
+using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryViewModel.Helpers;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
     public class LibraryExplorerViewModel : ILibraryExplorerViewModel
     {
+        private ILibraryFileService _libraryFileService;
+
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; set; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public string InfoText { get; set; }
@@ -24,8 +27,9 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler RefreshViewEvent;
 
-        public LibraryExplorerViewModel(IDataSourceCollection dataSourceCollection, IExplorerHistory explorerHistory)
+        public LibraryExplorerViewModel(IDataSourceCollection dataSourceCollection, IExplorerHistory explorerHistory, ILibraryFileService libraryFileService)
         {
+            _libraryFileService = libraryFileService;
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
             SelectedElements = new ObservableCollection<IExplorableElement>();
             DataSourceCollection = dataSourceCollection;
@@ -89,7 +93,13 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             }
             else if (CurrentlyOpenedElement is Library library)
             {
-                foreach (var t in library.Images)
+                var dataSource = await Task.Run(() => DataSourceCollection.GetDataSourceByRemoteStorageId(library.RemoteStorageInfoId));
+
+                var updatedLibrary = _libraryFileService.ReloadLibrary(library);
+                
+                _currentlyOpenedElement = updatedLibrary;
+                
+                foreach (var t in updatedLibrary.Images)
                 {
                     CurrentlyShownElements.Add(t);
                     t.LoadIcon();

@@ -30,7 +30,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public async Task<IExplorableElementsViewViewModel> GetFilesViewViewModelAsync()
         { 
-            await CommonVM.LoadCurrentlyShownElementsAsync();
+            //await CommonVM.LoadCurrentlyShownElementsAsync();
             return new FilesViewViewModel(CommonVM);
         }
     }

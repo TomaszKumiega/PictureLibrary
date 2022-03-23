@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model
 {
@@ -10,6 +11,7 @@ namespace PictureLibraryModel.Model
         public Guid? RemoteStorageInfoId { get; set; }
         public string Path { get; set; }
         public string Color { get; set; }
+        [XmlIgnore]
         public Image Icon { get; private set; }
 
         public Tag()
@@ -19,16 +21,6 @@ namespace PictureLibraryModel.Model
         public void LoadIcon()
         {
             Icon = Image.FromFile(".\\Icons\\FolderIcon.png");
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is Tag tag)
-            {
-                return tag.Name == Name && tag.Description == Description && tag.Path == Path && tag.Color == Color && tag.RemoteStorageInfoId == RemoteStorageInfoId;
-            }
-
-            return false;
         }
 
         ~Tag()

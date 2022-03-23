@@ -10,6 +10,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
     public interface ILibraryFileService
     {
         void WriteLibraryToStreamAsync(Stream fileStream, Library library);
-        Task<Library> ReadLibraryFromStreamAsync(Stream fileStream, Guid? origin);
+        Library ReadLibraryFromStreamAsync(Stream fileStream, Guid? origin);
+        Library ReloadLibrary(Library library);
     }
 }

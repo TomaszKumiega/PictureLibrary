@@ -75,7 +75,7 @@ namespace PictureLibraryModel.DataProviders
                 try
                 {
                     stream = FileService.OpenFile(t, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-                    var library = LibraryFileService.ReadLibraryFromStreamAsync(stream, null).Result;
+                    var library = LibraryFileService.ReadLibraryFromStreamAsync(stream, null);
                     libraries.Add(library);
                 }
                 catch (FileNotFoundException e)

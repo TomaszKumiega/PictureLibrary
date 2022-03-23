@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model
 {
@@ -72,6 +73,7 @@ namespace PictureLibraryModel.Model
         }
     }
 
+    [XmlInclude(typeof(LocalImageFile))]
     public abstract class ImageFile : File
     {
         public ImageExtension Extension { get; set; }

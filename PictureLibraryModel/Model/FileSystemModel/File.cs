@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model
 {
@@ -6,6 +7,7 @@ namespace PictureLibraryModel.Model
     {
         public string Name { get; set; }
         public string Extension { get; set; }
+        [XmlIgnore]
         public Image Icon { get; protected set; }
         public string Path { get; set; }
         

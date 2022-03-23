@@ -57,8 +57,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 ExplorableElementsTree.Add(t);
                 t.LoadIcon();
             }
-
-            CommonViewModel.CurrentlyOpenedElement = null;
         }
     }
 }
