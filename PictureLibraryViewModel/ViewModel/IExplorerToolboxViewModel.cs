@@ -12,10 +12,5 @@ namespace PictureLibraryViewModel.ViewModel
         ICommand RenameCommand { get; }
         ICommand RefreshCommand { get; }
         string SearchText { get; set; }
-
-        Task Remove();
-        Task Rename();
-        Task Refresh();
-        bool IsDriveSelected();
     }
 }

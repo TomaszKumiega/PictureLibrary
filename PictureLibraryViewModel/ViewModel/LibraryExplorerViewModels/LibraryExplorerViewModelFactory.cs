@@ -12,24 +12,24 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     {
         private readonly ILibraryExplorerViewModel _commonViewModel;
         private readonly IDataSourceCollection _dataSourceCollection;
-        private readonly ICommandFactory _commandFactory;
+        private readonly ICommandCreator _commandCreator;
         private readonly ISettingsProvider _settingsProvider;
 
         public LibraryExplorerViewModelFactory(
             ILibraryExplorerViewModel commonVM, 
             IDataSourceCollection dataSourceCollection, 
-            ICommandFactory commandFactory, 
+            ICommandCreator commandCreator, 
             ISettingsProvider settingsProvider)
         {
             _commonViewModel = commonVM;
-            _commandFactory = commandFactory;
+            _commandCreator = commandCreator;
             _dataSourceCollection = dataSourceCollection;
             _settingsProvider = settingsProvider;
         }
 
         public ILibraryExplorerToolboxViewModel GetLibraryExplorerToolboxViewModel(IClipboardService clipboard)
         {
-            return new LibraryExplorerToolboxViewModel(_commonViewModel, _commandFactory, clipboard);
+            return new LibraryExplorerToolboxViewModel(_commonViewModel, _commandCreator, clipboard);
         }
 
         public async Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModelAsync()

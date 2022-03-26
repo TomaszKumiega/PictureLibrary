@@ -1,10 +1,10 @@
 ﻿using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.RemoteStorages;
+using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -14,15 +14,13 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
     public class AddImagesDialogViewModel : IAddImagesDialogViewModel, INotifyPropertyChanged
     {
+        #region Private fields
         private readonly ILibraryExplorerViewModel _commonViewModel;
         private readonly List<ImageFile> _selectedImages;
         private readonly IDataSourceCollection _dataSourceCollection;
+        #endregion
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
-
-
-        public ICommand AddImagesCommand { get; }
+        #region Public properties
         public List<Library> Libraries { get; private set; }
 
         private Library _selectedLibrary;
@@ -35,28 +33,48 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedLibrary)));
             }
         }
+        #endregion
+
+        #region Commands
+        [Command]
+        public ICommand AddImagesCommand { get; set; }
+        #endregion
+
+        #region Events
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
+        #endregion
 
         public AddImagesDialogViewModel(
             ILibraryExplorerViewModel commonVM, 
             IDataSourceCollection dataSourceCollection, 
-            List<ImageFile> selectedImages, 
-            ICommandFactory commandFactory)
+            List<ImageFile> selectedImages,
+            ICommandCreator commandCreator)
         {
             _commonViewModel = commonVM;
             _selectedImages = selectedImages;
-            AddImagesCommand = commandFactory.GetAddImagesCommand(this);
             _dataSourceCollection = dataSourceCollection;
 
             _dataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
 
-            PropertyChanged += OnSelectedLibraryChanged;
+            commandCreator.InitializeCommands(this);
         }
 
-        private void OnSelectedLibraryChanged(object sender, PropertyChangedEventArgs args)
+        #region Command methods
+        [CanExecute(nameof(AddImagesCommand))]
+        private bool CanExecuteAddImagesCommand(object parameter)
         {
-            (AddImagesCommand as AddImagesCommand).RaiseCanExecuteChanged(this, EventArgs.Empty);
+            return SelectedLibrary != null;
         }
 
+        [Execute(nameof(AddImagesCommand))]
+        private async void ExecuteAddImagesCommand(object parameter)
+        {
+            await AddAsync();
+        }
+        #endregion
+
+        #region Public methods
         public async Task Initialize()
         {
             Libraries = await Task.Run(() => _dataSourceCollection.GetAllLibraries());
@@ -81,5 +99,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
             ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Finished));
         }
+        #endregion
     }
 }

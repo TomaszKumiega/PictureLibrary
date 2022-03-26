@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Moq" Version="4.17.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PictureLibraryModel\PictureLibraryModel.csproj" />
   </ItemGroup>
 

@@ -1,10 +1,12 @@
 ﻿using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryModel.Services.FileSystemServices;
+using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -24,27 +26,28 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         #endregion
 
         #region Commands
-        public ICommand CopyCommand { get; }
-
-        public ICommand PasteCommand { get; }
-
-        public ICommand CutCommand { get; }
-
-        public ICommand CopyPathCommand { get; }
-
-        public ICommand RemoveCommand { get; }
-
-        public ICommand RenameCommand { get; }
-
-        public ICommand CreateFolderCommand { get; }
-
-        public ICommand BackCommand { get; }
-
-        public ICommand ForwardCommand { get; }
-
-        public ICommand GoToParentDirectoryCommand { get; }
-
-        public ICommand RefreshCommand { get; }
+        [Command]
+        public ICommand CopyCommand { get; set; }
+        [Command]
+        public ICommand PasteCommand { get; set; }
+        [Command]
+        public ICommand CutCommand { get; set; }
+        [Command]
+        public ICommand CopyPathCommand { get; set; }
+        [Command]
+        public ICommand RemoveCommand { get; set; }
+        [Command]
+        public ICommand RenameCommand { get; set; }
+        [Command]
+        public ICommand CreateFolderCommand { get; set; }
+        [Command]
+        public ICommand BackCommand { get; set; }
+        [Command]
+        public ICommand ForwardCommand { get; set; }
+        [Command]
+        public ICommand GoToParentDirectoryCommand { get; set; }
+        [Command]
+        public ICommand RefreshCommand { get; set; }
         #endregion
 
         public FileExplorerToolboxViewModel(
@@ -52,59 +55,46 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             IFileService fileService, 
             IDirectoryService directoryService, 
             IClipboardService clipboard, 
-            ICommandFactory commandFactory)
+            ICommandCreator commandCreator)
         {
             CommonViewModel = viewModel;
             _fileService = fileService;
             _directoryService = directoryService;
             Clipboard = clipboard;
 
-            #region Command Initialization
-            CopyCommand = commandFactory.GetCopyCommand(this);
-            PasteCommand = commandFactory.GetPasteCommand(this);
-            CutCommand = commandFactory.GetCutCommand(this);
-            CopyPathCommand = commandFactory.GetCopyPathCommand(this);
-            RemoveCommand = commandFactory.GetRemoveCommand(this);
-            RenameCommand = commandFactory.GetRenameCommand(this);
-            CreateFolderCommand = commandFactory.GetCreateFolderCommand(this);
-            BackCommand = commandFactory.GetBackCommand(this);
-            ForwardCommand = commandFactory.GetForwardCommand(this);
-            GoToParentDirectoryCommand = commandFactory.GetGoToParentDirectoryCommand(this);
-            RefreshCommand = commandFactory.GetRefreshCommand(this);
-            #endregion
-
-            CommonViewModel.SelectedElements.CollectionChanged += OnSelectedElementsChanged;
-            Clipboard.ClipboardContentChanged += OnClipboardContentChanged;
-            CommonViewModel.PropertyChanged += OnCurrentlyOpenedElementChanged;
+            commandCreator.InitializeCommands(this);
         }
 
-
-        #region Event Handler methods
-        private void OnSelectedElementsChanged(object o, EventArgs args)
+        #region Private methods
+        private bool IsDriveSelected()
         {
-            (CopyCommand as CopyCommand).OnExecuteChanged();
-            (CutCommand as CutCommand).OnExecuteChanged();
-            (CopyPathCommand as CopyPathCommand).OnExecuteChanged();
-            (RemoveCommand as RemoveCommand).OnExecuteChanged();
-        }
+            bool isDriveSelected = false;
 
-        private void OnClipboardContentChanged(object o, EventArgs args)
-        {
-            (PasteCommand as PasteCommand).OnExecuteChanged();
-        }
+            foreach (var t in CommonViewModel.SelectedElements)
+            {
+                if (t is PictureLibraryModel.Model.Drive)
+                {
+                    isDriveSelected = true;
+                    break;
+                }
+            }
 
-        private void OnCurrentlyOpenedElementChanged(object sender, PropertyChangedEventArgs args)
-        {
-            if (args.PropertyName != "CurrentlyOpenedElement") return;
-
-            (BackCommand as BackCommand).OnExecuteChanged();
-            (ForwardCommand as ForwardCommand).OnExecuteChanged();
-            (GoToParentDirectoryCommand as GoToParentDirectoryCommand).OnExecuteChanged();
+            return isDriveSelected;
         }
         #endregion
 
-        #region Public methods
-        public async Task Copy()
+        #region Command methods
+        [CanExecute(nameof(CopyCommand))]
+        private bool CanExecuteCopyCommand(object parameter)
+        {
+            return CommonViewModel.SelectedElements != null
+                    && (CommonViewModel.SelectedElements.Any() && !IsDriveSelected()
+                    ? true
+                    : false);
+        }
+
+        [Execute(nameof(CopyCommand))]
+        private async void ExecuteCopyCommand(object parameter)
         {
             var paths = new List<string>();
 
@@ -116,36 +106,14 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             await Task.Run(() => Clipboard.SetFiles(paths, ClipboardFilesState.Copied));
         }
 
-        public void CopyPath()
+        [CanExecute(nameof(PasteCommand))]
+        private bool CanExecutePasteCommand(object parameter)
         {
-            var text = "";
-
-            if (CommonViewModel.SelectedElements.Count == 1) text = CommonViewModel.SelectedElements[0].Path;
-            else
-            {
-                foreach (var t in CommonViewModel.SelectedElements)
-                {
-                    text += t.Path + "\n";
-                }
-            }
-
-            Clipboard.SetText(text);
+            return Clipboard.ContainsFiles();
         }
 
-        public async Task CreateDirectory()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GoToParentDirectory()
-        {
-            var parent = _directoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.Path);
-           
-            if (parent != null) 
-                CommonViewModel.CurrentlyOpenedElement = parent;
-        }
-
-        public async Task Paste()
+        [Execute(nameof(PasteCommand))]
+        private async void ExecutePasteCommand(object parameter)
         {
             var paths = Clipboard.GetFiles();
             string directoryPath;
@@ -184,38 +152,19 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             }
 
             Clipboard.Clear();
-            
-            await CommonViewModel.LoadCurrentlyShownElementsAsync();
-        }
-
-        public async Task Refresh()
-        {
-            await CommonViewModel.LoadCurrentlyShownElementsAsync();
-        }
-
-        public async Task Remove()
-        {
-            foreach (var t in CommonViewModel.SelectedElements)
-            {
-                if (t is File)
-                {
-                    _fileService.Remove(t.Path);
-                }
-                else if (t is Directory)
-                {
-                    _directoryService.Remove(t.Path);
-                }
-            }
 
             await CommonViewModel.LoadCurrentlyShownElementsAsync();
         }
 
-        public async Task Rename()
+        [CanExecute(nameof(CutCommand))]
+        private bool CanExecuteCutCommand(object parameter)
         {
-            throw new NotImplementedException();
+            return CommonViewModel.SelectedElements != null
+                && CommonViewModel.SelectedElements.Any() && !IsDriveSelected();
         }
 
-        public async Task Cut()
+        [Execute(nameof(CutCommand))]
+        private async void ExecuteCutCommand(object parameter)
         {
             var paths = new List<string>();
 
@@ -227,21 +176,130 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             await Task.Run(() => Clipboard.SetFiles(paths, ClipboardFilesState.Cut));
         }
 
-        public bool IsDriveSelected()
+        [CanExecute(nameof(CopyPathCommand))]
+        private bool CanExecuteCopyPathCommand(object parameter)
         {
-            bool isDriveSelected = false;
+            return CommonViewModel.SelectedElements != null
+                && CommonViewModel.SelectedElements.Any();
+        }
 
-            foreach (var t in CommonViewModel.SelectedElements)
+        [Execute(nameof(CopyPathCommand))]
+        private void ExecuteCopyPathCommand(object parameter)
+        {
+            var text = "";
+
+            if (CommonViewModel.SelectedElements.Count == 1) text = CommonViewModel.SelectedElements[0].Path;
+            else
             {
-                if (t is PictureLibraryModel.Model.Drive)
+                foreach (var t in CommonViewModel.SelectedElements)
                 {
-                    isDriveSelected = true;
-                    break;
+                    text += t.Path + "\n";
                 }
             }
 
-            return isDriveSelected;
+            Clipboard.SetText(text);
         }
+
+        [CanExecute(nameof(RemoveCommand))]
+        private bool CanExecuteRemoveCommand(object parameter)
+        {
+            return CommonViewModel.SelectedElements != null
+                && CommonViewModel.SelectedElements.Any() 
+                && !IsDriveSelected();
+        }
+
+        [Execute(nameof(RemoveCommand))]
+        private async void ExecuteRemoveCommand(object parameter)
+        {
+            foreach (var t in CommonViewModel.SelectedElements)
+            {
+                if (t is PictureLibraryModel.Model.File)
+                {
+                    _fileService.Remove(t.Path);
+                }
+                else if (t is PictureLibraryModel.Model.Directory)
+                {
+                    _directoryService.Remove(t.Path);
+                }
+            }
+
+            await CommonViewModel.LoadCurrentlyShownElementsAsync();
+        }
+
+        [CanExecute(nameof(RenameCommand))]
+        private bool CanExecuteRenameCommand(object parameter)
+        {
+            return CommonViewModel.SelectedElements != null
+                && CommonViewModel.SelectedElements.Any() && !IsDriveSelected();
+        }
+
+        [Execute(nameof(RenameCommand))]
+        private void ExecuteRenameCommand(object parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        [CanExecute(nameof(CreateFolderCommand))]
+        private bool CanExecuteCreateFolderCommand(object parameter)
+        {
+            return (parameter as string) != null
+                && (parameter as string).Trim() != String.Empty;
+        }
+
+        [Execute(nameof (CreateFolderCommand))]
+        private void ExecuteCreateFolderCommand(object parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        [CanExecute(nameof(BackCommand))]
+        private bool CanExecuteBackCommand(object parameter)
+        {
+            return CommonViewModel.ExplorerHistory.BackStack.Count > 1;
+        }
+
+        [Execute(nameof(BackCommand))]
+        private void ExecuteBackCommand(object parameter)
+        {
+            CommonViewModel.Back();
+        }
+
+        [CanExecute(nameof(ForwardCommand))]
+        private bool CanExecuteForwardCommand(object parameter)
+        {
+            return CommonViewModel.ExplorerHistory.ForwardStack.Count > 0;
+        }
+
+        [Execute(nameof(ForwardCommand))]
+        private void ExecuteForwardCommand(object parameter)
+        {
+            CommonViewModel.Forward();
+        }
+
+        [CanExecute(nameof(GoToParentDirectoryCommand))]
+        private bool CanExecuteGoToParentDirectoryCommand(object parameter)
+        {
+            if (CommonViewModel.CurrentlyOpenedElement == null) 
+                return false;
+            
+            return _directoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.Path) != null;
+        }
+
+        [Execute(nameof(GoToParentDirectoryCommand))]
+        private void ExecuteGoToParentDictionaryCommand(object parameter)
+        {
+            var parent = _directoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.Path);
+
+            if (parent != null)
+                CommonViewModel.CurrentlyOpenedElement = parent;
+        }
+
+        [Execute(nameof(RefreshCommand))]
+        private async void ExecuteRefreshCommand(object parameter)
+        {
+            await CommonViewModel.LoadCurrentlyShownElementsAsync();
+        }
+        
         #endregion
     }
 }

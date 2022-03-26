@@ -3,6 +3,7 @@ using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model.Builders;
 using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryModel.Services.SettingsProvider;
+using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
@@ -31,7 +32,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         public string Name { get; set; }
         public string Description { get; set; }
         public string Directory { get; set; }
-        public ICommand AddLibraryCommand { get; }
 
         private string _selectedStorage;
         public string SelectedStorage
@@ -69,22 +69,41 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         }
         #endregion
 
+        #region Commands
+        [Command]
+        public ICommand AddLibraryCommand { get; set; }
+        #endregion
+
         #region Events
         public event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
-        public AddLibraryDialogViewModel(IDataSourceCollection dataSourceCollection, ILibraryExplorerViewModel commonVM, ICommandFactory commandFactory, ISettingsProvider settingsProviderService, IImplementationSelector<int, ILibraryBuilder> libraryBuilderImplementationSelector)
+        public AddLibraryDialogViewModel(
+            IDataSourceCollection dataSourceCollection, 
+            ILibraryExplorerViewModel commonVM, 
+            ICommandCreator commandCreator,
+            ISettingsProvider settingsProviderService, 
+            IImplementationSelector<int, ILibraryBuilder> libraryBuilderImplementationSelector)
         {
             _dataSourceCollection = dataSourceCollection;
             _commonViewModel = commonVM;
-            AddLibraryCommand = commandFactory.GetAddLibraryCommand(this);
             _settingsProvider = settingsProviderService;
             _libraryBuilderImplementationSelector = libraryBuilderImplementationSelector;
 
+            commandCreator.InitializeCommands(this);
             _dataSourceCollection.Initialize(settingsProviderService.Settings.RemoteStorageInfos);
         }
 
+        #region Command methods
+        [Execute(nameof(AddLibraryCommand))]
+        private async void ExecuteAddLibraryCommand(object parameter)
+        {
+            await AddAsync();
+        }
+        #endregion
+
+        #region Private methods
         private void NotifyPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -124,7 +143,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         private bool IsObjectValid()
         {
             if (!IsNameValid()) return false;
-            if (!IsSelectedStorageValid()) return false;  
+            if (!IsSelectedStorageValid()) return false;
             if (!IsDirectoryValid()) return false;
 
             return true;
@@ -138,7 +157,9 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             return _settingsProvider.Settings.RemoteStorageInfos.FirstOrDefault(x => x.Name == SelectedStorage);
         }
         #endregion
+        #endregion
 
+        #region Public methods
         public async Task AddAsync()
         {
             if (!IsObjectValid())
@@ -181,5 +202,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
             ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Finished));
         }
+        #endregion
     }
 }

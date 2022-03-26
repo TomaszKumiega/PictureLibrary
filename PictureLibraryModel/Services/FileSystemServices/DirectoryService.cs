@@ -194,6 +194,9 @@ namespace PictureLibraryModel.Services.FileSystemServices
         {
             var directoryInfo = System.IO.Directory.GetParent(path);
 
+            if (directoryInfo == null) 
+                return null;
+
             return directoryInfo.Parent == null
                 ? new Drive(directoryInfo.FullName, directoryInfo.Name, this)
                 : (Directory)new Folder(directoryInfo.FullName, directoryInfo.Name, this);

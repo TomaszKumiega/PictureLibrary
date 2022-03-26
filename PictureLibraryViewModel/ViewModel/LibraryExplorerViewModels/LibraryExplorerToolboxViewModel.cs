@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.Clipboard;
+using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
 using System;
 using System.Linq;
@@ -17,38 +18,36 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         #region Public properties
         public IExplorerViewModel CommonViewModel { get; }
         public IClipboardService Clipboard { get; }
-        public ICommand RemoveCommand { get; }
-        public ICommand RenameCommand { get; }
-        public ICommand RefreshCommand { get; }
         public string SearchText { get; set; }
         #endregion
 
-        public LibraryExplorerToolboxViewModel(ILibraryExplorerViewModel commonVM, ICommandFactory commandFactory, IClipboardService clipboard)
-        {
-            RemoveCommand = commandFactory.GetRemoveCommand(this);
-            RenameCommand = commandFactory.GetRenameCommand(this);
-            RefreshCommand = commandFactory.GetRefreshCommand(this);
+        #region Commands
+        [Command]
+        public ICommand RemoveCommand { get; set; }
+        [Command]
+        public ICommand RenameCommand { get; set; }
+        [Command]
+        public ICommand RefreshCommand { get; set; }
+        #endregion
 
+        public LibraryExplorerToolboxViewModel(ILibraryExplorerViewModel commonVM, ICommandCreator commandCreator, IClipboardService clipboard)
+        {
             Clipboard = clipboard;
             CommonViewModel = commonVM;
 
-            CommonViewModel.SelectedElements.CollectionChanged += OnSelectedElementsChanged;
+            commandCreator.InitializeCommands(this);
         }
 
-        #region Event Handler methods
-        private void OnSelectedElementsChanged(object o, EventArgs args)
+        #region Command methods
+        [CanExecute(nameof(RemoveCommand))]
+        private bool CanExecuteRemoveCommand(object parameter)
         {
-            (RemoveCommand as RemoveCommand).OnExecuteChanged();
-        }
-        #endregion
-
-        #region Public methods
-        public async Task Refresh()
-        {
-            await CommonViewModel.LoadCurrentlyShownElementsAsync();
+            return CommonViewModel.SelectedElements != null
+                && CommonViewModel.SelectedElements.Any();
         }
 
-        public async Task Remove()
+        [Execute(nameof(RemoveCommand))]
+        private async void ExecuteRemoveCommand(object parameter)
         {
             if (CommonViewModel.SelectedElements.All(x => x is Library))
             {
@@ -72,14 +71,22 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             }
         }
 
-        public Task Rename()
+        [CanExecute(nameof(RenameCommand))]
+        private bool CanExecuteRenameCommand(object parameter)
+        {
+            return CommonViewModel.SelectedElements.Count == 1;
+        }
+
+        [Execute(nameof(RenameCommand))]
+        private void ExecuteRenameCommand(object parameter)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsDriveSelected()
+        [Execute(nameof(RefreshCommand))]
+        private async void ExecuteRefreshCommand(object parameter)
         {
-            return false;
+            await CommonViewModel.LoadCurrentlyShownElementsAsync();
         }
         #endregion
     }

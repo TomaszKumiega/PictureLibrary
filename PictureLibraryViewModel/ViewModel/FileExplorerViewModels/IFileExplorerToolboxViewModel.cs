@@ -13,12 +13,5 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         ICommand CutCommand { get; }
         ICommand CopyPathCommand { get; }
         ICommand CopyCommand { get; }
-
-        Task CreateDirectory();
-        void GoToParentDirectory();
-        Task Paste();
-        void CopyPath();
-        Task Cut();
-        Task Copy();
     }
 }

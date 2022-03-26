@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
@@ -12,7 +13,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         private readonly ILibraryExplorerViewModel _commonViewModel;
 
         #region Public properties
-        public ICommand AddTagCommand { get; }
         public string Color { get; set; }
         public string Description { get; set; }
 
@@ -28,16 +28,30 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         }
         #endregion
 
+        #region Commands
+        [Command]
+        public ICommand AddTagCommand { get; set; }
+        #endregion
+
         #region Events
         public event InvalidInputEventHandler InvalidInput;
         public event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
         #endregion
 
-        public AddTagDialogViewModel(ILibraryExplorerViewModel commonVM ,ICommandFactory commandFactory)
+        public AddTagDialogViewModel(ILibraryExplorerViewModel commonVM, ICommandCreator commandCreator)
         {
             _commonViewModel = commonVM;
-            AddTagCommand = commandFactory.GetAddTagCommand(this);
+
+            commandCreator.InitializeCommands(this);
         }
+
+        #region Command methods
+        [Execute(nameof(AddTagCommand))]  
+        private async void ExecuteAddTagCommand(object parameter)
+        {
+            await AddAsync();
+        }
+        #endregion
 
         #region Validation
         private bool IsNameValid()

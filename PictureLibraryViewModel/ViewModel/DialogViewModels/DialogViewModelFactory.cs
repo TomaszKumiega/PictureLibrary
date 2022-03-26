@@ -11,11 +11,11 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
     //TODO: remove
     public class DialogViewModelFactory : IDialogViewModelFactory
     {
-        private ICommandFactory CommandFactory { get; }
+        private ICommandCreator CommandFactory { get; }
         private ILibraryExplorerViewModel CommonViewModel { get; }
         private IDataSourceCollection DataSourceCollection { get; }
 
-        public DialogViewModelFactory(ILibraryExplorerViewModel commonVM, ICommandFactory commandFactory, IDataSourceCollection dataSourceCollection)
+        public DialogViewModelFactory(ILibraryExplorerViewModel commonVM, ICommandCreator commandFactory, IDataSourceCollection dataSourceCollection)
         {
             CommonViewModel = commonVM;
             CommandFactory = commandFactory;
