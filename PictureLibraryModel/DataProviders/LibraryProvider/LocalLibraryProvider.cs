@@ -56,7 +56,7 @@ namespace PictureLibraryModel.DataProviders
 
             var fileStream = _fileService.OpenFile(library.Path, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
 
-            _settingsProvider.Settings.ImportedLibraries.Add(library.Path);
+            _settingsProvider.Settings.ImportedLocalLibraries.Add(library.Path);
             _settingsProvider.SaveSettingsAsync();
 
             _libraryFileService.WriteLibraryToStreamAsync(fileStream, library);
@@ -66,8 +66,8 @@ namespace PictureLibraryModel.DataProviders
         {
             var libraries = new List<Library>();
 
-            if (_settingsProvider.Settings.ImportedLibraries == null) return libraries;
-            var importedLibraries = _settingsProvider.Settings.ImportedLibraries.ToArray();
+            if (_settingsProvider.Settings.ImportedLocalLibraries == null) return libraries;
+            var importedLibraries = _settingsProvider.Settings.ImportedLocalLibraries.ToArray();
 
             foreach (var t in importedLibraries)
             {
@@ -82,7 +82,7 @@ namespace PictureLibraryModel.DataProviders
                 catch (FileNotFoundException e)
                 {
                     _logger.Debug(e, "Library file not found.");
-                    _settingsProvider.Settings.ImportedLibraries.Remove(t);
+                    _settingsProvider.Settings.ImportedLocalLibraries.Remove(t);
                     _settingsProvider.SaveSettingsAsync();
                     _logger.Info("Removed library entry: " + t + " from settings");
                 }
@@ -105,7 +105,7 @@ namespace PictureLibraryModel.DataProviders
                 throw new ArgumentNullException(nameof(library));
 
             _fileService.Remove(library.Path);
-            _settingsProvider.Settings.ImportedLibraries.Remove(library.Path);
+            _settingsProvider.Settings.ImportedLocalLibraries.Remove(library.Path);
             _settingsProvider.SaveSettingsAsync().Wait();
         }
 

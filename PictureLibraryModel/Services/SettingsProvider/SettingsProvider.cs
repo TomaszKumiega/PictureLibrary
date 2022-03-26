@@ -49,7 +49,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
                         AccentColor = "#0066ff",
                         Language = CultureInfo.CurrentCulture.Name,
                         LightMode = true,
-                        ImportedLibraries = new List<string>(),
+                        ImportedLocalLibraries = new List<string>(),
                         RemoteStorageInfos = new List<IRemoteStorageInfo>()
                     };
             }
@@ -61,7 +61,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
                 XmlReaderSettings xmlSettings = new XmlReaderSettings();
                 xmlSettings.DtdProcessing = DtdProcessing.Parse;
 
-                settings.ImportedLibraries = new List<string>();
+                settings.ImportedLocalLibraries = new List<string>();
                 settings.RemoteStorageInfos = new List<IRemoteStorageInfo>();
 
                 using (var reader = XmlReader.Create(fileStream, xmlSettings))
@@ -93,7 +93,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
                                 case "library":
                                     {
                                         var libraryElement = XNode.ReadFrom(reader) as XElement;
-                                        settings.ImportedLibraries.Add(libraryElement.Attribute("path").Value);
+                                        settings.ImportedLocalLibraries.Add(libraryElement.Attribute("path").Value);
                                     }
                                     break;
                                 case "remote_storage_info":
@@ -128,7 +128,7 @@ namespace PictureLibraryModel.Services.SettingsProvider
             var importedLibraries = new XElement("imported_libraries");
             var remoteStorageInfos = new XElement("remote_storage_infos");
 
-            foreach (var t in Settings.ImportedLibraries)
+            foreach (var t in Settings.ImportedLocalLibraries)
             {
                 var libraryElement = new XElement("library", new XAttribute("path", t));
                 importedLibraries.Add(libraryElement);
