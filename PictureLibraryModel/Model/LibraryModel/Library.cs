@@ -25,11 +25,13 @@ namespace PictureLibraryModel.Model
 
         public void LoadIcon()
         {
+            //TODO: fix
             Icon = Image.FromFile(".\\Icons\\LibraryIcon.png");
         }
 
         ~Library()
         {
+            //TODO: fix
             Icon?.Dispose();
         }
     }

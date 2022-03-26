@@ -12,11 +12,12 @@ namespace PictureLibraryModel.Services.FileSystemServices
     public class DirectoryService : FileSystemService, IDirectoryService
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private Func<LocalImageFile> LocalImageFileLocator { get; }
+
+        private readonly Func<LocalImageFile> _localImageFileLocator;
 
         public DirectoryService(Func<LocalImageFile> localImageFileLocator) 
         {
-            LocalImageFileLocator = localImageFileLocator;
+            _localImageFileLocator = localImageFileLocator;
         }
 
         public override void Copy(string sourcePath, string destinationPath)
@@ -59,7 +60,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
                 if (ImageFile.IsFileAnImage(fileInfo) && UserHasAccessToTheFile(t))
                 {
-                    var imageFile = LocalImageFileLocator();
+                    var imageFile = _localImageFileLocator();
                     imageFile.Name = fileInfo.Name;
                     imageFile.Path = fileInfo.FullName;
                     imageFile.Extension = ImageExtensionHelper.GetExtension(fileInfo.Extension);
@@ -192,6 +193,9 @@ namespace PictureLibraryModel.Services.FileSystemServices
         public Directory GetParent(string path)
         {
             var directoryInfo = System.IO.Directory.GetParent(path);
+
+            if (directoryInfo == null) 
+                return null;
 
             return directoryInfo.Parent == null
                 ? new Drive(directoryInfo.FullName, directoryInfo.Name, this)

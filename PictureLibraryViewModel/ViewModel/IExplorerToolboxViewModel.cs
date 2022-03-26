@@ -1,8 +1,4 @@
 ﻿using PictureLibraryModel.Services.Clipboard;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -16,10 +12,5 @@ namespace PictureLibraryViewModel.ViewModel
         ICommand RenameCommand { get; }
         ICommand RefreshCommand { get; }
         string SearchText { get; set; }
-
-        Task Remove();
-        Task Rename();
-        Task Refresh();
-        bool IsDriveSelected();
     }
 }

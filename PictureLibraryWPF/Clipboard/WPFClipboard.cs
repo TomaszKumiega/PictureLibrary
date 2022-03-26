@@ -3,7 +3,6 @@ using PictureLibraryModel.Services.Clipboard;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Text;
 using System.Threading;
 
 namespace PictureLibraryWPF.Clipboard
@@ -21,6 +20,7 @@ namespace PictureLibraryWPF.Clipboard
             System.Windows.Clipboard.Clear();
         }
 
+        #region Contains
         public bool ContainsFiles()
         {
             return System.Windows.Clipboard.ContainsFileDropList();
@@ -35,7 +35,9 @@ namespace PictureLibraryWPF.Clipboard
         {
             return System.Windows.Clipboard.ContainsText();
         }
+        #endregion
 
+        #region Get
         public IEnumerable<string> GetFiles()
         {
             var filePaths = new List<string>();
@@ -54,7 +56,9 @@ namespace PictureLibraryWPF.Clipboard
         {
             return System.Windows.Clipboard.GetText();
         }
+        #endregion
 
+        #region Set
         public void SetFiles(IEnumerable<string> paths, ClipboardFilesState filesState)
         {
             Clear();
@@ -83,5 +87,6 @@ namespace PictureLibraryWPF.Clipboard
 
             ClipboardContentChanged?.Invoke(this, EventArgs.Empty);
         }
+        #endregion
     }
 }

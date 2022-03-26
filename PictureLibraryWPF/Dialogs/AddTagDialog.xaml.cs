@@ -19,6 +19,7 @@ namespace PictureLibraryWPF.Dialogs
             viewModel.ProcessingStatusChanged += OnProcessingStatusChanged;
         }
 
+        //TODO: remove methods
         private void OnProcessingStatusChanged(object sender, ProcessingStatusChangedEventArgs args)
         {
             if (args.Status == ProcessingStatus.Finished) this.Close();

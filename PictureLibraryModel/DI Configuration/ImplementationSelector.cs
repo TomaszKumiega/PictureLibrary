@@ -4,16 +4,16 @@ namespace PictureLibraryModel.DI_Configuration
 {
     public class ImplementationSelector<TKey, TType> : IImplementationSelector<TKey, TType>
     {
-        private IIndex<TKey, TType> Implementations { get; }
+        private readonly IIndex<TKey, TType> _implementations;
 
         public ImplementationSelector(IIndex<TKey, TType> implementations)
         {
-            Implementations = implementations;
+            _implementations = implementations;
         }
 
         public TType Select(TKey key)
         {
-            return Implementations.TryGetValue(key, out TType value)
+            return _implementations.TryGetValue(key, out TType value)
                 ? value
                 : default;
         }

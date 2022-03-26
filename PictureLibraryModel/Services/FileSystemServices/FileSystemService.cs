@@ -1,5 +1,4 @@
-﻿using PictureLibraryModel.Model;
-using System.IO;
+﻿using System.IO;
 
 namespace PictureLibraryModel.Services.FileSystemServices
 {

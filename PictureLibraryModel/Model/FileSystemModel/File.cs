@@ -17,6 +17,7 @@ namespace PictureLibraryModel.Model
         }
 
         public abstract void LoadIcon();
+
         public virtual bool Exists()
         {
             return System.IO.File.Exists(Path);

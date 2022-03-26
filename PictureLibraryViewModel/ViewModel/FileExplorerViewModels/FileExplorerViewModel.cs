@@ -7,26 +7,23 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
     public class FileExplorerViewModel : IFileExplorerViewModel
     {
+        #region Private fields
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private string _infoText;
-        private bool _isProcessing;
-        private IExplorableElement _currentlyOpenedElement;
+        private readonly IDirectoryService _directoryService;
+        #endregion
 
-        private IDirectoryService DirectoryService{get;}
-  
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        #region Public properties
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public IExplorerHistory ExplorerHistory { get; }
 
+        private string _infoText;
         public string InfoText 
         {
             get => _infoText;
@@ -36,6 +33,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("InfoText"));
             }
         }
+
+        private bool _isProcessing;
         public bool IsProcessing 
         { 
             get => _isProcessing; 
@@ -46,9 +45,10 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             }
         }
 
-        public IExplorableElement CurrentlyOpenedElement 
-        { 
-            get => _currentlyOpenedElement; 
+        private IExplorableElement _currentlyOpenedElement;
+        public IExplorableElement CurrentlyOpenedElement
+        {
+            get => _currentlyOpenedElement;
             set
             {
                 ExplorerHistory.BackStack.Push(_currentlyOpenedElement);
@@ -58,10 +58,17 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
             }
         }
+        #endregion
 
-        public FileExplorerViewModel(IDirectoryService directoryService, IExplorerHistory explorerHistory)
+        #region Events
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+        public FileExplorerViewModel(
+            IDirectoryService directoryService, 
+            IExplorerHistory explorerHistory)
         {
-            DirectoryService = directoryService;
+            _directoryService = directoryService;
             ExplorerHistory = explorerHistory;
 
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
@@ -73,6 +80,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             _currentlyOpenedElement = null;
         }
 
+        #region Event handlers
         public async void OnCurrentlyOpenedElementChanged(object sender, PropertyChangedEventArgs args)
         {
             if(args.PropertyName == nameof(CurrentlyOpenedElement)) await LoadCurrentlyShownElementsAsync();
@@ -82,7 +90,9 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         {
             InfoText = Strings.SelectedElements + ' ' + SelectedElements.Count;
         }
+        #endregion
 
+        #region Public mehtods
         public async Task LoadCurrentlyShownElementsAsync()
         {
             if (CurrentlyShownElements == null) return;
@@ -98,11 +108,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             {
                 if (CurrentlyOpenedElement == null)
                 {
-                    content = await Task.Run(() => DirectoryService.GetRootDirectories());
+                    content = await Task.Run(() => _directoryService.GetRootDirectories());
                 }
                 else
                 {
-                    content = await Task.Run(() => DirectoryService.GetDirectoryContent(CurrentlyOpenedElement.Path));
+                    content = await Task.Run(() => _directoryService.GetDirectoryContent(CurrentlyOpenedElement.Path));
                 }
             }
             catch(Exception e)
@@ -130,7 +140,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             _currentlyOpenedElement = ExplorerHistory.BackStack.Pop();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
         }
-
         public void Forward()
         {
             if (ExplorerHistory.ForwardStack.Count == 0) return;
@@ -139,5 +148,6 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             _currentlyOpenedElement = ExplorerHistory.ForwardStack.Pop();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
         }
+        #endregion
     }
 }

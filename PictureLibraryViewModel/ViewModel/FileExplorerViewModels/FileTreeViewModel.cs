@@ -1,55 +1,43 @@
-﻿using NLog;
-using PictureLibraryModel.Model;
+﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.FileSystemServices;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
-    public class FileTreeViewModel : IExplorableElementsTreeViewModel
+    public class FileTreeViewModel : IFileTreeViewModel
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private IExplorableElement _selectedNode;
+        #region Private fields
+        private readonly IDirectoryService _directoryService;
+        private readonly IFileExplorerViewModel _commonViewModel;
+        #endregion
 
-        private IDirectoryService DirectoryService { get; }
-
-        public IExplorerViewModel CommonViewModel { get; }
-
+        #region Public properties
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
+
+        private IExplorableElement _selectedNode;
         public IExplorableElement SelectedNode 
         { 
             get => _selectedNode; 
             set
             {
                 _selectedNode = value;
-                CommonViewModel.CurrentlyOpenedElement = _selectedNode;
+                _commonViewModel.CurrentlyOpenedElement = _selectedNode;
             }
         }
+        #endregion
 
         public FileTreeViewModel(IFileExplorerViewModel viewModel, IDirectoryService directoryService)
         {
-            CommonViewModel = viewModel;
-            DirectoryService = directoryService;
+            _commonViewModel = viewModel;
+            _directoryService = directoryService;
         }
 
-        public async Task InitializeDirectoryTreeAsync()
+        public async Task Initialize()
         {
             ExplorableElementsTree = new ObservableCollection<IExplorableElement>();
 
-            IEnumerable<Directory> rootDirectories = new List<Directory>();
-
-            try
-            {
-                rootDirectories = await Task.Run(() => DirectoryService.GetRootDirectories());
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e, e.Message);
-                throw new Exception("Application failed loading the directory tree");
-            }
+            var rootDirectories = await Task.Run(() => _directoryService.GetRootDirectories());
 
             foreach (var t in rootDirectories)
             {

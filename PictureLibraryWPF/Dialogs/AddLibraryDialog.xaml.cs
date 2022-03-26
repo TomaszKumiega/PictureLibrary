@@ -1,19 +1,9 @@
 ﻿using PictureLibraryViewModel.ViewModel.DialogViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using PublicResXFileCodeGenerator;
-using System.Windows.Forms;
-using PictureLibraryWPF.Helpers;
 using PictureLibraryViewModel.ViewModel.Events;
+using PictureLibraryWPF.Helpers;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace PictureLibraryWPF.Dialogs
 {
@@ -29,6 +19,7 @@ namespace PictureLibraryWPF.Dialogs
             viewModel.ProcessingStatusChanged += OnProcessingStatusChanged;
         }
 
+        //TODO: remove methods
         private void OnProcessingStatusChanged(object sender, ProcessingStatusChangedEventArgs args)
         {
             if (args.Status == ProcessingStatus.Finished) this.Close();

@@ -1,19 +1,10 @@
 ﻿using PictureLibraryModel.Model;
-using PictureLibraryViewModel.ViewModel;
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using PictureLibraryWPF.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PictureLibraryWPF.CustomControls
 {
@@ -22,27 +13,32 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class FileExplorerToolbar : UserControl
     {
-        private IDialogFactory DialogFactory { get; }
+        private readonly Func<AddImagesDialog> _addImagesDialogLocator;
 
-        public FileExplorerToolbar(IFileExplorerToolboxViewModel viewModel, IDialogFactory dialogFactory)
+        public FileExplorerToolbar(IFileExplorerToolbarViewModel viewModel, Func<AddImagesDialog> addImagesDialogLocator)
         {
-            DialogFactory = dialogFactory;
+            _addImagesDialogLocator = addImagesDialogLocator;
+
             DataContext = viewModel;
             InitializeComponent();
         }
 
-        private async void AddToLibraryButton_Click(object sender, RoutedEventArgs e)
+        //TODO: remove
+        private void AddToLibraryButton_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = DataContext as IFileExplorerToolboxViewModel;
-            var images = new List<ImageFile>();
+            var viewModel = DataContext as IFileExplorerToolbarViewModel;
+            var selectedImages = new List<ImageFile>();
 
             foreach(var t in viewModel.CommonViewModel.SelectedElements)
             {
-                if (t is ImageFile) images.Add(t as ImageFile);
+                if (t is ImageFile)
+                {
+                    selectedImages.Add((ImageFile)t);
+                }
             }
 
-            var dialog = await DialogFactory.GetAddImagesDialog(images);
-            dialog.ShowDialog();
+            var dialog = _addImagesDialogLocator();
+            dialog.ShowDialog(selectedImages);
         }
     }
 }

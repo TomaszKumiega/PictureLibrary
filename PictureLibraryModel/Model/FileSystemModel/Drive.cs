@@ -11,11 +11,13 @@ namespace PictureLibraryModel.Model
 
         public override void LoadIcon()
         {
+            //TODO: fix
             Icon = Image.FromFile(".\\Icons\\DiskIcon.png");
         }
 
         ~Drive()
         {
+            //TODO: fix
             Icon?.Dispose();
         }
     }

@@ -1,13 +1,9 @@
-﻿using PictureLibraryModel.Services.Clipboard;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
-    public interface IFileExplorerToolboxViewModel : IExplorerToolboxViewModel
+    public interface IFileExplorerToolbarViewModel : IExplorerToolboxViewModel
     {
         ICommand CreateFolderCommand { get; }
         ICommand GoToParentDirectoryCommand { get; }
@@ -17,12 +13,5 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         ICommand CutCommand { get; }
         ICommand CopyPathCommand { get; }
         ICommand CopyCommand { get; }
-
-        Task CreateDirectory();
-        void GoToParentDirectory();
-        Task Paste();
-        void CopyPath();
-        Task Cut();
-        Task Copy();
     }
 }
