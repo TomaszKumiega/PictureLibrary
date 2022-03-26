@@ -19,6 +19,7 @@ namespace PictureLibraryWPF.Dialogs
         public AddImagesDialog(IAddImagesDialogViewModel viewModel)
         {
             DataContext = viewModel;
+            _viewModel = viewModel;
             viewModel.ProcessingStatusChanged += OnProcessingStatusChanged;
 
             InitializeComponent();

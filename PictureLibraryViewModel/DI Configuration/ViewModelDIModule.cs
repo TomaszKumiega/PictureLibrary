@@ -31,7 +31,7 @@ namespace PictureLibraryViewModel
         }
         private void RegisterFileExplorerViewModels(ContainerBuilder builder)
         {
-            builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
+            builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>().SingleInstance();
             builder.RegisterType<FileExplorerToolbarViewModel>().As<IFileExplorerToolbarViewModel>();
             builder.RegisterType<FileTreeViewModel>().As<IFileTreeViewModel>();
             builder.RegisterType<FilesViewViewModel>().As<IFilesViewViewModel>();
