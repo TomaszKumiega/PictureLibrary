@@ -7,6 +7,7 @@ using System.Windows.Controls;
 
 namespace PictureLibraryWPF.CustomControls
 {
+    //TODO: remove
     public interface IFileExplorerControlsFactory
     {
         Task<ElementsTree> GetFileElementsTreeAsync();

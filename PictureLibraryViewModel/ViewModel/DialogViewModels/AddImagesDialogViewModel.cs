@@ -7,7 +7,6 @@ using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -15,35 +14,40 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
     public class AddImagesDialogViewModel : IAddImagesDialogViewModel, INotifyPropertyChanged
     {
-        private ILibraryExplorerViewModel CommonViewModel { get; }
-        private List<ImageFile> SelectedImages { get; }
-        private IDataSourceCollection DataSourceCollection { get; }
-        private Library _selectedLibrary;
-
+        private readonly ILibraryExplorerViewModel _commonViewModel;
+        private readonly List<ImageFile> _selectedImages;
+        private readonly IDataSourceCollection _dataSourceCollection;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
 
+
         public ICommand AddImagesCommand { get; }
         public List<Library> Libraries { get; private set; }
-        public Library SelectedLibrary 
+
+        private Library _selectedLibrary;
+        public Library SelectedLibrary
         {
-            get => _selectedLibrary; 
+            get => _selectedLibrary;
             set
             {
                 _selectedLibrary = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedLibrary"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedLibrary)));
             }
         }
 
-        public AddImagesDialogViewModel(ILibraryExplorerViewModel commonVM, IDataSourceCollection dataSourceCollection, List<ImageFile> selectedImages, ICommandFactory commandFactory)
+        public AddImagesDialogViewModel(
+            ILibraryExplorerViewModel commonVM, 
+            IDataSourceCollection dataSourceCollection, 
+            List<ImageFile> selectedImages, 
+            ICommandFactory commandFactory)
         {
-            CommonViewModel = commonVM;
-            SelectedImages = selectedImages;
+            _commonViewModel = commonVM;
+            _selectedImages = selectedImages;
             AddImagesCommand = commandFactory.GetAddImagesCommand(this);
-            DataSourceCollection = dataSourceCollection;
+            _dataSourceCollection = dataSourceCollection;
 
-            DataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
+            _dataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
 
             PropertyChanged += OnSelectedLibraryChanged;
         }
@@ -55,25 +59,25 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         public async Task Initialize()
         {
-            Libraries = await Task.Run(() => DataSourceCollection.GetAllLibraries());
+            Libraries = await Task.Run(() => _dataSourceCollection.GetAllLibraries());
         }
 
         public async Task AddAsync()
         {
-            foreach(var t in SelectedImages)
+            foreach(var t in _selectedImages)
             {
-                var dataSource = DataSourceCollection.GetDataSourceByRemoteStorageId(t.RemoteStorageInfoId);
+                var dataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(t.RemoteStorageInfoId);
                 await Task.Run(() => dataSource.ImageProvider.AddImageToLibrary(t, SelectedLibrary.Path));
                 SelectedLibrary.Images.Add(t);
                 dataSource.LibraryProvider.UpdateLibrary(SelectedLibrary);
             }
 
-            SelectedLibrary.Images.AddRange(SelectedImages);
+            SelectedLibrary.Images.AddRange(_selectedImages);
 
-            var libraryDataSource = DataSourceCollection.GetDataSourceByRemoteStorageId(SelectedLibrary.RemoteStorageInfoId);
+            var libraryDataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(SelectedLibrary.RemoteStorageInfoId);
             await Task.Run(() => libraryDataSource.LibraryProvider.UpdateLibrary(SelectedLibrary));
 
-            await CommonViewModel.LoadCurrentlyShownElementsAsync();
+            await _commonViewModel.LoadCurrentlyShownElementsAsync();
 
             ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Finished));
         }

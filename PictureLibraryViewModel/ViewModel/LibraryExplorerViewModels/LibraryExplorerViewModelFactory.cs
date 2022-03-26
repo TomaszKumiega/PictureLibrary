@@ -7,43 +7,48 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
+    //TODO: remove
     public class LibraryExplorerViewModelFactory : ILibraryExplorerViewModelFactory
     {
-        private ILibraryExplorerViewModel CommonViewModel { get; }
-        private IDataSourceCollection DataSourceCollection { get; }
-        private ICommandFactory CommandFactory { get; }
-        private ISettingsProvider SettingsProvider { get; }
+        private readonly ILibraryExplorerViewModel _commonViewModel;
+        private readonly IDataSourceCollection _dataSourceCollection;
+        private readonly ICommandFactory _commandFactory;
+        private readonly ISettingsProvider _settingsProvider;
 
-        public LibraryExplorerViewModelFactory(ILibraryExplorerViewModel commonVM, IDataSourceCollection dataSourceCollection, ICommandFactory commandFactory, ISettingsProvider settingsProvider)
+        public LibraryExplorerViewModelFactory(
+            ILibraryExplorerViewModel commonVM, 
+            IDataSourceCollection dataSourceCollection, 
+            ICommandFactory commandFactory, 
+            ISettingsProvider settingsProvider)
         {
-            CommonViewModel = commonVM;
-            CommandFactory = commandFactory;
-            DataSourceCollection = dataSourceCollection;
-            SettingsProvider = settingsProvider;
+            _commonViewModel = commonVM;
+            _commandFactory = commandFactory;
+            _dataSourceCollection = dataSourceCollection;
+            _settingsProvider = settingsProvider;
         }
 
         public ILibraryExplorerToolboxViewModel GetLibraryExplorerToolboxViewModel(IClipboardService clipboard)
         {
-            return new LibraryExplorerToolboxViewModel(CommonViewModel, CommandFactory, clipboard);
+            return new LibraryExplorerToolboxViewModel(_commonViewModel, _commandFactory, clipboard);
         }
 
         public async Task<IExplorableElementsTreeViewModel> GetLibraryTreeViewModelAsync()
         {
-            var viewModel = new LibraryTreeViewModel(DataSourceCollection, CommonViewModel, SettingsProvider);
+            var viewModel = new LibraryTreeViewModel(_dataSourceCollection, _commonViewModel, _settingsProvider);
             await viewModel.InitializeLibraryTreeAsync();
             return viewModel;
         }
 
         public async Task<IExplorableElementsViewViewModel> GetLibraryViewViewModelAsync()
         {
-            var viewModel = new LibraryViewViewModel(CommonViewModel);
+            var viewModel = new LibraryViewViewModel(_commonViewModel);
             await viewModel.CommonViewModel.LoadCurrentlyShownElementsAsync();
             return viewModel;
         }
 
         public ITagPanelViewModel GetTagPanelViewModel()
         {
-            return new TagPanelViewModel(CommonViewModel);
+            return new TagPanelViewModel(_commonViewModel);
         }
     }
 }

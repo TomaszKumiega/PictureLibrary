@@ -11,13 +11,16 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
     public class LibraryTreeViewModel : IExplorableElementsTreeViewModel
     {
+        #region Private fields
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private IExplorableElement _selectedNode;
-        private IDataSourceCollection DataSourceCollection { get; set; }
+        private readonly IDataSourceCollection _dataSourceCollection;
+        #endregion
 
+        #region Public properties
         public IExplorerViewModel CommonViewModel { get; }
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
 
+        private IExplorableElement _selectedNode;
         public IExplorableElement SelectedNode 
         { 
             get => _selectedNode; 
@@ -27,20 +30,23 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
                 CommonViewModel.CurrentlyOpenedElement = _selectedNode;
             }
         }
+        #endregion
 
         public LibraryTreeViewModel(IDataSourceCollection dataSourceCollection, IExplorerViewModel commonVM, ISettingsProvider settingsProvider)
         {
-            DataSourceCollection = dataSourceCollection;
+            _dataSourceCollection = dataSourceCollection;
             CommonViewModel = commonVM;
 
-            DataSourceCollection.Initialize(settingsProvider.Settings.RemoteStorageInfos);
+            _dataSourceCollection.Initialize(settingsProvider.Settings.RemoteStorageInfos);
             ((ILibraryExplorerViewModel)CommonViewModel).RefreshViewEvent += OnRefreshView;
         }
 
+        #region Event handlers
         private async void OnRefreshView(object sender, EventArgs e)
         {
             await InitializeLibraryTreeAsync();
         }
+        #endregion
 
         public async Task InitializeLibraryTreeAsync()
         {
@@ -57,7 +63,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             try
             {
-                libraries = await Task.Run(() => DataSourceCollection.GetAllLibraries());
+                libraries = await Task.Run(() => _dataSourceCollection.GetAllLibraries());
             }
             catch(Exception e)
             {

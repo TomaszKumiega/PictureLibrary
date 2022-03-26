@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryWPF.CustomControls
 {
+    //TODO: remove
     public class FileExplorerControlsFactory : IFileExplorerControlsFactory
     {
         private IFileExplorerViewModelFactory FileExplorerViewModelFactory { get; }

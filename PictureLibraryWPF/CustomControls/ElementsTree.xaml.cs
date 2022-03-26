@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using PictureLibraryModel.Model;
+﻿using PictureLibraryModel.Model;
 using PictureLibraryViewModel.ViewModel;
+using System.Windows.Controls;
 
 namespace PictureLibraryWPF.CustomControls
 {
@@ -17,6 +15,7 @@ namespace PictureLibraryWPF.CustomControls
             DataContext = viewModel;
         }
 
+        //TODO: remove
         private void TreeViewItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var viewModel = DataContext as IExplorableElementsTreeViewModel;

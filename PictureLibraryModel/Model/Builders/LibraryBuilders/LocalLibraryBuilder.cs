@@ -4,52 +4,53 @@ namespace PictureLibraryModel.Model.Builders
 {
     public class LocalLibraryBuilder : ILibraryBuilder
     {
-        private Library Library { get; set; }
-        private Func<Library> LibraryLocator { get; }
+        private readonly Func<Library> _libraryLocator;
+
+        private Library _library;
 
         public LocalLibraryBuilder(Func<Library> libraryLocator)
         {
-            LibraryLocator = libraryLocator;
+            _libraryLocator = libraryLocator;
         }
 
         public ILibraryBuilder CreateLibrary()
         {
-            Library = LibraryLocator();
+            _library = _libraryLocator();
 
             return this;
         }
 
         public ILibraryBuilder WithDescription(string description)
         {
-            Library.Description = description;
+            _library.Description = description;
 
             return this;
         }
 
         public ILibraryBuilder WithName(string name)
         {
-            Library.Name = name;
+            _library.Name = name;
 
             return this;
         }
 
         public ILibraryBuilder WithPath(string path)
         {
-            Library.Path = path;
+            _library.Path = path;
 
             return this;
         }
 
         public ILibraryBuilder WithStorageInfoId(Guid? storageInfoId)
         {
-            Library.RemoteStorageInfoId = storageInfoId;
+            _library.RemoteStorageInfoId = storageInfoId;
 
             return this;
         }
 
         public Library Build()
         {
-            return Library;
+            return _library;
         }
     }
 }

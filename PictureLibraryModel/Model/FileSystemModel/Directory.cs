@@ -1,7 +1,6 @@
 ﻿using NLog;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
@@ -12,7 +11,6 @@ namespace PictureLibraryModel.Model
     public abstract class Directory : IFileSystemElement, INotifyPropertyChanged
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private bool _isExpanded;
 
         protected IDirectoryService DirectoryService { get; set; }
         protected string IconPath => ".\\Icons\\FolderIcon.png";
@@ -55,6 +53,7 @@ namespace PictureLibraryModel.Model
         #endregion
 
         #region Expanding and collapsing
+        private bool _isExpanded;
         public bool IsExpanded
         {
             get => _isExpanded;
@@ -62,13 +61,13 @@ namespace PictureLibraryModel.Model
             set
             {
                 _isExpanded = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsExpanded"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsExpanded)));
             }
         }
 
         protected virtual async void OnIsExpandedChanged(object sender, PropertyChangedEventArgs args)
         {
-            if(args.PropertyName == "IsExpanded")
+            if(args.PropertyName == nameof(IsExpanded))
             {
                 if (IsExpanded) await Expand();
                 else Collapse();
@@ -94,6 +93,7 @@ namespace PictureLibraryModel.Model
 
         public virtual void LoadIcon()
         {
+            //TODO: fix
             Icon = Image.FromFile(IconPath); 
         }
 
@@ -101,22 +101,20 @@ namespace PictureLibraryModel.Model
         {
             SubDirectories.Clear();
 
-            IEnumerable<Folder> directories = new List<Folder>();
-
             try
             {
-                directories = await Task.Run(() => DirectoryService.GetSubFolders(Path));
+                var directories = await Task.Run(() => DirectoryService.GetSubFolders(Path));
+
+                foreach (var t in directories)
+                {
+                    SubDirectories.Add(t);
+                    t.LoadIcon();
+                }
             }
             catch(Exception e)
             {
                 _logger.Error(e, e.Message);
                 throw new Exception("Application failed loading sub directories of: " + Path + " directory.");
-            }
-
-            foreach (var t in directories)
-            {
-                SubDirectories.Add(t);
-                t.LoadIcon();
             }
         }
     }

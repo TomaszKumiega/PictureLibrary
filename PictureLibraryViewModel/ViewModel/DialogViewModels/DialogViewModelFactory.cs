@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
-    //TODO: REFACTOR
+    //TODO: remove
     public class DialogViewModelFactory : IDialogViewModelFactory
     {
         private ICommandFactory CommandFactory { get; }

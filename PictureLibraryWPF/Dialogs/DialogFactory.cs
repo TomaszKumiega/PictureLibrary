@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryWPF.Dialogs
 {
+    //TODO: remove
     public class DialogFactory : IDialogFactory
     {
         private IDialogViewModelFactory ViewModelFactory;

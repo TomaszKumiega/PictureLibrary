@@ -2,7 +2,6 @@
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -10,16 +9,14 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
     public class AddTagDialogViewModel : IAddTagDialogViewModel
     {
-        private string _name;
-        private ILibraryExplorerViewModel CommonVM { get; }
+        private readonly ILibraryExplorerViewModel _commonViewModel;
 
-        public event InvalidInputEventHandler InvalidInput;
-        public event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
-
+        #region Public properties
         public ICommand AddTagCommand { get; }
         public string Color { get; set; }
         public string Description { get; set; }
 
+        private string _name;
         public string Name 
         {
             get => _name; 
@@ -28,14 +25,21 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                 _name = value;
                 if(!IsNameValid()) InvalidInput?.Invoke(this, new InvalidInputEventArgs("Name"));
             }
-        }        
+        }
+        #endregion
+
+        #region Events
+        public event InvalidInputEventHandler InvalidInput;
+        public event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
+        #endregion
 
         public AddTagDialogViewModel(ILibraryExplorerViewModel commonVM ,ICommandFactory commandFactory)
         {
-            CommonVM = commonVM;
+            _commonViewModel = commonVM;
             AddTagCommand = commandFactory.GetAddTagCommand(this);
         }
 
+        #region Validation
         private bool IsNameValid()
         {
             if(string.IsNullOrEmpty(Name))
@@ -45,6 +49,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
             return true;
         }
+        #endregion 
 
         public async Task AddAsync()
         {
@@ -55,19 +60,19 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                 Name = Name,
                 Description = Description,
                 Color = Color,
-                Path = CommonVM.CurrentlyOpenedElement.Name + "\\" + Name,
-                RemoteStorageInfoId = (CommonVM.CurrentlyOpenedElement as Library).RemoteStorageInfoId
+                Path = _commonViewModel.CurrentlyOpenedElement.Name + "\\" + Name,
+                RemoteStorageInfoId = (_commonViewModel.CurrentlyOpenedElement as Library).RemoteStorageInfoId
             };
 
-            var library = CommonVM.CurrentlyOpenedElement as Library;
+            var library = _commonViewModel.CurrentlyOpenedElement as Library;
             library.Tags.Add(tag);
             
-            CommonVM.LoadCurrentlyShownElements(library.Tags);
+            _commonViewModel.LoadCurrentlyShownElements(library.Tags);
 
-            var dataSource = CommonVM.DataSourceCollection.GetDataSourceByRemoteStorageId(library.RemoteStorageInfoId);
+            var dataSource = _commonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(library.RemoteStorageInfoId);
             await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(library));
 
-            CommonVM.InvokeTagsChanged();
+            _commonViewModel.InvokeTagsChanged();
             ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Finished));
         }
     }

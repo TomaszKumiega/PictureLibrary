@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PictureLibraryViewModel.ViewModel.Events
+﻿namespace PictureLibraryViewModel.ViewModel.Events
 {
     public enum ProcessingStatus
     {

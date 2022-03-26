@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -13,12 +12,16 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
     public class FileExplorerToolboxViewModel : IFileExplorerToolboxViewModel
     {
-        private IDirectoryService DirectoryService { get; }
-        private IFileService FileService { get; }
+        #region Private fields
+        private readonly IDirectoryService _directoryService;
+        private readonly IFileService _fileService;
+        #endregion
 
+        #region Public properties
         public IExplorerViewModel CommonViewModel { get; }
         public IClipboardService Clipboard { get; }
         public string SearchText { get; set; }
+        #endregion
 
         #region Commands
         public ICommand CopyCommand { get; }
@@ -44,11 +47,16 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         public ICommand RefreshCommand { get; }
         #endregion
 
-        public FileExplorerToolboxViewModel(IFileExplorerViewModel viewModel, IFileService fileService, IDirectoryService directoryService, IClipboardService clipboard, ICommandFactory commandFactory)
+        public FileExplorerToolboxViewModel(
+            IFileExplorerViewModel viewModel, 
+            IFileService fileService, 
+            IDirectoryService directoryService, 
+            IClipboardService clipboard, 
+            ICommandFactory commandFactory)
         {
             CommonViewModel = viewModel;
-            FileService = fileService;
-            DirectoryService = directoryService;
+            _fileService = fileService;
+            _directoryService = directoryService;
             Clipboard = clipboard;
 
             #region Command Initialization
@@ -131,7 +139,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
         public void GoToParentDirectory()
         {
-            var parent = DirectoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.Path);
+            var parent = _directoryService.GetParent(CommonViewModel.CurrentlyOpenedElement.Path);
            
             if (parent != null) 
                 CommonViewModel.CurrentlyOpenedElement = parent;
@@ -147,30 +155,30 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             foreach (var t in paths)
             {
-                if (DirectoryService.IsDirectory(t))
+                if (_directoryService.IsDirectory(t))
                 {
-                    var directoryName = DirectoryService.GetInfo(t).Name;
+                    var directoryName = _directoryService.GetInfo(t).Name;
 
                     if (Clipboard.FilesState == ClipboardFilesState.Copied)
                     {
-                        await Task.Run(() => DirectoryService.Copy(t, directoryPath + directoryName));
+                        await Task.Run(() => _directoryService.Copy(t, directoryPath + directoryName));
                     }
                     else if (Clipboard.FilesState == ClipboardFilesState.Cut)
                     {
-                        await Task.Run(() => DirectoryService.Move(t, directoryPath + directoryName));
+                        await Task.Run(() => _directoryService.Move(t, directoryPath + directoryName));
                     }
                 }
                 else
                 {
-                    var fileName = FileService.GetInfo(t).Name;
+                    var fileName = _fileService.GetInfo(t).Name;
 
                     if (Clipboard.FilesState == ClipboardFilesState.Copied)
                     {
-                        await Task.Run(() => FileService.Copy(t, directoryPath + fileName));
+                        await Task.Run(() => _fileService.Copy(t, directoryPath + fileName));
                     }
                     else if (Clipboard.FilesState == ClipboardFilesState.Cut)
                     {
-                        await Task.Run(() => FileService.Move(t, directoryPath + fileName));
+                        await Task.Run(() => _fileService.Move(t, directoryPath + fileName));
                     }
                 }
             }
@@ -191,11 +199,11 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             {
                 if (t is File)
                 {
-                    FileService.Remove(t.Path);
+                    _fileService.Remove(t.Path);
                 }
                 else if (t is Directory)
                 {
-                    DirectoryService.Remove(t.Path);
+                    _directoryService.Remove(t.Path);
                 }
             }
 

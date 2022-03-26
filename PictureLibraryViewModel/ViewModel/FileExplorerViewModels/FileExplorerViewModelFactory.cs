@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
+    //TODO: remove
     public class FileExplorerViewModelFactory : IFileExplorerViewModelFactory
     {
         private IFileExplorerViewModel CommonVM { get; }

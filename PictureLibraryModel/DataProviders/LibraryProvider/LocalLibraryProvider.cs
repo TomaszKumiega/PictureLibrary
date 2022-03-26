@@ -12,11 +12,12 @@ namespace PictureLibraryModel.DataProviders
 {
     public class LocalLibraryProvider : ILibraryProvider
     {
-        private static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
-        private IDirectoryService DirectoryService { get; }
-        private IFileService FileService { get; }
-        private ISettingsProvider SettingsProvider { get; }
-        private ILibraryFileService LibraryFileService { get; }
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        private readonly IDirectoryService _directoryService;
+        private readonly IFileService _fileService;
+        private readonly ISettingsProvider _settingsProvider;
+        private readonly ILibraryFileService _libraryFileService;
 
         public LocalLibraryProvider(
             IFileService fileService, 
@@ -24,10 +25,10 @@ namespace PictureLibraryModel.DataProviders
             ISettingsProvider settingsProvider, 
             ILibraryFileService libraryFileService)
         {
-            FileService = fileService;
-            DirectoryService = directoryService;
-            SettingsProvider = settingsProvider;
-            LibraryFileService = libraryFileService;
+            _fileService = fileService;
+            _directoryService = directoryService;
+            _settingsProvider = settingsProvider;
+            _libraryFileService = libraryFileService;
         }
 
         public void AddLibraries(IEnumerable<Library> libraries)
@@ -48,25 +49,25 @@ namespace PictureLibraryModel.DataProviders
             if (library.Path == null)
                 throw new ArgumentException(nameof(library.Path));
 
-            var directory = DirectoryService.GetParent(library.Path);
+            var directory = _directoryService.GetParent(library.Path);
             
-            DirectoryService.Create(directory.Path + "\\Images");
-            FileService.Create(library.Path);
+            _directoryService.Create(directory.Path + "\\Images");
+            _fileService.Create(library.Path);
 
-            var fileStream = FileService.OpenFile(library.Path, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
+            var fileStream = _fileService.OpenFile(library.Path, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
 
-            SettingsProvider.Settings.ImportedLibraries.Add(library.Path);
-            SettingsProvider.SaveSettingsAsync();
+            _settingsProvider.Settings.ImportedLibraries.Add(library.Path);
+            _settingsProvider.SaveSettingsAsync();
 
-            LibraryFileService.WriteLibraryToStreamAsync(fileStream, library);
+            _libraryFileService.WriteLibraryToStreamAsync(fileStream, library);
         }
 
         public IEnumerable<Library> GetAllLibraries()
         {
             var libraries = new List<Library>();
 
-            if (SettingsProvider.Settings.ImportedLibraries == null) return libraries;
-            var importedLibraries = SettingsProvider.Settings.ImportedLibraries.ToArray();
+            if (_settingsProvider.Settings.ImportedLibraries == null) return libraries;
+            var importedLibraries = _settingsProvider.Settings.ImportedLibraries.ToArray();
 
             foreach (var t in importedLibraries)
             {
@@ -74,20 +75,20 @@ namespace PictureLibraryModel.DataProviders
 
                 try
                 {
-                    stream = FileService.OpenFile(t, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-                    var library = LibraryFileService.ReadLibraryFromStreamAsync(stream, null);
+                    stream = _fileService.OpenFile(t, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+                    var library = _libraryFileService.ReadLibraryFromStreamAsync(stream, null);
                     libraries.Add(library);
                 }
                 catch (FileNotFoundException e)
                 {
-                    Logger.Debug(e, "Library file not found.");
-                    SettingsProvider.Settings.ImportedLibraries.Remove(t);
-                    SettingsProvider.SaveSettingsAsync();
-                    Logger.Info("Removed library entry: " + t + " from settings");
+                    _logger.Debug(e, "Library file not found.");
+                    _settingsProvider.Settings.ImportedLibraries.Remove(t);
+                    _settingsProvider.SaveSettingsAsync();
+                    _logger.Info("Removed library entry: " + t + " from settings");
                 }
                 catch (Exception e)
                 {
-                    Logger.Debug(e, "Couldn't read " + t);
+                    _logger.Debug(e, "Couldn't read " + t);
                 }
                 finally
                 {
@@ -103,16 +104,16 @@ namespace PictureLibraryModel.DataProviders
             if (library == null) 
                 throw new ArgumentNullException(nameof(library));
 
-            FileService.Remove(library.Path);
-            SettingsProvider.Settings.ImportedLibraries.Remove(library.Path);
-            SettingsProvider.SaveSettingsAsync().Wait();
+            _fileService.Remove(library.Path);
+            _settingsProvider.Settings.ImportedLibraries.Remove(library.Path);
+            _settingsProvider.SaveSettingsAsync().Wait();
         }
 
         public void UpdateLibrary(Library library)
         {
             if (library == null) 
                 throw new ArgumentNullException(nameof(library));
-            if (!FileService.Exists(library.Path)) 
+            if (!_fileService.Exists(library.Path)) 
                 throw new ArgumentException(nameof(library));
 
             // load file for potential recovery
@@ -121,19 +122,19 @@ namespace PictureLibraryModel.DataProviders
 
             // remove contents of the file
             string[] text = { "" };
-            FileService.WriteAllLines(library.Name, text);
+            _fileService.WriteAllLines(library.Name, text);
 
             Stream stream = null;
 
             try
             {
                 // write updated library to the file
-                stream = FileService.OpenFile(library.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-                LibraryFileService.WriteLibraryToStreamAsync(stream, library);
+                stream = _fileService.OpenFile(library.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+                _libraryFileService.WriteLibraryToStreamAsync(stream, library);
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Library update error:" + e.Message);
+                _logger.Error(e, "Library update error:" + e.Message);
                 document.Save(library.Path);
             }
             finally

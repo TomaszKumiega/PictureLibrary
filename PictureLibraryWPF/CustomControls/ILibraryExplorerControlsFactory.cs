@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryWPF.CustomControls
 {
+    //TODO: remove
     public interface ILibraryExplorerControlsFactory
     {
         Task<ElementsTree> GetLibrariesTreeAsync();

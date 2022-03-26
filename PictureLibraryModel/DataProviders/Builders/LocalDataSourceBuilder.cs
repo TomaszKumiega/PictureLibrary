@@ -1,52 +1,51 @@
 ﻿using PictureLibraryModel.Model.RemoteStorages;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PictureLibraryModel.DataProviders.Builders
 {
     public class LocalDataSourceBuilder : IDataSourceBuilder
     {
-        private IDataSource DataSource { get; set; }
-        private Func<IDataSource> DataSourceLocator { get; }
-        private Func<LocalLibraryProvider> LocalLibraryProviderLocator { get; }
-        private Func<LocalImageFileProvider> LocalImageFileProviderLocator { get; }
+        private readonly Func<IDataSource> _dataSourceLocator;
+        private readonly Func<LocalLibraryProvider> _localLibraryProviderLocator;
+        private readonly Func<LocalImageFileProvider> _localImageFileProviderLocator;
+
+        private IDataSource _dataSource;
 
         public LocalDataSourceBuilder(Func<IDataSource> dataSourceLocator, Func<LocalImageFileProvider> localImageFileProviderLocator, Func<LocalLibraryProvider> localLibraryProviderLocator)
         {
-            DataSourceLocator = dataSourceLocator;
-            LocalImageFileProviderLocator = localImageFileProviderLocator;
-            LocalLibraryProviderLocator = localLibraryProviderLocator;
+            _dataSourceLocator = dataSourceLocator;
+            _localImageFileProviderLocator = localImageFileProviderLocator;
+            _localLibraryProviderLocator = localLibraryProviderLocator;
         }
 
         public IDataSourceBuilder CreateDataSource()
         {
-            DataSource = DataSourceLocator();
+            _dataSource = _dataSourceLocator();
 
             return this;
         }
 
         public IDataSourceBuilder WithImageFileProvider()
         {
-            DataSource.ImageProvider = LocalImageFileProviderLocator();
+            _dataSource.ImageProvider = _localImageFileProviderLocator();
             return this;
         }
 
         public IDataSourceBuilder WithLibraryProvider()
         {
-            DataSource.LibraryProvider = LocalLibraryProviderLocator();
+            _dataSource.LibraryProvider = _localLibraryProviderLocator();
             return this;
         }
 
         public IDataSourceBuilder WithRemoteStorageInfo(IRemoteStorageInfo remoteStorageInfo)
         {
-            DataSource.RemoteStorageInfo = remoteStorageInfo;
+            _dataSource.RemoteStorageInfo = remoteStorageInfo;
             return this;
         }
 
         public IDataSource Build()
         {
-            return DataSource;
+            return _dataSource;
         }
     }
 }

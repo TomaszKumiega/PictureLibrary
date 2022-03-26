@@ -2,9 +2,7 @@
 using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.Commands;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -12,14 +10,18 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
     public class LibraryExplorerToolboxViewModel : ILibraryExplorerToolboxViewModel
     {
+        #region Private fields
         private ILibraryExplorerViewModel LibraryCommonViewModel => (ILibraryExplorerViewModel)CommonViewModel;
+        #endregion
 
+        #region Public properties
         public IExplorerViewModel CommonViewModel { get; }
         public IClipboardService Clipboard { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
         public ICommand RefreshCommand { get; }
         public string SearchText { get; set; }
+        #endregion
 
         public LibraryExplorerToolboxViewModel(ILibraryExplorerViewModel commonVM, ICommandFactory commandFactory, IClipboardService clipboard)
         {
@@ -40,6 +42,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         }
         #endregion
 
+        #region Public methods
         public async Task Refresh()
         {
             await CommonViewModel.LoadCurrentlyShownElementsAsync();
@@ -78,5 +81,6 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         {
             return false;
         }
+        #endregion
     }
 }

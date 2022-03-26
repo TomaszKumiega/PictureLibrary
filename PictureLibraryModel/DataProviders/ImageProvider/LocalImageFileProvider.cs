@@ -1,21 +1,20 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
-using System.IO;
 
 namespace PictureLibraryModel.DataProviders
 {
     public class LocalImageFileProvider : IImageFileProvider
     {
-        private IFileService FileService { get; }
-        private IDirectoryService DirectoryService { get; }
-        private Func<LocalImageFile> ImageFileLocator { get; }
+        private readonly IFileService _fileService;
+        private readonly IDirectoryService _directoryService;
+        private readonly Func<LocalImageFile> _imageFileLocator;
 
         public LocalImageFileProvider(IFileService fileService, IDirectoryService directoryService, Func<LocalImageFile> imageFileLocator)
         {
-            FileService = fileService;
-            DirectoryService = directoryService;
-            ImageFileLocator = imageFileLocator;
+            _fileService = fileService;
+            _directoryService = directoryService;
+            _imageFileLocator = imageFileLocator;
         }
 
         public ImageFile AddImageToLibrary(ImageFile imageFile, string libraryFullName)
@@ -23,16 +22,16 @@ namespace PictureLibraryModel.DataProviders
             if (imageFile == null)
                 throw new ArgumentNullException(nameof(imageFile));
             if (string.IsNullOrEmpty(libraryFullName))
-                throw new ArgumentException(nameof(libraryFullName));
+                throw new ArgumentException(null, nameof(libraryFullName));
 
-            var directory = DirectoryService.GetParent(libraryFullName);
+            var directory = _directoryService.GetParent(libraryFullName);
             var path = directory.Path + "\\Images\\" + imageFile.Name;
 
-            FileService.Copy(imageFile.Path, path);
+            _fileService.Copy(imageFile.Path, path);
 
-            var fileInfo = FileService.GetInfo(path);
+            var fileInfo = _fileService.GetInfo(path);
 
-            var newImageFile = ImageFileLocator();
+            var newImageFile = _imageFileLocator();
 
             newImageFile.Name = fileInfo.Name;
             newImageFile.Path = fileInfo.FullName;
@@ -47,7 +46,7 @@ namespace PictureLibraryModel.DataProviders
             if (imageFile == null)
                 throw new ArgumentNullException(nameof(imageFile));
 
-            return FileService.ReadAllBytes(imageFile.Path);
+            return _fileService.ReadAllBytes(imageFile.Path);
         }
 
         public void RemoveImage(ImageFile imageFile)
@@ -55,7 +54,7 @@ namespace PictureLibraryModel.DataProviders
             if (imageFile == null)
                 throw new ArgumentNullException(nameof(imageFile));
 
-            FileService.Remove(imageFile.Path);
+            _fileService.Remove(imageFile.Path);
         }
     }
 }

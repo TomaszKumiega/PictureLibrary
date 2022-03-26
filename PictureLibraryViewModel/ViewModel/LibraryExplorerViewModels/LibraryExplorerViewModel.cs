@@ -14,20 +14,42 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
     public class LibraryExplorerViewModel : ILibraryExplorerViewModel
     {
-        private ILibraryFileService _libraryFileService;
+        #region Private fields
+        private readonly ILibraryFileService _libraryFileService;
+        #endregion
 
+        #region Public properties
         public ObservableCollection<IExplorableElement> CurrentlyShownElements { get; set; }
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public string InfoText { get; set; }
         public bool IsProcessing { get; set; }
         public IDataSourceCollection DataSourceCollection { get; } 
-
         public IExplorerHistory ExplorerHistory { get; }
 
+        private IExplorableElement _currentlyOpenedElement;
+        public IExplorableElement CurrentlyOpenedElement
+        {
+            get => _currentlyOpenedElement;
+            set
+            {
+                ExplorerHistory.BackStack.Push(_currentlyOpenedElement);
+                ExplorerHistory.ForwardStack.Clear();
+
+                _currentlyOpenedElement = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
+            }
+        }
+        #endregion
+
+        #region Event handlers
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler RefreshViewEvent;
+        #endregion 
 
-        public LibraryExplorerViewModel(IDataSourceCollection dataSourceCollection, IExplorerHistory explorerHistory, ILibraryFileService libraryFileService)
+        public LibraryExplorerViewModel(
+            IDataSourceCollection dataSourceCollection, 
+            IExplorerHistory explorerHistory, 
+            ILibraryFileService libraryFileService)
         {
             _libraryFileService = libraryFileService;
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
@@ -39,20 +61,6 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             PropertyChanged += OnCurrentlyOpenedElementChanged;
             RefreshViewEvent += OnRefreshView;
-        }
-
-        private IExplorableElement _currentlyOpenedElement;
-        public IExplorableElement CurrentlyOpenedElement 
-        { 
-            get => _currentlyOpenedElement; 
-            set
-            {
-                ExplorerHistory.BackStack.Push(_currentlyOpenedElement);
-                ExplorerHistory.ForwardStack.Clear();
-
-                _currentlyOpenedElement = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentlyOpenedElement)));
-            }
         }
 
         #region Event handlers
@@ -73,11 +81,14 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         }
         #endregion
 
-        private void InvokePropertyChanged(string propertyName)
+        #region Private methods
+        private void NotifyPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
 
+        #region Public methods
         public async Task LoadCurrentlyShownElementsAsync()
         {
             CurrentlyShownElements.Clear();
@@ -132,7 +143,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             ExplorerHistory.ForwardStack.Push(_currentlyOpenedElement);
             _currentlyOpenedElement = ExplorerHistory.BackStack.Pop();
-            InvokePropertyChanged(nameof(CurrentlyOpenedElement));
+            NotifyPropertyChanged(nameof(CurrentlyOpenedElement));
         }
 
         public void Forward()
@@ -141,17 +152,18 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             ExplorerHistory.BackStack.Push(_currentlyOpenedElement);
             _currentlyOpenedElement = ExplorerHistory.ForwardStack.Pop();
-            InvokePropertyChanged(nameof(CurrentlyOpenedElement));
+            NotifyPropertyChanged(nameof(CurrentlyOpenedElement));
         }
 
         public void InvokeTagsChanged()
         {
-            InvokePropertyChanged(nameof(Library.Tags));
+            NotifyPropertyChanged(nameof(Library.Tags));
         }
         
         public void RefreshView(object sender, EventArgs args)
         {
             RefreshViewEvent?.Invoke(sender, args);
         }
+        #endregion
     }
 }

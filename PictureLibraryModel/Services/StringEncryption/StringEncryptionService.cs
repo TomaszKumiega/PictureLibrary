@@ -7,12 +7,12 @@ namespace PictureLibraryModel.Services.StringEncryption
 {
     public class StringEncryptionService : IStringEncryptionService
     {
-        private AesCryptoServiceProvider AesProvider { get; }
+        private Aes AesProvider { get; }
 
         public StringEncryptionService()
         {
             var privateKey = ModelResources.EncryptionPrivateKey;
-            AesProvider = new AesCryptoServiceProvider();
+            AesProvider = Aes.Create();
 
             AesProvider.BlockSize = 128;
             AesProvider.KeySize = 256;

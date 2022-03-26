@@ -1,5 +1,4 @@
-﻿using Autofac;
-using PictureLibraryWPF.CustomControls;
+﻿using PictureLibraryWPF.CustomControls;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,25 +22,26 @@ namespace PictureLibraryWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IFileExplorerControlsFactory FileExplorerControlsFactory { get; }
-        private ILibraryExplorerControlsFactory LibraryExplorerControlsFactory { get; }
-        private List<Control> CurrentPageControls { get; }
-        private Func<LibraryExplorerToolbar> LibraryExplorerToolbarLocator { get; }
+        private readonly IFileExplorerControlsFactory _fileExplorerControlsFactory;
+        private readonly ILibraryExplorerControlsFactory _libraryExplorerControlsFactory;
+        private readonly List<Control> _currentPageControls;
+        private readonly Func<LibraryExplorerToolbar> _libraryExplorerToolbarLocator;
 
         public MainWindow(
             IFileExplorerControlsFactory fileExplorerControlsFactory, 
             ILibraryExplorerControlsFactory libraryExplorerControlsFactory, 
             Func<LibraryExplorerToolbar> libraryExplorerToolbarLocator)
         {
-            FileExplorerControlsFactory = fileExplorerControlsFactory;
-            LibraryExplorerControlsFactory = libraryExplorerControlsFactory;
-            CurrentPageControls = new List<Control>();
-            LibraryExplorerToolbarLocator = libraryExplorerToolbarLocator;
+            _fileExplorerControlsFactory = fileExplorerControlsFactory;
+            _libraryExplorerControlsFactory = libraryExplorerControlsFactory;
+            _currentPageControls = new List<Control>();
+            _libraryExplorerToolbarLocator = libraryExplorerToolbarLocator;
 
             InitializeComponent();
             LoadHomePage();
         }
 
+        //TODO: refactor
         #region Page loading methods
         private void LoadHomePage()
         {
@@ -62,7 +62,7 @@ namespace PictureLibraryWPF
             ToolBarShadow.Fill = new SolidColorBrush(Color.FromArgb(29, 31, 33, 1)); // change rectangle color to #2b2d30
 
             // Add files tree to the grid
-            var filesTree = await FileExplorerControlsFactory.GetFileElementsTreeAsync();
+            var filesTree = await _fileExplorerControlsFactory.GetFileElementsTreeAsync();
             Grid.Children.Add(filesTree);
             filesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
             filesTree.VerticalAlignment = VerticalAlignment.Stretch;
@@ -70,7 +70,7 @@ namespace PictureLibraryWPF
             Grid.SetRow(filesTree, 8);
 
             // Add files view to the grid
-            var filesView = await FileExplorerControlsFactory.GetFileElementsViewAsync();
+            var filesView = await _fileExplorerControlsFactory.GetFileElementsViewAsync();
             MainPanelGrid.Children.Add(filesView);
             filesView.HorizontalAlignment = HorizontalAlignment.Stretch;
             filesView.VerticalAlignment = VerticalAlignment.Stretch;
@@ -79,7 +79,7 @@ namespace PictureLibraryWPF
             Grid.SetColumnSpan(filesView, 2);
 
             // Add file explorer toolbar to the grid
-            var toolbar = FileExplorerControlsFactory.GetFileExplorerToolbar();
+            var toolbar = _fileExplorerControlsFactory.GetFileExplorerToolbar();
             MainPanelGrid.Children.Add(toolbar);
             toolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
             toolbar.VerticalAlignment = VerticalAlignment.Stretch;
@@ -87,9 +87,9 @@ namespace PictureLibraryWPF
             Grid.SetRow(toolbar, 0);
             Grid.SetColumnSpan(toolbar, 2);
 
-            CurrentPageControls.Add(filesTree);
-            CurrentPageControls.Add(filesView);
-            CurrentPageControls.Add(toolbar);
+            _currentPageControls.Add(filesTree);
+            _currentPageControls.Add(filesView);
+            _currentPageControls.Add(toolbar);
         }
 
         private async Task LoadLibraryExplorerPageAsync()
@@ -103,7 +103,7 @@ namespace PictureLibraryWPF
 
 
             // Add libraries tree to the grid
-            var librariesTree = await LibraryExplorerControlsFactory.GetLibrariesTreeAsync();
+            var librariesTree = await _libraryExplorerControlsFactory.GetLibrariesTreeAsync();
             Grid.Children.Add(librariesTree);
             librariesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
             librariesTree.VerticalAlignment = VerticalAlignment.Stretch;
@@ -111,7 +111,7 @@ namespace PictureLibraryWPF
             Grid.SetRow(librariesTree, 8);
 
             // Add libraries view to the grid
-            var librariesView = await LibraryExplorerControlsFactory.GetLibrariesViewAsync();
+            var librariesView = await _libraryExplorerControlsFactory.GetLibrariesViewAsync();
             MainPanelGrid.Children.Add(librariesView);
             librariesView.HorizontalAlignment = HorizontalAlignment.Stretch;
             librariesView.VerticalAlignment = VerticalAlignment.Stretch;
@@ -120,7 +120,7 @@ namespace PictureLibraryWPF
             Grid.SetColumnSpan(librariesView, 2);
 
             // Add libraries toolbar to the grid
-            var librariesToolbar = LibraryExplorerToolbarLocator();
+            var librariesToolbar = _libraryExplorerToolbarLocator();
             MainPanelGrid.Children.Add(librariesToolbar);
             librariesToolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
             librariesToolbar.VerticalAlignment = VerticalAlignment.Stretch;
@@ -128,20 +128,20 @@ namespace PictureLibraryWPF
             Grid.SetRow(librariesToolbar, 0);
             Grid.SetColumnSpan(librariesToolbar, 2);
 
-            CurrentPageControls.Add(librariesTree);
-            CurrentPageControls.Add(librariesView);
-            CurrentPageControls.Add(librariesToolbar);
+            _currentPageControls.Add(librariesTree);
+            _currentPageControls.Add(librariesView);
+            _currentPageControls.Add(librariesToolbar);
         }
 
         private void RemoveCurrentPageControlsFromTheGrid()
         {
-            foreach(var t in CurrentPageControls)
+            foreach(var t in _currentPageControls)
             {
                 Grid.Children.Remove(t);
                 MainPanelGrid.Children.Remove(t);
             }
 
-            CurrentPageControls.Clear();
+            _currentPageControls.Clear();
         }
 
         private void ResetButtonClickedRectangles()

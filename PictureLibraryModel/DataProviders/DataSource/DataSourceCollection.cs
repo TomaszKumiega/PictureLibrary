@@ -9,14 +9,14 @@ namespace PictureLibraryModel.DataProviders
 {
     public class DataSourceCollection : IDataSourceCollection
     {
-        private IDataSourceCreator DataSourceCreator { get; }
+        private readonly IDataSourceCreator _dataSourceCreator;
 
         public IList<IDataSource> DataSources { get; private set; }
 
         public DataSourceCollection(IDataSourceCreator dataSourceCreator)
         {
             DataSources = new List<IDataSource>();
-            DataSourceCreator = dataSourceCreator;
+            _dataSourceCreator = dataSourceCreator;
         }
 
         public void Initialize(IEnumerable<IRemoteStorageInfo> remoteStorageInfos)
@@ -24,12 +24,12 @@ namespace PictureLibraryModel.DataProviders
             if (DataSources.Any())
                 DataSources.Clear();
 
-            var localDataSource = DataSourceCreator.CreateDataSource();
+            var localDataSource = _dataSourceCreator.CreateDataSource();
             DataSources.Add(localDataSource);
 
             foreach (var remoteStorageInfo in remoteStorageInfos)
             {
-                DataSources.Add(DataSourceCreator.CreateDataSource(remoteStorageInfo));
+                DataSources.Add(_dataSourceCreator.CreateDataSource(remoteStorageInfo));
             }
         }
 

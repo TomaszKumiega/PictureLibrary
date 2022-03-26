@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-
-namespace PictureLibraryWPF.Helpers
+﻿namespace PictureLibraryWPF.Helpers
 {
     public static class WindowsFormsWindowHelper
     {

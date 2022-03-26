@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryWPF.Dialogs
 {
+    //TODO: remove
     public interface IDialogFactory
     {
         Task<AddImagesDialog> GetAddImagesDialog(List<ImageFile> selectedFiles);

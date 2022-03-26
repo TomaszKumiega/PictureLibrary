@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
+﻿namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
     public class LibraryViewViewModel : IExplorableElementsViewViewModel
     {

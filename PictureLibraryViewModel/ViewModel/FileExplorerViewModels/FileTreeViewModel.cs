@@ -4,21 +4,22 @@ using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
     public class FileTreeViewModel : IExplorableElementsTreeViewModel
     {
+        #region Private fields
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private IExplorableElement _selectedNode;
+        private readonly IDirectoryService _directoryService;
+        #endregion
 
-        private IDirectoryService DirectoryService { get; }
-
+        #region Public properties
         public IExplorerViewModel CommonViewModel { get; }
-
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
+
+        private IExplorableElement _selectedNode;
         public IExplorableElement SelectedNode 
         { 
             get => _selectedNode; 
@@ -28,11 +29,12 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
                 CommonViewModel.CurrentlyOpenedElement = _selectedNode;
             }
         }
+        #endregion
 
         public FileTreeViewModel(IFileExplorerViewModel viewModel, IDirectoryService directoryService)
         {
             CommonViewModel = viewModel;
-            DirectoryService = directoryService;
+            _directoryService = directoryService;
         }
 
         public async Task InitializeDirectoryTreeAsync()
@@ -43,7 +45,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             try
             {
-                rootDirectories = await Task.Run(() => DirectoryService.GetRootDirectories());
+                rootDirectories = await Task.Run(() => _directoryService.GetRootDirectories());
             }
             catch (Exception e)
             {

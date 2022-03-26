@@ -1,17 +1,9 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryViewModel.ViewModel.DialogViewModels;
 using PictureLibraryViewModel.ViewModel.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PictureLibraryWPF.Dialogs
 {
@@ -28,6 +20,7 @@ namespace PictureLibraryWPF.Dialogs
             InitializeComponent();
         }
 
+        //TODO: remove methods
         private void OnProcessingStatusChanged(object sender, ProcessingStatusChangedEventArgs args)
         {
             if (args.Status == ProcessingStatus.Finished)
