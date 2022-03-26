@@ -3,6 +3,7 @@ using PictureLibraryViewModel.ViewModel;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace PictureLibraryWPF.CustomControls
@@ -12,6 +13,7 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class ElementsView : UserControl
     {
+        private readonly IExplorableElementsViewViewModel _viewModel;
         private readonly Func<TagPanel> _tagPanelLocator;
         private bool _isTagPanelVisible;
         private TagPanel _tagPanel;
@@ -21,12 +23,19 @@ namespace PictureLibraryWPF.CustomControls
             InitializeComponent();
 
             DataContext = viewModel;
-            viewModel.CommonViewModel.PropertyChanged += OnOpenedElementChanged;
             _tagPanelLocator = tagPanelLocator;
+            _viewModel = viewModel;
+
+            viewModel.CommonViewModel.PropertyChanged += OnOpenedElementChanged;
+        }
+
+        public async Task Initialize()
+        {
+            await _viewModel.CommonViewModel.LoadCurrentlyShownElementsAsync();
         }
 
         //TODO: remove methods
-        private void OnOpenedElementChanged(object sender, PropertyChangedEventArgs args)
+        protected void OnOpenedElementChanged(object sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == nameof(ILibraryExplorerViewModel.CurrentlyOpenedElement) && DataContext is LibraryViewViewModel viewModel)
             {
@@ -41,7 +50,7 @@ namespace PictureLibraryWPF.CustomControls
             }
         }
 
-        private void ShowTags()
+        protected void ShowTags()
         {
             var tagPanel = _tagPanelLocator();
             _tagPanel = tagPanel;
@@ -56,7 +65,7 @@ namespace PictureLibraryWPF.CustomControls
             _isTagPanelVisible = true;
         }
 
-        private void HideTags()
+        protected void HideTags()
         {
             ElementsViewGrid.Children.Remove(_tagPanel);
             Grid.SetColumnSpan(FilesList, 2);
@@ -64,12 +73,12 @@ namespace PictureLibraryWPF.CustomControls
             _isTagPanelVisible = false;
         }
 
-        private void ItemMouseDoubleClick(object o, EventArgs args)
+        protected void ItemMouseDoubleClick(object o, EventArgs args)
         {
             (DataContext as IExplorableElementsViewViewModel).CommonViewModel.CurrentlyOpenedElement = ((o as ListViewItem).DataContext as IExplorableElement);
         }
 
-        private void FilesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        protected void FilesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             (DataContext as IExplorableElementsViewViewModel).CommonViewModel.SelectedElements.Clear();
 

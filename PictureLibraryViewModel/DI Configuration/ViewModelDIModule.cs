@@ -32,32 +32,40 @@ namespace PictureLibraryViewModel
         private void RegisterFileExplorerViewModels(ContainerBuilder builder)
         {
             builder.RegisterType<FileExplorerViewModel>().As<IFileExplorerViewModel>();
-            builder.RegisterType<FileExplorerViewModelFactory>().As<IFileExplorerViewModelFactory>();
+            builder.RegisterType<FileExplorerToolbarViewModel>().As<IFileExplorerToolbarViewModel>();
+            builder.RegisterType<FileTreeViewModel>().As<IFileTreeViewModel>();
+            builder.RegisterType<FilesViewViewModel>().As<IFilesViewViewModel>();
         }
         private void RegisterLibraryExplorerViewModels(ContainerBuilder builder)
         {
             builder.RegisterType<LibraryExplorerViewModel>().As<ILibraryExplorerViewModel>().SingleInstance();
-            builder.RegisterType<LibraryExplorerViewModelFactory>().As<ILibraryExplorerViewModelFactory>();
-            builder.RegisterType<TagPanelViewModel>().As<ITagPanelViewModel>();
-
+            builder.RegisterType<LibraryTreeViewModel>().As<ILibraryTreeViewModel>();
             builder.RegisterType<LibraryExplorerToolboxViewModel>().As<ILibraryExplorerToolboxViewModel>();
+            builder.RegisterType<LibraryViewViewModel>().As<ILibraryViewViewModel>();
 
-            builder.Register<Func<ILibraryExplorerToolboxViewModel>>((context) =>
-            {
-                var cc = context.Resolve<IComponentContext>();
-                return () => { return cc.Resolve<ILibraryExplorerToolboxViewModel>(); };
-            });
+            builder.RegisterType<TagPanelViewModel>().As<ITagPanelViewModel>();
         }
         private void RegisterDialogViewModels(ContainerBuilder builder)
         {
-            builder.RegisterType<DialogViewModelFactory>().As<IDialogViewModelFactory>();
-            builder.RegisterType<AddTagDialogViewModel>().As<IAddTagDialogViewModel>();
-
             builder.RegisterType<AddLibraryDialogViewModel>().As<IAddLibraryDialogViewModel>();
             builder.Register<Func<IAddLibraryDialogViewModel>>((context) =>
             {
                 var cc = context.Resolve<IComponentContext>();
                 return () => { return cc.Resolve<IAddLibraryDialogViewModel>(); };
+            });
+
+            builder.RegisterType<AddImagesDialogViewModel>().As<IAddImagesDialogViewModel>();
+            builder.Register<Func<IAddImagesDialogViewModel>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<IAddImagesDialogViewModel>(); };
+            });
+
+            builder.RegisterType<AddTagDialogViewModel>().As<IAddTagDialogViewModel>();
+            builder.Register<Func<IAddTagDialogViewModel>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<IAddTagDialogViewModel>(); };
             });
         }
         private void RegisterDependencies(ContainerBuilder builder)

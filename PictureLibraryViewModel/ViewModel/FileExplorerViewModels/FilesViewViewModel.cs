@@ -1,6 +1,6 @@
 ﻿namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
-    public class FilesViewViewModel : IExplorableElementsViewViewModel
+    public class FilesViewViewModel : IFilesViewViewModel
     {
         public IExplorerViewModel CommonViewModel { get; }
 

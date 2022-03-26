@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
-    public interface IFileExplorerToolboxViewModel : IExplorerToolboxViewModel
+    public interface IFileExplorerToolbarViewModel : IExplorerToolboxViewModel
     {
         ICommand CreateFolderCommand { get; }
         ICommand GoToParentDirectoryCommand { get; }

@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryViewModel.ViewModel;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace PictureLibraryWPF.CustomControls
@@ -9,14 +10,22 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class ElementsTree : UserControl
     {
+        private readonly IExplorableElementsTreeViewModel _viewModel;
+
         public ElementsTree(IExplorableElementsTreeViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
+            _viewModel = viewModel;
+        }
+
+        public async Task Initialize()
+        {
+            await _viewModel.Initialize();
         }
 
         //TODO: remove
-        private void TreeViewItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        protected void TreeViewItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var viewModel = DataContext as IExplorableElementsTreeViewModel;
             var item = sender as TreeViewItem;

@@ -1,6 +1,7 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using PictureLibraryWPF.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,28 +13,32 @@ namespace PictureLibraryWPF.CustomControls
     /// </summary>
     public partial class FileExplorerToolbar : UserControl
     {
-        private readonly IDialogFactory _dialogFactory;
+        private readonly Func<AddImagesDialog> _addImagesDialogLocator;
 
-        public FileExplorerToolbar(IFileExplorerToolboxViewModel viewModel, IDialogFactory dialogFactory)
+        public FileExplorerToolbar(IFileExplorerToolbarViewModel viewModel, Func<AddImagesDialog> addImagesDialogLocator)
         {
-            _dialogFactory = dialogFactory;
+            _addImagesDialogLocator = addImagesDialogLocator;
+
             DataContext = viewModel;
             InitializeComponent();
         }
 
         //TODO: remove
-        private async void AddToLibraryButton_Click(object sender, RoutedEventArgs e)
+        private void AddToLibraryButton_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = DataContext as IFileExplorerToolboxViewModel;
-            var images = new List<ImageFile>();
+            var viewModel = DataContext as IFileExplorerToolbarViewModel;
+            var selectedImages = new List<ImageFile>();
 
             foreach(var t in viewModel.CommonViewModel.SelectedElements)
             {
-                if (t is ImageFile) images.Add(t as ImageFile);
+                if (t is ImageFile)
+                {
+                    selectedImages.Add((ImageFile)t);
+                }
             }
 
-            var dialog = await _dialogFactory.GetAddImagesDialog(images);
-            dialog.ShowDialog();
+            var dialog = _addImagesDialogLocator();
+            dialog.ShowDialog(selectedImages);
         }
     }
 }

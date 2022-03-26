@@ -16,12 +16,11 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
     {
         #region Private fields
         private readonly ILibraryExplorerViewModel _commonViewModel;
-        private readonly List<ImageFile> _selectedImages;
         private readonly IDataSourceCollection _dataSourceCollection;
         #endregion
 
         #region Public properties
-        public List<Library> Libraries { get; private set; }
+        public List<Library> Libraries { get; }
 
         private Library _selectedLibrary;
         public Library SelectedLibrary
@@ -33,6 +32,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedLibrary)));
             }
         }
+        public IEnumerable<ImageFile> SelectedImages { private get; set; }
         #endregion
 
         #region Commands
@@ -48,14 +48,13 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         public AddImagesDialogViewModel(
             ILibraryExplorerViewModel commonVM, 
             IDataSourceCollection dataSourceCollection, 
-            List<ImageFile> selectedImages,
             ICommandCreator commandCreator)
         {
             _commonViewModel = commonVM;
-            _selectedImages = selectedImages;
             _dataSourceCollection = dataSourceCollection;
 
             _dataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
+            Libraries = _dataSourceCollection.GetAllLibraries();
 
             commandCreator.InitializeCommands(this);
         }
@@ -75,14 +74,9 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         #endregion
 
         #region Public methods
-        public async Task Initialize()
-        {
-            Libraries = await Task.Run(() => _dataSourceCollection.GetAllLibraries());
-        }
-
         public async Task AddAsync()
         {
-            foreach(var t in _selectedImages)
+            foreach(var t in SelectedImages)
             {
                 var dataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(t.RemoteStorageInfoId);
                 await Task.Run(() => dataSource.ImageProvider.AddImageToLibrary(t, SelectedLibrary.Path));
@@ -90,7 +84,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                 dataSource.LibraryProvider.UpdateLibrary(SelectedLibrary);
             }
 
-            SelectedLibrary.Images.AddRange(_selectedImages);
+            SelectedLibrary.Images.AddRange(SelectedImages);
 
             var libraryDataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(SelectedLibrary.RemoteStorageInfoId);
             await Task.Run(() => libraryDataSource.LibraryProvider.UpdateLibrary(SelectedLibrary));

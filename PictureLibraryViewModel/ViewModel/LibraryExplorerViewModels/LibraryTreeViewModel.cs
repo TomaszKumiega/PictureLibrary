@@ -1,23 +1,20 @@
-﻿using NLog;
-using PictureLibraryModel.DataProviders;
+﻿using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.SettingsProvider;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
-    public class LibraryTreeViewModel : IExplorableElementsTreeViewModel
+    public class LibraryTreeViewModel : ILibraryTreeViewModel
     {
         #region Private fields
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IDataSourceCollection _dataSourceCollection;
+        private IExplorerViewModel _commonViewModel;
         #endregion
 
         #region Public properties
-        public IExplorerViewModel CommonViewModel { get; }
         public ObservableCollection<IExplorableElement> ExplorableElementsTree { get; private set; }
 
         private IExplorableElement _selectedNode;
@@ -27,28 +24,31 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             set
             {
                 _selectedNode = value;
-                CommonViewModel.CurrentlyOpenedElement = _selectedNode;
+                _commonViewModel.CurrentlyOpenedElement = _selectedNode;
             }
         }
         #endregion
 
-        public LibraryTreeViewModel(IDataSourceCollection dataSourceCollection, IExplorerViewModel commonVM, ISettingsProvider settingsProvider)
+        public LibraryTreeViewModel(
+            IDataSourceCollection dataSourceCollection, 
+            ILibraryExplorerViewModel commonVM, 
+            ISettingsProvider settingsProvider)
         {
             _dataSourceCollection = dataSourceCollection;
-            CommonViewModel = commonVM;
+            _commonViewModel = commonVM;
 
             _dataSourceCollection.Initialize(settingsProvider.Settings.RemoteStorageInfos);
-            ((ILibraryExplorerViewModel)CommonViewModel).RefreshViewEvent += OnRefreshView;
+            ((ILibraryExplorerViewModel)_commonViewModel).RefreshViewEvent += OnRefreshView;
         }
 
         #region Event handlers
         private async void OnRefreshView(object sender, EventArgs e)
         {
-            await InitializeLibraryTreeAsync();
+            await Initialize();
         }
         #endregion
 
-        public async Task InitializeLibraryTreeAsync()
+        public async Task Initialize()
         {
             if (ExplorableElementsTree == null)
             {
@@ -59,19 +59,9 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
                 ExplorableElementsTree.Clear();
             }
             
-            IEnumerable<Library> libraries = new List<Library>();
-
-            try
-            {
-                libraries = await Task.Run(() => _dataSourceCollection.GetAllLibraries());
-            }
-            catch(Exception e)
-            {
-                _logger.Error(e, e.Message);
-                throw new Exception("Application failed loading the library tree.");
-            }
-
-            foreach(var t in libraries)
+            var libraries = await Task.Run(() => _dataSourceCollection.GetAllLibraries());
+                
+            foreach (var t in libraries)
             {
                 ExplorableElementsTree.Add(t);
                 t.LoadIcon();

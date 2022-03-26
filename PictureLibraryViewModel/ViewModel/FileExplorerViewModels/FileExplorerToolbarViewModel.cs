@@ -4,15 +4,13 @@ using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 {
-    public class FileExplorerToolboxViewModel : IFileExplorerToolboxViewModel
+    public class FileExplorerToolbarViewModel : IFileExplorerToolbarViewModel
     {
         #region Private fields
         private readonly IDirectoryService _directoryService;
@@ -50,7 +48,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         public ICommand RefreshCommand { get; set; }
         #endregion
 
-        public FileExplorerToolboxViewModel(
+        public FileExplorerToolbarViewModel(
             IFileExplorerViewModel viewModel, 
             IFileService fileService, 
             IDirectoryService directoryService, 

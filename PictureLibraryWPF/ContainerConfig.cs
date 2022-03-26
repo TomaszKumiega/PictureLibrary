@@ -47,9 +47,6 @@ namespace PictureLibraryViewModel
         }
         private static void RegisterUIElements(ContainerBuilder builder)
         {
-            builder.RegisterType<LibraryExplorerControlsFactory>().As<ILibraryExplorerControlsFactory>();
-            builder.RegisterType<FileExplorerControlsFactory>().As<IFileExplorerControlsFactory>();
-
             builder.RegisterType<LibraryExplorerToolbar>().AsSelf();
             builder.Register<Func<LibraryExplorerToolbar>>((context) =>
             {
@@ -63,11 +60,45 @@ namespace PictureLibraryViewModel
                 var cc = context.Resolve<IComponentContext>();
                 return () => { return cc.Resolve<TagPanel>(); };
             });
+
+            builder.RegisterType<FileExplorerToolbar>().AsSelf();
+            builder.Register<Func<FileExplorerToolbar>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<FileExplorerToolbar>(); };
+            });
+
+            builder.RegisterType<FileTree>().AsSelf();
+            builder.Register<Func<FileTree>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<FileTree>(); };
+            });
+
+            builder.RegisterType<LibraryTree>().AsSelf();
+            builder.Register<Func<LibraryTree>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<LibraryTree>(); };
+            });
+
+            builder.RegisterType<FilesView>().AsSelf();
+            builder.Register<Func<FilesView>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<FilesView>(); };
+            });
+
+            builder.RegisterType<LibraryView>().AsSelf();
+            builder.Register<Func<LibraryView>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<LibraryView>(); };
+            });
+
         }
         private static void RegisterDialogs(ContainerBuilder builder)
         {
-            builder.RegisterType<DialogFactory>().As<IDialogFactory>();
-
             builder.RegisterType<AddTagDialog>().AsSelf();
             builder.Register<Func<AddTagDialog>>((context) =>
             {
@@ -80,6 +111,13 @@ namespace PictureLibraryViewModel
             {
                 var cc = context.Resolve<IComponentContext>();
                 return () => { return cc.Resolve<AddLibraryDialog>(); };
+            });
+
+            builder.RegisterType<AddImagesDialog>().AsSelf();
+            builder.Register<Func<AddImagesDialog>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<AddImagesDialog>(); };
             });
         }
         private static void RegisterCommands(ContainerBuilder builder)

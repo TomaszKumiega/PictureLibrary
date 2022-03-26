@@ -22,20 +22,29 @@ namespace PictureLibraryWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly IFileExplorerControlsFactory _fileExplorerControlsFactory;
-        private readonly ILibraryExplorerControlsFactory _libraryExplorerControlsFactory;
         private readonly List<Control> _currentPageControls;
         private readonly Func<LibraryExplorerToolbar> _libraryExplorerToolbarLocator;
+        private readonly Func<FileExplorerToolbar> _fileExplorerToolbarLocator;
+        private readonly Func<FileTree> _fileTreeLocator;
+        private readonly Func<LibraryTree> _libraryTreeLocator;
+        private readonly Func<FilesView> _filesViewLocator;
+        private readonly Func<LibraryView> _libraryViewLocator;
 
         public MainWindow(
-            IFileExplorerControlsFactory fileExplorerControlsFactory, 
-            ILibraryExplorerControlsFactory libraryExplorerControlsFactory, 
-            Func<LibraryExplorerToolbar> libraryExplorerToolbarLocator)
+            Func<LibraryExplorerToolbar> libraryExplorerToolbarLocator,
+            Func<FileExplorerToolbar> fileExplorerToolbarLocator,
+            Func<FileTree> fileTreeLocator,
+            Func<LibraryTree> libraryTreeLocator,
+            Func<FilesView> filesViewLocator,
+            Func<LibraryView> libraryViewLocator)
         {
-            _fileExplorerControlsFactory = fileExplorerControlsFactory;
-            _libraryExplorerControlsFactory = libraryExplorerControlsFactory;
+            _fileExplorerToolbarLocator = fileExplorerToolbarLocator;
             _currentPageControls = new List<Control>();
             _libraryExplorerToolbarLocator = libraryExplorerToolbarLocator;
+            _fileTreeLocator = fileTreeLocator;
+            _libraryTreeLocator= libraryTreeLocator;
+            _filesViewLocator = filesViewLocator;
+            _libraryViewLocator = libraryViewLocator;
 
             InitializeComponent();
             LoadHomePage();
@@ -62,7 +71,9 @@ namespace PictureLibraryWPF
             ToolBarShadow.Fill = new SolidColorBrush(Color.FromArgb(29, 31, 33, 1)); // change rectangle color to #2b2d30
 
             // Add files tree to the grid
-            var filesTree = await _fileExplorerControlsFactory.GetFileElementsTreeAsync();
+            var filesTree = _fileTreeLocator();
+            await filesTree.Initialize();
+
             Grid.Children.Add(filesTree);
             filesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
             filesTree.VerticalAlignment = VerticalAlignment.Stretch;
@@ -70,7 +81,8 @@ namespace PictureLibraryWPF
             Grid.SetRow(filesTree, 8);
 
             // Add files view to the grid
-            var filesView = await _fileExplorerControlsFactory.GetFileElementsViewAsync();
+            var filesView = _filesViewLocator();
+            await filesView.Initialize();
             MainPanelGrid.Children.Add(filesView);
             filesView.HorizontalAlignment = HorizontalAlignment.Stretch;
             filesView.VerticalAlignment = VerticalAlignment.Stretch;
@@ -79,7 +91,7 @@ namespace PictureLibraryWPF
             Grid.SetColumnSpan(filesView, 2);
 
             // Add file explorer toolbar to the grid
-            var toolbar = _fileExplorerControlsFactory.GetFileExplorerToolbar();
+            var toolbar = _fileExplorerToolbarLocator();
             MainPanelGrid.Children.Add(toolbar);
             toolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
             toolbar.VerticalAlignment = VerticalAlignment.Stretch;
@@ -103,7 +115,9 @@ namespace PictureLibraryWPF
 
 
             // Add libraries tree to the grid
-            var librariesTree = await _libraryExplorerControlsFactory.GetLibrariesTreeAsync();
+            var librariesTree = _libraryTreeLocator();
+            await librariesTree.Initialize();
+
             Grid.Children.Add(librariesTree);
             librariesTree.HorizontalAlignment = HorizontalAlignment.Stretch;
             librariesTree.VerticalAlignment = VerticalAlignment.Stretch;
@@ -111,7 +125,8 @@ namespace PictureLibraryWPF
             Grid.SetRow(librariesTree, 8);
 
             // Add libraries view to the grid
-            var librariesView = await _libraryExplorerControlsFactory.GetLibrariesViewAsync();
+            var librariesView = _libraryViewLocator();
+            await librariesView.Initialize();
             MainPanelGrid.Children.Add(librariesView);
             librariesView.HorizontalAlignment = HorizontalAlignment.Stretch;
             librariesView.VerticalAlignment = VerticalAlignment.Stretch;
