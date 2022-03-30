@@ -51,7 +51,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                 var list = new List<string>();
 
                 list.Add(LocalStorageString);
-                _settingsProvider.Settings.RemoteStorageInfos.ForEach(x => list.Add(x.Name));
+                _settingsProvider.Settings.RemoteStorageInfos.ToList().ForEach(x => list.Add(x.Name));
 
                 return list;
             }

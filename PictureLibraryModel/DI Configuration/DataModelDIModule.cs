@@ -4,8 +4,11 @@ using PictureLibraryModel.DataProviders.Builders;
 using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders;
+using PictureLibraryModel.Model.RemoteStorages;
+using PictureLibraryModel.Model.Settings;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryModel.Services.LibraryFileService;
+using PictureLibraryModel.Services.RemoteStorageInfoSerializer;
 using PictureLibraryModel.Services.SettingsProvider;
 using PictureLibraryModel.Services.StringEncryption;
 using System;
@@ -61,6 +64,27 @@ namespace PictureLibraryModel
                 return () => { return cc.Resolve<Tag>(); };
             });
 
+            builder.RegisterType<Settings>().AsSelf();
+            builder.Register<Func<Settings>>(context =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<Settings>(); };
+            });
+
+            builder.RegisterType<SerializableSettings>().AsSelf();
+            builder.Register<Func<SerializableSettings>>(context =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<SerializableSettings>(); };
+            });
+
+            builder.RegisterType<SerializableRemoteStorageInfo>().AsSelf();
+            builder.Register<Func<SerializableRemoteStorageInfo>>(context =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<SerializableRemoteStorageInfo>(); };
+            });
+
             builder.RegisterType<LocalLibraryBuilder>().Keyed<ILibraryBuilder>(-1);
         }
 
@@ -71,6 +95,7 @@ namespace PictureLibraryModel
             builder.RegisterType<StringEncryptionService>().As<IStringEncryptionService>();
             builder.RegisterType<DirectoryService>().As<IDirectoryService>();
             builder.RegisterType<FileService>().As<IFileService>();
+            builder.RegisterType<RemoteStorageInfosSerializer>().As<IRemoteStorageInfosSerializer>();
         }
 
         private void RegisterDataAccess(ContainerBuilder builder)

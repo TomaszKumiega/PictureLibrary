@@ -57,7 +57,7 @@ namespace PictureLibraryModel.DataProviders
             var fileStream = _fileService.OpenFile(library.Path, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
 
             _settingsProvider.Settings.ImportedLocalLibraries.Add(library.Path);
-            _settingsProvider.SaveSettingsAsync();
+            _settingsProvider.SaveSettings();
 
             _libraryFileService.WriteLibraryToStreamAsync(fileStream, library);
         }
@@ -83,7 +83,7 @@ namespace PictureLibraryModel.DataProviders
                 {
                     _logger.Debug(e, "Library file not found.");
                     _settingsProvider.Settings.ImportedLocalLibraries.Remove(t);
-                    _settingsProvider.SaveSettingsAsync();
+                    _settingsProvider.SaveSettings();
                     _logger.Info("Removed library entry: " + t + " from settings");
                 }
                 catch (Exception e)
@@ -106,7 +106,7 @@ namespace PictureLibraryModel.DataProviders
 
             _fileService.Remove(library.Path);
             _settingsProvider.Settings.ImportedLocalLibraries.Remove(library.Path);
-            _settingsProvider.SaveSettingsAsync().Wait();
+            _settingsProvider.SaveSettings();
         }
 
         public void UpdateLibrary(Library library)

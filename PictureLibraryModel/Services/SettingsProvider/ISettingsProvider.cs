@@ -7,6 +7,6 @@ namespace PictureLibraryModel.Services.SettingsProvider
     {
         Settings Settings { get; }
 
-        Task SaveSettingsAsync();
+        void SaveSettings();
     }
 }
