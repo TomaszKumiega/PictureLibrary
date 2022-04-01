@@ -76,21 +76,17 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         #region Public methods
         public async Task AddAsync()
         {
-            foreach(var t in SelectedImages)
+            var dataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(SelectedLibrary.RemoteStorageInfoId);
+
+            foreach (var t in SelectedImages)
             {
-                var dataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(t.RemoteStorageInfoId);
                 await Task.Run(() => dataSource.ImageProvider.AddImageToLibrary(t, SelectedLibrary.Path));
                 SelectedLibrary.Images.Add(t);
-                dataSource.LibraryProvider.UpdateLibrary(SelectedLibrary);
             }
 
-            SelectedLibrary.Images.AddRange(SelectedImages);
-
-            var libraryDataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(SelectedLibrary.RemoteStorageInfoId);
-            await Task.Run(() => libraryDataSource.LibraryProvider.UpdateLibrary(SelectedLibrary));
+            await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(SelectedLibrary));
 
             await _commonViewModel.LoadCurrentlyShownElementsAsync();
-
             ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Finished));
         }
         #endregion
