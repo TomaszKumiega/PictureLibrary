@@ -15,7 +15,7 @@ namespace PictureLibraryModel.Model
         public override void LoadIcon()
         {
             //TODO: fix
-            Icon = Image.FromFile(Path);
+            //Icon = Image.FromFile(Path);
         }
 
         ~LocalImageFile()

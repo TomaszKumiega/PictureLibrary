@@ -17,8 +17,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public override void Create(string path)
         {
-            var fileStream = File.Create(path);
-            fileStream.Close();
+            File.Create(path).Close();
         }
 
         public override bool Exists(string path)

@@ -121,8 +121,7 @@ namespace PictureLibraryModel.DataProviders
             document.Load(library.Path);
 
             // remove contents of the file
-            string[] text = { "" };
-            _fileService.WriteAllLines(library.Name, text);
+            _fileService.Create(library.Path);
 
             Stream stream = null;
 

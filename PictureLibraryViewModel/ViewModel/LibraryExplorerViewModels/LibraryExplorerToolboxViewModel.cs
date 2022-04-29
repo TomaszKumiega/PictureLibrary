@@ -64,6 +64,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
                 foreach (ImageFile imageFile in CommonViewModel.SelectedElements)
                 {
                     var dataSource = LibraryCommonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(imageFile.RemoteStorageInfoId);
+                    var library = (Library)CommonViewModel.CurrentlyOpenedElement;
+                    
+                    library.Images.Remove(imageFile);
+
+                    await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(library));
                     await Task.Run(() => dataSource.ImageProvider.RemoveImage(imageFile));
                 }
 
