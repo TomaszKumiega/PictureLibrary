@@ -34,7 +34,7 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type src:Library}">
-                    <TextBlock Width="100" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" Text="{Binding Name}"/>
+                    <TextBlock Width="100" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="Black" Text="{Binding Name}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
             <ListView.ItemContainerStyle>
