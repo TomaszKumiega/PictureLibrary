@@ -128,7 +128,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             {
                 foreach (var i in library.Images)
                 {
-                    if (i.Tags.Intersect(tags).Any())
+                    if (i.Tags.Intersect(tags).Any() || !tags.Any())
                     {
                         CurrentlyShownElements.Add(i);
                         i.LoadIcon();

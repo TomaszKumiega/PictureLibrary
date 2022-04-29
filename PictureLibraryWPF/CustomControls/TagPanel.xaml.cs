@@ -27,7 +27,9 @@ namespace PictureLibraryWPF.CustomControls
         //TODO: remove methods
         private void TagsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var viewModel = DataContext as ITagPanelViewModel;
+            var viewModel = (ITagPanelViewModel)DataContext;
+
+            viewModel.SelectedTags.Clear();
 
             foreach(var t in TagsListView.SelectedItems)
             {
