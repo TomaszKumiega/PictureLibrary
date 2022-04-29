@@ -7,6 +7,7 @@ using PictureLibraryWPF.Commands;
 using PictureLibraryWPF.CustomControls;
 using PictureLibraryWPF.Dialogs;
 using System;
+using System.Windows.Controls;
 
 namespace PictureLibraryViewModel
 {
@@ -55,11 +56,6 @@ namespace PictureLibraryViewModel
             });
 
             builder.RegisterType<TagPanel>().AsSelf();
-            builder.Register<Func<TagPanel>>((context) =>
-            {
-                var cc = context.Resolve<IComponentContext>();
-                return () => { return cc.Resolve<TagPanel>(); };
-            });
 
             builder.RegisterType<FileExplorerToolbar>().AsSelf();
             builder.Register<Func<FileExplorerToolbar>>((context) =>
@@ -95,6 +91,8 @@ namespace PictureLibraryViewModel
                 var cc = context.Resolve<IComponentContext>();
                 return () => { return cc.Resolve<LibraryView>(); };
             });
+
+            builder.RegisterType<GridSplitter>().AsSelf();
 
         }
         private static void RegisterDialogs(ContainerBuilder builder)

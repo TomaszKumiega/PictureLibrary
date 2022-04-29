@@ -3,11 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls"
              xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
              xmlns:src="clr-namespace:PictureLibraryModel.Model;assembly=PictureLibraryModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="150" Background="Transparent">
+             d:DesignHeight="450" d:DesignWidth="150" Background="#2b2d30">
+
+    <UserControl.Resources>
+        <Style x:Key="_ListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Border Name="_Border"
+                                Padding="2"
+                                SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="_Border" Property="Background" Value="#37393D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
@@ -19,21 +40,29 @@
 
         <TextBlock x:Name="TagsTextBlock" Grid.Row="1" FontFamily="Segoe UI" FontSize="19" Foreground="#CDCDCD" TextAlignment="Center" Text="{x:Static res:Strings.Tags}"/>
 
-        <ListView x:Name="TagsListView" Grid.Row="2" Background="Transparent" BorderThickness="0"
+        <ListView x:Name="TagsListView" Grid.Row="2" BorderThickness="0"
                   ItemsSource="{Binding Tags}"
-                  SelectionMode="Single" SelectionChanged="TagsListView_SelectionChanged">
+                  SelectionMode="Multiple" SelectionChanged="TagsListView_SelectionChanged"
+                  HorizontalAlignment="Stretch"
+                  Background="Transparent"
+                  HorizontalContentAlignment="Stretch"
+                  ItemContainerStyle="{DynamicResource _ListViewItemStyle}" >
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type src:Tag}">
-                    <TextBlock TextWrapping="NoWrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" Foreground="#cdcdcd" Text="{Binding Name}" Background="{Binding Color}"/>
+                    <TextBlock TextWrapping="NoWrap" 
+                               HorizontalAlignment="Stretch" 
+                               TextAlignment="Center" 
+                               Text="{Binding Name}" 
+                               Foreground="{Binding Color}"
+                               FontWeight="Bold" />
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                </Style>
-            </ListView.ItemContainerStyle>
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical"/>
+                    <StackPanel Orientation="Vertical" 
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Stretch" 
+                                Background="Transparent"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>

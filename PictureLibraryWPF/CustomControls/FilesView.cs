@@ -5,7 +5,7 @@ namespace PictureLibraryWPF.CustomControls
 {
     public class FilesView : ElementsView
     {
-        public FilesView(IFilesViewViewModel viewModel, Func<TagPanel> tagPanelLocator) : base(viewModel, tagPanelLocator)
+        public FilesView(IFilesViewViewModel viewModel) : base(viewModel)
         {
         }
     }

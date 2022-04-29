@@ -4,6 +4,8 @@ using PictureLibraryWPF.Dialogs;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Media;
 
 namespace PictureLibraryWPF.CustomControls
 {
@@ -29,10 +31,8 @@ namespace PictureLibraryWPF.CustomControls
 
             foreach(var t in TagsListView.SelectedItems)
             {
-                var tag = (t as ListViewItem)?.DataContext as Tag;
-                
-                if (tag != null)
-                    viewModel.SelectedTags.Add(tag);
+                var tag = (Tag)t;
+                viewModel.SelectedTags.Add(tag);
             }
         }
 
