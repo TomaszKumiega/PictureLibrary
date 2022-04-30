@@ -1,5 +1,5 @@
-﻿using System;
-using System.Drawing;
+﻿using ImageMagick;
+using System;
 using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model
@@ -12,7 +12,7 @@ namespace PictureLibraryModel.Model
         public string Path { get; set; }
         public string Color { get; set; }
         [XmlIgnore]
-        public Image Icon { get; private set; }
+        public MagickImage Icon { get; private set; }
 
         public Tag()
         {
@@ -20,13 +20,15 @@ namespace PictureLibraryModel.Model
 
         public void LoadIcon()
         {
-            //TODO: fix
-            Icon = Image.FromFile(".\\Icons\\FolderIcon.png");
+            var settings = new MagickReadSettings();
+            settings.Width = 50;
+            settings.Height = 50;
+
+            Icon = new MagickImage(".\\Icons\\FolderIcon.png", settings);
         }
 
         ~Tag()
         {
-            //TODO: fix
             Icon?.Dispose();
         }
     }

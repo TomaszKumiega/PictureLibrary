@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using ImageMagick;
 
 namespace PictureLibraryModel.Model
 {
@@ -6,7 +6,7 @@ namespace PictureLibraryModel.Model
     {
         string Name { get; set; }
         string Path { get; set; }
-        Image Icon { get; }
+        MagickImage Icon { get; }
 
         void LoadIcon();
     }

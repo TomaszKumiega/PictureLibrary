@@ -1,5 +1,5 @@
-﻿using System;
-using System.Drawing;
+﻿using ImageMagick;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Windows.Data;
@@ -11,11 +11,11 @@ namespace PictureLibraryWPF.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Image image)
+            if (value is MagickImage image)
             {
                 using (var ms = new MemoryStream())
                 {
-                    image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    image.Write(ms);
                     ms.Position = 0;
 
                     var bi = new BitmapImage();
@@ -23,6 +23,8 @@ namespace PictureLibraryWPF.Helpers
                     bi.CacheOption = BitmapCacheOption.OnLoad;
                     bi.StreamSource = ms;
                     bi.EndInit();
+
+                    ms.Dispose();
 
                     return bi;
                 }
@@ -34,7 +36,7 @@ namespace PictureLibraryWPF.Helpers
                 bi.CacheOption = BitmapCacheOption.OnLoad;
                 bi.UriSource = new Uri(imageSource);
                 bi.EndInit();
-
+                
                 return bi;
             }
 

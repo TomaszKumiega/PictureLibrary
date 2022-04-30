@@ -1,5 +1,5 @@
-﻿using System;
-using System.Drawing;
+﻿using ImageMagick;
+using System;
 
 namespace PictureLibraryModel.Model
 {
@@ -14,13 +14,15 @@ namespace PictureLibraryModel.Model
 
         public override void LoadIcon()
         {
-            //TODO: fix
-            //Icon = Image.FromFile(Path);
+            var settings = new MagickReadSettings();
+            settings.Width = 50;
+            settings.Height = 50;
+
+            Icon = new MagickImage(Path, settings);
         }
 
         ~LocalImageFile()
         {
-            //TODO: fix
             Icon?.Dispose();
         }
     }

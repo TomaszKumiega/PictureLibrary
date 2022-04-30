@@ -92,7 +92,7 @@ namespace PictureLibraryModel.DataProviders
                 }
                 finally
                 {
-                    stream.Close();
+                    stream?.Close();
                 }
             }
 

@@ -2,10 +2,9 @@
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using PictureLibraryWPF.Dialogs;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
 
 namespace PictureLibraryWPF.CustomControls
 {
@@ -24,7 +23,6 @@ namespace PictureLibraryWPF.CustomControls
             InitializeComponent();
         }
 
-        //TODO: remove methods
         private void TagsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var viewModel = (ITagPanelViewModel)DataContext;
@@ -36,6 +34,8 @@ namespace PictureLibraryWPF.CustomControls
                 var tag = (Tag)t;
                 viewModel.SelectedTags.Add(tag);
             }
+
+            viewModel.CommonViewModel.LoadCurrentlyShownElements(viewModel.SelectedTags.ToList());
         }
 
         private void AddTagButton_Click(object sender, RoutedEventArgs e)

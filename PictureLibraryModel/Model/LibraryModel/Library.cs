@@ -1,7 +1,7 @@
-﻿using PictureLibraryModel.Model.LibraryModel;
+﻿using ImageMagick;
+using PictureLibraryModel.Model.LibraryModel;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model
@@ -16,7 +16,7 @@ namespace PictureLibraryModel.Model
         public List<ImageFile> Images { get; set; }
         public Guid? RemoteStorageInfoId { get; set; }
         [XmlIgnore]
-        public Image Icon { get; private set; }
+        public MagickImage Icon { get; private set; }
 
         public Library()
         {
@@ -25,13 +25,15 @@ namespace PictureLibraryModel.Model
 
         public void LoadIcon()
         {
-            //TODO: fix
-            Icon = Image.FromFile(".\\Icons\\LibraryIcon.png");
+            var settings = new MagickReadSettings();
+            settings.Width = 50;
+            settings.Height = 50;
+
+            Icon = new MagickImage(".\\Icons\\LibraryIcon.png", settings);
         }
 
         ~Library()
         {
-            //TODO: fix
             Icon?.Dispose();
         }
     }

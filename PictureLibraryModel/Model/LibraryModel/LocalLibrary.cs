@@ -4,7 +4,6 @@
     {
         ~LocalLibrary()
         {
-            //TODO: fix
             Icon?.Dispose();
         }
     }

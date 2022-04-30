@@ -16,7 +16,6 @@ namespace PictureLibraryModel.Model
 
         ~Folder()
         {
-            //TODO: fix
             Icon?.Dispose();
         }
     }

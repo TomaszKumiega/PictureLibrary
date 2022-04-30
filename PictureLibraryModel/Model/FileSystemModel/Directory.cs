@@ -1,9 +1,9 @@
-﻿using NLog;
+﻿using ImageMagick;
+using NLog;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing;
 using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Model
@@ -21,7 +21,7 @@ namespace PictureLibraryModel.Model
         public string Name { get; set; }
         public string Extension { get; set; }
         public string Path { get; set; }
-        public Image Icon { get; protected set; }
+        public MagickImage Icon { get; protected set; }
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
         #endregion
 
@@ -93,8 +93,11 @@ namespace PictureLibraryModel.Model
 
         public virtual void LoadIcon()
         {
-            //TODO: fix
-            Icon = Image.FromFile(IconPath); 
+            var settings = new MagickReadSettings();
+            settings.Width = 50;
+            settings.Height = 50;
+            
+            Icon = new MagickImage(".\\Icons\\FolderIcon.png", settings);
         }
 
         public virtual async Task LoadSubDirectoriesAsync()

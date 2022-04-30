@@ -24,7 +24,6 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             Tags = new ObservableCollection<Tag>();
             CommonViewModel = commonVM;
 
-            SelectedTags.CollectionChanged += OnSelectedTagsChanged;
             CommonViewModel.PropertyChanged += OnCurrentlyOpenedElementChanged;
             CommonViewModel.PropertyChanged += OnTagsChanged;
         }
@@ -39,11 +38,6 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tags)));
             }
-        }
-
-        private void OnSelectedTagsChanged(object sender, EventArgs args)
-        {
-            CommonViewModel.LoadCurrentlyShownElements(SelectedTags.ToList());
         }
 
         private void OnCurrentlyOpenedElementChanged(object sender, PropertyChangedEventArgs args)

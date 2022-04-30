@@ -1,5 +1,5 @@
-﻿using PictureLibraryModel.Services.FileSystemServices;
-using System.Drawing;
+﻿using ImageMagick;
+using PictureLibraryModel.Services.FileSystemServices;
 
 namespace PictureLibraryModel.Model
 {
@@ -11,13 +11,15 @@ namespace PictureLibraryModel.Model
 
         public override void LoadIcon()
         {
-            //TODO: fix
-            Icon = Image.FromFile(".\\Icons\\DiskIcon.png");
+            var settings = new MagickReadSettings();
+            settings.Width = 50;
+            settings.Height = 50;
+
+            Icon = new MagickImage(".\\Icons\\DiskIcon.png", settings);
         }
 
         ~Drive()
         {
-            //TODO: fix
             Icon?.Dispose();
         }
     }
