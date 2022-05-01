@@ -33,6 +33,8 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         {
             if (args.PropertyName == nameof(Tags))
             {
+                Tags.Clear();
+
                 foreach (var t in ((Library)CommonViewModel.CurrentlyOpenedElement).Tags)
                     Tags.Add(t);
 
