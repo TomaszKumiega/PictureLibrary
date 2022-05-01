@@ -3,11 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:src="clr-namespace:PictureLibraryWPF.CustomControls"
-        xmlns:local="clr-namespace:PictureLibraryWPF"
         xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
         mc:Ignorable="d"
-        Title="PictureLibrary" Background="Transparent" Height="650" Width="1000" MinHeight="600" MinWidth="900" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
+        Title="PictureLibrary" 
+        Background="Transparent" 
+        Height="850" Width="1400" MinHeight="600" MinWidth="900" 
+        WindowStyle="None" 
+        AllowsTransparency="True" 
+        ResizeMode="CanResizeWithGrip"
+        WindowStartupLocation="CenterScreen" >
 
     <Window.Resources>
         <Style TargetType="Button" x:Key="CustomButton">
