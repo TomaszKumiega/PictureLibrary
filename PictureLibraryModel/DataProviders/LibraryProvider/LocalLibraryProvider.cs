@@ -79,7 +79,7 @@ namespace PictureLibraryModel.DataProviders
                     var library = _libraryFileService.ReadLibraryFromStreamAsync(stream, null);
                     libraries.Add(library);
                 }
-                catch (FileNotFoundException e)
+                catch (Exception e) when (e is FileNotFoundException || e is DirectoryNotFoundException)
                 {
                     _logger.Debug(e, "Library file not found.");
                     _settingsProvider.Settings.ImportedLocalLibraries.Remove(t);
