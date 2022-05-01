@@ -253,7 +253,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         [CanExecute(nameof(BackCommand))]
         private bool CanExecuteBackCommand(object parameter)
         {
-            return CommonViewModel.ExplorerHistory.BackStack.Count > 1;
+            return CommonViewModel.ExplorerHistory.BackStack.Count > 0;
         }
 
         [Execute(nameof(BackCommand))]
