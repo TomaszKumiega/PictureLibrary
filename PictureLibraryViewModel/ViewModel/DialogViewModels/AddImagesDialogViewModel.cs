@@ -6,6 +6,7 @@ using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -29,15 +30,31 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             set
             {
                 _selectedLibrary = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedLibrary)));
+                NotifyPropertyChanged(nameof(SelectedLibrary));
+            }
+        }
+        public Tag SelectedTag
+        {
+            get => null;
+            set
+            {
+                if (!SelectedTags.Contains(value))
+                {
+                    SelectedTags.Add(value);
+                }    
+
+                NotifyPropertyChanged(nameof(SelectedTag));
             }
         }
         public IEnumerable<ImageFile> SelectedImages { private get; set; }
+        public ObservableCollection<Tag> SelectedTags { get; }
         #endregion
 
         #region Commands
         [Command]
         public ICommand AddImagesCommand { get; set; }
+        [Command]
+        public ICommand RemoveTagCommand { get; set; }
         #endregion
 
         #region Events
@@ -55,6 +72,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
             _dataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
             Libraries = _dataSourceCollection.GetAllLibraries();
+            SelectedTags = new ObservableCollection<Tag>();
 
             commandCreator.InitializeCommands(this);
         }
@@ -70,6 +88,29 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         private async void ExecuteAddImagesCommand(object parameter)
         {
             await AddAsync();
+        }
+
+        [CanExecute(nameof(RemoveTagCommand))]
+        private bool CanExecuteRemoveTagCommand(object parameter)
+        {
+            return parameter is Tag tag && SelectedTags.Contains(tag);
+        }
+
+        [Execute(nameof(RemoveTagCommand))]
+        private void ExecuteRemoveTagCommand(object parameter)
+        {
+            if (parameter is Tag tag)
+            {
+                SelectedTags.Remove(tag);
+                NotifyPropertyChanged(nameof(SelectedTags));
+            }
+        }
+        #endregion
+
+        #region Private methods
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
 

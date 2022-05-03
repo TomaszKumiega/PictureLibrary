@@ -5,49 +5,129 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
         xmlns:src="clr-namespace:PictureLibraryModel.Model;assembly=PictureLibraryModel"
+        xmlns:templates="clr-namespace:PictureLibraryWPF.TemplateSelectors"
         xmlns:local="clr-namespace:PictureLibraryWPF.Dialogs"
         mc:Ignorable="d"
-        WindowStyle="None" ResizeMode="NoResize" Height="500" Width="250" Background="#2b2d30" WindowStartupLocation="CenterScreen">
+        WindowStyle="None" ResizeMode="NoResize" Width="300" Height="auto" SizeToContent="Height" Background="#2b2d30" WindowStartupLocation="CenterScreen">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
 
         <Rectangle x:Name="TitleBarRectangle" Grid.ColumnSpan="2" Grid.Row="0" Height="20" VerticalAlignment="Top" Fill="Transparent" MouseDown="TitleBarRectangle_MouseDown"/>
 
-        <TextBlock x:Name="TitleTextBlock" Grid.Row="1" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="19" Text="{x:Static res:Strings.AddImages}"/>
+        <TextBlock x:Name="TitleTextBlock" Grid.ColumnSpan="2" Grid.Row="1" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="19" Text="{x:Static res:Strings.AddImages}"/>
 
-        <ListView x:Name="LibrariesListView" Grid.Row="3" Background="WhiteSmoke" Width="200" BorderThickness="0"
-                  ItemsSource="{Binding Path=Libraries, Mode=OneWay}" SelectionMode="Single" SelectionChanged="LibrariesListView_SelectionChanged">
-            <ListView.ItemsPanel>
+        <Label Grid.Row="3" Grid.Column="0" Content="Biblioteka:" Foreground="#cdcdcd" FontSize="17" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+        <ComboBox 
+            ItemsSource="{Binding Path=Libraries, Mode=OneTime}" 
+            SelectedItem="{Binding SelectedLibrary}" 
+            Grid.Row="3" 
+            Grid.Column="1" 
+            Width="150" 
+            Height="22" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type src:Library}">
+                    <TextBlock 
+                        TextWrapping="NoWrap" 
+                        VerticalAlignment="Center" 
+                        TextAlignment="Center" 
+                        Foreground="Black" 
+                        Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Label Grid.Row="5" Grid.Column="0" Content="Tagi:" Foreground="#cdcdcd" FontSize="17" HorizontalAlignment="Right" VerticalAlignment="Center" />
+
+        <ComboBox 
+            ItemsSource="{Binding Path=SelectedLibrary.Tags, Mode=OneWay}" 
+            SelectedItem="{Binding SelectedTag, Mode=TwoWay}"
+            Grid.Row="5" Grid.Column="1" 
+            Width="150" Height="22" >
+            <ComboBox.Resources>
+                <DataTemplate x:Key="NullTemplate">
+                    <Label Content=""/>
+                </DataTemplate>
+                <DataTemplate x:Key="TagTemplate" DataType="{x:Type src:Tag}">
+                    <TextBlock 
+                        TextWrapping="NoWrap" 
+                        VerticalAlignment="Center" 
+                        TextAlignment="Center" 
+                        Foreground="{Binding Color}" 
+                        Text="{Binding Name}" />
+                </DataTemplate>
+            </ComboBox.Resources>
+            <ComboBox.ItemTemplateSelector >
+                <templates:TagTemplateSelector 
+                    NullTemplate="{StaticResource NullTemplate}"
+                    TagTemplate="{StaticResource TagTemplate}"/>
+            </ComboBox.ItemTemplateSelector>
+        </ComboBox>
+
+        <ItemsControl 
+            ItemsSource="{Binding SelectedTags}"
+            Grid.Row="6" 
+            Grid.Column="1" 
+            Width="150" Height="auto" MinHeight="20" 
+            Background="Transparent" 
+            BorderThickness="0">
+            <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel IsItemsHost="True" Orientation="Vertical"/>
                 </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate DataType="{x:Type src:Library}">
-                    <TextBlock Width="100" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="Black" Text="{Binding Name}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type src:Tag}">
+                    <Grid Height="20" Width="150">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20" />
+                        </Grid.ColumnDefinitions>
 
-        <Button x:Name="AddButton" Grid.Row="5" Width="100" BorderThickness="0" Command="{Binding AddImagesCommand}">
+                        <TextBlock 
+                            TextWrapping="NoWrap" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            TextAlignment="Center" 
+                            Margin="10,0,0,0"
+                            Foreground="{Binding Color}" 
+                            Text="{Binding Name}" />
+
+                        <Button Command="{Binding DataContext.RemoveTagCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding .}" Grid.Column="1" Width="20" Height="20" Background="Transparent" BorderThickness="0">
+                            <Image>
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Icons/CloseIcon.png"/>
+                                </Image.Source>
+                            </Image>
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Button x:Name="AddButton" Grid.Row="8" Grid.ColumnSpan="2" Width="100" BorderThickness="0" Command="{Binding AddImagesCommand}" >
             <TextBlock x:Name="AddButtonTextBlock" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Segoe UI" FontSize="15" Text="{x:Static res:Strings.Add}"/>
         </Button>
 
-        <Button x:Name="CancelButton" Grid.Row="7" Width="100" BorderThickness="0" Click="CancelButton_Click">
+        <Button x:Name="CancelButton" Grid.Row="10" Grid.ColumnSpan="2" Width="100" BorderThickness="0" Click="CancelButton_Click">
             <TextBlock x:Name="CancelButtonTextBlock" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Segoe UI" FontSize="15" Text="{x:Static res:Strings.Cancel}"/>
         </Button>
     </Grid>

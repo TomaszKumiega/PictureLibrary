@@ -25,19 +25,10 @@ namespace PictureLibraryWPF.Dialogs
             InitializeComponent();
         }
 
-        //TODO: remove methods
         private void OnProcessingStatusChanged(object sender, ProcessingStatusChangedEventArgs args)
         {
             if (args.Status == ProcessingStatus.Finished)
                 this.Close();
-        }
-
-        private void LibrariesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var viewModel = DataContext as IAddImagesDialogViewModel;
-            var library = LibrariesListView.SelectedItem as Library;
-
-            viewModel.SelectedLibrary = library;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
