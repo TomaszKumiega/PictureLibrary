@@ -28,6 +28,12 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         public ICommand RenameCommand { get; set; }
         [Command]
         public ICommand RefreshCommand { get; set; }
+        [Command]
+        public ICommand BackCommand { get; set; }
+        [Command]
+        public ICommand ForwardCommand { get; set; }
+        [Command]
+        public ICommand GoToParentDirectoryCommand { get; set; }
         #endregion
 
         public LibraryExplorerToolboxViewModel(ILibraryExplorerViewModel commonVM, ICommandCreator commandCreator, IClipboardService clipboard)
@@ -65,7 +71,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
                 {
                     var dataSource = LibraryCommonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(imageFile.RemoteStorageInfoId);
                     var library = (Library)CommonViewModel.CurrentlyOpenedElement;
-                    
+
                     library.Images.Remove(imageFile);
 
                     await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(library));
@@ -92,6 +98,48 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         private async void ExecuteRefreshCommand(object parameter)
         {
             await CommonViewModel.LoadCurrentlyShownElementsAsync();
+        }
+
+        [CanExecute(nameof(BackCommand))]
+        private bool CanExecuteBackCommand(object parameter)
+        {
+            return CommonViewModel.ExplorerHistory.BackStack.Count > 0;
+        }
+
+        [Execute(nameof(BackCommand))]
+        private void ExecuteBackCommand(object parameter)
+        {
+            CommonViewModel.Back();
+        }
+
+        [CanExecute(nameof(ForwardCommand))]
+        private bool CanExecuteForwardCommand(object parameter)
+        {
+            return CommonViewModel.ExplorerHistory.ForwardStack.Count > 0;
+        }
+
+        [Execute(nameof(ForwardCommand))]
+        private void ExecuteForwardCommand(object parameter)
+        {
+            CommonViewModel.Forward();
+        }
+
+        [CanExecute(nameof(GoToParentDirectoryCommand))]
+        private bool CanExecuteGoToParentDirectoryCommand(object parameter)
+        {
+            if (CommonViewModel.CurrentlyOpenedElement == null)
+                return false;
+
+            return true;
+        }
+
+        [Execute(nameof(GoToParentDirectoryCommand))]
+        private void ExecuteGoToParentDictionaryCommand(object parameter)
+        {
+            if (CommonViewModel.CurrentlyOpenedElement is Library)
+            {
+                CommonViewModel.CurrentlyOpenedElement = null;
+            }
         }
         #endregion
     }
