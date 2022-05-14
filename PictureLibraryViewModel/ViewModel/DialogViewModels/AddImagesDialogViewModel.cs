@@ -8,6 +8,7 @@ using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -121,8 +122,9 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
             foreach (var t in SelectedImages)
             {
-                await Task.Run(() => dataSource.ImageProvider.AddImageToLibrary(t, SelectedLibrary.Path));
-                SelectedLibrary.Images.Add(t);
+                t.Tags = SelectedTags.ToList();
+                var savedImageFile = await Task.Run(() => dataSource.ImageProvider.AddImageToLibrary(t, SelectedLibrary.Path));
+                SelectedLibrary.Images.Add(savedImageFile);
             }
 
             await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(SelectedLibrary));
