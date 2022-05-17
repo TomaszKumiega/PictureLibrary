@@ -1,8 +1,10 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.LibraryModel;
 using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -75,7 +77,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                 Description = Description,
                 Color = Color,
                 Path = _commonViewModel.CurrentlyOpenedElement.Name + "\\" + Name,
-                RemoteStorageInfoId = (_commonViewModel.CurrentlyOpenedElement as Library).RemoteStorageInfoId
             };
 
             var library = _commonViewModel.CurrentlyOpenedElement as Library;
@@ -83,7 +84,11 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             
             _commonViewModel.LoadCurrentlyShownElements(library.Tags);
 
-            var dataSource = _commonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(library.RemoteStorageInfoId);
+            Guid? remoteStorageInfoId = library is RemoteLibrary remoteLibrary
+                ? remoteLibrary.RemoteStorageInfoId
+                : null;
+
+            var dataSource = _commonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageInfoId);
             await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(library));
 
             _commonViewModel.InvokeTagsChanged();

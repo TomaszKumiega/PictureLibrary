@@ -63,7 +63,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
                     var imageFile = _localImageFileLocator();
                     imageFile.Name = fileInfo.Name;
                     imageFile.Path = fileInfo.FullName;
-                    imageFile.Extension = ImageExtensionHelper.GetExtension(fileInfo.Extension);
+                    imageFile.Extension = fileInfo.Extension;
 
                     content.Add(imageFile);
                 }

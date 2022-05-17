@@ -8,7 +8,6 @@ namespace PictureLibraryModel.Model
     { 
         public string Name { get; set; }
         public string Description { get; set; }
-        public Guid? RemoteStorageInfoId { get; set; }
         public string Path { get; set; }
         public string Color { get; set; }
         [XmlIgnore]

@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.LibraryModel;
 using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryViewModel.Helpers;
@@ -104,7 +105,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             }
             else if (CurrentlyOpenedElement is Library library)
             {
-                var dataSource = await Task.Run(() => DataSourceCollection.GetDataSourceByRemoteStorageId(library.RemoteStorageInfoId));
+                Guid? remoteStorageInfoId = library is RemoteLibrary remoteLibrary
+                    ? remoteLibrary.RemoteStorageInfoId
+                    : null;
+
+                var dataSource = await Task.Run(() => DataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageInfoId));
 
                 var updatedLibrary = _libraryFileService.ReloadLibrary(library);
                 

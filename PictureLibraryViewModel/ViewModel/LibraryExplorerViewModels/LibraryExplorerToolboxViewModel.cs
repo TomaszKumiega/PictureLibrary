@@ -1,4 +1,6 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.FileSystemModel;
+using PictureLibraryModel.Model.LibraryModel;
 using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
@@ -59,7 +61,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             {
                 foreach (Library library in CommonViewModel.SelectedElements)
                 {
-                    var dataSource = LibraryCommonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(library.RemoteStorageInfoId);
+                    Guid? remoteStorageInfoId = library is RemoteLibrary remoteLibrary
+                        ? remoteLibrary.RemoteStorageInfoId
+                        : null;
+
+                    var dataSource = LibraryCommonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageInfoId);
                     await Task.Run(() => dataSource.LibraryProvider.RemoveLibrary(library));
                 }
 
@@ -69,7 +75,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             {
                 foreach (ImageFile imageFile in CommonViewModel.SelectedElements)
                 {
-                    var dataSource = LibraryCommonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(imageFile.RemoteStorageInfoId);
+                    Guid? remoteStorageInfoId = imageFile is RemoteImageFile remoteImageFile
+                        ? remoteImageFile.RemoteStorageInfoId
+                        : null;
+
+                    var dataSource = LibraryCommonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageInfoId);
                     var library = (Library)CommonViewModel.CurrentlyOpenedElement;
 
                     library.Images.Remove(imageFile);

@@ -1,10 +1,12 @@
 ﻿using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.LibraryModel;
 using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -118,7 +120,11 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         #region Public methods
         public async Task AddAsync()
         {
-            var dataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(SelectedLibrary.RemoteStorageInfoId);
+            Guid? remoteStorageInfoId = SelectedLibrary is RemoteLibrary remoteLibrary
+                ? remoteLibrary.RemoteStorageInfoId
+                : null;
+
+            var dataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageInfoId);
 
             foreach (var t in SelectedImages)
             {

@@ -43,9 +43,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public ILibraryBuilder WithStorageInfoId(Guid? storageInfoId)
         {
-            _library.RemoteStorageInfoId = storageInfoId;
-
-            return this;
+            throw new NotImplementedException();
         }
 
         public Library Build()

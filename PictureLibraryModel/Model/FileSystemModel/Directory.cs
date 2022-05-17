@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace PictureLibraryModel.Model
 {
-    public abstract class Directory : IFileSystemElement, INotifyPropertyChanged
+    public abstract class Directory : IExplorableElement, INotifyPropertyChanged
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         protected IDirectoryService DirectoryService { get; set; }
         protected string IconPath => ".\\Icons\\FolderIcon.png";
 
@@ -19,28 +17,12 @@ namespace PictureLibraryModel.Model
 
         #region Public Properties
         public string Name { get; set; }
-        public string Extension { get; set; }
         public string Path { get; set; }
         public MagickImage Icon { get; protected set; }
         public ObservableCollection<Directory> SubDirectories { get; protected set; }
         #endregion
 
         #region Constructors
-        public Directory()
-        {
-            SubDirectories = new ObservableCollection<Directory>();
-
-            PropertyChanged += OnIsExpandedChanged;
-        }
-
-        public Directory(IDirectoryService directoryService)
-        {
-            SubDirectories = new ObservableCollection<Directory>();
-            DirectoryService = directoryService;
-
-            PropertyChanged += OnIsExpandedChanged;
-        }
-
         public Directory(string path, string name, IDirectoryService directoryService)
         {
             Path = path;
@@ -103,21 +85,13 @@ namespace PictureLibraryModel.Model
         public virtual async Task LoadSubDirectoriesAsync()
         {
             SubDirectories.Clear();
+            
+            var directories = await Task.Run(() => DirectoryService.GetSubFolders(Path));
 
-            try
+            foreach (var t in directories)
             {
-                var directories = await Task.Run(() => DirectoryService.GetSubFolders(Path));
-
-                foreach (var t in directories)
-                {
-                    SubDirectories.Add(t);
-                    t.LoadIcon();
-                }
-            }
-            catch(Exception e)
-            {
-                _logger.Error(e, e.Message);
-                throw new Exception("Application failed loading sub directories of: " + Path + " directory.");
+                SubDirectories.Add(t);
+                t.LoadIcon();
             }
         }
     }

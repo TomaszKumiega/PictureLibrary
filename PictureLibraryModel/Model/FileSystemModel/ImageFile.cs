@@ -39,10 +39,8 @@ namespace PictureLibraryModel.Model
     [XmlInclude(typeof(LocalImageFile))]
     public abstract class ImageFile : File
     {
-        new public ImageExtension Extension { get; set; }
         public string LibraryFullName { get; set; }
         public List<Tag> Tags { get; set; }
-        public virtual Guid? RemoteStorageInfoId { get; }
 
         public ImageFile() : base()
         {

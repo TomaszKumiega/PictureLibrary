@@ -19,11 +19,10 @@ namespace PictureLibraryModel.Services.LibraryFileService
             }
         }
 
-        public Library ReadLibraryFromStreamAsync(Stream fileStream, Guid? remoteStorageId)
+        public Library ReadLibraryFromStreamAsync(Stream fileStream)
         {
             var serializer = new XmlSerializer(typeof(Library), AttributeOverrides);
             var library = (Library)serializer.Deserialize(fileStream);
-            library.RemoteStorageInfoId = remoteStorageId;
 
             return library;
         }
@@ -40,7 +39,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
         {
             var fileStream = System.IO.File.Open(library.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
             
-            var updatedLibrary = ReadLibraryFromStreamAsync(fileStream, library.RemoteStorageInfoId);
+            var updatedLibrary = ReadLibraryFromStreamAsync(fileStream);
             
             fileStream.Close();
 

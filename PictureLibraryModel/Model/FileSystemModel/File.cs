@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model
 {
-    public abstract class File : IFileSystemElement
+    public abstract class File : IExplorableElement
     {
         public string Name { get; set; }
         public string Extension { get; set; }
@@ -17,10 +17,5 @@ namespace PictureLibraryModel.Model
         }
 
         public abstract void LoadIcon();
-
-        public virtual bool Exists()
-        {
-            return System.IO.File.Exists(Path);
-        }
     }
 }

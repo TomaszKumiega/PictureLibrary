@@ -5,8 +5,6 @@ namespace PictureLibraryModel.Model
 {
     public class LocalImageFile : ImageFile
     {
-        public override Guid? RemoteStorageInfoId => null;
-
         public LocalImageFile() : base()
         {
 

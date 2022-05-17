@@ -35,7 +35,7 @@ namespace PictureLibraryModel.DataProviders
 
             newImageFile.Name = fileInfo.Name;
             newImageFile.Path = fileInfo.FullName;
-            newImageFile.Extension = ImageExtensionHelper.GetExtension(fileInfo.Extension);
+            newImageFile.Extension = fileInfo.Extension;
             newImageFile.LibraryFullName = libraryFullName;
 
             return newImageFile;
