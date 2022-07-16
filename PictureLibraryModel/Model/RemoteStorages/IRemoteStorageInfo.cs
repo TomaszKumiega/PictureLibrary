@@ -8,7 +8,7 @@ namespace PictureLibraryModel.Model.RemoteStorages
     {
         Guid Id { get; set; }
         string Name { get; }
-        RemoteStorageType StorageType { get; set; }
+        DataSourceType DataSourceType { get; set; }
 
         void Deserialize(string serializedStorageInfo);
 

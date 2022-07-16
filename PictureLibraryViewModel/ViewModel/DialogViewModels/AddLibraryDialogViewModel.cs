@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.DI_Configuration;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders;
 using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryModel.Services.SettingsProvider;
@@ -21,7 +22,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         #region Private fields
         private readonly ILibraryExplorerViewModel _commonViewModel;
         private readonly ISettingsProvider _settingsProvider;
-        private readonly IImplementationSelector<int, ILibraryBuilder> _libraryBuilderImplementationSelector;
+        private readonly IImplementationSelector<DataSourceType, ILibraryBuilder> _libraryBuilderImplementationSelector;
         private readonly IDataSourceCollection _dataSourceCollection;
 
         private string LocalStorageString => "Ten komputer";
@@ -84,7 +85,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             ILibraryExplorerViewModel commonVM, 
             ICommandCreator commandCreator,
             ISettingsProvider settingsProviderService, 
-            IImplementationSelector<int, ILibraryBuilder> libraryBuilderImplementationSelector)
+            IImplementationSelector<DataSourceType, ILibraryBuilder> libraryBuilderImplementationSelector)
         {
             _dataSourceCollection = dataSourceCollection;
             _commonViewModel = commonVM;
@@ -173,18 +174,23 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             }
 
             var selectedStorage = GetSelectedStorage();
-            var storageType = selectedStorage == null ? -1 : (int)selectedStorage.StorageType;
+            DataSourceType storageType = selectedStorage != null 
+                ? selectedStorage.DataSourceType
+                : DataSourceType.Local;
 
             var libraryBuilder = _libraryBuilderImplementationSelector.Select(storageType);
             var library = libraryBuilder.CreateLibrary()
                 .WithName(Name)
                 .WithDescription(Description)
-                .WithStorageInfoId(selectedStorage?.Id)
                 .Build();
 
-            if (storageType == -1)
+            if (storageType == DataSourceType.Local)
             {
                 library.Path = Directory + "\\" + Name + "\\" + Name + ".plib";
+            }
+            else if (DataSourceType.Remote.HasFlag(storageType) && library is RemoteLibrary remoteLibrary)
+            {
+                remoteLibrary.RemoteStorageInfoId = _settingsProvider.Settings.RemoteStorageInfos.First(x => x.Name == SelectedStorage).Id;
             }
 
             var dataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(selectedStorage?.Id);

@@ -8,7 +8,7 @@ namespace PictureLibraryModel.Model.Builders
 
         private Library _library;
 
-        public LocalLibraryBuilder(Func<Library> libraryLocator)
+        public LocalLibraryBuilder(Func<LocalLibrary> libraryLocator)
         {
             _libraryLocator = libraryLocator;
         }
@@ -41,14 +41,11 @@ namespace PictureLibraryModel.Model.Builders
             return this;
         }
 
-        public ILibraryBuilder WithStorageInfoId(Guid? storageInfoId)
-        {
-            throw new NotImplementedException();
-        }
-
         public Library Build()
         {
             return _library;
         }
     }
 }
+
+

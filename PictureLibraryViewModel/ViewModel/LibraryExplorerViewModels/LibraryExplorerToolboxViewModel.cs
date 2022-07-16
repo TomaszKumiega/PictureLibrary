@@ -1,6 +1,5 @@
 ﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.FileSystemModel;
-using PictureLibraryModel.Model.LibraryModel;
 using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;

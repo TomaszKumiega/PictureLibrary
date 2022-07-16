@@ -1,6 +1,5 @@
 ﻿using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.Model;
-using PictureLibraryModel.Model.LibraryModel;
 using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;

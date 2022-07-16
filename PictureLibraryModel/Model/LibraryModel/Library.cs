@@ -1,13 +1,11 @@
 ﻿using ImageMagick;
-using PictureLibraryModel.Model.LibraryModel;
-using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model
 {
     [XmlInclude(typeof(LocalLibrary))]
-    public class Library : IExplorableElement
+    public abstract class Library : IExplorableElement
     {
         public string Path { get; set; }
         public string Name { get; set; }
@@ -15,21 +13,9 @@ namespace PictureLibraryModel.Model
         public List<Tag> Tags { get; set; }
         public List<ImageFile> Images { get; set; }
         [XmlIgnore]
-        public MagickImage Icon { get; private set; }
+        public MagickImage Icon { get; protected set; }
 
-        public Library()
-        {
-            
-        }
-
-        public void LoadIcon()
-        {
-            var settings = new MagickReadSettings();
-            settings.Width = 50;
-            settings.Height = 50;
-
-            Icon = new MagickImage(".\\Icons\\LibraryIcon.png", settings);
-        }
+        abstract public void LoadIcon();
 
         ~Library()
         {

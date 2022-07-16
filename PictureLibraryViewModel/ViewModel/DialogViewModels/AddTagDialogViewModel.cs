@@ -1,5 +1,4 @@
 ﻿using PictureLibraryModel.Model;
-using PictureLibraryModel.Model.LibraryModel;
 using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;

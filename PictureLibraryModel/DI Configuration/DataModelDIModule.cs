@@ -50,11 +50,11 @@ namespace PictureLibraryModel
                 return () => { return cc.Resolve<Folder>(); };
             });
 
-            builder.RegisterType<Library>().AsSelf();
-            builder.Register<Func<Library>>(context =>
+            builder.RegisterType<LocalLibrary>().AsSelf();
+            builder.Register<Func<LocalLibrary>>(context =>
             {
                 var cc = context.Resolve<IComponentContext>();
-                return () => { return cc.Resolve<Library>(); };
+                return () => { return cc.Resolve<LocalLibrary>(); };
             });
 
             builder.RegisterType<Tag>().AsSelf();
@@ -85,7 +85,7 @@ namespace PictureLibraryModel
                 return () => { return cc.Resolve<SerializableRemoteStorageInfo>(); };
             });
 
-            builder.RegisterType<LocalLibraryBuilder>().Keyed<ILibraryBuilder>(-1);
+            builder.RegisterType<LocalLibraryBuilder>().Keyed<ILibraryBuilder>(DataSourceType.Local);
         }
 
         private void RegisterServices(ContainerBuilder builder)
@@ -100,7 +100,7 @@ namespace PictureLibraryModel
 
         private void RegisterDataAccess(ContainerBuilder builder)
         {
-            builder.RegisterType<LocalDataSourceBuilder>().Keyed<IDataSourceBuilder>(-1);
+            builder.RegisterType<LocalDataSourceBuilder>().Keyed<IDataSourceBuilder>(DataSourceType.Local);
             builder.RegisterType<DataSourceCollection>().As<IDataSourceCollection>();
 
             builder.RegisterType<DataSource>().As<IDataSource>();

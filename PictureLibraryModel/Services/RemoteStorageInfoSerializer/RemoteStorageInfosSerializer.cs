@@ -7,11 +7,11 @@ namespace PictureLibraryModel.Services.RemoteStorageInfoSerializer
 {
     public class RemoteStorageInfosSerializer : IRemoteStorageInfosSerializer
     {
-        private readonly IImplementationSelector<RemoteStorageType, IRemoteStorageInfo> _remoteStorageInfoImplementationSelector;
+        private readonly IImplementationSelector<DataSourceType, IRemoteStorageInfo> _remoteStorageInfoImplementationSelector;
         private readonly Func<SerializableRemoteStorageInfo> _serializableRemoteStorageInfoLocator;
 
         public RemoteStorageInfosSerializer(
-            IImplementationSelector<RemoteStorageType, IRemoteStorageInfo> remoteStorageInfoImplementationSelector, 
+            IImplementationSelector<DataSourceType, IRemoteStorageInfo> remoteStorageInfoImplementationSelector, 
             Func<SerializableRemoteStorageInfo> serializableRemoteStorageInfoLocator)
         {
             _remoteStorageInfoImplementationSelector = remoteStorageInfoImplementationSelector;
@@ -24,7 +24,7 @@ namespace PictureLibraryModel.Services.RemoteStorageInfoSerializer
 
             foreach (var serializedRemoteStorageInfo in serializedRemoteStorageInfos)
             {
-                var remoteStorageInfo = _remoteStorageInfoImplementationSelector.Select(serializedRemoteStorageInfo.RemoteStorageType);
+                var remoteStorageInfo = _remoteStorageInfoImplementationSelector.Select(serializedRemoteStorageInfo.DataSourceType);
 
                 remoteStorageInfo.Deserialize(serializedRemoteStorageInfo.SerializedRemoteStorageInfo);
 
@@ -41,7 +41,7 @@ namespace PictureLibraryModel.Services.RemoteStorageInfoSerializer
             foreach (var remoteStorageInfo in remoteStorageInfos)
             {
                 var serializableRemoteStorageInfo = _serializableRemoteStorageInfoLocator();
-                serializableRemoteStorageInfo.RemoteStorageType = remoteStorageInfo.StorageType;
+                serializableRemoteStorageInfo.DataSourceType = remoteStorageInfo.DataSourceType;
                 serializableRemoteStorageInfo.SerializedRemoteStorageInfo = remoteStorageInfo.ToString();
 
                 serializedRemoteStorageInfos.Add(serializableRemoteStorageInfo);

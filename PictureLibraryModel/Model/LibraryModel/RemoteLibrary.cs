@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PictureLibraryModel.Model.LibraryModel
+namespace PictureLibraryModel.Model
 {
     public abstract class RemoteLibrary : Library
     {

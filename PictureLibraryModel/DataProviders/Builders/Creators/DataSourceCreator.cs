@@ -6,18 +6,18 @@ namespace PictureLibraryModel.DataProviders.Builders
 {
     public class DataSourceCreator : IDataSourceCreator
     {
-        private IImplementationSelector<int, IDataSourceBuilder> BuildersImplementations { get; }
+        private IImplementationSelector<DataSourceType, IDataSourceBuilder> BuildersImplementations { get; }
 
-        public DataSourceCreator(IImplementationSelector<int, IDataSourceBuilder> buildersImplementations)
+        public DataSourceCreator(IImplementationSelector<DataSourceType, IDataSourceBuilder> buildersImplementations)
         {
             BuildersImplementations = buildersImplementations;
         }
 
         public IDataSource CreateDataSource(IRemoteStorageInfo remoteStorageInfo = null)
         {
-            int storageType = remoteStorageInfo != null
-                ? (int)remoteStorageInfo.StorageType
-                : -1;
+            DataSourceType storageType = remoteStorageInfo != null
+                ? remoteStorageInfo.DataSourceType
+                : DataSourceType.Local;
 
             var builder = BuildersImplementations.Select(storageType);
 

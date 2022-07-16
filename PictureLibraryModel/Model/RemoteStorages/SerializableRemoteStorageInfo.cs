@@ -3,6 +3,6 @@
     public class SerializableRemoteStorageInfo
     {
         public string SerializedRemoteStorageInfo { get; set; }
-        public RemoteStorageType RemoteStorageType { get; set; }
+        public DataSourceType DataSourceType { get; set; }
     }
 }
