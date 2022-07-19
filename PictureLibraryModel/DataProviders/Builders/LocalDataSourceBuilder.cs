@@ -1,4 +1,4 @@
-﻿using PictureLibraryModel.Model.RemoteStorages;
+﻿using PictureLibraryModel.Model;
 using System;
 
 namespace PictureLibraryModel.DataProviders.Builders

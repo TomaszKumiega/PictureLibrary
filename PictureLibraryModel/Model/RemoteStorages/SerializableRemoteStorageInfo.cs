@@ -1,4 +1,4 @@
-﻿namespace PictureLibraryModel.Model.RemoteStorages
+﻿namespace PictureLibraryModel.Model
 {
     public class SerializableRemoteStorageInfo
     {

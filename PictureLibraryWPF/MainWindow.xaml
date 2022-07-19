@@ -154,7 +154,7 @@
         </Button>
 
         <!--Main Panel Grid-->
-        <Grid x:Name="MainPanelGrid" Grid.Row="2" Grid.Column="2" Grid.RowSpan="10">
+        <Grid x:Name="MainPanelGrid" Grid.Row="2" Grid.Column="2" Grid.RowSpan="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="100"/>

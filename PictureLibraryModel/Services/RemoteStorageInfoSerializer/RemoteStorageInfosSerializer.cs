@@ -1,5 +1,5 @@
 ﻿using PictureLibraryModel.DI_Configuration;
-using PictureLibraryModel.Model.RemoteStorages;
+using PictureLibraryModel.Model;
 using System;
 using System.Collections.Generic;
 

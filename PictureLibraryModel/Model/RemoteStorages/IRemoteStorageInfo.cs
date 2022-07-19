@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PictureLibraryModel.Model.RemoteStorages
+namespace PictureLibraryModel.Model
 {
     public interface IRemoteStorageInfo
     {

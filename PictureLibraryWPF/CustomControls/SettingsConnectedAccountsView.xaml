@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="PictureLibraryWPF.CustomControls.SettingsConnectedAccountsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:model="clr-namespace:PictureLibraryModel.Model;assembly=PictureLibraryModel"
+             xmlns:local="clr-namespace:PictureLibraryWPF.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style TargetType="Button" x:Key="CustomButton">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="WhiteSmoke" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="MyContentPresenter" 
+                                          Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="WhiteSmoke"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7183ed"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Połączone konta:" Grid.Column="0" Grid.ColumnSpan="2" Foreground="#cdcdcd" FontSize="19" VerticalAlignment="Center" TextAlignment="Center"/>
+        <ListView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Background="Transparent" BorderThickness="0">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel IsItemsHost="true" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type model:IRemoteStorageInfo}">
+                    <StackPanel Width="auto" Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" TextAlignment="Center" VerticalAlignment="Center" Foreground="#cdcdcd"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Grid.Row="2" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" Width="50">
+            <Image HorizontalAlignment="Right" Width="40" Height="40" Source="pack://application:,,,/Icons/AddIcon.png"/>
+        </Button>
+        <Button Grid.Row="2" Grid.Column="1" Background="Transparent" BorderThickness="0" HorizontalAlignment="Left" Width="50">
+            <TextBlock Text="Logout" Foreground="#cdcdcd"/>
+        </Button>
+    </Grid>
+</UserControl>

@@ -1,4 +1,4 @@
-﻿using PictureLibraryModel.Model.RemoteStorages;
+﻿using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Settings;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryModel.Services.RemoteStorageInfoSerializer;

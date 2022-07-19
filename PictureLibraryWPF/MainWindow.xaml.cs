@@ -29,6 +29,7 @@ namespace PictureLibraryWPF
         private readonly Func<LibraryTree> _libraryTreeLocator;
         private readonly Func<FilesView> _filesViewLocator;
         private readonly Func<LibraryView> _libraryViewLocator;
+        private readonly Func<SettingsPanel> _settingsPanelLocator;
 
         public MainWindow(
             Func<LibraryExplorerToolbar> libraryExplorerToolbarLocator,
@@ -36,7 +37,8 @@ namespace PictureLibraryWPF
             Func<FileTree> fileTreeLocator,
             Func<LibraryTree> libraryTreeLocator,
             Func<FilesView> filesViewLocator,
-            Func<LibraryView> libraryViewLocator)
+            Func<LibraryView> libraryViewLocator,
+            Func<SettingsPanel> settingsPanelLocator)
         {
             _fileExplorerToolbarLocator = fileExplorerToolbarLocator;
             _currentPageControls = new List<Control>();
@@ -45,6 +47,7 @@ namespace PictureLibraryWPF
             _libraryTreeLocator= libraryTreeLocator;
             _filesViewLocator = filesViewLocator;
             _libraryViewLocator = libraryViewLocator;
+            _settingsPanelLocator = settingsPanelLocator;
 
             InitializeComponent();
             LoadHomePage();
@@ -148,6 +151,22 @@ namespace PictureLibraryWPF
             _currentPageControls.Add(librariesToolbar);
         }
 
+        private async Task LoadSettingsPageAsync()
+        {
+            ResetButtonClickedRectangles();
+            RemoveCurrentPageControlsFromTheGrid();
+
+            // Add libraries view to the grid
+            var settingsPanel = _settingsPanelLocator();
+            MainPanelGrid.Children.Add(settingsPanel);
+            settingsPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
+            settingsPanel.VerticalAlignment = VerticalAlignment.Stretch;
+            Grid.SetColumn(settingsPanel, 0);
+            Grid.SetRow(settingsPanel, 1);
+            Grid.SetColumnSpan(settingsPanel, 2);
+            Grid.SetRowSpan(settingsPanel, 2);
+        }
+
         private void RemoveCurrentPageControlsFromTheGrid()
         {
             foreach(var t in _currentPageControls)
@@ -223,9 +242,9 @@ namespace PictureLibraryWPF
             await LoadLibraryExplorerPageAsync();
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        private async void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            await LoadSettingsPageAsync();
         }
         #endregion
     }

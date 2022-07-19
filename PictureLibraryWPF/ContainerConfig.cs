@@ -94,6 +94,20 @@ namespace PictureLibraryViewModel
 
             builder.RegisterType<GridSplitter>().AsSelf();
 
+            builder.RegisterType<SettingsConnectedAccountsView>().AsSelf();
+            builder.Register<Func<SettingsConnectedAccountsView>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<SettingsConnectedAccountsView>(); };
+            });
+
+            builder.RegisterType<SettingsPanel>().AsSelf();
+            builder.Register<Func<SettingsPanel>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<SettingsPanel>(); };
+            });
+
         }
         private static void RegisterDialogs(ContainerBuilder builder)
         {

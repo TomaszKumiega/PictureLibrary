@@ -1,5 +1,4 @@
-﻿using PictureLibraryModel.Model.RemoteStorages;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model.Settings
