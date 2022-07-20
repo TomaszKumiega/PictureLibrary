@@ -67,6 +67,8 @@ namespace PictureLibraryViewModel
                 var cc = context.Resolve<IComponentContext>();
                 return () => { return cc.Resolve<IAddTagDialogViewModel>(); };
             });
+
+            builder.RegisterType<ChooseAccountTypeDialogViewModel>().As<IChooseAccountTypeDialogViewModel>();
         }
         private void RegisterDependencies(ContainerBuilder builder)
         {

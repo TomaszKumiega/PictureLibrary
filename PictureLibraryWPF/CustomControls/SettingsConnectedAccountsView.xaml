@@ -65,7 +65,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Grid.Row="2" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" Width="50">
+        <Button x:Name="AddButton" Grid.Row="2" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" Width="50" Click="AddButton_Click">
             <Image HorizontalAlignment="Right" Width="40" Height="40" Source="pack://application:,,,/Icons/AddIcon.png"/>
         </Button>
         <Button Grid.Row="2" Grid.Column="1" Background="Transparent" BorderThickness="0" HorizontalAlignment="Left" Width="50">

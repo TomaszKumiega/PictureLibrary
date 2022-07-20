@@ -131,6 +131,13 @@ namespace PictureLibraryViewModel
                 var cc = context.Resolve<IComponentContext>();
                 return () => { return cc.Resolve<AddImagesDialog>(); };
             });
+
+            builder.RegisterType<ChooseAccountTypeDialog>().AsSelf();
+            builder.Register<Func<ChooseAccountTypeDialog>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<ChooseAccountTypeDialog>(); };
+            });
         }
         private static void RegisterCommands(ContainerBuilder builder)
         {
