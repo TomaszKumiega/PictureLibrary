@@ -15,14 +15,10 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
     internal class GoogleDriveAPIClient : IGoogleDriveAPIClient
     {
         private readonly ICredentialsProvider _credentialsProvider;
-        private readonly IFileService _fileService;
 
-        public GoogleDriveAPIClient(
-            ICredentialsProvider credentialsProvider, 
-            IFileService fileService)
+        public GoogleDriveAPIClient(ICredentialsProvider credentialsProvider)
         {
             _credentialsProvider = credentialsProvider;
-            _fileService = fileService;
         }
 
         #region Private methods
@@ -61,19 +57,19 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             return stream;
         }
 
-        public Google.Apis.Drive.v3.Data.File UploadFileToFolder(string filePath, string folderId, string contentType, string userName)
+        public Google.Apis.Drive.v3.Data.File UploadFileToFolder(Stream fileStream, string fileName, string folderId, string contentType, string userName)
         {
             DriveService service = GetDriveService(userName);
 
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
-                Name = _fileService.GetInfo(filePath).Name,
+                Name = fileName,
                 Parents = new List<string> { folderId },
             };
 
             FilesResource.CreateMediaUpload request = service.Files.Create(
                 fileMetadata,
-                _fileService.OpenFile(filePath, FileMode.Open),
+                fileStream,
                 contentType);
             
             request.Fields = "id";
@@ -85,14 +81,15 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             return file;
         }
         
-        public string CreateFolder(string folderName, string userName)
+        public string CreateFolder(string folderName, string userName, List<string> parentsIds = null)
         {
             var service = GetDriveService(userName);
 
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
                 Name = folderName,
-                MimeType = GoogleDriveAPIMimeTypes.Folder
+                MimeType = GoogleDriveAPIMimeTypes.Folder,
+                Parents = parentsIds,
             };
 
             var request = service.Files.Create(fileMetadata);
@@ -147,11 +144,21 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             return file.Id; 
         }
 
-        public bool FolderExists(string userName, string folderName)
+        public bool FolderExists(string userName, string folderName, out string folderId)
         {
-            var files = SearchFiles(userName, GoogleDriveAPIMimeTypes.Folder, "files(name)");
+            var files = SearchFiles(userName, GoogleDriveAPIMimeTypes.Folder, "files(id, name)");
+            var file = files.FirstOrDefault(x => x.Name == folderName);
 
-            return files.Any(x => x.Name == folderName);
+            if (file != null)
+            {
+                folderId = file.Id;
+                return true;
+            }
+            else
+            {
+                folderId = null;
+                return false;
+            }
         }
 
         public Google.Apis.Drive.v3.Data.File GetFileMetadata(string userName, string fileId, string fields)
@@ -164,6 +171,15 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             var fileMetadata = request.Execute();
 
             return fileMetadata;
+        }
+
+        public void RemoveFile(string fileId, string userName)
+        {
+            DriveService service = GetDriveService(userName);
+
+            FilesResource.DeleteRequest deleteRequest = service.Files.Delete(fileId);
+
+            deleteRequest.Execute();
         }
     }
 }
