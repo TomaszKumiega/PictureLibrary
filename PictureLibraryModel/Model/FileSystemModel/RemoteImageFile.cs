@@ -6,6 +6,6 @@ namespace PictureLibraryModel.Model.FileSystemModel
     {
         public RemoteImageFile() : base() { }
 
-        public virtual Guid RemoteStorageInfoId { get; }
+        public virtual Guid RemoteStorageInfoId { get; set; }
     }
 }

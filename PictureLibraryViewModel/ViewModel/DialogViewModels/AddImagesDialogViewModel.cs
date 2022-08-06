@@ -127,7 +127,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             foreach (var t in SelectedImages)
             {
                 t.Tags = SelectedTags.ToList();
-                var savedImageFile = await Task.Run(() => dataSource.ImageProvider.AddImageToLibrary(t, SelectedLibrary.Path));
+                var savedImageFile = await Task.Run(() => dataSource.ImageProvider.AddImageToLibrary(t, SelectedLibrary));
                 SelectedLibrary.Images.Add(savedImageFile);
             }
 

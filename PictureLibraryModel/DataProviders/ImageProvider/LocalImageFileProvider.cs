@@ -17,14 +17,14 @@ namespace PictureLibraryModel.DataProviders
             _imageFileLocator = imageFileLocator;
         }
 
-        public ImageFile AddImageToLibrary(ImageFile imageFile, string libraryFullName)
+        public ImageFile AddImageToLibrary(ImageFile imageFile, Library library)
         {
             if (imageFile == null)
                 throw new ArgumentNullException(nameof(imageFile));
-            if (string.IsNullOrEmpty(libraryFullName))
-                throw new ArgumentException(null, nameof(libraryFullName));
+            if (library is not LocalLibrary)
+                throw new InvalidOperationException("Invalid library type");
 
-            var directory = _directoryService.GetParent(libraryFullName);
+            var directory = _directoryService.GetParent(library.Path);
             var path = directory.Path + "\\Images\\" + imageFile.Name;
 
             _fileService.Copy(imageFile.Path, path);
@@ -36,7 +36,7 @@ namespace PictureLibraryModel.DataProviders
             newImageFile.Name = fileInfo.Name;
             newImageFile.Path = fileInfo.FullName;
             newImageFile.Extension = fileInfo.Extension;
-            newImageFile.LibraryFullName = libraryFullName;
+            newImageFile.LibraryFullName = library.Path;
 
             return newImageFile;
         }
