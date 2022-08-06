@@ -19,17 +19,17 @@ namespace PictureLibraryModel.Services.LibraryFileService
             }
         }
 
-        public Library ReadLibraryFromStreamAsync(Stream fileStream)
+        public TLibrary ReadLibraryFromStreamAsync<TLibrary>(Stream fileStream)
         {
-            var serializer = new XmlSerializer(typeof(Library), AttributeOverrides);
-            var library = (Library)serializer.Deserialize(fileStream);
+            var serializer = new XmlSerializer(typeof(TLibrary), AttributeOverrides);
+            var library = (TLibrary)serializer.Deserialize(fileStream);
 
             return library;
         }
 
         public void WriteLibraryToStreamAsync(Stream fileStream, Library library)
         {
-            var serializer = new XmlSerializer(typeof(Library), AttributeOverrides);
+            var serializer = new XmlSerializer(library.GetType(), AttributeOverrides);
             serializer.Serialize(fileStream, library);
 
             fileStream.Close();
@@ -39,7 +39,7 @@ namespace PictureLibraryModel.Services.LibraryFileService
         {
             var fileStream = System.IO.File.Open(library.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
             
-            var updatedLibrary = ReadLibraryFromStreamAsync(fileStream);
+            var updatedLibrary = ReadLibraryFromStreamAsync<LocalLibrary>(fileStream);
             
             fileStream.Close();
 
