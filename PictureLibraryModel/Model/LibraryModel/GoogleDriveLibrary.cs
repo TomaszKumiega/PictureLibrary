@@ -12,6 +12,8 @@ namespace PictureLibraryModel.Model.LibraryModel
         private readonly IGoogleDriveAPIClient _client;
 
         public string FileId { get; set; }
+        public string LibraryFolderId { get; set; }
+        public string ImagesFolderId { get; set; }
 
         public GoogleDriveLibrary(
             ISettingsProvider settingsProvider,

@@ -1,10 +1,12 @@
 ﻿using ImageMagick;
+using PictureLibraryModel.Model.LibraryModel;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model
 {
     [XmlInclude(typeof(LocalLibrary))]
+    [XmlInclude(typeof(GoogleDriveLibrary))]
     public abstract class Library : IExplorableElement
     {
         public string Path { get; set; }
