@@ -87,14 +87,14 @@ namespace PictureLibraryModel
 
         private void RegisterServices(ContainerBuilder builder)
         {
-            builder.RegisterType<LibraryFileService>().As<ILibraryFileService>();
-            builder.RegisterType<SettingsProvider>().As<ISettingsProvider>().SingleInstance();
-            builder.RegisterType<StringEncryptionService>().As<IStringEncryptionService>();
-            builder.RegisterType<DirectoryService>().As<IDirectoryService>();
-            builder.RegisterType<FileService>().As<IFileService>();
-            builder.RegisterType<RemoteStorageInfosSerializer>().As<IRemoteStorageInfosSerializer>();
-            builder.RegisterType<CredentialsProvider>().As<ICredentialsProvider>();
-            builder.RegisterType<GoogleDriveAPIClient>().As<IGoogleDriveAPIClient>();
+            builder.RegisterType<LibraryFileService>().As<ILibraryFileService>().SingleInstance();
+            builder.RegisterType<SettingsProvider>().As<ISettingsProvider>().SingleInstance().SingleInstance();
+            builder.RegisterType<StringEncryptionService>().As<IStringEncryptionService>().SingleInstance();
+            builder.RegisterType<DirectoryService>().As<IDirectoryService>().SingleInstance();
+            builder.RegisterType<FileService>().As<IFileService>().SingleInstance();
+            builder.RegisterType<RemoteStorageInfosSerializer>().As<IRemoteStorageInfosSerializer>().SingleInstance();
+            builder.RegisterType<CredentialsProvider>().As<ICredentialsProvider>().SingleInstance();
+            builder.RegisterType<GoogleDriveAPIClient>().As<IGoogleDriveAPIClient>().SingleInstance();
         }
 
         private void RegisterDataAccess(ContainerBuilder builder)
