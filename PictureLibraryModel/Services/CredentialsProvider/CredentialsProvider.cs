@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Services.FileSystemServices;
+﻿using Google.Apis.Auth.OAuth2;
+using PictureLibraryModel.Services.FileSystemServices;
 using System.IO;
 using System.Reflection;
 
@@ -13,17 +14,12 @@ namespace PictureLibraryModel.Services.CredentialsProvider
             _fileService = fileService;
         }
 
-        public string GetGoogleDriveAPICredentials()
+        public ClientSecrets GetGoogleDriveAPIClientSecrets()
         {
             var credentialsFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\google_drive_api_secret.json";
-            
             Stream fileStream = _fileService.OpenFile(credentialsFilePath, FileMode.Open);
-            
-            using (StreamReader reader = new (fileStream))
-            {
-                string credentialsJson = reader.ReadToEnd();
-                return credentialsJson;
-            }
+
+            return GoogleClientSecrets.FromStream(fileStream).Secrets;
         }
     }
 }

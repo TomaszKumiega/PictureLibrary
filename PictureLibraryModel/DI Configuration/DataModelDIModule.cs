@@ -8,6 +8,7 @@ using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryModel.Model.Settings;
 using PictureLibraryModel.Services.CredentialsProvider;
 using PictureLibraryModel.Services.FileSystemServices;
+using PictureLibraryModel.Services.GoogleDriveAPIClient;
 using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryModel.Services.RemoteStorageInfoSerializer;
 using PictureLibraryModel.Services.SettingsProvider;
@@ -93,6 +94,7 @@ namespace PictureLibraryModel
             builder.RegisterType<FileService>().As<IFileService>();
             builder.RegisterType<RemoteStorageInfosSerializer>().As<IRemoteStorageInfosSerializer>();
             builder.RegisterType<CredentialsProvider>().As<ICredentialsProvider>();
+            builder.RegisterType<GoogleDriveAPIClient>().As<IGoogleDriveAPIClient>();
         }
 
         private void RegisterDataAccess(ContainerBuilder builder)
