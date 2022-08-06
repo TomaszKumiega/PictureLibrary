@@ -7,6 +7,7 @@ using PictureLibraryModel.Services.CredentialsProvider;
 using PictureLibraryModel.Services.FileSystemServices;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 namespace PictureLibraryModel.Services.GoogleDriveAPIClient
@@ -144,6 +145,13 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             var file = updateRequest.ResponseBody;
             
             return file.Id; 
+        }
+
+        public bool FolderExists(string userName, string folderName)
+        {
+            var files = SearchFiles(userName, "application/vnd.google-apps.folder", "files(name)");
+
+            return files.Any(x => x.Name == folderName);
         }
     }
 }
