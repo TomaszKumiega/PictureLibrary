@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.DataProviders.Builders;
+using PictureLibraryModel.DataProviders.ImageProvider;
 using PictureLibraryModel.DataProviders.LibraryProvider;
 using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model;
@@ -101,6 +102,8 @@ namespace PictureLibraryModel
         private void RegisterDataAccess(ContainerBuilder builder)
         {
             builder.RegisterType<LocalDataSourceBuilder>().Keyed<IDataSourceBuilder>(DataSourceType.Local);
+            builder.RegisterType<GoogleDriveDataSourceBuilder>().Keyed<IDataSourceBuilder>(DataSourceType.GoogleDrive);
+
             builder.RegisterType<DataSourceCollection>().As<IDataSourceCollection>();
 
             builder.RegisterType<DataSource>().As<IDataSource>();
@@ -115,6 +118,13 @@ namespace PictureLibraryModel
             {
                 var cc = context.Resolve<IComponentContext>();
                 return () => { return cc.Resolve<LocalImageFileProvider>(); };
+            });
+
+            builder.RegisterType<GoogleDriveImageFileProvider>().AsSelf();
+            builder.Register<Func<GoogleDriveImageFileProvider>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<GoogleDriveImageFileProvider>(); };
             });
 
             builder.RegisterType<LocalLibraryProvider>().AsSelf();
@@ -143,7 +153,7 @@ namespace PictureLibraryModel
                 return () => { return cc.Resolve<SerializableRemoteStorageInfo>(); };
             });
 
-            builder.RegisterType<GoogleDriveRemoteStorageInfo>().As<IRemoteStorageInfo>().Keyed<DataSourceType>(DataSourceType.GoogleDrive);
+            builder.RegisterType<GoogleDriveRemoteStorageInfo>().Keyed<IRemoteStorageInfo>(DataSourceType.GoogleDrive);
         }
     }
 }

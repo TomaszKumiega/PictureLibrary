@@ -4,7 +4,6 @@ using PictureLibraryModel.Model.LibraryModel;
 using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryModel.Services.GoogleDriveAPIClient;
 using PictureLibraryModel.Services.LibraryFileService;
-using PictureLibraryModel.Services.SettingsProvider;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,18 +14,15 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
     public class GoogleDriveLibraryProvider : ILibraryProvider
     {
         private readonly IGoogleDriveAPIClient _client;
-        private readonly ISettingsProvider _settingsProvider;
         private readonly ILibraryFileService _libraryFileService;
 
         public GoogleDriveRemoteStorageInfo RemoteStorageInfo { get; set; }
 
         public GoogleDriveLibraryProvider(
             IGoogleDriveAPIClient googleDriveAPIClient,
-            ISettingsProvider settingsProvider,
             ILibraryFileService libraryFileService)
         {
             _client = googleDriveAPIClient;
-            _settingsProvider = settingsProvider;
             _libraryFileService = libraryFileService;
         }
 
@@ -45,29 +41,23 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
                 throw new InvalidOperationException("Invalid library type");
             }
 
-            GoogleDriveRemoteStorageInfo remoteStorageInfo = _settingsProvider.Settings.RemoteStorageInfos.FirstOrDefault(x => x.Id == googleDriveLibrary.RemoteStorageInfoId) as GoogleDriveRemoteStorageInfo;
-            if (remoteStorageInfo == null)
+            if (!_client.FolderExists(RemoteStorageInfo.UserName, "PictureLibrary", out string pictureLibraryFolderId))
             {
-                throw new InvalidOperationException("No remote storage info found in the library object");
+                AddPictureLibraryFolder(RemoteStorageInfo.UserName);
             }
 
-            if (!_client.FolderExists(remoteStorageInfo.UserName, "PictureLibrary", out string pictureLibraryFolderId))
-            {
-                AddPictureLibraryFolder(remoteStorageInfo.UserName);
-            }
-
-            if (_client.FolderExists(remoteStorageInfo.UserName, googleDriveLibrary.Name, out var _))
+            if (_client.FolderExists(RemoteStorageInfo.UserName, googleDriveLibrary.Name, out var _))
             {
                 throw new LibraryAlreadyExistsException(googleDriveLibrary.Name);
             }
 
-            AddLibraryFolder(googleDriveLibrary, remoteStorageInfo.UserName, pictureLibraryFolderId);
+            AddLibraryFolder(googleDriveLibrary, RemoteStorageInfo.UserName, pictureLibraryFolderId);
 
             using (var memoryStream = new MemoryStream())
             {
                 _libraryFileService.WriteLibraryToStreamAsync(memoryStream, googleDriveLibrary);
 
-                var fileMetadata = _client.UploadFileToFolder(memoryStream, googleDriveLibrary.Name + ".plib", googleDriveLibrary.LibraryFolderId, "xml/plib", remoteStorageInfo.UserName);
+                var fileMetadata = _client.UploadFileToFolder(memoryStream, googleDriveLibrary.Name + ".plib", googleDriveLibrary.LibraryFolderId, "xml/plib", RemoteStorageInfo.UserName);
 
                 googleDriveLibrary.FileId = fileMetadata.Id;
             }
