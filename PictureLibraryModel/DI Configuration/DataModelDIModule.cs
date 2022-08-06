@@ -4,6 +4,7 @@ using PictureLibraryModel.DataProviders.Builders;
 using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders;
+using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryModel.Model.Settings;
 using PictureLibraryModel.Services.CredentialsProvider;
 using PictureLibraryModel.Services.FileSystemServices;
@@ -78,14 +79,9 @@ namespace PictureLibraryModel
                 return () => { return cc.Resolve<SerializableSettings>(); };
             });
 
-            builder.RegisterType<SerializableRemoteStorageInfo>().AsSelf();
-            builder.Register<Func<SerializableRemoteStorageInfo>>(context =>
-            {
-                var cc = context.Resolve<IComponentContext>();
-                return () => { return cc.Resolve<SerializableRemoteStorageInfo>(); };
-            });
-
             builder.RegisterType<LocalLibraryBuilder>().Keyed<ILibraryBuilder>(DataSourceType.Local);
+
+            RegisterRemoteStorageInfos(builder);
         }
 
         private void RegisterServices(ContainerBuilder builder)
@@ -126,6 +122,18 @@ namespace PictureLibraryModel
             });
 
             builder.RegisterType<DataSourceCreator>().As<IDataSourceCreator>();
+        }
+
+        private void RegisterRemoteStorageInfos(ContainerBuilder builder)
+        {
+            builder.RegisterType<SerializableRemoteStorageInfo>().AsSelf();
+            builder.Register<Func<SerializableRemoteStorageInfo>>(context =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<SerializableRemoteStorageInfo>(); };
+            });
+
+            builder.RegisterType<GoogleDriveRemoteStorageInfo>().As<IRemoteStorageInfo>().Keyed<DataSourceType>(DataSourceType.GoogleDrive);
         }
     }
 }

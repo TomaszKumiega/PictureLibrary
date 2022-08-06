@@ -8,7 +8,7 @@ namespace PictureLibraryModel.Model
     {
         Guid Id { get; set; }
         string Name { get; }
-        DataSourceType DataSourceType { get; set; }
+        DataSourceType DataSourceType { get; }
 
         void Deserialize(string serializedStorageInfo);
 
