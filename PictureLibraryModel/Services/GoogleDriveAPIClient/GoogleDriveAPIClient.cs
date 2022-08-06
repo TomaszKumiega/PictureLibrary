@@ -92,7 +92,7 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
                 Name = folderName,
-                MimeType = "application/vnc.google-apps.folder"
+                MimeType = GoogleDriveAPIMimeTypes.Folder
             };
 
             var request = service.Files.Create(fileMetadata);
@@ -149,7 +149,7 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
 
         public bool FolderExists(string userName, string folderName)
         {
-            var files = SearchFiles(userName, "application/vnd.google-apps.folder", "files(name)");
+            var files = SearchFiles(userName, GoogleDriveAPIMimeTypes.Folder, "files(name)");
 
             return files.Any(x => x.Name == folderName);
         }
