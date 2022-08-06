@@ -153,5 +153,17 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
 
             return files.Any(x => x.Name == folderName);
         }
+
+        public Google.Apis.Drive.v3.Data.File GetFileMetadata(string userName, string fileId, string fields)
+        {
+            var service = GetDriveService(userName);
+
+            FilesResource.GetRequest request = service.Files.Get(fileId);
+            request.Fields = fields;
+
+            var fileMetadata = request.Execute();
+
+            return fileMetadata;
+        }
     }
 }
