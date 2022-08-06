@@ -5,6 +5,7 @@ using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders;
 using PictureLibraryModel.Model.Settings;
+using PictureLibraryModel.Services.CredentialsProvider;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryModel.Services.RemoteStorageInfoSerializer;
@@ -95,6 +96,7 @@ namespace PictureLibraryModel
             builder.RegisterType<DirectoryService>().As<IDirectoryService>();
             builder.RegisterType<FileService>().As<IFileService>();
             builder.RegisterType<RemoteStorageInfosSerializer>().As<IRemoteStorageInfosSerializer>();
+            builder.RegisterType<CredentialsProvider>().As<ICredentialsProvider>();
         }
 
         private void RegisterDataAccess(ContainerBuilder builder)
