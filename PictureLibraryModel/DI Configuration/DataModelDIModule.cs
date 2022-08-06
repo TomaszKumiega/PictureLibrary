@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using PictureLibraryModel.DataProviders;
 using PictureLibraryModel.DataProviders.Builders;
+using PictureLibraryModel.DataProviders.LibraryProvider;
 using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders;
@@ -121,6 +122,13 @@ namespace PictureLibraryModel
             {
                 var cc = context.Resolve<IComponentContext>();
                 return () => { return cc.Resolve<LocalLibraryProvider>(); };
+            });
+
+            builder.RegisterType<GoogleDriveLibraryProvider>().AsSelf();
+            builder.Register<Func<GoogleDriveLibraryProvider>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<GoogleDriveLibraryProvider>(); };
             });
 
             builder.RegisterType<DataSourceCreator>().As<IDataSourceCreator>();
