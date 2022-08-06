@@ -126,5 +126,24 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
 
             return files;
         }
+
+        public string UpdateFile(Google.Apis.Drive.v3.Data.File updatedFileMedatada, Stream fileStream, string fileId, string userName, string contentType)
+        {
+            var service = GetDriveService(userName);
+
+            FilesResource.UpdateMediaUpload updateRequest;
+            updateRequest = service.Files.Update(
+                updatedFileMedatada,
+                fileId,
+                fileStream,
+                contentType);
+            updateRequest.Fields = "id";
+
+            updateRequest.Upload();
+            
+            var file = updateRequest.ResponseBody;
+            
+            return file.Id; 
+        }
     }
 }

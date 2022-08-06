@@ -9,5 +9,6 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
         Google.Apis.Drive.v3.Data.File UploadFileToFolder(string filePath, string folderId, string contentType, string userName);
         string CreateFolder(string folderName, string userName);
         IList<Google.Apis.Drive.v3.Data.File> SearchFiles(string userName, string filesType, string fields);
+        string UpdateFile(Google.Apis.Drive.v3.Data.File updatedFileMedatada, Stream fileStream, string fileId, string userName, string contentType);
     }
 }
