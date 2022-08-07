@@ -6,6 +6,6 @@ namespace PictureLibraryModel.Model.Settings
     public class Settings : SettingsBase
     {
         [XmlIgnore]
-        public IEnumerable<IRemoteStorageInfo> RemoteStorageInfos { get; set; }
+        public IList<IRemoteStorageInfo> RemoteStorageInfos { get; set; }
     }
 }
