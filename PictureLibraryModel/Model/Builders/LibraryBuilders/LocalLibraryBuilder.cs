@@ -2,7 +2,7 @@
 
 namespace PictureLibraryModel.Model.Builders
 {
-    public class LocalLibraryBuilder : ILibraryBuilder
+    public class LocalLibraryBuilder : ILocalLibraryBuilder
     {
         private readonly Func<Library> _libraryLocator;
 
@@ -13,28 +13,28 @@ namespace PictureLibraryModel.Model.Builders
             _libraryLocator = libraryLocator;
         }
 
-        public ILibraryBuilder CreateLibrary()
+        public ILocalLibraryBuilder CreateLibrary()
         {
             _library = _libraryLocator();
 
             return this;
         }
 
-        public ILibraryBuilder WithDescription(string description)
+        public ILocalLibraryBuilder WithDescription(string description)
         {
             _library.Description = description;
 
             return this;
         }
 
-        public ILibraryBuilder WithName(string name)
+        public ILocalLibraryBuilder WithName(string name)
         {
             _library.Name = name;
 
             return this;
         }
 
-        public ILibraryBuilder WithPath(string path)
+        public ILocalLibraryBuilder WithPath(string path)
         {
             _library.Path = path;
 

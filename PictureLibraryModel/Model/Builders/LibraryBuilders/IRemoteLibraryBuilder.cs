@@ -2,8 +2,8 @@
 
 namespace PictureLibraryModel.Model.Builders
 {
-    public interface IRemoteLibraryBuilder : ILibraryBuilder
+    public interface IRemoteLibraryBuilder : IGenericLibraryBuilder<IRemoteLibraryBuilder>
     {
-        ILibraryBuilder WithStorageInfoId(Guid? storageInfoId);
+        IRemoteLibraryBuilder WithRemoteStorageInfo(Guid? remoteStorageInfoId);
     }
 }
