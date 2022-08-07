@@ -13,5 +13,6 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
         bool FolderExists(string userName, string folderName, out string folderId);
         Google.Apis.Drive.v3.Data.File GetFileMetadata(string userName, string fileId, string fields);
         void RemoveFile(string fileId, string userName);
+        bool Authorize(string userName);
     }
 }

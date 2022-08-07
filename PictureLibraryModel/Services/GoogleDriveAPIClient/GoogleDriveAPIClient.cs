@@ -50,7 +50,11 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             FilesResource.GetRequest request = service.Files.Get(fileId);
             var stream = new MemoryStream();
 
-            // TODO: request.MediaDownloader.ProgressChanged
+            request.MediaDownloader.ProgressChanged += progress =>
+            {
+                if (progress.Exception != null)
+                    throw progress.Exception;
+            };
 
             request.Download(stream);
 
@@ -74,6 +78,12 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             
             request.Fields = "id";
             
+            request.ProgressChanged += progress =>
+            {
+                if (progress.Exception != null)
+                    throw progress.Exception;
+            };
+
             request.Upload();
 
             Google.Apis.Drive.v3.Data.File file = request.ResponseBody;
@@ -180,6 +190,11 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             FilesResource.DeleteRequest deleteRequest = service.Files.Delete(fileId);
 
             deleteRequest.Execute();
+        }
+
+        public bool Authorize(string userName)
+        {
+            return GetDriveService(userName) != null;
         }
     }
 }
