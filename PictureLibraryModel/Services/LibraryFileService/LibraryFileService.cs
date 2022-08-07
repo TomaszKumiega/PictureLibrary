@@ -1,4 +1,7 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.LibraryModel;
+using PictureLibraryModel.Services.GoogleDriveAPIClient;
+using PictureLibraryModel.Services.SettingsProvider;
 using System;
 using System.IO;
 using System.Xml.Serialization;
@@ -7,6 +10,17 @@ namespace PictureLibraryModel.Services.LibraryFileService
 {
     public class LibraryFileService : ILibraryFileService
     {
+        private readonly ISettingsProvider _settingsProvider;
+        private readonly IGoogleDriveAPIClient _googleDriveAPIClient;
+
+        public LibraryFileService(
+            ISettingsProvider settingsProvider,
+            IGoogleDriveAPIClient googleDriveAPIClient)
+        {
+            _settingsProvider = settingsProvider;
+            _googleDriveAPIClient = googleDriveAPIClient;
+        }
+
         private XmlAttributeOverrides AttributeOverrides
         {
             get
@@ -21,18 +35,26 @@ namespace PictureLibraryModel.Services.LibraryFileService
 
         public TLibrary ReadLibraryFromStreamAsync<TLibrary>(Stream fileStream)
         {
+            fileStream.Position = 0;
             var serializer = new XmlSerializer(typeof(TLibrary), AttributeOverrides);
             var library = (TLibrary)serializer.Deserialize(fileStream);
+
+            if (library is GoogleDriveLibrary googleDriveLibrary)
+            {
+                googleDriveLibrary.SettingsProvider = _settingsProvider;
+                googleDriveLibrary.Client = _googleDriveAPIClient;
+            }
 
             return library;
         }
 
-        public void WriteLibraryToStreamAsync(Stream fileStream, Library library)
+        public void WriteLibraryToStreamAsync(Stream fileStream, Library library, bool closeTheStream = true)
         {
             var serializer = new XmlSerializer(library.GetType(), AttributeOverrides);
             serializer.Serialize(fileStream, library);
 
-            fileStream.Close();
+            if (closeTheStream)
+                fileStream.Close();
         }
 
         public Library ReloadLibrary(Library library)
