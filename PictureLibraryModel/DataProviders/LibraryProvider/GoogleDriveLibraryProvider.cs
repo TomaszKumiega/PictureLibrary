@@ -43,7 +43,7 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
 
             if (!_client.FolderExists(RemoteStorageInfo.UserName, "PictureLibrary", out string pictureLibraryFolderId))
             {
-                AddPictureLibraryFolder(RemoteStorageInfo.UserName);
+                pictureLibraryFolderId = AddPictureLibraryFolder(RemoteStorageInfo.UserName);
             }
 
             if (_client.FolderExists(RemoteStorageInfo.UserName, googleDriveLibrary.Name, out var _))
@@ -55,7 +55,7 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
 
             using (var memoryStream = new MemoryStream())
             {
-                _libraryFileService.WriteLibraryToStreamAsync(memoryStream, googleDriveLibrary);
+                _libraryFileService.WriteLibraryToStreamAsync(memoryStream, googleDriveLibrary, false);
 
                 var fileMetadata = _client.UploadFileToFolder(memoryStream, googleDriveLibrary.Name + ".plib", googleDriveLibrary.LibraryFolderId, "xml/plib", RemoteStorageInfo.UserName);
 
@@ -67,14 +67,17 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
         {
             var libraries = new List<Library>();
 
-            var files = _client.SearchFiles(RemoteStorageInfo.UserName, GoogleDriveAPIMimeTypes.File, "files(id, parents)");
-            var libraryFiles = files.Where(x => x.Parents.Contains("PictureLibrary")).ToList();
+            var files = _client.SearchFiles(RemoteStorageInfo.UserName, "xml/plib", "files(id, parents, name)");
             
-            foreach (var file in libraryFiles)
+            foreach (var file in files)
             {
                 var stream = _client.DownloadFile(file.Id, RemoteStorageInfo.UserName);
                 var library = _libraryFileService.ReadLibraryFromStreamAsync<GoogleDriveLibrary>(stream);
+                library.FileId = file.Id;
+
                 libraries.Add(library);
+
+                stream.Close();
             }
 
             return libraries;
@@ -105,16 +108,16 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
 
             using (var memoryStream = new MemoryStream())
             {
-                _libraryFileService.WriteLibraryToStreamAsync(memoryStream, googleDriveLibrary);
+                _libraryFileService.WriteLibraryToStreamAsync(memoryStream, googleDriveLibrary, false);
                 string fileId = _client.UpdateFile(fileMetadata, memoryStream, googleDriveLibrary.FileId, RemoteStorageInfo.UserName, "xml/plib");
 
                 googleDriveLibrary.FileId = fileId;
             }
         }
 
-        private void AddPictureLibraryFolder(string userName)
+        private string AddPictureLibraryFolder(string userName)
         {
-            _ = _client.CreateFolder("PictureLibrary", userName);
+            return _client.CreateFolder("PictureLibrary", userName);
         }
 
         private void AddLibraryFolder(GoogleDriveLibrary library, string userName, string pictureLibraryFolderId)
