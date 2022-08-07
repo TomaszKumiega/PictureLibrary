@@ -84,7 +84,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             ILibraryExplorerViewModel commonVM, 
             ICommandCreator commandCreator,
             ISettingsProvider settingsProviderService, 
-            IImplementationSelector<DataSourceType, ILibraryBuilder> libraryBuilderImplementationSelector)
+            IImplementationSelector<DataSourceType, ILibraryBuilder>libraryBuilderImplementationSelector)
         {
             _dataSourceCollection = dataSourceCollection;
             _commonViewModel = commonVM;
@@ -107,6 +107,35 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         private void NotifyPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private Library CreateLibrary()
+        {
+            var selectedStorageInfo = GetSelectedStorage();
+            DataSourceType storageType = selectedStorageInfo != null
+                ? selectedStorageInfo.DataSourceType
+                : DataSourceType.Local;
+
+            var libraryBuilder = _libraryBuilderImplementationSelector.Select(storageType);
+
+            if (libraryBuilder is IRemoteLibraryBuilder remoteLibraryBuilder)
+            {
+                return remoteLibraryBuilder.CreateLibrary()
+                        .WithName(Name)
+                        .WithDescription(Description)
+                        .WithRemoteStorageInfo(selectedStorageInfo.Id)
+                        .Build();
+            }
+            else if (libraryBuilder is ILocalLibraryBuilder localLibraryBuilder)
+            {
+                return localLibraryBuilder.CreateLibrary()
+                    .WithName(Name)
+                    .WithDescription(Description)
+                    .WithPath(Directory + "\\" + Name + "\\" + Name + ".plib")
+                    .Build();
+            }
+
+            return null;
         }
 
         #region Validation
@@ -132,7 +161,12 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 
         private bool IsDirectoryValid()
         {
-            if (SelectedStorage == LocalStorageString && !string.IsNullOrEmpty(Directory) && System.IO.Directory.Exists(Directory))
+            bool doesntRequireDirectory = SelectedStorage != LocalStorageString;
+            bool directoryIsValid = SelectedStorage == LocalStorageString
+                    && !string.IsNullOrEmpty(Directory)
+                    && System.IO.Directory.Exists(Directory);
+
+            if (doesntRequireDirectory || directoryIsValid) 
             {
                 return true;
             }
@@ -171,28 +205,11 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             {
                 IsValid = true;
             }
+            
+            Library library = CreateLibrary();
 
-            var selectedStorage = GetSelectedStorage();
-            DataSourceType storageType = selectedStorage != null 
-                ? selectedStorage.DataSourceType
-                : DataSourceType.Local;
-
-            var libraryBuilder = _libraryBuilderImplementationSelector.Select(storageType);
-            var library = libraryBuilder.CreateLibrary()
-                .WithName(Name)
-                .WithDescription(Description)
-                .Build();
-
-            if (storageType == DataSourceType.Local)
-            {
-                library.Path = Directory + "\\" + Name + "\\" + Name + ".plib";
-            }
-            else if (DataSourceType.Remote.HasFlag(storageType) && library is RemoteLibrary remoteLibrary)
-            {
-                remoteLibrary.RemoteStorageInfoId = _settingsProvider.Settings.RemoteStorageInfos.First(x => x.Name == SelectedStorage).Id;
-            }
-
-            var dataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(selectedStorage?.Id);
+            IRemoteStorageInfo selectedStorageInfo = GetSelectedStorage();
+            IDataSource dataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(selectedStorageInfo?.Id);
 
             try
             {
