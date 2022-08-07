@@ -27,9 +27,10 @@ namespace PictureLibraryModel.Model.FileSystemModel
         {
             if (_settingsProvider.Settings.RemoteStorageInfos.FirstOrDefault(x => x.Id == RemoteStorageInfoId) is GoogleDriveRemoteStorageInfo googleDriveRemoteStorageInfo)
             {
-                var fileMetadata = _client.GetFileMetadata(googleDriveRemoteStorageInfo.UserName, FileId, $"files({FileId}, hasThumbnail, contentHints)");
+                var fileMetadata = _client.GetFileMetadata(googleDriveRemoteStorageInfo.UserName, FileId, $"hasThumbnail,thumbnailLink");
+                bool hasThumbail = fileMetadata.HasThumbnail.HasValue ? fileMetadata.HasThumbnail.Value : false;
 
-                if (fileMetadata != null)
+                if (fileMetadata != null && hasThumbail)
                 {
                     var bytes = Convert.FromBase64String(fileMetadata.ContentHints.Thumbnail.Image);
                     Icon = new ImageMagick.MagickImage(bytes);

@@ -1,43 +1,38 @@
-﻿using PictureLibraryModel.Model.RemoteStorages;
+﻿using ImageMagick;
 using PictureLibraryModel.Services.GoogleDriveAPIClient;
 using PictureLibraryModel.Services.SettingsProvider;
-using System;
-using System.Linq;
+using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model.LibraryModel
 {
     public class GoogleDriveLibrary : RemoteLibrary
     {
-        private readonly ISettingsProvider _settingsProvider;
-        private readonly IGoogleDriveAPIClient _client;
+        [XmlIgnore]
+        public ISettingsProvider SettingsProvider { private get; set; }
+        [XmlIgnore]
+        public IGoogleDriveAPIClient Client { private get; set; }
 
         public string FileId { get; set; }
         public string LibraryFolderId { get; set; }
         public string ImagesFolderId { get; set; }
 
+        public GoogleDriveLibrary() : base() { }
+
         public GoogleDriveLibrary(
             ISettingsProvider settingsProvider,
             IGoogleDriveAPIClient googleDriveAPIClient) : base()
         {
-            _client = googleDriveAPIClient;
-            _settingsProvider = settingsProvider;
+            Client = googleDriveAPIClient;
+            SettingsProvider = settingsProvider;
         }
 
         public override void LoadIcon()
         {
-            if (_settingsProvider.Settings.RemoteStorageInfos.FirstOrDefault(x => x.Id == RemoteStorageInfoId) is GoogleDriveRemoteStorageInfo googleDriveRemoteStorageInfo)
-            {
-                var fileMetadata = _client.GetFileMetadata(googleDriveRemoteStorageInfo.UserName, FileId, $"files({FileId}, hasThumbnail, contentHints)");
+            var settings = new MagickReadSettings();
+            settings.Width = 50;
+            settings.Height = 50;
 
-                if (fileMetadata != null)
-                {
-                    var bytes = Convert.FromBase64String(fileMetadata.ContentHints.Thumbnail.Image);
-                    Icon = new ImageMagick.MagickImage(bytes);
-                    return;
-                }
-            }
-
-            Icon = new ImageMagick.MagickImage();
+            Icon = new MagickImage(".\\Icons\\LibraryIcon.png", settings);
         }
     }
 }
