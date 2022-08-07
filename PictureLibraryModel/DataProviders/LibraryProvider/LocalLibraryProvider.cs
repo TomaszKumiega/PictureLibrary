@@ -6,6 +6,7 @@ using PictureLibraryModel.Services.SettingsProvider;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace PictureLibraryModel.DataProviders
@@ -97,6 +98,29 @@ namespace PictureLibraryModel.DataProviders
             }
 
             return libraries;
+        }
+
+        public Library GetLibrary(string name)
+        {
+            var libraryPath = _settingsProvider.Settings.ImportedLocalLibraries.FirstOrDefault(x => x.Contains(name));
+
+            try
+            {
+                using (var stream = _fileService.OpenFile(libraryPath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    LocalLibrary library = _libraryFileService.ReadLibraryFromStreamAsync<LocalLibrary>(stream);
+                    return library;
+                }
+            }
+            catch (Exception e) when (e is FileNotFoundException || e is DirectoryNotFoundException)
+            {
+                _logger.Debug(e, "Library file not found");
+                _settingsProvider.Settings.ImportedLocalLibraries.Remove(libraryPath);
+                _settingsProvider.SaveSettings();
+                _logger.Info($"Removed library entry: {libraryPath} from settings");
+            }
+
+            return null;
         }
 
         public void RemoveLibrary(Library library)

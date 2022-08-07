@@ -92,7 +92,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             _libraryBuilderImplementationSelector = libraryBuilderImplementationSelector;
 
             commandCreator.InitializeCommands(this);
-            _dataSourceCollection.Initialize(settingsProviderService.Settings.RemoteStorageInfos);
         }
 
         #region Command methods

@@ -31,13 +31,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
         public LibraryTreeViewModel(
             IDataSourceCollection dataSourceCollection, 
-            ILibraryExplorerViewModel commonVM, 
-            ISettingsProvider settingsProvider)
+            ILibraryExplorerViewModel commonVM)
         {
             _dataSourceCollection = dataSourceCollection;
             _commonViewModel = commonVM;
 
-            _dataSourceCollection.Initialize(settingsProvider.Settings.RemoteStorageInfos);
             ((ILibraryExplorerViewModel)_commonViewModel).RefreshViewEvent += OnRefreshView;
         }
 

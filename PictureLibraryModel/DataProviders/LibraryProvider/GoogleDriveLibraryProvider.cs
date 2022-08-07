@@ -128,5 +128,24 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
             library.LibraryFolderId = libraryFolderId;
             library.ImagesFolderId = imagesFolderId;
         }
+
+        public Library GetLibrary(string name)
+        {
+            var files = _client.SearchFiles(RemoteStorageInfo.UserName, "xml/plib", "files(id, parents, name)");
+            var libraryFile = files.FirstOrDefault(x => x.Name.Contains(name));
+
+            if (libraryFile != null)
+            {
+                var stream = _client.DownloadFile(libraryFile.Id, RemoteStorageInfo.UserName);
+                var library = _libraryFileService.ReadLibraryFromStreamAsync<GoogleDriveLibrary>(stream);
+                library.FileId = libraryFile.Id;
+
+                stream.Close();
+
+                return library;
+            }
+
+            return null;
+        }
     }
 }

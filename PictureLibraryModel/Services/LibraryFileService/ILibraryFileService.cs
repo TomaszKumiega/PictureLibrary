@@ -8,6 +8,5 @@ namespace PictureLibraryModel.Services.LibraryFileService
     {
         void WriteLibraryToStreamAsync(Stream fileStream, Library library, bool closeTheStream = true);
         TLibrary ReadLibraryFromStreamAsync<TLibrary>(Stream fileStream);
-        Library ReloadLibrary(Library library);
     }
 }

@@ -121,7 +121,7 @@ namespace PictureLibraryModel
             builder.RegisterType<LocalDataSourceBuilder>().Keyed<IDataSourceBuilder>(DataSourceType.Local);
             builder.RegisterType<GoogleDriveDataSourceBuilder>().Keyed<IDataSourceBuilder>(DataSourceType.GoogleDrive);
 
-            builder.RegisterType<DataSourceCollection>().As<IDataSourceCollection>();
+            builder.RegisterType<DataSourceCollection>().As<IDataSourceCollection>().SingleInstance();
 
             builder.RegisterType<DataSource>().As<IDataSource>();
             builder.Register<Func<IDataSource>>((context) =>

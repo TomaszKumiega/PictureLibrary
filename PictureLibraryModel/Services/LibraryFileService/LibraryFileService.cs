@@ -56,16 +56,5 @@ namespace PictureLibraryModel.Services.LibraryFileService
             if (closeTheStream)
                 fileStream.Close();
         }
-
-        public Library ReloadLibrary(Library library)
-        {
-            var fileStream = System.IO.File.Open(library.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-            
-            var updatedLibrary = ReadLibraryFromStreamAsync<LocalLibrary>(fileStream);
-            
-            fileStream.Close();
-
-            return updatedLibrary;
-        }
     }
 }

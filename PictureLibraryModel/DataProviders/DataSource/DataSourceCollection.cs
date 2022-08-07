@@ -1,5 +1,6 @@
 ﻿using PictureLibraryModel.DataProviders.Builders;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Services.SettingsProvider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,14 @@ namespace PictureLibraryModel.DataProviders
 
         public IList<IDataSource> DataSources { get; private set; }
 
-        public DataSourceCollection(IDataSourceCreator dataSourceCreator)
+        public DataSourceCollection(
+            IDataSourceCreator dataSourceCreator,
+            ISettingsProvider settingsProvider)
         {
             DataSources = new List<IDataSource>();
             _dataSourceCreator = dataSourceCreator;
+
+            Initialize(settingsProvider.Settings.RemoteStorageInfos);
         }
 
         public void Initialize(IEnumerable<IRemoteStorageInfo> remoteStorageInfos)

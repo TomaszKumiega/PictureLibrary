@@ -10,5 +10,6 @@ namespace PictureLibraryModel.DataProviders
         IEnumerable<Library> GetAllLibraries();
         void RemoveLibrary(Library library);
         void UpdateLibrary(Library library);
+        Library GetLibrary(string name);
     }
 }

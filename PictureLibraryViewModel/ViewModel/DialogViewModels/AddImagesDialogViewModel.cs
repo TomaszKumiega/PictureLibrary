@@ -71,7 +71,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             _commonViewModel = commonVM;
             _dataSourceCollection = dataSourceCollection;
 
-            _dataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
             Libraries = _dataSourceCollection.GetAllLibraries();
             SelectedTags = new ObservableCollection<Tag>();
 

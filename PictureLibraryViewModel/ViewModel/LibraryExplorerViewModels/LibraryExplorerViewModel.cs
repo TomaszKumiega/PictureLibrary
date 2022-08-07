@@ -56,8 +56,6 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             DataSourceCollection = dataSourceCollection;
             ExplorerHistory = explorerHistory;
 
-            DataSourceCollection.Initialize(new List<IRemoteStorageInfo>());
-
             PropertyChanged += OnCurrentlyOpenedElementChanged;
             RefreshViewEvent += OnRefreshView;
         }
@@ -109,8 +107,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
                 var dataSource = await Task.Run(() => DataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageInfoId));
 
-                var updatedLibrary = _libraryFileService.ReloadLibrary(library);
-                
+                var updatedLibrary = dataSource.LibraryProvider.GetLibrary(library.Name); // reload library
+
+                if (updatedLibrary == null)
+                    return;
+
                 _currentlyOpenedElement = updatedLibrary;
                 
                 foreach (var t in updatedLibrary.Images)
