@@ -18,7 +18,7 @@ namespace PictureLibraryModel.Services.RemoteStorageInfoSerializer
             _serializableRemoteStorageInfoLocator = serializableRemoteStorageInfoLocator;
         }
 
-        public IEnumerable<IRemoteStorageInfo> DeserializeStorageInfos(List<SerializableRemoteStorageInfo> serializedRemoteStorageInfos)
+        public List<IRemoteStorageInfo> DeserializeStorageInfos(List<SerializableRemoteStorageInfo> serializedRemoteStorageInfos)
         {
             var remoteStorageInfos = new List<IRemoteStorageInfo>();
 
