@@ -69,6 +69,7 @@ namespace PictureLibraryViewModel
             });
 
             builder.RegisterType<ChooseAccountTypeDialogViewModel>().As<IChooseAccountTypeDialogViewModel>();
+            builder.RegisterType<GoogleDriveLoginDialogViewModel>().As<IGoogleDriveLoginDialogViewModel>();
         }
         private void RegisterDependencies(ContainerBuilder builder)
         {
