@@ -1,0 +1,50 @@
+﻿<Window x:Class="PictureLibraryWPF.Dialogs.GoogleDriveLoginDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
+        mc:Ignorable="d"
+        WindowStyle="None" ResizeMode="NoResize" Width="340" Height="auto" SizeToContent="Height" Background="#2b2d30" WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="10,10,0,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Rectangle x:Name="TitleBarRectangle" Grid.ColumnSpan="2" Grid.Row="0" Height="20" VerticalAlignment="Top" Fill="Transparent" MouseDown="TitleBarRectangle_MouseDown"/>
+
+        <TextBlock x:Name="TitleTextBlock" Grid.ColumnSpan="2" Grid.Row="1" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="19" Text="{x:Static res:Strings.GoogleDriveLogin}"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="{x:Static res:Strings.Username}" Foreground="#cdcdcd" FontSize="17" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Right"/>
+
+        <TextBox Grid.Row="3" 
+            Grid.Column="1" 
+            Width="150" 
+            Height="22"
+            Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Button x:Name="AddAccountButton" Grid.Row="8" Grid.ColumnSpan="2" Width="100" BorderThickness="0" Command="{Binding LoginCommand}" >
+            <TextBlock x:Name="NextButtonTextBlock" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Segoe UI" FontSize="15" Text="{x:Static res:Strings.Next}"/>
+        </Button>
+
+        <Button x:Name="CancelButton" Grid.Row="10" Grid.ColumnSpan="2" Width="100" BorderThickness="0" Click="CancelButton_Click">
+            <TextBlock x:Name="CancelButtonTextBlock" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Segoe UI" FontSize="15" Text="{x:Static res:Strings.Cancel}"/>
+        </Button>
+    </Grid>
+</Window>

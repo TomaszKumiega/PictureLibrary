@@ -138,6 +138,13 @@ namespace PictureLibraryViewModel
                 var cc = context.Resolve<IComponentContext>();
                 return () => { return cc.Resolve<ChooseAccountTypeDialog>(); };
             });
+
+            builder.RegisterType<GoogleDriveLoginDialog>().AsSelf();
+            builder.Register<Func<GoogleDriveLoginDialog>>((context) =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                return () => { return cc.Resolve<GoogleDriveLoginDialog>(); };
+            });
         }
         private static void RegisterCommands(ContainerBuilder builder)
         {

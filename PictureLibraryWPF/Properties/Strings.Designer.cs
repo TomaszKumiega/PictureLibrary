@@ -178,6 +178,15 @@ namespace PublicResXFileCodeGenerator {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sign in to google drive:.
+        /// </summary>
+        public static string GoogleDriveLogin {
+            get {
+                return ResourceManager.GetString("GoogleDriveLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
@@ -336,6 +345,15 @@ namespace PublicResXFileCodeGenerator {
         public static string ThisComputer {
             get {
                 return ResourceManager.GetString("ThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Google user name:.
+        /// </summary>
+        public static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
             }
         }
     }

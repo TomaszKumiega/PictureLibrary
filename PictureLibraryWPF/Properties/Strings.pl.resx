@@ -156,6 +156,9 @@
   <data name="Files" xml:space="preserve">
     <value>Pliki</value>
   </data>
+  <data name="GoogleDriveLogin" xml:space="preserve">
+    <value>Zaloguj się do google drive:</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Strona główna</value>
   </data>
@@ -209,5 +212,8 @@
   </data>
   <data name="ThisComputer" xml:space="preserve">
     <value>Ten Komputer</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nazwa użytkownika google:</value>
   </data>
 </root>
