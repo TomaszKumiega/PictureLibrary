@@ -165,6 +165,8 @@ namespace PictureLibraryWPF
             Grid.SetRow(settingsPanel, 1);
             Grid.SetColumnSpan(settingsPanel, 2);
             Grid.SetRowSpan(settingsPanel, 2);
+
+            _currentPageControls.Add(settingsPanel);
         }
 
         private void RemoveCurrentPageControlsFromTheGrid()
