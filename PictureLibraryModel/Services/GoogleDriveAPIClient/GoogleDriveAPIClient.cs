@@ -147,6 +147,12 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
                 contentType);
             updateRequest.Fields = "id";
 
+            updateRequest.ProgressChanged += progress =>
+            {
+                if (progress.Exception != null)
+                    throw progress.Exception;
+            };
+
             updateRequest.Upload();
             
             var file = updateRequest.ResponseBody;

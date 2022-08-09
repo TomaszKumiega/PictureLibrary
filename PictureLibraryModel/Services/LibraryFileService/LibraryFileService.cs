@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.FileSystemModel;
 using PictureLibraryModel.Model.LibraryModel;
 using PictureLibraryModel.Services.GoogleDriveAPIClient;
 using PictureLibraryModel.Services.SettingsProvider;
@@ -43,6 +44,12 @@ namespace PictureLibraryModel.Services.LibraryFileService
             {
                 googleDriveLibrary.SettingsProvider = _settingsProvider;
                 googleDriveLibrary.Client = _googleDriveAPIClient;
+
+                foreach (var image in googleDriveLibrary.Images)
+                {
+                    ((GoogleDriveImageFile)image).Client = _googleDriveAPIClient;
+                    ((GoogleDriveImageFile)image).SettingsProvider = _settingsProvider;
+                }
             }
 
             return library;

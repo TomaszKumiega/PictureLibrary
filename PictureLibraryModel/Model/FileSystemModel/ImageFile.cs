@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PictureLibraryModel.Model.FileSystemModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -37,6 +38,7 @@ namespace PictureLibraryModel.Model
     }
 
     [XmlInclude(typeof(LocalImageFile))]
+    [XmlInclude(typeof(GoogleDriveImageFile))]
     public abstract class ImageFile : File
     {
         public string LibraryFullName { get; set; }

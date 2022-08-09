@@ -103,7 +103,6 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
                 Name = googleDriveLibrary.Name,
-                Parents = new List<string> { googleDriveLibrary.LibraryFolderId }
             };
 
             using (var memoryStream = new MemoryStream())
