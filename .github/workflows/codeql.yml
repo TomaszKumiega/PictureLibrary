@@ -60,9 +60,8 @@ jobs:
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
 
-    - run: |
-      echo "Build App"
-      dotnet build ./PictureLibraryWPF.sln
+    - name: Build
+      run: dotnet build ./PictureLibraryWPF.sln
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
