@@ -2,7 +2,7 @@
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using PictureLibraryWPF.Dialogs;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -27,18 +27,9 @@ namespace PictureLibraryWPF.CustomControls
         private void AddToLibraryButton_Click(object sender, RoutedEventArgs e)
         {
             var viewModel = DataContext as IFileExplorerToolbarViewModel;
-            var selectedImages = new List<ImageFile>();
-
-            foreach(var t in viewModel.CommonViewModel.SelectedElements)
-            {
-                if (t is ImageFile)
-                {
-                    selectedImages.Add((ImageFile)t);
-                }
-            }
 
             var dialog = _addImagesDialogLocator();
-            dialog.ShowDialog(selectedImages);
+            dialog.ShowDialog(viewModel.CommonViewModel.SelectedElements.Where(x => x is ImageFile).Cast<ImageFile>());
         }
     }
 }

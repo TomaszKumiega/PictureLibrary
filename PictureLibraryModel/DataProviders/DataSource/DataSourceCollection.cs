@@ -38,7 +38,7 @@ namespace PictureLibraryModel.DataProviders
             }
         }
 
-        public IDataSource GetDataSourceByRemoteStorageId(Guid? remoteStorageId)
+        public IDataSource GetDataSourceByRemoteStorageId(Guid? remoteStorageId = null)
         {
             var dataSource = DataSources.FirstOrDefault(x => x.RemoteStorageInfo?.Id == remoteStorageId);
 

@@ -2,9 +2,7 @@
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using PictureLibraryModel.Model.RemoteStorages;
 using PictureLibraryModel.Services.CredentialsProvider;
-using PictureLibraryModel.Services.FileSystemServices;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,11 +10,11 @@ using System.Threading;
 
 namespace PictureLibraryModel.Services.GoogleDriveAPIClient
 {
-    internal class GoogleDriveAPIClient : IGoogleDriveAPIClient
+    internal class GoogleDriveApiClient : IGoogleDriveApiClient
     {
         private readonly ICredentialsProvider _credentialsProvider;
 
-        public GoogleDriveAPIClient(ICredentialsProvider credentialsProvider)
+        public GoogleDriveApiClient(ICredentialsProvider credentialsProvider)
         {
             _credentialsProvider = credentialsProvider;
         }
@@ -98,7 +96,7 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
                 Name = folderName,
-                MimeType = GoogleDriveAPIMimeTypes.Folder,
+                MimeType = GoogleDriveApiMimeTypes.Folder,
                 Parents = parentsIds,
             };
 
@@ -162,7 +160,7 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
 
         public bool FolderExists(string userName, string folderName, out string folderId)
         {
-            var files = SearchFiles(userName, GoogleDriveAPIMimeTypes.Folder, "files(id, name)");
+            var files = SearchFiles(userName, GoogleDriveApiMimeTypes.Folder, "files(id, name)");
             var file = files.FirstOrDefault(x => x.Name == folderName);
 
             if (file != null)

@@ -44,9 +44,13 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
         private void OnCurrentlyOpenedElementChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (args.PropertyName != nameof(CommonViewModel.CurrentlyOpenedElement)) return;
-            if (SelectedTags == null) return;
-                SelectedTags.Clear();
+            if (args.PropertyName != nameof(CommonViewModel.CurrentlyOpenedElement)
+                || SelectedTags == null)
+            {
+                return;
+            }
+
+            SelectedTags.Clear();
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tags)));
         }

@@ -66,30 +66,16 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         #region Private methods
         private bool IsDriveSelected()
         {
-            bool isDriveSelected = false;
-
-            foreach (var t in CommonViewModel.SelectedElements)
-            {
-                if (t is PictureLibraryModel.Model.Drive)
-                {
-                    isDriveSelected = true;
-                    break;
-                }
-            }
-
-            return isDriveSelected;
+            return CommonViewModel.SelectedElements.Any(x => x is PictureLibraryModel.Model.Drive);
         }
         #endregion
 
         #region Command methods
         [CanExecute(nameof(CopyCommand))]
-        private bool CanExecuteCopyCommand(object parameter)
-        {
-            return CommonViewModel.SelectedElements != null
-                    && (CommonViewModel.SelectedElements.Any() && !IsDriveSelected()
-                    ? true
-                    : false);
-        }
+        private bool CanExecuteCopyCommand(object parameter) 
+            => CommonViewModel.SelectedElements != null
+            && CommonViewModel.SelectedElements.Any() 
+            && !IsDriveSelected();
 
         [Execute(nameof(CopyCommand))]
         private async void ExecuteCopyCommand(object parameter)
@@ -240,8 +226,8 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
         [CanExecute(nameof(CreateFolderCommand))]
         private bool CanExecuteCreateFolderCommand(object parameter)
         {
-            return (parameter as string) != null
-                && (parameter as string).Trim() != String.Empty;
+            return parameter is string text
+                && text.Trim() != String.Empty;
         }
 
         [Execute(nameof (CreateFolderCommand))]

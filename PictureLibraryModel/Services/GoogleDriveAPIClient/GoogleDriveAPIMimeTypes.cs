@@ -1,6 +1,6 @@
 ﻿namespace PictureLibraryModel.Services.GoogleDriveAPIClient
 {
-    public static class GoogleDriveAPIMimeTypes
+    public static class GoogleDriveApiMimeTypes
     {
         public static string Drawing => "application/vnd.google-apps.drawing";
         public static string File => "application/vnd.google-apps.file";

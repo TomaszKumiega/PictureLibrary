@@ -5,6 +5,7 @@ using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -26,7 +27,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             set
             {
                 _name = value;
-                if(!IsNameValid()) InvalidInput?.Invoke(this, new InvalidInputEventArgs("Name"));
+                if(!IsNameValid()) InvalidInput?.Invoke(this, new InvalidInputEventArgs(nameof(Name)));
             }
         }
         #endregion
@@ -81,7 +82,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                 Name = Name,
                 Description = Description,
                 Color = Color,
-                Path = _commonViewModel.CurrentlyOpenedElement.Name + "\\" + Name,
+                Path = _commonViewModel.CurrentlyOpenedElement.Name + Path.DirectorySeparatorChar + Name,
             };
 
             var library = _commonViewModel.CurrentlyOpenedElement as Library;

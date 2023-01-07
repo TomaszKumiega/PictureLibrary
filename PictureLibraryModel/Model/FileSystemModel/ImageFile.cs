@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model
 {
-    public enum ImageExtension : int
+    public enum ImageExtension
     {
         JPG,
         BMP,
@@ -45,7 +45,7 @@ namespace PictureLibraryModel.Model
         public string LibraryFullName { get; set; }
         public List<Tag> Tags { get; set; }
 
-        public ImageFile() : base()
+        protected ImageFile() : base()
         {
             Id = Guid.NewGuid();
             Tags = new List<Tag>();

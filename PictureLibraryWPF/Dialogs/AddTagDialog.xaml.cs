@@ -2,7 +2,6 @@
 using PictureLibraryViewModel.ViewModel.Events;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace PictureLibraryWPF.Dialogs
 {
@@ -25,11 +24,7 @@ namespace PictureLibraryWPF.Dialogs
             if (args.Status == ProcessingStatus.Finished) this.Close();
         }
 
-        private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
-        {
-            //TODO: add color picker
-            // viewModel.Color = color;
-        }
+        //TODO: add color picker
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {

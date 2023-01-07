@@ -13,13 +13,13 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
 {
     public class GoogleDriveLibraryProvider : ILibraryProvider
     {
-        private readonly IGoogleDriveAPIClient _client;
+        private readonly IGoogleDriveApiClient _client;
         private readonly ILibraryFileService _libraryFileService;
 
         public GoogleDriveRemoteStorageInfo RemoteStorageInfo { get; set; }
 
         public GoogleDriveLibraryProvider(
-            IGoogleDriveAPIClient googleDriveAPIClient,
+            IGoogleDriveApiClient googleDriveAPIClient,
             ILibraryFileService libraryFileService)
         {
             _client = googleDriveAPIClient;
@@ -143,11 +143,11 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
 
             var files = _client.SearchFiles(RemoteStorageInfo.UserName, "xml/plib", "files(id, parents, name)");
 
-            foreach (var file in files)
+            foreach (var fileId in files.Select(f => f.Id))
             {
-                var stream = _client.DownloadFile(file.Id, RemoteStorageInfo.UserName);
+                var stream = _client.DownloadFile(fileId, RemoteStorageInfo.UserName);
                 var library = _libraryFileService.ReadLibraryFromStreamAsync<GoogleDriveLibrary>(stream);
-                library.FileId = file.Id;
+                library.FileId = fileId;
 
                 libraries.Add(library);
 

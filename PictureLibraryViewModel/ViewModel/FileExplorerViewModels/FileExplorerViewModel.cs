@@ -30,7 +30,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             set
             {
                 _infoText = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("InfoText"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InfoText)));
             }
         }
 
@@ -41,7 +41,7 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
             set
             {
                 _isProcessing = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsProcessing"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsProcessing)));
             }
         }
 
@@ -104,21 +104,13 @@ namespace PictureLibraryViewModel.ViewModel.FileExplorerViewModels
 
             IEnumerable<IExplorableElement> content = new List<IExplorableElement>();
 
-            try
+            if (CurrentlyOpenedElement == null)
             {
-                if (CurrentlyOpenedElement == null)
-                {
-                    content = await Task.Run(() => _directoryService.GetRootDirectories());
-                }
-                else
-                {
-                    content = await Task.Run(() => _directoryService.GetDirectoryContent(CurrentlyOpenedElement.Path));
-                }
+                content = await Task.Run(() => _directoryService.GetRootDirectories());
             }
-            catch(Exception e)
+            else
             {
-                _logger.Error(e, e.Message);
-                throw new Exception("Application failed loading the contents of: " + CurrentlyOpenedElement.Path + " directory.");
+                content = await Task.Run(() => _directoryService.GetDirectoryContent(CurrentlyOpenedElement.Path));
             }
 
             foreach (var t in content)

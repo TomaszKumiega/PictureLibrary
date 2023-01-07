@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace PictureLibraryWPF.Clipboard
 {
-    public class WPFClipboard : IClipboardService
+    public class WpfClipboard : IClipboardService
     {
         public ClipboardFilesState FilesState { get; private set; }
 

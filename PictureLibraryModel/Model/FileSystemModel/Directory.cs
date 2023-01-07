@@ -23,7 +23,7 @@ namespace PictureLibraryModel.Model
         #endregion
 
         #region Constructors
-        public Directory(string path, string name, IDirectoryService directoryService)
+        protected Directory(string path, string name, IDirectoryService directoryService)
         {
             Path = path;
             Name = name;

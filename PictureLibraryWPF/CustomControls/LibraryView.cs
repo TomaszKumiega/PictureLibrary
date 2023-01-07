@@ -9,8 +9,8 @@ namespace PictureLibraryWPF.CustomControls
     public class LibraryView : ElementsView
     {
         private bool _isTagPanelVisible;
-        private TagPanel _tagPanel;
-        private GridSplitter _splitter;
+        private readonly TagPanel _tagPanel;
+        private readonly GridSplitter _splitter;
 
         public LibraryView(ILibraryViewViewModel viewModel, GridSplitter splitter, TagPanel tagPanel) : base(viewModel)
         {

@@ -21,7 +21,7 @@ namespace PictureLibraryModel.Model
 
         abstract public void LoadIcon();
 
-        public Library()
+        protected Library()
         {
             Id = Guid.NewGuid();
         }

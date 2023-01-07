@@ -1,5 +1,4 @@
-﻿using NLog;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using File = System.IO.File;
@@ -8,8 +7,6 @@ namespace PictureLibraryModel.Services.FileSystemServices
 {
     public class FileService : FileSystemService, IFileService
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         public override void Copy(string sourcePath, string destinationPath)
         {
             File.Copy(sourcePath, destinationPath, true);
@@ -30,14 +27,14 @@ namespace PictureLibraryModel.Services.FileSystemServices
             var files = new List<string>();
             string[] subDirectories = null;
 
-            try
-            {
-                files.AddRange((await Task.Run(() => System.IO.Directory.GetFiles(directory, searchPattern))));
-                subDirectories = await Task.Run(() => System.IO.Directory.GetDirectories(directory));
-            }
-            catch { }
+            files.AddRange((await Task.Run(() => Directory.GetFiles(directory, searchPattern))));
+            subDirectories = await Task.Run(() => Directory.GetDirectories(directory));
 
-            if(subDirectories != null)
+            if(subDirectories == null)
+            {
+                return files;
+            }
+
             foreach(var t in subDirectories)
             {
                 files.AddRange(await FindFilesAsync(searchPattern, t));
@@ -61,9 +58,9 @@ namespace PictureLibraryModel.Services.FileSystemServices
             return File.Open(path, FileMode.Open);
         }
 
-        public Stream OpenFile(string path, FileMode mode, FileAccess access, FileShare fileShare)
+        public Stream OpenFile(string path, FileMode fileMode, FileAccess fileAccess, FileShare fileShare)
         {
-            return File.Open(path, mode, access, fileShare);
+            return File.Open(path, fileMode, fileAccess, fileShare);
         }
 
         public override void Remove(string path)
@@ -74,9 +71,9 @@ namespace PictureLibraryModel.Services.FileSystemServices
         public override void Rename(string path, string name)
         {
             var extension = new FileInfo(path).Extension;
-            var directoryPath = System.IO.Directory.GetParent(path).FullName;
+            var directoryPath = Directory.GetParent(path).FullName;
 
-            File.Move(path, directoryPath + "\\" + name + extension);
+            File.Move(path, directoryPath + Path.DirectorySeparatorChar + name + extension);
         }
 
         public byte[] ReadAllBytes(string path)

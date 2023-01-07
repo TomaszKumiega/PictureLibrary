@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Directory = PictureLibraryModel.Model.Directory;
 
@@ -22,8 +23,11 @@ namespace PictureLibraryModel.Services.FileSystemServices
 
         public override void Copy(string sourcePath, string destinationPath)
         {
-            if (destinationPath == null) throw new ArgumentNullException();
-            if (!destinationPath.EndsWith("\\")) destinationPath += "\\";
+            if (destinationPath == null) 
+                throw new ArgumentNullException("destinationPath must not be null");
+
+            if (!destinationPath.EndsWith("\\")) 
+                destinationPath += "\\";
 
             System.IO.Directory.CreateDirectory(destinationPath);
 
@@ -54,28 +58,25 @@ namespace PictureLibraryModel.Services.FileSystemServices
             var filePaths = System.IO.Directory.GetFiles(path).ToList();
             var directoryPaths = System.IO.Directory.GetDirectories(path).ToList();
 
-            foreach (string t in filePaths)
+            var fileInfos = filePaths
+                .Where(path => UserHasAccessToTheFile(path))
+                .Select(path => new FileInfo(path))
+                .Where(fileInfo => ImageFile.IsFileAnImage(fileInfo));
+
+            foreach (FileInfo fileInfo in fileInfos)
             {
-                var fileInfo = new FileInfo(t);
+                var imageFile = _localImageFileLocator();
+                imageFile.Name = fileInfo.Name;
+                imageFile.Path = fileInfo.FullName;
+                imageFile.Extension = fileInfo.Extension;
 
-                if (ImageFile.IsFileAnImage(fileInfo) && UserHasAccessToTheFile(t))
-                {
-                    var imageFile = _localImageFileLocator();
-                    imageFile.Name = fileInfo.Name;
-                    imageFile.Path = fileInfo.FullName;
-                    imageFile.Extension = fileInfo.Extension;
-
-                    content.Add(imageFile);
-                }
+                content.Add(imageFile);
             }
 
-            foreach (var t in directoryPaths)
+            foreach (var t in directoryPaths.Where(path => UserHasAccessToTheFolder(path)))
             {
-                if (UserHasAccessToTheFolder(t))
-                {
-                    var directoryInfo = new DirectoryInfo(t);
-                    content.Add(new Folder(directoryInfo.FullName, directoryInfo.Name, this));
-                }
+                var directoryInfo = new DirectoryInfo(t);
+                content.Add(new Folder(directoryInfo.FullName, directoryInfo.Name, this));
             }
 
             return content;
@@ -90,17 +91,10 @@ namespace PictureLibraryModel.Services.FileSystemServices
         {
             if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var rootDirectories = new List<Model.Directory>();
-
-                foreach (var driveinfo in DriveInfo.GetDrives())
-                {
-                    if (System.IO.Directory.Exists(driveinfo.Name))
-                    {
-                        rootDirectories.Add(new Drive(driveinfo.Name, driveinfo.Name, this));
-                    }
-                }
-
-                return rootDirectories;
+                return DriveInfo
+                    .GetDrives()
+                    .Where(driveInfo => System.IO.Directory.Exists(driveInfo.Name))
+                    .Select(driveInfo => new Drive(driveInfo.Name, driveInfo.Name, this));
             }
             else
             {
@@ -143,7 +137,7 @@ namespace PictureLibraryModel.Services.FileSystemServices
         {
             var parentDirectory = System.IO.Directory.GetParent(path).FullName;
 
-            Move(path, parentDirectory + '\\' + name);
+            Move(path, parentDirectory + Path.DirectorySeparatorChar + name);
         }
 
         private bool UserHasAccessToTheFolder(string path)

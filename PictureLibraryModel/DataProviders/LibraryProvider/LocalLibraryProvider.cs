@@ -111,7 +111,7 @@ namespace PictureLibraryModel.DataProviders
             if (library == null) 
                 throw new ArgumentNullException(nameof(library));
             if (!_fileService.Exists(library.Path)) 
-                throw new ArgumentException(nameof(library));
+                throw new ArgumentException("Unable to update library. Local library must have a path.");
 
             // load file for potential recovery
             XmlDocument document = new XmlDocument();

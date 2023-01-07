@@ -1,6 +1,6 @@
 ﻿namespace PictureLibraryModel.DI_Configuration
 {
-    public interface IImplementationSelector<TKey, TType>
+    public interface IImplementationSelector<in TKey, out TType>
     {
         TType Select(TKey key);
     }

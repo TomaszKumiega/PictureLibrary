@@ -12,11 +12,11 @@ namespace PictureLibraryModel.Services.LibraryFileService
     public class LibraryFileService : ILibraryFileService
     {
         private readonly ISettingsProvider _settingsProvider;
-        private readonly IGoogleDriveAPIClient _googleDriveAPIClient;
+        private readonly IGoogleDriveApiClient _googleDriveAPIClient;
 
         public LibraryFileService(
             ISettingsProvider settingsProvider,
-            IGoogleDriveAPIClient googleDriveAPIClient)
+            IGoogleDriveApiClient googleDriveAPIClient)
         {
             _settingsProvider = settingsProvider;
             _googleDriveAPIClient = googleDriveAPIClient;

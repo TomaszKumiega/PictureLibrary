@@ -10,14 +10,14 @@ namespace PictureLibraryModel.DataProviders.ImageProvider
 {
     public class GoogleDriveImageFileProvider : IImageFileProvider
     {
-        private readonly IGoogleDriveAPIClient _client;
+        private readonly IGoogleDriveApiClient _client;
         private readonly IFileService _fileService;
         private readonly Func<GoogleDriveImageFile> _imageFileLocator;
 
         public GoogleDriveRemoteStorageInfo RemoteStorageInfo { get; set; }
 
         public GoogleDriveImageFileProvider(
-            IGoogleDriveAPIClient googleDriveAPIClient,
+            IGoogleDriveApiClient googleDriveAPIClient,
             IFileService fileService,
             Func<GoogleDriveImageFile> imageFileLocator)
         {

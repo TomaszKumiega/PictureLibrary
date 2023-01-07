@@ -11,7 +11,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
     public class GoogleDriveLoginDialogViewModel : IGoogleDriveLoginDialogViewModel
     {
-        private readonly IGoogleDriveAPIClient _client;
+        private readonly IGoogleDriveApiClient _client;
         private readonly ISettingsProvider _settingsProvider;
         private readonly Func<GoogleDriveRemoteStorageInfo> _googleDriveRemoteStorageInfoLocator;
 
@@ -34,7 +34,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         public bool Authorized { get; set; }
 
         public GoogleDriveLoginDialogViewModel(
-            IGoogleDriveAPIClient client,
+            IGoogleDriveApiClient client,
             ISettingsProvider settingsProvider,
             ICommandCreator commandCreator,
             Func<GoogleDriveRemoteStorageInfo> googleDriveRemoteStorageInfoLocator)

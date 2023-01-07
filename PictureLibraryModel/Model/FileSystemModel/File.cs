@@ -11,7 +11,7 @@ namespace PictureLibraryModel.Model
         public MagickImage Icon { get; protected set; }
         public string Path { get; set; }
         
-        public File()
+        protected File()
         {
           
         }

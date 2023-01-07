@@ -9,7 +9,7 @@
             return win;
         }
 
-        private class OldWindow : System.Windows.Forms.IWin32Window
+        private sealed class OldWindow : System.Windows.Forms.IWin32Window
         {
             private readonly System.IntPtr _handle;
             public OldWindow(System.IntPtr handle)

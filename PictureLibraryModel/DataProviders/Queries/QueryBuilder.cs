@@ -12,7 +12,7 @@ namespace PictureLibraryModel.DataProviders.Queries
         protected readonly StorageQuery _query;
         protected IDataSourceCollection _dataSourceCollection;
 
-        public QueryBuilder(Func<StorageQuery> storageQueryLocator)
+        protected QueryBuilder(Func<StorageQuery> storageQueryLocator)
         {
             _query = storageQueryLocator();
         }

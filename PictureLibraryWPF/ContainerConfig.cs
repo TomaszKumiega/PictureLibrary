@@ -45,7 +45,7 @@ namespace PictureLibraryViewModel
 
         private static void RegisterServices(ContainerBuilder builder)
         {
-            builder.RegisterType<WPFClipboard>().As<IClipboardService>();
+            builder.RegisterType<WpfClipboard>().As<IClipboardService>();
         }
 
         private static void RegisterUIElements(ContainerBuilder builder)

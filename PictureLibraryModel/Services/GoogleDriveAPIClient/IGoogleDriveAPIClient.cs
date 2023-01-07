@@ -3,7 +3,7 @@ using System.IO;
 
 namespace PictureLibraryModel.Services.GoogleDriveAPIClient
 {
-    public interface IGoogleDriveAPIClient
+    public interface IGoogleDriveApiClient
     {
         MemoryStream DownloadFile(string fileId, string userName);
         Google.Apis.Drive.v3.Data.File UploadFileToFolder(Stream fileStream, string fileName, string folderId, string contentType, string userName);

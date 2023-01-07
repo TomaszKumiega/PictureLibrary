@@ -6,7 +6,7 @@ namespace PictureLibraryModel.Exceptions
     {
         public override string Message => $"Library with name: {_libraryName} already exists";
 
-        private string _libraryName;
+        private readonly string _libraryName;
 
         public LibraryAlreadyExistsException(string libraryName)
         {

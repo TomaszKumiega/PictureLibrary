@@ -10,7 +10,7 @@ namespace PictureLibraryModel.Model.FileSystemModel
     public class GoogleDriveImageFile : RemoteImageFile
     {
         [XmlIgnore]
-        public IGoogleDriveAPIClient Client { private get; set; }
+        public IGoogleDriveApiClient Client { private get; set; }
         [XmlIgnore]
         public ISettingsProvider SettingsProvider { private get; set; }
 
@@ -24,7 +24,7 @@ namespace PictureLibraryModel.Model.FileSystemModel
         }
 
         public GoogleDriveImageFile(
-            IGoogleDriveAPIClient googleDriveAPIClient,
+            IGoogleDriveApiClient googleDriveAPIClient,
             ISettingsProvider settingsProvider) : base()
         {
             Client = googleDriveAPIClient;
@@ -36,9 +36,9 @@ namespace PictureLibraryModel.Model.FileSystemModel
             if (SettingsProvider.Settings.RemoteStorageInfos.FirstOrDefault(x => x.Id == RemoteStorageInfoId) is GoogleDriveRemoteStorageInfo googleDriveRemoteStorageInfo)
             {
                 var fileMetadata = Client.GetFileMetadata(googleDriveRemoteStorageInfo.UserName, FileId, $"hasThumbnail,thumbnailLink");
-                bool hasThumbail = fileMetadata.HasThumbnail.HasValue ? fileMetadata.HasThumbnail.Value : false;
+                bool hasThumbail = fileMetadata?.HasThumbnail ?? false;
 
-                if (fileMetadata != null && hasThumbail)
+                if (hasThumbail)
                 {
                     var bytes = Convert.FromBase64String(fileMetadata.ContentHints.Thumbnail.Image);
                     Icon = new ImageMagick.MagickImage(bytes);

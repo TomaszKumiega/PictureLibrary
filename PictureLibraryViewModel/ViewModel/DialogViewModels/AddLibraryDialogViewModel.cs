@@ -10,6 +10,7 @@ using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -130,7 +131,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                 return localLibraryBuilder.CreateLibrary()
                     .WithName(Name)
                     .WithDescription(Description)
-                    .WithPath(Directory + "\\" + Name + "\\" + Name + ".plib")
+                    .WithPath(Directory + Path.DirectorySeparatorChar + Name + Path.DirectorySeparatorChar + Name + ".plib")
                     .Build();
             }
 

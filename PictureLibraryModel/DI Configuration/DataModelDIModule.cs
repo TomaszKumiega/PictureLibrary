@@ -63,7 +63,7 @@ namespace PictureLibraryModel
             builder.RegisterType<FileService>().As<IFileService>().SingleInstance();
             builder.RegisterType<RemoteStorageInfosSerializer>().As<IRemoteStorageInfosSerializer>().SingleInstance();
             builder.RegisterType<CredentialsProvider>().As<ICredentialsProvider>().SingleInstance();
-            builder.RegisterType<GoogleDriveAPIClient>().As<IGoogleDriveAPIClient>().SingleInstance();
+            builder.RegisterType<GoogleDriveApiClient>().As<IGoogleDriveApiClient>().SingleInstance();
         }
 
         private void RegisterDataAccess(ContainerBuilder builder)

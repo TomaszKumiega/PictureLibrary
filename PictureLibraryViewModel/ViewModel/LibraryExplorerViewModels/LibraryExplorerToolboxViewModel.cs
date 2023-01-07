@@ -1,6 +1,5 @@
 ﻿using PictureLibraryModel.DataProviders.Repositories;
 using PictureLibraryModel.Model;
-using PictureLibraryModel.Model.FileSystemModel;
 using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
@@ -16,7 +15,6 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         #region Private fields
         private readonly ILibraryRepository _libraryRepository;
         private readonly IImageFileRepository _imageFileRepository;
-        private ILibraryExplorerViewModel LibraryCommonViewModel => (ILibraryExplorerViewModel)CommonViewModel;
         #endregion
 
         #region Public properties
@@ -69,7 +67,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         {
             if (CommonViewModel.SelectedElements.All(x => x is Library))
             {
-                foreach (Library library in CommonViewModel.SelectedElements)
+                foreach (Library library in CommonViewModel.SelectedElements.Cast<Library>())
                 {
                     await Task.Run(() => _libraryRepository.RemoveLibrary(library));
                 }
@@ -78,7 +76,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             }
             else if (CommonViewModel.SelectedElements.All(x => x is ImageFile))
             {
-                foreach (ImageFile imageFile in CommonViewModel.SelectedElements)
+                foreach (ImageFile imageFile in CommonViewModel.SelectedElements.Cast<ImageFile>())
                 {
                     var library = (Library)CommonViewModel.CurrentlyOpenedElement;
 

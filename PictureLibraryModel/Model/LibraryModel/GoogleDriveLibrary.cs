@@ -10,7 +10,7 @@ namespace PictureLibraryModel.Model.LibraryModel
         [XmlIgnore]
         public ISettingsProvider SettingsProvider { private get; set; }
         [XmlIgnore]
-        public IGoogleDriveAPIClient Client { private get; set; }
+        public IGoogleDriveApiClient Client { private get; set; }
 
         public string FileId { get; set; }
         public string LibraryFolderId { get; set; }
@@ -20,7 +20,7 @@ namespace PictureLibraryModel.Model.LibraryModel
 
         public GoogleDriveLibrary(
             ISettingsProvider settingsProvider,
-            IGoogleDriveAPIClient googleDriveAPIClient) : base()
+            IGoogleDriveApiClient googleDriveAPIClient) : base()
         {
             Client = googleDriveAPIClient;
             SettingsProvider = settingsProvider;

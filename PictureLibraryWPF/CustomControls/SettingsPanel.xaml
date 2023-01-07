@@ -20,10 +20,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Background="Transparent" BorderThickness="0" Click="Button_Click">
-            <TextBlock Text="Wygląd" FontSize="17" Foreground="#cdcdcd" TextAlignment="Center" VerticalAlignment="Center" />
-        </Button>
-
         <Button Grid.Row="1" Background="Transparent" BorderThickness="0" Click="Button_Click_1">
             <TextBlock Grid.Row="1" Text="Połączone konta" FontSize="17" Foreground="#cdcdcd" TextAlignment="Center" VerticalAlignment="Center" />
         </Button>

@@ -151,7 +151,7 @@ namespace PictureLibraryWPF
             _currentPageControls.Add(librariesToolbar);
         }
 
-        private async Task LoadSettingsPageAsync()
+        private void LoadSettingsPage()
         {
             ResetButtonClickedRectangles();
             RemoveCurrentPageControlsFromTheGrid();
@@ -244,9 +244,9 @@ namespace PictureLibraryWPF
             await LoadLibraryExplorerPageAsync();
         }
 
-        private async void SettingsButton_Click(object sender, RoutedEventArgs e)
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            await LoadSettingsPageAsync();
+            LoadSettingsPage();
         }
         #endregion
     }
