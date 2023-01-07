@@ -7,7 +7,6 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 {
     public interface ILibraryExplorerViewModel : IExplorerViewModel
     {
-        IDataSourceCollection DataSourceCollection { get; }
         void LoadCurrentlyShownElements(IEnumerable<Tag> tags);
         void InvokeTagsChanged();
         void RefreshView(object sender, EventArgs args);

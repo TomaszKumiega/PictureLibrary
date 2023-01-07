@@ -4,6 +4,7 @@ using PictureLibraryModel.DataProviders.Builders;
 using PictureLibraryModel.DataProviders.ImageProvider;
 using PictureLibraryModel.DataProviders.LibraryProvider;
 using PictureLibraryModel.DataProviders.Queries;
+using PictureLibraryModel.DataProviders.Repositories;
 using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders;
@@ -45,6 +46,7 @@ namespace PictureLibraryModel
             builder.RegisterAsSelfWithFuncFactory<Tag>();
             builder.RegisterAsSelfWithFuncFactory<Settings>();
             builder.RegisterAsSelfWithFuncFactory<SerializableSettings>();
+            builder.RegisterAsSelfWithFuncFactory<StorageQuery>();
 
             builder.RegisterType<LocalLibraryBuilder>().Keyed<ILibraryBuilder>(DataSourceType.Local);
             builder.RegisterType<GoogleDriveLibraryBuilder>().Keyed<ILibraryBuilder>(DataSourceType.GoogleDrive);
@@ -73,11 +75,13 @@ namespace PictureLibraryModel
             builder.RegisterType<DataSourceCreator>().As<IDataSourceCreator>();
 
             builder.RegisterWithInterfaceAndFuncFactory<DataSource, IDataSource>();
+            builder.RegisterWithInterfaceAndFuncFactory<LibraryRepository, ILibraryRepository>();
 
             builder.RegisterAsSelfWithFuncFactory<LocalImageFileProvider>();
             builder.RegisterAsSelfWithFuncFactory<GoogleDriveImageFileProvider>();
             builder.RegisterAsSelfWithFuncFactory<LocalLibraryProvider>();
             builder.RegisterAsSelfWithFuncFactory<GoogleDriveLibraryProvider>();
+            builder.RegisterAsSelfWithFuncFactory<LibraryQueryBuilder>();
         }
 
         private void RegisterRemoteStorageInfos(ContainerBuilder builder)

@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.DataProviders.Builders;
+using PictureLibraryModel.Exceptions;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.SettingsProvider;
 using System;
@@ -37,21 +38,16 @@ namespace PictureLibraryModel.DataProviders
             }
         }
 
-        public List<Library> GetAllLibraries()
-        {
-            var libraries = new List<Library>();
-
-            foreach (var dataSource in DataSources)
-            {
-                libraries.AddRange(dataSource.LibraryProvider.GetAllLibraries());
-            }
-
-            return libraries;
-        }
-
         public IDataSource GetDataSourceByRemoteStorageId(Guid? remoteStorageId)
         {
-            return DataSources.FirstOrDefault(x => x.RemoteStorageInfo?.Id == remoteStorageId);
+            var dataSource = DataSources.FirstOrDefault(x => x.RemoteStorageInfo?.Id == remoteStorageId);
+
+            if (dataSource == null)
+            {
+                throw new DataSourceNotFoundException(remoteStorageId);
+            }
+
+            return dataSource;
         }
     }
 }

@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.4.0" />
+    <PackageReference Include="Autofac" Version="6.5.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.57.0.2746" />
     <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="11.3.0" />
     <PackageReference Include="NLog" Version="5.0.1" />

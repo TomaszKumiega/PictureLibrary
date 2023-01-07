@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.Model;
+using System;
 using System.Collections.Generic;
 
 namespace PictureLibraryModel.DataProviders
@@ -11,5 +12,6 @@ namespace PictureLibraryModel.DataProviders
         void RemoveLibrary(Library library);
         void UpdateLibrary(Library library);
         Library GetLibrary(string name);
+        Library FindLibrary(Predicate<Library> predicate);
     }
 }

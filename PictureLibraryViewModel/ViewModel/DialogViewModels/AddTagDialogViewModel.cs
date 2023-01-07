@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Model;
+﻿using PictureLibraryModel.DataProviders.Repositories;
+using PictureLibraryModel.Model;
 using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.ViewModel.Events;
@@ -11,6 +12,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
 {
     public class AddTagDialogViewModel : IAddTagDialogViewModel
     {
+        private readonly ILibraryRepository _libraryRepository;
         private readonly ILibraryExplorerViewModel _commonViewModel;
 
         #region Public properties
@@ -39,8 +41,12 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         public event ProcessingStatusChangedEventHandler ProcessingStatusChanged;
         #endregion
 
-        public AddTagDialogViewModel(ILibraryExplorerViewModel commonVM, ICommandCreator commandCreator)
+        public AddTagDialogViewModel(
+            ILibraryRepository libraryRepository,
+            ILibraryExplorerViewModel commonVM, 
+            ICommandCreator commandCreator)
         {
+            _libraryRepository = libraryRepository;
             _commonViewModel = commonVM;
 
             commandCreator.InitializeCommands(this);
@@ -83,12 +89,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             
             _commonViewModel.LoadCurrentlyShownElements(library.Tags);
 
-            Guid? remoteStorageInfoId = library is RemoteLibrary remoteLibrary
-                ? remoteLibrary.RemoteStorageInfoId
-                : null;
-
-            var dataSource = _commonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageInfoId);
-            await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(library));
+            await Task.Run(() => _libraryRepository.UpdateLibrary(library));
 
             _commonViewModel.InvokeTagsChanged();
             ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Finished));

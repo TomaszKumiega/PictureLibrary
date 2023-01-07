@@ -1,4 +1,4 @@
-﻿using PictureLibraryModel.DataProviders;
+﻿using PictureLibraryModel.DataProviders.Repositories;
 using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders;
@@ -21,8 +21,8 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         #region Private fields
         private readonly ILibraryExplorerViewModel _commonViewModel;
         private readonly ISettingsProvider _settingsProvider;
+        private readonly ILibraryRepository _libraryRepository;
         private readonly IImplementationSelector<DataSourceType, ILibraryBuilder> _libraryBuilderImplementationSelector;
-        private readonly IDataSourceCollection _dataSourceCollection;
 
         private string LocalStorageString => "Ten komputer";
         #endregion
@@ -80,14 +80,14 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         #endregion
 
         public AddLibraryDialogViewModel(
-            IDataSourceCollection dataSourceCollection, 
             ILibraryExplorerViewModel commonVM, 
+            ILibraryRepository libraryRepository,
             ICommandCreator commandCreator,
             ISettingsProvider settingsProviderService, 
             IImplementationSelector<DataSourceType, ILibraryBuilder>libraryBuilderImplementationSelector)
         {
-            _dataSourceCollection = dataSourceCollection;
             _commonViewModel = commonVM;
+            _libraryRepository = libraryRepository;
             _settingsProvider = settingsProviderService;
             _libraryBuilderImplementationSelector = libraryBuilderImplementationSelector;
 
@@ -187,7 +187,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             if (SelectedStorage == LocalStorageString)
                 return null;
 
-            return _settingsProvider.Settings.RemoteStorageInfos.FirstOrDefault(x => x.Name == SelectedStorage);
+            return _settingsProvider.Settings.RemoteStorageInfos.Single(x => x.Name == SelectedStorage);
         }
         #endregion
         #endregion
@@ -207,12 +207,9 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             
             Library library = CreateLibrary();
 
-            IRemoteStorageInfo selectedStorageInfo = GetSelectedStorage();
-            IDataSource dataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(selectedStorageInfo?.Id);
-
             try
             {
-                await Task.Run(() => dataSource.LibraryProvider.AddLibrary(library));
+                await Task.Run(() => _libraryRepository.AddLibrary(library));
             }
             catch (Exception)
             {

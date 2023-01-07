@@ -39,13 +39,15 @@ namespace PictureLibraryModel.Model
 
     [XmlInclude(typeof(LocalImageFile))]
     [XmlInclude(typeof(GoogleDriveImageFile))]
-    public abstract class ImageFile : File
+    public abstract class ImageFile : File, IEntity
     {
+        public Guid Id { get; set; }
         public string LibraryFullName { get; set; }
         public List<Tag> Tags { get; set; }
 
         public ImageFile() : base()
         {
+            Id = Guid.NewGuid();
             Tags = new List<Tag>();
         }
 

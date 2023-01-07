@@ -1,4 +1,5 @@
 ﻿using PictureLibraryModel.DataProviders;
+using PictureLibraryModel.DataProviders.Repositories;
 using PictureLibraryModel.Model;
 using PictureLibraryViewModel.Attributes;
 using PictureLibraryViewModel.Commands;
@@ -17,8 +18,8 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
     public class AddImagesDialogViewModel : IAddImagesDialogViewModel, INotifyPropertyChanged
     {
         #region Private fields
+        private readonly ILibraryRepository _libraryRepository;
         private readonly ILibraryExplorerViewModel _commonViewModel;
-        private readonly IDataSourceCollection _dataSourceCollection;
         #endregion
 
         #region Public properties
@@ -64,14 +65,14 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         #endregion
 
         public AddImagesDialogViewModel(
-            ILibraryExplorerViewModel commonVM, 
-            IDataSourceCollection dataSourceCollection, 
-            ICommandCreator commandCreator)
+            ICommandCreator commandCreator,
+            ILibraryExplorerViewModel commonVM,
+            ILibraryRepository libraryRepository)
         {
             _commonViewModel = commonVM;
-            _dataSourceCollection = dataSourceCollection;
+            _libraryRepository = libraryRepository;
 
-            Libraries = _dataSourceCollection.GetAllLibraries();
+            Libraries = libraryRepository.Query().GetAll().ToList();
             SelectedTags = new ObservableCollection<Tag>();
 
             commandCreator.InitializeCommands(this);
@@ -117,12 +118,6 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         #region Public methods
         public async Task AddAsync()
         {
-            Guid? remoteStorageInfoId = SelectedLibrary is RemoteLibrary remoteLibrary
-                ? remoteLibrary.RemoteStorageInfoId
-                : null;
-
-            var dataSource = _dataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageInfoId);
-
             foreach (var t in SelectedImages)
             {
                 t.Tags = SelectedTags.ToList();
@@ -130,7 +125,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
                 SelectedLibrary.Images.Add(savedImageFile);
             }
 
-            await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(SelectedLibrary));
+            await Task.Run(() => _libraryRepository.UpdateLibrary(SelectedLibrary));
 
             await _commonViewModel.LoadCurrentlyShownElementsAsync();
             ProcessingStatusChanged?.Invoke(this, new ProcessingStatusChangedEventArgs(ProcessingStatus.Finished));

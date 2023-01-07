@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Model;
+﻿using PictureLibraryModel.DataProviders.Repositories;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.FileSystemModel;
 using PictureLibraryModel.Services.Clipboard;
 using PictureLibraryViewModel.Attributes;
@@ -13,6 +14,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     public class LibraryExplorerToolboxViewModel : ILibraryExplorerToolboxViewModel
     {
         #region Private fields
+        private readonly ILibraryRepository _libraryRepository;
         private ILibraryExplorerViewModel LibraryCommonViewModel => (ILibraryExplorerViewModel)CommonViewModel;
         #endregion
 
@@ -37,8 +39,14 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         public ICommand GoToParentDirectoryCommand { get; set; }
         #endregion
 
-        public LibraryExplorerToolboxViewModel(ILibraryExplorerViewModel commonVM, ICommandCreator commandCreator, IClipboardService clipboard)
+        public LibraryExplorerToolboxViewModel(
+            ILibraryRepository libraryRepository,
+            ILibraryExplorerViewModel commonVM, 
+            ICommandCreator commandCreator, 
+            IClipboardService clipboard)
         {
+            _libraryRepository = libraryRepository;
+
             Clipboard = clipboard;
             CommonViewModel = commonVM;
 
@@ -60,12 +68,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             {
                 foreach (Library library in CommonViewModel.SelectedElements)
                 {
-                    Guid? remoteStorageInfoId = library is RemoteLibrary remoteLibrary
-                        ? remoteLibrary.RemoteStorageInfoId
-                        : null;
-
-                    var dataSource = LibraryCommonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageInfoId);
-                    await Task.Run(() => dataSource.LibraryProvider.RemoveLibrary(library));
+                    await Task.Run(() => _libraryRepository.RemoveLibrary(library));
                 }
 
                 (CommonViewModel as ILibraryExplorerViewModel).RefreshView(this, EventArgs.Empty);
@@ -74,16 +77,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             {
                 foreach (ImageFile imageFile in CommonViewModel.SelectedElements)
                 {
-                    Guid? remoteStorageInfoId = imageFile is RemoteImageFile remoteImageFile
-                        ? remoteImageFile.RemoteStorageInfoId
-                        : null;
-
-                    var dataSource = LibraryCommonViewModel.DataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageInfoId);
                     var library = (Library)CommonViewModel.CurrentlyOpenedElement;
 
                     library.Images.Remove(imageFile);
 
-                    await Task.Run(() => dataSource.LibraryProvider.UpdateLibrary(library));
+                    await Task.Run(() => _libraryRepository.UpdateLibrary(library));
                     await Task.Run(() => dataSource.ImageProvider.RemoveImage(imageFile));
                 }
 

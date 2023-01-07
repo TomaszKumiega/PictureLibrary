@@ -65,39 +65,7 @@ namespace PictureLibraryModel.DataProviders
 
         public IEnumerable<Library> GetAllLibraries()
         {
-            var libraries = new List<Library>();
-
-            if (_settingsProvider.Settings.ImportedLocalLibraries == null) return libraries;
-            var importedLibraries = _settingsProvider.Settings.ImportedLocalLibraries.ToArray();
-
-            foreach (var t in importedLibraries)
-            {
-                Stream stream = null;
-
-                try
-                {
-                    stream = _fileService.OpenFile(t, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-                    var library = _libraryFileService.ReadLibraryFromStreamAsync<LocalLibrary>(stream);
-                    libraries.Add(library);
-                }
-                catch (Exception e) when (e is FileNotFoundException || e is DirectoryNotFoundException)
-                {
-                    _logger.Debug(e, "Library file not found.");
-                    _settingsProvider.Settings.ImportedLocalLibraries.Remove(t);
-                    _settingsProvider.SaveSettings();
-                    _logger.Info("Removed library entry: " + t + " from settings");
-                }
-                catch (Exception e)
-                {
-                    _logger.Debug(e, "Couldn't read " + t);
-                }
-                finally
-                {
-                    stream?.Close();
-                }
-            }
-
-            return libraries;
+            return LoadLibraries();
         }
 
         public Library GetLibrary(string name)
@@ -121,6 +89,11 @@ namespace PictureLibraryModel.DataProviders
             }
 
             return null;
+        }
+
+        public Library FindLibrary(Predicate<Library> predicate)
+        {
+            return LoadLibraries(predicate).LastOrDefault();
         }
 
         public void RemoveLibrary(Library library)
@@ -164,6 +137,48 @@ namespace PictureLibraryModel.DataProviders
             {
                 stream.Close();
             }
-        }    
+        } 
+        
+        private List<Library> LoadLibraries(Predicate<Library> stopOnMatchingLibrary = null)
+        {
+            var libraries = new List<Library>();
+
+            if (_settingsProvider.Settings.ImportedLocalLibraries == null) return libraries;
+            var importedLibraries = _settingsProvider.Settings.ImportedLocalLibraries.ToArray();
+
+            foreach (var t in importedLibraries)
+            {
+                Stream stream = null;
+
+                try
+                {
+                    stream = _fileService.OpenFile(t, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+                    var library = _libraryFileService.ReadLibraryFromStreamAsync<LocalLibrary>(stream);
+                    libraries.Add(library);
+
+                    if (stopOnMatchingLibrary != null && stopOnMatchingLibrary(library))
+                    {
+                        return libraries;
+                    }
+                }
+                catch (Exception e) when (e is FileNotFoundException || e is DirectoryNotFoundException)
+                {
+                    _logger.Debug(e, "Library file not found.");
+                    _settingsProvider.Settings.ImportedLocalLibraries.Remove(t);
+                    _settingsProvider.SaveSettings();
+                    _logger.Info("Removed library entry: " + t + " from settings");
+                }
+                catch (Exception e)
+                {
+                    _logger.Debug(e, "Couldn't read " + t);
+                }
+                finally
+                {
+                    stream?.Close();
+                }
+            }
+
+            return libraries;
+        }
     }
 }

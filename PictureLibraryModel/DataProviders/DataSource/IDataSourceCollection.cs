@@ -9,7 +9,6 @@ namespace PictureLibraryModel.DataProviders
         IList<IDataSource> DataSources { get; }
 
         void Initialize(IEnumerable<IRemoteStorageInfo> remoteStorageInfos);
-        List<Library> GetAllLibraries();
         IDataSource GetDataSourceByRemoteStorageId(Guid? remoteStorageId = null);
     }
 }

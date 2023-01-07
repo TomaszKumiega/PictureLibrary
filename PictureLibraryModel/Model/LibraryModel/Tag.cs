@@ -4,8 +4,9 @@ using System.Xml.Serialization;
 
 namespace PictureLibraryModel.Model
 {
-    public class Tag : IExplorableElement
+    public class Tag : IExplorableElement, IEntity
     { 
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Path { get; set; }
@@ -15,6 +16,7 @@ namespace PictureLibraryModel.Model
 
         public Tag()
         {
+            Id = Guid.NewGuid();
         }
 
         public void LoadIcon()

@@ -1,6 +1,5 @@
-﻿using PictureLibraryModel.DataProviders;
+﻿using PictureLibraryModel.DataProviders.Repositories;
 using PictureLibraryModel.Model;
-using PictureLibraryModel.Services.SettingsProvider;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -10,8 +9,8 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     public class LibraryTreeViewModel : ILibraryTreeViewModel
     {
         #region Private fields
-        private readonly IDataSourceCollection _dataSourceCollection;
-        private IExplorerViewModel _commonViewModel;
+        private readonly IExplorerViewModel _commonViewModel;
+        private readonly ILibraryRepository _libraryRepository;
         #endregion
 
         #region Public properties
@@ -30,11 +29,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         #endregion
 
         public LibraryTreeViewModel(
-            IDataSourceCollection dataSourceCollection, 
-            ILibraryExplorerViewModel commonVM)
+            ILibraryExplorerViewModel commonVM,
+            ILibraryRepository libraryRepository)
         {
-            _dataSourceCollection = dataSourceCollection;
             _commonViewModel = commonVM;
+            _libraryRepository = libraryRepository;
 
             ((ILibraryExplorerViewModel)_commonViewModel).RefreshViewEvent += OnRefreshView;
         }
@@ -56,8 +55,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             {
                 ExplorableElementsTree.Clear();
             }
-            
-            var libraries = await Task.Run(() => _dataSourceCollection.GetAllLibraries());
+
+            var libraries = await Task.Run(
+                () => _libraryRepository.Query()
+                                        .GetAll()
+                                        .ToList());
                 
             foreach (var t in libraries)
             {

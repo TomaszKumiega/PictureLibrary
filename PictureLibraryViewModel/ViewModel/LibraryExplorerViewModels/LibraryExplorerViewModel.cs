@@ -1,6 +1,5 @@
-﻿using PictureLibraryModel.DataProviders;
+﻿using PictureLibraryModel.DataProviders.Repositories;
 using PictureLibraryModel.Model;
-using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryViewModel.Helpers;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     public class LibraryExplorerViewModel : ILibraryExplorerViewModel
     {
         #region Private fields
-        private readonly ILibraryFileService _libraryFileService;
+        private readonly ILibraryRepository _libraryRepository;
         #endregion
 
         #region Public properties
@@ -22,7 +21,6 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         public ObservableCollection<IExplorableElement> SelectedElements { get; set; }
         public string InfoText { get; set; }
         public bool IsProcessing { get; set; }
-        public IDataSourceCollection DataSourceCollection { get; } 
         public IExplorerHistory ExplorerHistory { get; }
 
         private IExplorableElement _currentlyOpenedElement;
@@ -46,14 +44,13 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         #endregion 
 
         public LibraryExplorerViewModel(
-            IDataSourceCollection dataSourceCollection, 
-            IExplorerHistory explorerHistory, 
-            ILibraryFileService libraryFileService)
+            IExplorerHistory explorerHistory,
+            ILibraryRepository libraryRepository)
         {
-            _libraryFileService = libraryFileService;
+            _libraryRepository = libraryRepository;
+
             CurrentlyShownElements = new ObservableCollection<IExplorableElement>();
             SelectedElements = new ObservableCollection<IExplorableElement>();
-            DataSourceCollection = dataSourceCollection;
             ExplorerHistory = explorerHistory;
 
             PropertyChanged += OnCurrentlyOpenedElementChanged;
@@ -92,7 +89,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             if (CurrentlyOpenedElement == null)
             {
-                var libraries = await Task.Run(() => DataSourceCollection.GetAllLibraries());
+                var libraries = await Task.Run(() => _libraryRepository.Query().GetAll().ToList());
                 foreach (IExplorableElement t in libraries)
                 {
                     CurrentlyShownElements.Add(t);
@@ -101,13 +98,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
             }
             else if (CurrentlyOpenedElement is Library library)
             {
-                Guid? remoteStorageInfoId = library is RemoteLibrary remoteLibrary
-                    ? remoteLibrary.RemoteStorageInfoId
-                    : null;
-
-                var dataSource = await Task.Run(() => DataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageInfoId));
-
-                var updatedLibrary = dataSource.LibraryProvider.GetLibrary(library.Name); // reload library
+                var updatedLibrary = _libraryRepository.Query() // reload library
+                    .FromAllDataSources()
+                    .WithId(library.Id)
+                    .ToList()
+                    .SingleOrDefault(); 
 
                 if (updatedLibrary == null)
                     return;

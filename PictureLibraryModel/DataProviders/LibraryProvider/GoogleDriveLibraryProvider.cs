@@ -65,22 +65,7 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
 
         public IEnumerable<Library> GetAllLibraries()
         {
-            var libraries = new List<Library>();
-
-            var files = _client.SearchFiles(RemoteStorageInfo.UserName, "xml/plib", "files(id, parents, name)");
-            
-            foreach (var file in files)
-            {
-                var stream = _client.DownloadFile(file.Id, RemoteStorageInfo.UserName);
-                var library = _libraryFileService.ReadLibraryFromStreamAsync<GoogleDriveLibrary>(stream);
-                library.FileId = file.Id;
-
-                libraries.Add(library);
-
-                stream.Close();
-            }
-
-            return libraries;
+            return LoadLibraries();
         }
 
         public void RemoveLibrary(Library library)
@@ -145,6 +130,36 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
             }
 
             return null;
+        }
+
+        public Library FindLibrary(Predicate<Library> predicate)
+        {
+            return LoadLibraries(predicate).LastOrDefault();
+        }
+
+        private List<Library> LoadLibraries(Predicate<Library> stopOnMatchingLibrary = null)
+        {
+            var libraries = new List<Library>();
+
+            var files = _client.SearchFiles(RemoteStorageInfo.UserName, "xml/plib", "files(id, parents, name)");
+
+            foreach (var file in files)
+            {
+                var stream = _client.DownloadFile(file.Id, RemoteStorageInfo.UserName);
+                var library = _libraryFileService.ReadLibraryFromStreamAsync<GoogleDriveLibrary>(stream);
+                library.FileId = file.Id;
+
+                libraries.Add(library);
+
+                stream.Close();
+
+                if (stopOnMatchingLibrary != null && stopOnMatchingLibrary(library)) 
+                {
+                    return libraries;
+                }
+            }
+
+            return libraries;
         }
     }
 }
