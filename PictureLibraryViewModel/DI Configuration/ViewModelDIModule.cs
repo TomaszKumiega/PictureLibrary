@@ -1,11 +1,11 @@
 ﻿using Autofac;
 using PictureLibraryModel;
+using PictureLibraryModel.DI_Configuration;
 using PictureLibraryViewModel.Commands;
 using PictureLibraryViewModel.Helpers;
 using PictureLibraryViewModel.ViewModel.DialogViewModels;
 using PictureLibraryViewModel.ViewModel.FileExplorerViewModels;
 using PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels;
-using System;
 
 namespace PictureLibraryViewModel
 {
@@ -18,7 +18,7 @@ namespace PictureLibraryViewModel
             RegisterFileExplorerViewModels(builder);
             RegisterLibraryExplorerViewModels(builder);
             RegisterDialogViewModels(builder);
-            RegisterDependencies(builder);
+            RegisterHelpers(builder);
         }
 
         private void RegisterModules(ContainerBuilder builder)
@@ -47,31 +47,14 @@ namespace PictureLibraryViewModel
         }
         private void RegisterDialogViewModels(ContainerBuilder builder)
         {
-            builder.RegisterType<AddLibraryDialogViewModel>().As<IAddLibraryDialogViewModel>();
-            builder.Register<Func<IAddLibraryDialogViewModel>>((context) =>
-            {
-                var cc = context.Resolve<IComponentContext>();
-                return () => { return cc.Resolve<IAddLibraryDialogViewModel>(); };
-            });
-
-            builder.RegisterType<AddImagesDialogViewModel>().As<IAddImagesDialogViewModel>();
-            builder.Register<Func<IAddImagesDialogViewModel>>((context) =>
-            {
-                var cc = context.Resolve<IComponentContext>();
-                return () => { return cc.Resolve<IAddImagesDialogViewModel>(); };
-            });
-
-            builder.RegisterType<AddTagDialogViewModel>().As<IAddTagDialogViewModel>();
-            builder.Register<Func<IAddTagDialogViewModel>>((context) =>
-            {
-                var cc = context.Resolve<IComponentContext>();
-                return () => { return cc.Resolve<IAddTagDialogViewModel>(); };
-            });
+            builder.RegisterWithInterfaceAndFuncFactory<AddLibraryDialogViewModel, IAddLibraryDialogViewModel>();
+            builder.RegisterWithInterfaceAndFuncFactory<AddImagesDialogViewModel, IAddImagesDialogViewModel>();
+            builder.RegisterWithInterfaceAndFuncFactory<AddTagDialogViewModel, IAddTagDialogViewModel>();
 
             builder.RegisterType<ChooseAccountTypeDialogViewModel>().As<IChooseAccountTypeDialogViewModel>();
             builder.RegisterType<GoogleDriveLoginDialogViewModel>().As<IGoogleDriveLoginDialogViewModel>();
         }
-        private void RegisterDependencies(ContainerBuilder builder)
+        private void RegisterHelpers(ContainerBuilder builder)
         {
             builder.RegisterType<ExplorerHistory>().As<IExplorerHistory>();
         }
