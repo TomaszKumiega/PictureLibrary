@@ -3,8 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PictureLibraryWPF.Dialogs"
-        xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:res="clr-namespace:PublicResXFileCodeGenerator"
         mc:Ignorable="d"
         WindowStyle="None" ResizeMode="NoResize" Height="450" Width="250" Background="#2b2d30" WindowStartupLocation="CenterScreen">
@@ -38,7 +36,6 @@
         <TextBlock x:Name="TagNameTextBlock" Grid.Row="3" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="17" Text="{x:Static res:Strings.TagName}"/>
         <TextBox x:Name="TagNameTextBox" Grid.Row="5" Width="150" BorderThickness="0.5" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Segoe UI" FontSize="14" Text="{Binding Path=Name, Mode=OneWayToSource}"/>
         <TextBlock x:Name="TagColorTextBlock" Grid.Row="7" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="17" Text="{x:Static res:Strings.TagColor}"/>
-        <tk:ColorPicker Name="ColorPicker" Grid.Row="9" Width="150" ColorMode="ColorCanvas" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
         <TextBlock x:Name="TagDescriptionTextBlock" Grid.Row="11" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="#cdcdcd" FontFamily="Segoe UI" FontSize="17" Text="{x:Static res:Strings.TagDescription}"/>
         <TextBox x:Name="TagDescriptionTextBox" Grid.Row="13" Width="200" Height="60" BorderThickness="0.5" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" FontFamily="Segoe UI" FontSize="14" Text="{Binding Path=Description, Mode=OneWayToSource}"/>
 

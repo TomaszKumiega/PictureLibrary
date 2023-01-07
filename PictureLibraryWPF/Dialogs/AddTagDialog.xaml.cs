@@ -27,9 +27,8 @@ namespace PictureLibraryWPF.Dialogs
 
         private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
-            var viewModel = DataContext as IAddTagDialogViewModel;
-            var color = ColorPicker.SelectedColor.Value.ToString();
-            viewModel.Color = color;
+            //TODO: add color picker
+            // viewModel.Color = color;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
