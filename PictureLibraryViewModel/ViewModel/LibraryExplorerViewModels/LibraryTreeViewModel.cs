@@ -58,6 +58,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             var libraries = await Task.Run(
                 () => _libraryRepository.Query()
+                                        .FromAllDataSources()
                                         .GetAll()
                                         .ToList());
                 

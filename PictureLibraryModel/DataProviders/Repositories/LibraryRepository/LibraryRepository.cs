@@ -7,7 +7,6 @@ namespace PictureLibraryModel.DataProviders.Repositories
     public class LibraryRepository : Repository<Library>, ILibraryRepository
     {
         private readonly Func<LibraryQueryBuilder> _queryBuilderLocator;
-        private readonly IDataSourceCollection _dataSourceCollection;
 
         public LibraryRepository(
             Func<LibraryQueryBuilder> queryBuilderLocator,
@@ -23,12 +22,6 @@ namespace PictureLibraryModel.DataProviders.Repositories
             queryBuilder.StartQuery(_dataSourceCollection);
 
             return queryBuilder;
-        }
-
-        private IDataSource GetDataSource(Library library) 
-        {
-            Guid? remoteStorageId = GetRemoteStorageId(library);
-            return _dataSourceCollection.GetDataSourceByRemoteStorageId(remoteStorageId);
         }
 
         public void AddLibrary(Library library)

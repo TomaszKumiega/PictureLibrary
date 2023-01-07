@@ -15,6 +15,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
     {
         #region Private fields
         private readonly ILibraryRepository _libraryRepository;
+        private readonly IImageFileRepository _imageFileRepository;
         private ILibraryExplorerViewModel LibraryCommonViewModel => (ILibraryExplorerViewModel)CommonViewModel;
         #endregion
 
@@ -40,11 +41,13 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
         #endregion
 
         public LibraryExplorerToolboxViewModel(
+            IImageFileRepository imageFileRepository,
             ILibraryRepository libraryRepository,
             ILibraryExplorerViewModel commonVM, 
             ICommandCreator commandCreator, 
             IClipboardService clipboard)
         {
+            _imageFileRepository = imageFileRepository;
             _libraryRepository = libraryRepository;
 
             Clipboard = clipboard;
@@ -82,7 +85,7 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
                     library.Images.Remove(imageFile);
 
                     await Task.Run(() => _libraryRepository.UpdateLibrary(library));
-                    await Task.Run(() => dataSource.ImageProvider.RemoveImage(imageFile));
+                    await Task.Run(() => _imageFileRepository.RemoveImage(imageFile));
                 }
 
                 (CommonViewModel as ILibraryExplorerViewModel).RefreshView(this, EventArgs.Empty);

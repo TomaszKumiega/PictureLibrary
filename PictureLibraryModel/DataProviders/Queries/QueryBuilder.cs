@@ -17,7 +17,7 @@ namespace PictureLibraryModel.DataProviders.Queries
             _query = storageQueryLocator();
         }
 
-        public TBuilderInterface FromDataSources(params Guid[] sources)
+        public TBuilderInterface FromDataSources(params Guid?[] sources)
         {
             foreach (var sourceId in sources)
             {
@@ -33,7 +33,7 @@ namespace PictureLibraryModel.DataProviders.Queries
         public TBuilderInterface FromAllDataSources()
         {
             _query.DataSources = _dataSourceCollection.DataSources
-                .Select(x => x.RemoteStorageInfo.Id)
+                .Select(x => x.RemoteStorageInfo?.Id)
                 .ToList();
 
             return this as TBuilderInterface;

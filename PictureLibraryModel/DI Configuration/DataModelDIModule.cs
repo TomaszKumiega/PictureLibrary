@@ -76,12 +76,14 @@ namespace PictureLibraryModel
 
             builder.RegisterWithInterfaceAndFuncFactory<DataSource, IDataSource>();
             builder.RegisterWithInterfaceAndFuncFactory<LibraryRepository, ILibraryRepository>();
+            builder.RegisterWithInterfaceAndFuncFactory<ImageFileRepository, IImageFileRepository>();
 
             builder.RegisterAsSelfWithFuncFactory<LocalImageFileProvider>();
             builder.RegisterAsSelfWithFuncFactory<GoogleDriveImageFileProvider>();
             builder.RegisterAsSelfWithFuncFactory<LocalLibraryProvider>();
             builder.RegisterAsSelfWithFuncFactory<GoogleDriveLibraryProvider>();
             builder.RegisterAsSelfWithFuncFactory<LibraryQueryBuilder>();
+            builder.RegisterAsSelfWithFuncFactory<ImageFileQueryBuilder>();
         }
 
         private void RegisterRemoteStorageInfos(ContainerBuilder builder)

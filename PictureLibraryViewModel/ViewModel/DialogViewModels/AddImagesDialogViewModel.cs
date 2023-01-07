@@ -19,6 +19,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
     {
         #region Private fields
         private readonly ILibraryRepository _libraryRepository;
+        private readonly IImageFileRepository _imageFileRepository;
         private readonly ILibraryExplorerViewModel _commonViewModel;
         #endregion
 
@@ -67,12 +68,18 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
         public AddImagesDialogViewModel(
             ICommandCreator commandCreator,
             ILibraryExplorerViewModel commonVM,
-            ILibraryRepository libraryRepository)
+            ILibraryRepository libraryRepository,
+            IImageFileRepository imageFileRepository)
         {
             _commonViewModel = commonVM;
             _libraryRepository = libraryRepository;
+            _imageFileRepository = imageFileRepository;
 
-            Libraries = libraryRepository.Query().GetAll().ToList();
+            Libraries = libraryRepository.Query()
+                .FromAllDataSources()
+                .GetAll()
+                .ToList();
+
             SelectedTags = new ObservableCollection<Tag>();
 
             commandCreator.InitializeCommands(this);
@@ -121,7 +128,7 @@ namespace PictureLibraryViewModel.ViewModel.DialogViewModels
             foreach (var t in SelectedImages)
             {
                 t.Tags = SelectedTags.ToList();
-                var savedImageFile = await Task.Run(() => dataSource.ImageProvider.AddImageToLibrary(t, SelectedLibrary));
+                var savedImageFile = await Task.Run(() => _imageFileRepository.AddImageToLibrary(t, SelectedLibrary));
                 SelectedLibrary.Images.Add(savedImageFile);
             }
 

@@ -89,7 +89,11 @@ namespace PictureLibraryViewModel.ViewModel.LibraryExplorerViewModels
 
             if (CurrentlyOpenedElement == null)
             {
-                var libraries = await Task.Run(() => _libraryRepository.Query().GetAll().ToList());
+                var libraries = await Task.Run(() => _libraryRepository.Query()
+                    .FromAllDataSources()
+                    .GetAll()
+                    .ToList());
+
                 foreach (IExplorableElement t in libraries)
                 {
                     CurrentlyShownElements.Add(t);
