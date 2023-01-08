@@ -1,6 +1,8 @@
 ﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Resources;
 using PictureLibraryModel.Services.FileSystemServices;
 using System;
+using System.IO;
 
 namespace PictureLibraryModel.DataProviders
 {
@@ -24,14 +26,14 @@ namespace PictureLibraryModel.DataProviders
             if (library is not LocalLibrary)
                 throw new InvalidOperationException("Invalid library type");
 
-            var directory = _directoryService.GetParent(library.Path);
-            var path = directory.Path + "\\Images\\" + imageFile.Name;
+            Model.Directory directory = _directoryService.GetParent(library.Path);
+            string path = directory.Path + Path.DirectorySeparatorChar + Strings.ImagesDirectory + Path.DirectorySeparatorChar + imageFile.Name;
 
             _fileService.Copy(imageFile.Path, path);
 
-            var fileInfo = _fileService.GetInfo(path);
+            FileSystemInfo fileInfo = _fileService.GetInfo(path);
 
-            var newImageFile = _imageFileLocator();
+            LocalImageFile newImageFile = _imageFileLocator();
 
             newImageFile.Name = fileInfo.Name;
             newImageFile.Path = fileInfo.FullName;

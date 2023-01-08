@@ -11,7 +11,10 @@ namespace PictureLibraryModel.DataProviders.Builders
 
         private IDataSource _dataSource;
 
-        public LocalDataSourceBuilder(Func<IDataSource> dataSourceLocator, Func<LocalImageFileProvider> localImageFileProviderLocator, Func<LocalLibraryProvider> localLibraryProviderLocator)
+        public LocalDataSourceBuilder(
+            Func<IDataSource> dataSourceLocator, 
+            Func<LocalImageFileProvider> localImageFileProviderLocator, 
+            Func<LocalLibraryProvider> localLibraryProviderLocator)
         {
             _dataSourceLocator = dataSourceLocator;
             _localImageFileProviderLocator = localImageFileProviderLocator;

@@ -15,7 +15,7 @@ namespace PictureLibraryModel.Model
             settings.Width = 50;
             settings.Height = 50;
 
-            Icon = new MagickImage(".\\Icons\\DiskIcon.png", settings);
+            Icon = new MagickImage(IconPath, settings);
         }
 
         ~Drive()

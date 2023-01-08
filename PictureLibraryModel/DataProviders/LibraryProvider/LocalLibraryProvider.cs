@@ -1,5 +1,6 @@
 ﻿using NLog;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Resources;
 using PictureLibraryModel.Services.FileSystemServices;
 using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryModel.Services.SettingsProvider;
@@ -52,7 +53,7 @@ namespace PictureLibraryModel.DataProviders
 
             var directory = _directoryService.GetParent(library.Path);
             
-            _directoryService.Create(directory.Path + "\\Images");
+            _directoryService.Create(directory.Path + Path.DirectorySeparatorChar + Strings.ImagesDirectory);
             _fileService.Create(library.Path);
 
             var fileStream = _fileService.OpenFile(library.Path, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);

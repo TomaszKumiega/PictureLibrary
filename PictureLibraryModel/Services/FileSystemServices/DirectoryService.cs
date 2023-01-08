@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using Directory = PictureLibraryModel.Model.Directory;
 
@@ -26,8 +25,8 @@ namespace PictureLibraryModel.Services.FileSystemServices
             if (destinationPath == null) 
                 throw new ArgumentNullException("destinationPath must not be null");
 
-            if (!destinationPath.EndsWith("\\")) 
-                destinationPath += "\\";
+            if (!destinationPath.EndsWith(Path.DirectorySeparatorChar)) 
+                destinationPath += Path.DirectorySeparatorChar;
 
             System.IO.Directory.CreateDirectory(destinationPath);
 

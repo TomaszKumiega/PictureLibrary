@@ -14,7 +14,10 @@ namespace PictureLibraryModel.DataProviders.Builders
 
         private IDataSource _dataSource;
 
-        public GoogleDriveDataSourceBuilder(Func<IDataSource> dataSourceLocator, Func<GoogleDriveImageFileProvider> googleDriveImageFileProvider, Func<GoogleDriveLibraryProvider> googleDriveLibraryProvider)
+        public GoogleDriveDataSourceBuilder(
+            Func<IDataSource> dataSourceLocator, 
+            Func<GoogleDriveImageFileProvider> googleDriveImageFileProvider, 
+            Func<GoogleDriveLibraryProvider> googleDriveLibraryProvider)
         {
             _dataSourceLocator = dataSourceLocator;
             _googleDriveImageFileProvider = googleDriveImageFileProvider;
@@ -50,8 +53,8 @@ namespace PictureLibraryModel.DataProviders.Builders
         public IDataSourceBuilder WithRemoteStorageInfo(IRemoteStorageInfo remoteStorageInfo)
         {
             _dataSource.RemoteStorageInfo = remoteStorageInfo;
-            (_dataSource.ImageProvider as GoogleDriveImageFileProvider).RemoteStorageInfo = remoteStorageInfo as GoogleDriveRemoteStorageInfo;
-            (_dataSource.LibraryProvider as GoogleDriveLibraryProvider).RemoteStorageInfo = remoteStorageInfo as GoogleDriveRemoteStorageInfo;
+            ((GoogleDriveImageFileProvider)_dataSource.ImageProvider).RemoteStorageInfo = (GoogleDriveRemoteStorageInfo)remoteStorageInfo;
+            ((GoogleDriveLibraryProvider)_dataSource.LibraryProvider).RemoteStorageInfo = (GoogleDriveRemoteStorageInfo)remoteStorageInfo;
 
             return this;
         }

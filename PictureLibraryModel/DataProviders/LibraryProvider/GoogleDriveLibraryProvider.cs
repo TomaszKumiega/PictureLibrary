@@ -2,6 +2,7 @@
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.LibraryModel;
 using PictureLibraryModel.Model.RemoteStorages;
+using PictureLibraryModel.Resources;
 using PictureLibraryModel.Services.GoogleDriveAPIClient;
 using PictureLibraryModel.Services.LibraryFileService;
 using System;
@@ -57,7 +58,7 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
             {
                 _libraryFileService.WriteLibraryToStreamAsync(memoryStream, googleDriveLibrary, false);
 
-                var fileMetadata = _client.UploadFileToFolder(memoryStream, googleDriveLibrary.Name + ".plib", googleDriveLibrary.LibraryFolderId, "xml/plib", RemoteStorageInfo.UserName);
+                var fileMetadata = _client.UploadFileToFolder(memoryStream, googleDriveLibrary.Name + Strings.LibraryFileExtension, googleDriveLibrary.LibraryFolderId, Strings.LibraryFileGoogleDriveContentType, RemoteStorageInfo.UserName);
 
                 googleDriveLibrary.FileId = fileMetadata.Id;
             }
@@ -93,7 +94,7 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
             using (var memoryStream = new MemoryStream())
             {
                 _libraryFileService.WriteLibraryToStreamAsync(memoryStream, googleDriveLibrary, false);
-                string fileId = _client.UpdateFile(fileMetadata, memoryStream, googleDriveLibrary.FileId, RemoteStorageInfo.UserName, "xml/plib");
+                string fileId = _client.UpdateFile(fileMetadata, memoryStream, googleDriveLibrary.FileId, RemoteStorageInfo.UserName, Strings.LibraryFileGoogleDriveContentType);
 
                 googleDriveLibrary.FileId = fileId;
             }
@@ -101,13 +102,13 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
 
         private string AddPictureLibraryFolder(string userName)
         {
-            return _client.CreateFolder("PictureLibrary", userName);
+            return _client.CreateFolder(Strings.PictureLibraryDirectory, userName);
         }
 
         private void AddLibraryFolder(GoogleDriveLibrary library, string userName, string pictureLibraryFolderId)
         {
             string libraryFolderId = _client.CreateFolder(library.Name, userName, new List<string> { pictureLibraryFolderId });
-            string imagesFolderId = _client.CreateFolder("Images", userName, new List<string> { libraryFolderId });
+            string imagesFolderId = _client.CreateFolder(Strings.ImagesDirectory, userName, new List<string> { libraryFolderId });
 
             library.LibraryFolderId = libraryFolderId;
             library.ImagesFolderId = imagesFolderId;
@@ -115,7 +116,7 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
 
         public Library GetLibrary(string name)
         {
-            var files = _client.SearchFiles(RemoteStorageInfo.UserName, "xml/plib", "files(id, parents, name)");
+            var files = _client.SearchFiles(RemoteStorageInfo.UserName, Strings.LibraryFileGoogleDriveContentType, "files(id, parents, name)");
             var libraryFile = files.FirstOrDefault(x => x.Name.Contains(name));
 
             if (libraryFile != null)
@@ -141,7 +142,7 @@ namespace PictureLibraryModel.DataProviders.LibraryProvider
         {
             var libraries = new List<Library>();
 
-            var files = _client.SearchFiles(RemoteStorageInfo.UserName, "xml/plib", "files(id, parents, name)");
+            var files = _client.SearchFiles(RemoteStorageInfo.UserName, Strings.LibraryFileGoogleDriveContentType, "files(id, parents, name)");
 
             foreach (var fileId in files.Select(f => f.Id))
             {

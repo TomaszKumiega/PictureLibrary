@@ -27,7 +27,9 @@ namespace PictureLibraryModel.DataProviders
         public void Initialize(IEnumerable<IRemoteStorageInfo> remoteStorageInfos)
         {
             if (DataSources.Any())
+            {
                 DataSources.Clear();
+            }
 
             var localDataSource = _dataSourceCreator.CreateDataSource();
             DataSources.Add(localDataSource);

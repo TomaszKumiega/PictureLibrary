@@ -79,7 +79,7 @@ namespace PictureLibraryModel.Model
             settings.Width = 50;
             settings.Height = 50;
             
-            Icon = new MagickImage(".\\Icons\\FolderIcon.png", settings);
+            Icon = new MagickImage(IconPath, settings);
         }
 
         public virtual async Task LoadSubDirectoriesAsync()
