@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using PictureLibrary.FileExplorer.UI;
 
 namespace PictureLibrary.MIUI
 {
@@ -9,6 +10,7 @@ namespace PictureLibrary.MIUI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .RegisterFileExplorer()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
