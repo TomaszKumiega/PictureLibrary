@@ -1,10 +1,4 @@
 ﻿using Autofac;
-using PictureLibraryModel.DataProviders;
-using PictureLibraryModel.DataProviders.Builders;
-using PictureLibraryModel.DataProviders.ImageProvider;
-using PictureLibraryModel.DataProviders.LibraryProvider;
-using PictureLibraryModel.DataProviders.Queries;
-using PictureLibraryModel.DataProviders.Repositories;
 using PictureLibraryModel.DI_Configuration;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.Builders;
@@ -19,7 +13,6 @@ using PictureLibraryModel.Services.LibraryFileService;
 using PictureLibraryModel.Services.RemoteStorageInfoSerializer;
 using PictureLibraryModel.Services.SettingsProvider;
 using PictureLibraryModel.Services.StringEncryption;
-using System;
 
 namespace PictureLibraryModel
 {

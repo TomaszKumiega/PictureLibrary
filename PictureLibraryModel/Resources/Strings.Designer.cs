@@ -22,7 +22,7 @@ namespace PictureLibraryModel.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace PictureLibraryModel.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PictureLibraryModel.Resources.Strings", typeof(Strings).Assembly);
@@ -51,7 +51,7 @@ namespace PictureLibraryModel.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace PictureLibraryModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Images.
         /// </summary>
-        internal static string ImagesDirectory {
+        public static string ImagesDirectory {
             get {
                 return ResourceManager.GetString("ImagesDirectory", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace PictureLibraryModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to .plib.
         /// </summary>
-        internal static string LibraryFileExtension {
+        public static string LibraryFileExtension {
             get {
                 return ResourceManager.GetString("LibraryFileExtension", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace PictureLibraryModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to &quot;xml/plib&quot;.
         /// </summary>
-        internal static string LibraryFileGoogleDriveContentType {
+        public static string LibraryFileGoogleDriveContentType {
             get {
                 return ResourceManager.GetString("LibraryFileGoogleDriveContentType", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace PictureLibraryModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to PictureLibrary.
         /// </summary>
-        internal static string PictureLibraryDirectory {
+        public static string PictureLibraryDirectory {
             get {
                 return ResourceManager.GetString("PictureLibraryDirectory", resourceCulture);
             }
