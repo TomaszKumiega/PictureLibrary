@@ -2,6 +2,6 @@
 {
     public interface IImplementationSelector<in TKey, out TType>
     {
-        TType Select(TKey key);
+        TType? Select(TKey key);
     }
 }

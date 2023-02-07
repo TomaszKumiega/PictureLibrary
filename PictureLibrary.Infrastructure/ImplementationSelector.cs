@@ -11,7 +11,7 @@ namespace PictureLibraryModel.DI_Configuration
             _implementations = implementations;
         }
 
-        public TType Select(TKey key)
+        public TType? Select(TKey key)
         {
             return _implementations.TryGetValue(key, out TType value)
                 ? value

@@ -24,7 +24,7 @@ namespace PictureLibraryModel
             RegisterServices(builder);
             RegisterDataAccess(builder);
 
-            builder.RegisterGeneric(typeof(ImplementationSelector<,>)).As(typeof(IImplementationSelector<,>));
+            
 
         }
 
