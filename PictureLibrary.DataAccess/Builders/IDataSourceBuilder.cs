@@ -8,7 +8,7 @@ namespace PictureLibrary.DataAccess.Builders
         IDataSourceBuilder CreateDataSource();
         IDataSourceBuilder WithLibraryProvider();
         IDataSourceBuilder WithImageFileProvider();
-        IDataSourceBuilder WithRemoteStorageInfo(IRemoteStorageInfo remoteStorageInfo);
+        IDataSourceBuilder WithRemoteStorageInfo(IRemoteStorageInfo? remoteStorageInfo);
         IDataSource Build();
     }
 }
