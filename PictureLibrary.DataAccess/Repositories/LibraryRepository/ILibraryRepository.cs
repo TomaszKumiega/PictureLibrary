@@ -1,5 +1,4 @@
-﻿using PictureLibrary.DataAccess.Queries.LibraryQuery;
-using PictureLibraryModel.Model;
+﻿using PictureLibraryModel.Model;
 
 namespace PictureLibrary.DataAccess.Repositories.LibraryRepository
 {
@@ -8,6 +7,5 @@ namespace PictureLibrary.DataAccess.Repositories.LibraryRepository
         void AddLibrary(Library library);
         void UpdateLibrary(Library library);
         void RemoveLibrary(Library library);
-        ILibraryQueryBuilder Query();
     }
 }
