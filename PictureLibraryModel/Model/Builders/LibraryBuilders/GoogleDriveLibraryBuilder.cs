@@ -1,5 +1,4 @@
-﻿using PictureLibraryModel.Model.LibraryModel;
-using System;
+﻿using System;
 
 namespace PictureLibraryModel.Model.Builders
 {

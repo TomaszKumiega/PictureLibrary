@@ -9,19 +9,5 @@ namespace PictureLibraryModel.Model
         {
 
         }
-
-        public override void LoadIcon()
-        {
-            var settings = new MagickReadSettings();
-            settings.Width = 50;
-            settings.Height = 50;
-
-            Icon = new MagickImage(Path, settings);
-        }
-
-        ~LocalImageFile()
-        {
-            Icon?.Dispose();
-        }
     }
 }
