@@ -6,7 +6,7 @@ namespace PictureLibrary.DataAccess.DataSource
     {
         IList<IDataSource> DataSources { get; }
 
-        void Initialize(IEnumerable<IRemoteStorageInfo> remoteStorageInfos);
+        void Initialize(IEnumerable<IDataStoreInfo> remoteStorageInfos);
         IDataSource GetDataSourceByRemoteStorageId(Guid? remoteStorageId = null);
     }
 }

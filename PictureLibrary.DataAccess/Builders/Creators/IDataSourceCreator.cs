@@ -5,6 +5,6 @@ namespace PictureLibrary.DataAccess.Builders.Creators
 {
     public interface IDataSourceCreator
     {
-        IDataSource CreateDataSource(IRemoteStorageInfo? remoteStorageInfo = null);
+        IDataSource CreateDataSource(IDataStoreInfo? remoteStorageInfo = null);
     }
 }

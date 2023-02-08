@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace PictureLibraryModel.Model.RemoteStorages
+namespace PictureLibraryModel.Model
 {
-    public class GoogleDriveRemoteStorageInfo : IRemoteStorageInfo
+    public class GoogleDriveDataStoreInfo : IDataStoreInfo
     {
         public Guid Id { get; set; }
 
@@ -16,16 +16,14 @@ namespace PictureLibraryModel.Model.RemoteStorages
 
         public void Deserialize(string serializedStorageInfo)
         {
-            var googleDriveRemoteStorageInfo = JsonConvert.DeserializeObject<GoogleDriveRemoteStorageInfo>(serializedStorageInfo);
+            var googleDriveRemoteStorageInfo = JsonConvert.DeserializeObject<GoogleDriveDataStoreInfo>(serializedStorageInfo);
 
             Id = googleDriveRemoteStorageInfo.Id;
             Name = googleDriveRemoteStorageInfo.Name;
             UserName = googleDriveRemoteStorageInfo.UserName;
         }
 
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
+        public string Serialize()
+            => JsonConvert.SerializeObject(this);
     }
 }

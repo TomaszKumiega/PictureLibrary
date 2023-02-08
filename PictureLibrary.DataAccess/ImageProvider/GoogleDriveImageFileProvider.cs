@@ -13,7 +13,7 @@ namespace PictureLibrary.DataAccess.ImageProvider
         private readonly IFileService _fileService;
         private readonly Func<GoogleDriveImageFile> _imageFileLocator;
 
-        public GoogleDriveRemoteStorageInfo? RemoteStorageInfo { get; set; }
+        public GoogleDriveDataStoreInfo? RemoteStorageInfo { get; set; }
 
         public GoogleDriveImageFileProvider(
             IGoogleDriveApiClient googleDriveAPIClient,

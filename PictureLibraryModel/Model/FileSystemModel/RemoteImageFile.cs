@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PictureLibraryModel.Model.FileSystemModel
+namespace PictureLibraryModel.Model
 {
     public abstract class RemoteImageFile : ImageFile, IRemoteEntity
     {

@@ -1,9 +1,7 @@
 ﻿using ImageMagick;
-using PictureLibraryModel.Services.GoogleDriveAPIClient;
-using PictureLibraryModel.Services.SettingsProvider;
 using System.Xml.Serialization;
 
-namespace PictureLibraryModel.Model.LibraryModel
+namespace PictureLibraryModel.Model
 {
     public class GoogleDriveLibrary : RemoteLibrary
     {

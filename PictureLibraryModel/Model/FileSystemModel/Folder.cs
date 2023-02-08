@@ -1,6 +1,4 @@
-﻿using PictureLibraryModel.Services.FileSystemServices;
-
-namespace PictureLibraryModel.Model
+﻿namespace PictureLibraryModel.Model
 {
     public class Folder : Directory
     {

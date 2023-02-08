@@ -54,7 +54,7 @@ namespace PictureLibrary.DataAccess.Builders
             return this;
         }
 
-        public IDataSourceBuilder WithRemoteStorageInfo(IRemoteStorageInfo? remoteStorageInfo)
+        public IDataSourceBuilder WithRemoteStorageInfo(IDataStoreInfo? remoteStorageInfo)
         {
             if (_dataSource == null)
                 throw new InvalidOperationException("Data source should be created before setting remote storage info");

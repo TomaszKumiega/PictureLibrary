@@ -13,7 +13,7 @@ namespace PictureLibrary.DataAccess.LibraryProvider
         private readonly IGoogleDriveApiClient _client;
         private readonly ILibraryFileService _libraryFileService;
 
-        public GoogleDriveRemoteStorageInfo? RemoteStorageInfo { get; set; }
+        public GoogleDriveDataStoreInfo? RemoteStorageInfo { get; set; }
 
         public GoogleDriveLibraryProvider(
             IGoogleDriveApiClient googleDriveAPIClient,

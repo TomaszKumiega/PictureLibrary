@@ -1,6 +1,6 @@
 ﻿namespace PictureLibrary.FileSystem.API
 {
-    public interface IAppFolder
+    public interface IPathFinder
     {
         string AppFolderPath { get; }
     }

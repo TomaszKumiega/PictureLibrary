@@ -13,7 +13,7 @@ namespace PictureLibrary.DataAccess.Builders.Creators
             BuildersImplementations = buildersImplementations;
         }
 
-        public IDataSource CreateDataSource(IRemoteStorageInfo? remoteStorageInfo = null)
+        public IDataSource CreateDataSource(IDataStoreInfo? remoteStorageInfo = null)
         {
             DataSourceType storageType = remoteStorageInfo != null
                 ? remoteStorageInfo.DataSourceType

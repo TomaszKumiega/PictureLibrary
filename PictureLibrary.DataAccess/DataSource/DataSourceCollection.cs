@@ -12,8 +12,7 @@ namespace PictureLibrary.DataAccess.DataSource
         public IList<IDataSource> DataSources { get; private set; }
 
         public DataSourceCollection(
-            IDataSourceCreator dataSourceCreator,
-            ISettingsProvider settingsProvider)
+            IDataSourceCreator dataSourceCreator)
         {
             DataSources = new List<IDataSource>();
             _dataSourceCreator = dataSourceCreator;
@@ -21,7 +20,7 @@ namespace PictureLibrary.DataAccess.DataSource
             Initialize(settingsProvider.Settings.RemoteStorageInfos);
         }
 
-        public void Initialize(IEnumerable<IRemoteStorageInfo> remoteStorageInfos)
+        public void Initialize(IEnumerable<IDataStoreInfo> remoteStorageInfos)
         {
             if (DataSources.Any())
             {

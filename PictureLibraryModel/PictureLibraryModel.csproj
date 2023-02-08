@@ -21,11 +21,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\ModelResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ModelResources.resx</DependentUpon>
-    </Compile>
     <Compile Update="Resources\Strings.Designer.cs">
       <DependentUpon>Strings.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -37,11 +32,6 @@
     <EmbeddedResource Update="Resources\ErrorMessages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ModelResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ModelResources.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Strings.resx">
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>

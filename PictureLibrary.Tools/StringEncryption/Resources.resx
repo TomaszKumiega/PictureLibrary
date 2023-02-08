@@ -117,7 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EncryptionPrivateKey" xml:space="preserve">
+  <data name="EncryptionKey" xml:space="preserve">
     <value>9F0DE131245024E886CB1E2E00FB58F8</value>
+    <comment>Encryption key in testing environment</comment>
   </data>
 </root>

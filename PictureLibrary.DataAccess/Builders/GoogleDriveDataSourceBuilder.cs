@@ -55,7 +55,7 @@ namespace PictureLibrary.DataAccess.Builders
             return this;
         }
 
-        public IDataSourceBuilder WithRemoteStorageInfo(IRemoteStorageInfo? remoteStorageInfo)
+        public IDataSourceBuilder WithRemoteStorageInfo(IDataStoreInfo? remoteStorageInfo)
         {
             if (_libraryProvider == null || _imageProvider == null)
                 throw new InvalidOperationException("LibraryProvider and ImageFileProvider should be created before setting remote storage info");
@@ -64,8 +64,8 @@ namespace PictureLibrary.DataAccess.Builders
                 return this;
 
             _dataSource!.RemoteStorageInfo = remoteStorageInfo;
-            _imageProvider.RemoteStorageInfo = (GoogleDriveRemoteStorageInfo)remoteStorageInfo;
-            _libraryProvider.RemoteStorageInfo = (GoogleDriveRemoteStorageInfo)remoteStorageInfo;
+            _imageProvider.RemoteStorageInfo = (GoogleDriveDataStoreInfo)remoteStorageInfo;
+            _libraryProvider.RemoteStorageInfo = (GoogleDriveDataStoreInfo)remoteStorageInfo;
 
             return this;
         }

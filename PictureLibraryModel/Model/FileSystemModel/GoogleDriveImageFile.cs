@@ -1,11 +1,8 @@
-﻿using PictureLibraryModel.Model.RemoteStorages;
-using PictureLibraryModel.Services.GoogleDriveAPIClient;
-using PictureLibraryModel.Services.SettingsProvider;
-using System;
+﻿using System;
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace PictureLibraryModel.Model.FileSystemModel
+namespace PictureLibraryModel.Model
 {
     public class GoogleDriveImageFile : RemoteImageFile
     {
@@ -33,7 +30,7 @@ namespace PictureLibraryModel.Model.FileSystemModel
 
         public override void LoadIcon()
         {
-            if (SettingsProvider.Settings.RemoteStorageInfos.FirstOrDefault(x => x.Id == RemoteStorageInfoId) is GoogleDriveRemoteStorageInfo googleDriveRemoteStorageInfo)
+            if (SettingsProvider.Settings.RemoteStorageInfos.FirstOrDefault(x => x.Id == RemoteStorageInfoId) is GoogleDriveDataStoreInfo googleDriveRemoteStorageInfo)
             {
                 var fileMetadata = Client.GetFileMetadata(googleDriveRemoteStorageInfo.UserName, FileId, $"hasThumbnail,thumbnailLink");
                 bool hasThumbail = fileMetadata?.HasThumbnail ?? false;

@@ -8,11 +8,11 @@ namespace PictureLibraryModel.Services.SettingsProvider
     public class SettingsProvider : ISettingsProvider
     {
         private readonly IFileService _fileService;
-        private readonly IAppFolder _appFolder;
+        private readonly IPathFinder _appFolder;
 
         public SettingsProvider(
             IFileService fileService,
-            IAppFolder appFolder)
+            IPathFinder appFolder)
         {
             _fileService = fileService;
             _appFolder = appFolder;

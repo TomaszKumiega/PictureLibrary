@@ -1,4 +1,4 @@
-﻿namespace PictureLibraryModel.Services.StringEncryption
+﻿namespace PictureLibrary.Tools.StringEncryption
 {
     public interface IStringEncryptionService
     {

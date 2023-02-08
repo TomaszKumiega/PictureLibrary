@@ -82,9 +82,9 @@ namespace PictureLibraryModel
         private void RegisterRemoteStorageInfos(ContainerBuilder builder)
         {
             builder.RegisterAsSelfWithFuncFactory<SerializableRemoteStorageInfo>();
-            builder.RegisterAsSelfWithFuncFactory<GoogleDriveRemoteStorageInfo>();
+            builder.RegisterAsSelfWithFuncFactory<GoogleDriveDataStoreInfo>();
 
-            builder.RegisterType<GoogleDriveRemoteStorageInfo>().Keyed<IRemoteStorageInfo>(DataSourceType.GoogleDrive);
+            builder.RegisterType<GoogleDriveDataStoreInfo>().Keyed<IDataStoreInfo>(DataSourceType.GoogleDrive);
         }
     }
 }

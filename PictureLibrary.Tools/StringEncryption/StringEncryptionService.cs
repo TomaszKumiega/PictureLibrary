@@ -1,9 +1,7 @@
-﻿using PictureLibraryModel.Resources;
-using System;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace PictureLibraryModel.Services.StringEncryption
+namespace PictureLibrary.Tools.StringEncryption
 {
     public class StringEncryptionService : IStringEncryptionService
     {
@@ -11,13 +9,13 @@ namespace PictureLibraryModel.Services.StringEncryption
 
         public StringEncryptionService()
         {
-            var privateKey = ModelResources.EncryptionPrivateKey;
+            var privateKey = Resources.EncryptionKey;
             AesProvider = Aes.Create();
 
             AesProvider.BlockSize = 128;
             AesProvider.KeySize = 256;
             AesProvider.GenerateIV();
-            AesProvider.Key = ASCIIEncoding.ASCII.GetBytes(privateKey);
+            AesProvider.Key = Encoding.ASCII.GetBytes(privateKey);
             AesProvider.Mode = CipherMode.CBC;
             AesProvider.Padding = PaddingMode.PKCS7;
         }
@@ -26,7 +24,7 @@ namespace PictureLibraryModel.Services.StringEncryption
         {
             ICryptoTransform transform = AesProvider.CreateEncryptor();
 
-            byte[] bytes = ASCIIEncoding.ASCII.GetBytes(text);
+            byte[] bytes = Encoding.ASCII.GetBytes(text);
             byte[] encryptedBytes = transform.TransformFinalBlock(bytes, 0, text.Length);
 
             string encryptedString = Convert.ToBase64String(encryptedBytes);
@@ -41,7 +39,7 @@ namespace PictureLibraryModel.Services.StringEncryption
             byte[] encryptedBytes = Convert.FromBase64String(text);
             byte[] decryptedBytes = transform.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
 
-            string decryptedString = ASCIIEncoding.ASCII.GetString(decryptedBytes);
+            string decryptedString = Encoding.ASCII.GetString(decryptedBytes);
 
             return decryptedString;
         }

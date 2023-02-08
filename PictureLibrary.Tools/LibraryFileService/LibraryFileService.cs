@@ -1,34 +1,18 @@
-﻿using PictureLibraryModel.Model;
-using PictureLibraryModel.Model.FileSystemModel;
-using PictureLibraryModel.Model.LibraryModel;
-using PictureLibraryModel.Services.GoogleDriveAPIClient;
-using PictureLibraryModel.Services.SettingsProvider;
-using System;
-using System.IO;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
+using PictureLibraryModel.Model;
+using File = PictureLibraryModel.Model.File;
 
-namespace PictureLibraryModel.Services.LibraryFileService
+namespace PictureLibrary.Tools.LibraryFileService
 {
     public class LibraryFileService : ILibraryFileService
     {
-        private readonly ISettingsProvider _settingsProvider;
-        private readonly IGoogleDriveApiClient _googleDriveAPIClient;
-
-        public LibraryFileService(
-            ISettingsProvider settingsProvider,
-            IGoogleDriveApiClient googleDriveAPIClient)
-        {
-            _settingsProvider = settingsProvider;
-            _googleDriveAPIClient = googleDriveAPIClient;
-        }
-
         private XmlAttributeOverrides AttributeOverrides
         {
             get
             {
                 var attrOverrides = new XmlAttributeOverrides();
                 var attrs = new XmlAttributes() { XmlIgnore = true };
-                attrOverrides.Add(typeof(Model.File), nameof(Model.File.Extension), attrs);
+                attrOverrides.Add(typeof(File), nameof(File.Extension), attrs);
 
                 return attrOverrides;
             }

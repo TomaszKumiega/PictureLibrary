@@ -8,6 +8,6 @@ namespace PictureLibrary.DataAccess.DataSource
     {
         IImageFileProvider? ImageProvider { get; set; }
         ILibraryProvider? LibraryProvider { get; set; }
-        IRemoteStorageInfo? RemoteStorageInfo { get; set; }
+        IDataStoreInfo? RemoteStorageInfo { get; set; }
     }
 }
