@@ -2,5 +2,6 @@
 {
     public class LocalLibrary : Library
     {
+        public string FilePath { get; set; }
     }
 }
