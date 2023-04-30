@@ -35,7 +35,7 @@ namespace PictureLibrary.DataAccess.ImageProvider
             googleDriveImageFile.Extension = imageFile.Extension;
             googleDriveImageFile.Name = imageFile.Name;
             googleDriveImageFile.Path = string.Empty;
-            googleDriveImageFile.RemoteStorageInfoId = RemoteStorageInfo!.Id;
+            googleDriveImageFile.DataStoreInfoId = RemoteStorageInfo!.Id;
             googleDriveImageFile.Tags = imageFile.Tags;
 
             return googleDriveImageFile;

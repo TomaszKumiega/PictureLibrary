@@ -6,7 +6,6 @@ namespace PictureLibrary.DataAccess.LibraryService
         where TLibrary : Library
     {
         Task<TLibrary> AddLibraryAsync(TLibrary library);
-        Task<IEnumerable<TLibrary>> GetAllLibrariesAsync();
         Task UpdateLibraryAsync(TLibrary library);
         Task<bool> DeleteLibraryAsync(TLibrary library);
     }

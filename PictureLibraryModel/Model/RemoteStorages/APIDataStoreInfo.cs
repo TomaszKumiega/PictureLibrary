@@ -9,6 +9,7 @@ namespace PictureLibraryModel.Model.RemoteStorages
 
         public required string Name { get; set; }
 
+        public required Guid UserId { get; set; }
         public required Guid TokenId { get; set; }
         public required string AccessToken { get; set; }
         public required string RefreshToken { get; set; }
@@ -26,6 +27,7 @@ namespace PictureLibraryModel.Model.RemoteStorages
             {
                 Id = storeInfo.Id;
                 Name = storeInfo.Name;
+                UserId = storeInfo.UserId;
                 TokenId = storeInfo.TokenId;
                 AccessToken = storeInfo.AccessToken;
                 RefreshToken = storeInfo.RefreshToken;

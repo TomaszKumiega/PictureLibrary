@@ -4,6 +4,6 @@ namespace PictureLibraryModel.Model
 {
     public interface IRemoteEntity
     {
-        Guid RemoteStorageInfoId { get; set; }
+        Guid DataStoreInfoId { get; set; }
     }
 }

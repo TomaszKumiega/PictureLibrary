@@ -46,7 +46,7 @@ namespace PictureLibraryModel.Model.Builders
 
         public IRemoteLibraryBuilder WithRemoteStorageInfo(Guid? remoteStorageInfoId)
         {
-            _library.RemoteStorageInfoId = remoteStorageInfoId.Value;
+            _library.DataStoreInfoId = remoteStorageInfoId.Value;
 
             return this;
         }

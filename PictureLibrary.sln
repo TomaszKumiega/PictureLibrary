@@ -19,19 +19,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Infrastructu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.DataAccess", "PictureLibrary.DataAccess\PictureLibrary.DataAccess.csproj", "{622749AE-B107-42F8-877C-F21C7E1AFD97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibrary.GoogleDrive", "PictureLibrary.GoogleDrive\PictureLibrary.GoogleDrive.csproj", "{0C9B5437-68C2-4932-8ECF-D30D237DD065}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.GoogleDrive", "PictureLibrary.GoogleDrive\PictureLibrary.GoogleDrive.csproj", "{0C9B5437-68C2-4932-8ECF-D30D237DD065}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibrary.FileSystem.API", "PictureLibrary.FileSystem.API\PictureLibrary.FileSystem.API.csproj", "{21CC8E65-F0F3-4997-A8B4-9C9DAC0E1734}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.FileSystem.API", "PictureLibrary.FileSystem.API\PictureLibrary.FileSystem.API.csproj", "{21CC8E65-F0F3-4997-A8B4-9C9DAC0E1734}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibrary.FileSystem.MAUI", "PictureLibrary.FileSystem.MAUI\PictureLibrary.FileSystem.MAUI.csproj", "{E7E21814-8937-46AB-AFD0-06659F7C1A8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.FileSystem.MAUI", "PictureLibrary.FileSystem.MAUI\PictureLibrary.FileSystem.MAUI.csproj", "{E7E21814-8937-46AB-AFD0-06659F7C1A8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibrary.MAUI", "PictureLibrary.MAUI\PictureLibrary.MAUI.csproj", "{8A16FCF8-00D0-462E-8990-01E8BDD8B98F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.MAUI", "PictureLibrary.MAUI\PictureLibrary.MAUI.csproj", "{8A16FCF8-00D0-462E-8990-01E8BDD8B98F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibrary.Tools", "PictureLibrary.Tools\PictureLibrary.Tools.csproj", "{5761C5AB-5408-4B44-84D7-E388F953869C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Tools", "PictureLibrary.Tools\PictureLibrary.Tools.csproj", "{5761C5AB-5408-4B44-84D7-E388F953869C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibrary.Settings", "PictureLibrary.Settings\PictureLibrary.Settings.csproj", "{AE74F59D-5E40-44A7-935A-3F6CD78A4DE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Settings", "PictureLibrary.Settings\PictureLibrary.Settings.csproj", "{AE74F59D-5E40-44A7-935A-3F6CD78A4DE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibrary.Infrastructure", "PictureLibrary.Infrastructure\PictureLibrary.Infrastructure.csproj", "{C563661A-6754-4DA7-B8E6-8503E1ADAF82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Infrastructure", "PictureLibrary.Infrastructure\PictureLibrary.Infrastructure.csproj", "{C563661A-6754-4DA7-B8E6-8503E1ADAF82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibrary.APIClient", "PictureLibrary.APIClient\PictureLibrary.APIClient.csproj", "{3D9B7EA9-7C40-4ACA-B3EB-67EF023491BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +103,10 @@ Global
 		{C563661A-6754-4DA7-B8E6-8503E1ADAF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C563661A-6754-4DA7-B8E6-8503E1ADAF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C563661A-6754-4DA7-B8E6-8503E1ADAF82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D9B7EA9-7C40-4ACA-B3EB-67EF023491BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D9B7EA9-7C40-4ACA-B3EB-67EF023491BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D9B7EA9-7C40-4ACA-B3EB-67EF023491BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D9B7EA9-7C40-4ACA-B3EB-67EF023491BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

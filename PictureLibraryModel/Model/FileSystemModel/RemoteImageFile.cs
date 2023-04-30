@@ -8,6 +8,6 @@ namespace PictureLibraryModel.Model
         { 
         }
 
-        public virtual Guid RemoteStorageInfoId { get; set; }
+        public virtual Guid DataStoreInfoId { get; set; }
     }
 }

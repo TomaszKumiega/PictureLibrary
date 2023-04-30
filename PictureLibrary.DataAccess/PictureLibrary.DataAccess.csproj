@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PictureLibrary.APIClient\PictureLibrary.APIClient.csproj" />
     <ProjectReference Include="..\PictureLibrary.FileSystem.API\PictureLibrary.FileSystem.API.csproj" />
     <ProjectReference Include="..\PictureLibrary.GoogleDrive\PictureLibrary.GoogleDrive.csproj" />
     <ProjectReference Include="..\PictureLibrary.Infrastructure\PictureLibrary.Infrastructure.csproj" />

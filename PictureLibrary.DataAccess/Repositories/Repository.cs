@@ -15,7 +15,7 @@ namespace PictureLibrary.DataAccess.Repositories
 
         private static Guid? GetRemoteStorageId(object entity)
             => entity is IRemoteEntity remoteEntity
-                ? remoteEntity.RemoteStorageInfoId
+                ? remoteEntity.DataStoreInfoId
                 : null;
 
         protected IDataSource GetDataSource(T entity)
