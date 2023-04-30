@@ -60,7 +60,7 @@ namespace PictureLibrary.DataAccess.ImageProvider
                 throw new InvalidOperationException("Invalid image file type");
             }
 
-            using (var stream = _client.DownloadFile(googleDriveImageFile.FileId, RemoteStorageInfo!.UserName))
+            using (var stream = _client.DownloadFileAsync(googleDriveImageFile.FileId, RemoteStorageInfo!.UserName))
             {
                 return stream.ToArray();
             }
@@ -73,7 +73,7 @@ namespace PictureLibrary.DataAccess.ImageProvider
                 throw new InvalidOperationException("Invalid image file type");
             }
 
-            _client.RemoveFile(googleDriveImageFile.FileId, RemoteStorageInfo!.UserName);
+            _client.RemoveFileAsync(googleDriveImageFile.FileId, RemoteStorageInfo!.UserName);
         }
     }
 }

@@ -5,11 +5,11 @@ namespace PictureLibraryModel.Model
 {
     public class GoogleDriveDataStoreInfo : IDataStoreInfo
     {
-        public Guid Id { get; set; }
+        public required Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
-        public string UserName { get; set; }
+        public required string UserName { get; set; }
 
         [JsonIgnore]
         public DataSourceType DataSourceType => DataSourceType.GoogleDrive;

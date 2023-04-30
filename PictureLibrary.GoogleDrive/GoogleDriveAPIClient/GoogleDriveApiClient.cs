@@ -3,10 +3,6 @@ using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using PictureLibraryModel.Services.CredentialsProvider;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
 
 namespace PictureLibraryModel.Services.GoogleDriveAPIClient
 {
@@ -41,7 +37,7 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
         }
         #endregion
 
-        public MemoryStream DownloadFile(string fileId, string userName)
+        public async Task<MemoryStream> DownloadFileAsync(string fileId, string userName)
         {
             DriveService service = GetDriveService(userName);
 
@@ -54,12 +50,12 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
                     throw progress.Exception;
             };
 
-            request.Download(stream);
+            await request.DownloadAsync(stream);
 
             return stream;
         }
 
-        public Google.Apis.Drive.v3.Data.File UploadFileToFolder(Stream fileStream, string fileName, string folderId, string contentType, string userName)
+        public async Task<Google.Apis.Drive.v3.Data.File> UploadFileToFolderAsync(Stream fileStream, string fileName, string folderId, string contentType, string userName)
         {
             DriveService service = GetDriveService(userName);
 
@@ -82,14 +78,14 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
                     throw progress.Exception;
             };
 
-            request.Upload();
+            await request.UploadAsync();
 
             Google.Apis.Drive.v3.Data.File file = request.ResponseBody;
 
             return file;
         }
         
-        public string CreateFolder(string folderName, string userName, List<string> parentsIds = null)
+        public async Task<string> CreateFolderAsync(string folderName, string userName, List<string>? parentsIds = null)
         {
             var service = GetDriveService(userName);
 
@@ -103,26 +99,26 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             var request = service.Files.Create(fileMetadata);
             request.Fields = "id";
 
-            var file = request.Execute();
+            var file = await request.ExecuteAsync();
 
             return file.Id;
         }
 
-        public IList<Google.Apis.Drive.v3.Data.File> SearchFiles(string userName, string filesType, string fields)
+        public async Task<IList<Google.Apis.Drive.v3.Data.File>> SearchFilesAsync(string userName, string query, string fields)
         {
             var service = GetDriveService(userName);
             var files = new List<Google.Apis.Drive.v3.Data.File>();
 
-            string pageToken = null;
+            string? pageToken = null;
 
             do
             {
                 var request = service.Files.List();
-                request.Q = $"mimeType='{filesType}'";
+                request.Q = query;
                 request.Spaces = "drive";
                 request.Fields = $"nextPageToken, {fields}";
                 request.PageToken = pageToken;
-                var result = request.Execute();
+                var result = await request.ExecuteAsync();
 
                 files.AddRange(result.Files);
 
@@ -133,7 +129,7 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             return files;
         }
 
-        public string UpdateFile(Google.Apis.Drive.v3.Data.File updatedFileMedatada, Stream fileStream, string fileId, string userName, string contentType)
+        public async Task<string> UpdateFileAsync(Google.Apis.Drive.v3.Data.File updatedFileMedatada, Stream fileStream, string fileId, string userName, string contentType)
         {
             var service = GetDriveService(userName);
 
@@ -151,49 +147,47 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
                     throw progress.Exception;
             };
 
-            updateRequest.Upload();
+            await updateRequest.UploadAsync();
             
             var file = updateRequest.ResponseBody;
             
             return file.Id; 
         }
 
-        public bool FolderExists(string userName, string folderName, out string folderId)
+        public async Task<string> FolderExistsAsync(string userName, string folderName)
         {
-            var files = SearchFiles(userName, GoogleDriveApiMimeTypes.Folder, "files(id, name)");
+            var files = await SearchFilesAsync(userName, GoogleDriveApiMimeTypes.Folder, "files(id, name)");
             var file = files.FirstOrDefault(x => x.Name == folderName);
 
             if (file != null)
             {
-                folderId = file.Id;
-                return true;
+                return file.Id;
             }
             else
             {
-                folderId = null;
-                return false;
+                return string.Empty;
             }
         }
 
-        public Google.Apis.Drive.v3.Data.File GetFileMetadata(string userName, string fileId, string fields)
+        public async Task<Google.Apis.Drive.v3.Data.File> GetFileMetadataAsync(string userName, string fileId, string fields)
         {
             var service = GetDriveService(userName);
 
             FilesResource.GetRequest request = service.Files.Get(fileId);
             request.Fields = fields;
 
-            var fileMetadata = request.Execute();
+            var fileMetadata = await request.ExecuteAsync();
 
             return fileMetadata;
         }
 
-        public void RemoveFile(string fileId, string userName)
+        public async Task RemoveFileAsync(string fileId, string userName)
         {
             DriveService service = GetDriveService(userName);
 
             FilesResource.DeleteRequest deleteRequest = service.Files.Delete(fileId);
 
-            deleteRequest.Execute();
+            await deleteRequest.ExecuteAsync();
         }
 
         public bool Authorize(string userName)
