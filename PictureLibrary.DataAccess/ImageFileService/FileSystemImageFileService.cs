@@ -53,7 +53,7 @@ namespace PictureLibrary.DataAccess.ImageFileService
             await newFileContentStream.CopyToAsync(stream);
         }
 
-        public bool RemoveFile(LocalImageFile imageFile)
+        public bool DeleteFile(LocalImageFile imageFile)
         {
             return _fileService.Delete(imageFile.Path);
         }
