@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace PictureLibraryModel.Model.RemoteStorages
+namespace PictureLibraryModel.Model.DataStoreInfo
 {
     public class APIDataStoreInfo : IDataStoreInfo
     {

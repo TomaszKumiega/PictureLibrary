@@ -2,7 +2,7 @@
 
 namespace PictureLibrary.Tools.XamlSerializer
 {
-    internal class XmlSerializerWrapped<TType> : IXmlSerializer<TType>
+    public class XmlSerializerWrapped<TType> : IXmlSerializer<TType>
         where TType : class, new()
     {
         public TType? DeserializeFromString(string xml)

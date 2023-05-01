@@ -1,7 +1,7 @@
 ﻿using PictureLibrary.APIClient.LibraryClient;
 using PictureLibrary.DataAccess.DataStoreInfos;
 using PictureLibraryModel.Model;
-using PictureLibraryModel.Model.RemoteStorages;
+using PictureLibraryModel.Model.DataStoreInfo;
 
 namespace PictureLibrary.DataAccess.LibraryService
 {

@@ -2,6 +2,6 @@
 {
     public class LibrariesSettings
     {
-        public string LocalLibrariesStoragePath { get; set; }
+        public string? LocalLibrariesStoragePath { get; set; }
     }
 }

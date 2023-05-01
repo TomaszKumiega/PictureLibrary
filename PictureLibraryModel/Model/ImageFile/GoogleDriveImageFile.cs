@@ -4,13 +4,13 @@ namespace PictureLibraryModel.Model
 {
     public class GoogleDriveImageFile : RemoteImageFile
     {
-        public string FileId { get; set; }
-        public string LibraryFolderId { get; set; }
-        public string ImagesFolderId { get; set; }
+        public string? FileId { get; set; }
+        public string? LibraryFolderId { get; set; }
+        public string? ImagesFolderId { get; set; }
 
         public string GetMimeType()
         {
-            return Extension.ToLower() switch
+            return Extension?.ToLower() switch
             {
                 ".jpg" or ".jpeg" => MediaTypeNames.Image.Jpeg,
                 ".png" => "image/png",

@@ -1,8 +1,8 @@
-﻿using PictureLibraryModel.Model;
+﻿using PictureLibraryModel.Model.DataStoreInfo;
 
 namespace PictureLibrary.DataAccess.DataStoreInfos
 {
-    public interface IDataStoreInfoProvider
+    public interface IDataStoreInfoService
     {
         TDataStoreInfo GetDataStoreInfo<TDataStoreInfo>(Guid id) where TDataStoreInfo : class, IDataStoreInfo;
     }

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace PictureLibraryModel.Model
+namespace PictureLibraryModel.Model.DataStoreInfo
 {
     public class GoogleDriveDataStoreInfo : IDataStoreInfo
     {
@@ -11,12 +11,12 @@ namespace PictureLibraryModel.Model
 
         public required string UserName { get; set; }
 
-        [JsonIgnore]
-        public DataSourceType DataSourceType => DataSourceType.GoogleDrive;
-
         public void Deserialize(string serializedStorageInfo)
         {
             var googleDriveRemoteStorageInfo = JsonConvert.DeserializeObject<GoogleDriveDataStoreInfo>(serializedStorageInfo);
+
+            if (googleDriveRemoteStorageInfo == null)
+                return;
 
             Id = googleDriveRemoteStorageInfo.Id;
             Name = googleDriveRemoteStorageInfo.Name;

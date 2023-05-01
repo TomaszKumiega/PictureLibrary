@@ -1,5 +1,5 @@
 ﻿using PictureLibraryModel.Model;
-using PictureLibraryModel.Model.RemoteStorages;
+using PictureLibraryModel.Model.DataStoreInfo;
 
 namespace PictureLibrary.APIClient.ImageFileClient
 {
