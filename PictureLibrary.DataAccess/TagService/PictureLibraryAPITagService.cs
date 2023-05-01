@@ -8,11 +8,11 @@ namespace PictureLibrary.DataAccess.TagService
     public class PictureLibraryAPITagService
     {
         private readonly ITagClient _tagClient;
-        private readonly IDataStoreInfoProvider _dataStoreInfoProvider;
+        private readonly IDataStoreInfoService _dataStoreInfoProvider;
 
         public PictureLibraryAPITagService(
             ITagClient tagClient,
-            IDataStoreInfoProvider dataStoreInfoProvider)
+            IDataStoreInfoService dataStoreInfoProvider)
         {
             _tagClient = tagClient;
             _dataStoreInfoProvider = dataStoreInfoProvider;

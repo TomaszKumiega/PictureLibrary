@@ -8,11 +8,11 @@ namespace PictureLibrary.DataAccess.LibraryService
     public class PictureLibraryAPILibraryService : ILibraryService<ApiLibrary>
     {
         private readonly ILibraryClient _libraryClient;
-        private readonly IDataStoreInfoProvider _dataStoreInfoProvider;
+        private readonly IDataStoreInfoService _dataStoreInfoProvider;
 
         public PictureLibraryAPILibraryService(
             ILibraryClient libraryClient,
-            IDataStoreInfoProvider dataStoreInfoProvider)
+            IDataStoreInfoService dataStoreInfoProvider)
         {
             _libraryClient = libraryClient;
             _dataStoreInfoProvider = dataStoreInfoProvider;

@@ -8,11 +8,11 @@ namespace PictureLibrary.DataAccess.UserService
     public class PictureLibraryApiUserService
     {
         private readonly IUserClient _userClient;
-        private readonly IDataStoreInfoProvider _dataStoreInfoProvider;
+        private readonly IDataStoreInfoService _dataStoreInfoProvider;
 
         public PictureLibraryApiUserService(
             IUserClient userClient,
-            IDataStoreInfoProvider dataStoreInfoProvider)
+            IDataStoreInfoService dataStoreInfoProvider)
         {
             _userClient = userClient;
             _dataStoreInfoProvider = dataStoreInfoProvider;

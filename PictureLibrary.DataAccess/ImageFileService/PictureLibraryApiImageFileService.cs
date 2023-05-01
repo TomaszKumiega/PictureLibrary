@@ -8,11 +8,11 @@ namespace PictureLibrary.DataAccess.ImageFileService
     public class PictureLibraryApiImageFileService
     {
         private readonly IImageFileClient _imageFileClient;
-        private readonly IDataStoreInfoProvider _dataStoreInfoProvider;
+        private readonly IDataStoreInfoService _dataStoreInfoProvider;
 
         public PictureLibraryApiImageFileService(
             IImageFileClient imageFileClient,
-            IDataStoreInfoProvider dataStoreInfoProvider)
+            IDataStoreInfoService dataStoreInfoProvider)
         {
             _imageFileClient = imageFileClient;
             _dataStoreInfoProvider = dataStoreInfoProvider;

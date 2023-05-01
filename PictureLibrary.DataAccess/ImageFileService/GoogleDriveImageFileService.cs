@@ -11,12 +11,12 @@ namespace PictureLibrary.DataAccess.ImageFileService
     {
         private readonly ILibraryXmlService _libraryXmlService;
         private readonly IGoogleDriveApiClient _googleDriveApiClient;
-        private readonly IDataStoreInfoProvider _dataStoreInfoProvider;
+        private readonly IDataStoreInfoService _dataStoreInfoProvider;
 
         public GoogleDriveImageFileService(
             ILibraryXmlService libraryXmlService,
             IGoogleDriveApiClient googleDriveApiClient,
-            IDataStoreInfoProvider dataStoreInfoProvider)
+            IDataStoreInfoService dataStoreInfoProvider)
         {
             _libraryXmlService = libraryXmlService;
             _googleDriveApiClient = googleDriveApiClient;

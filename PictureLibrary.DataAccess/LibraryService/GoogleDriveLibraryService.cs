@@ -16,14 +16,14 @@ namespace PictureLibrary.DataAccess.LibraryService
         private readonly ILibraryXmlService _libraryXmlEditor;
         private readonly Func<IQueryBuilder> _queryBuilderLocator;
         private readonly IGoogleDriveApiClient _googleDriveApiClient;
-        private readonly IDataStoreInfoProvider _dataStoreInfoProvider;
+        private readonly IDataStoreInfoService _dataStoreInfoProvider;
         private readonly IXmlSerializer<GoogleDriveLibrary> _xmlSerializer;
 
         public GoogleDriveLibraryService(
             ILibraryXmlService libraryXmlEditor,
             Func<IQueryBuilder> queryBuilderLocator,
             IGoogleDriveApiClient googleDriveApiClient,
-            IDataStoreInfoProvider dataStoreInfoProvider,
+            IDataStoreInfoService dataStoreInfoProvider,
             IXmlSerializer<GoogleDriveLibrary> xmlSerializer)
         {
             _xmlSerializer = xmlSerializer;
