@@ -1,4 +1,4 @@
-﻿namespace PictureLibrary.GoogleDrive.QueryBuilder
+﻿namespace PictureLibrary.GoogleDrive
 {
     public interface IQueryBuilder
     {
@@ -10,7 +10,7 @@
         IQueryBuilder Trashed();
         IQueryBuilder Parents(string[] parentIds);
         IQueryBuilder SharedWithMe();
-        IQueryBuilder OwnerEmailAddress(string ownerEmailAddress);
+        IQueryBuilder OwnerEmailAddress(string[] ownersEmailAddresses);
         IQueryBuilder PageSize(short pageSize);
         IQueryBuilder WithFileExtension(string fileExtension);
         IQueryBuilder Or();

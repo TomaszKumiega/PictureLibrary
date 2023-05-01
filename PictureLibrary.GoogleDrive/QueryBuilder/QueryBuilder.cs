@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PictureLibrary.GoogleDrive.QueryBuilder
+﻿namespace PictureLibrary.GoogleDrive
 {
     public class QueryBuilder : IQueryBuilder
     {
-        private string _query;
+        private string? _query;
         
 
         public IQueryBuilder ContainsText(string text)
@@ -41,7 +35,7 @@ namespace PictureLibrary.GoogleDrive.QueryBuilder
 
         public string GetQuery()
         {
-            return _query;
+            return _query!;
         }
 
         public IQueryBuilder OwnerEmailAddress(string[] ownersEmailAddresses)

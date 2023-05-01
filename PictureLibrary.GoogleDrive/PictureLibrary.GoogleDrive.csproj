@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="7.0.1" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.60.0.3034" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PictureLibrary.FileSystem.API\PictureLibrary.FileSystem.API.csproj" />
+    <ProjectReference Include="..\PictureLibrary.Infrastructure\PictureLibrary.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
