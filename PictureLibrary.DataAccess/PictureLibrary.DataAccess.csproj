@@ -16,4 +16,10 @@
     <ProjectReference Include="..\PictureLibraryModel\PictureLibraryModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ImageFileService\" />
+    <Folder Include="UserService\" />
+    <Folder Include="TagService\" />
+  </ItemGroup>
+
 </Project>
