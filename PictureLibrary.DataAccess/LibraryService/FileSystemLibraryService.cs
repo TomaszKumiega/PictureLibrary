@@ -11,14 +11,14 @@ namespace PictureLibrary.DataAccess.LibraryService
     {
         private readonly IFileService _fileService;
         private readonly IDirectoryService _directoryService;
-        private readonly ILibraryXmlEditor _libraryXmlEditor;
+        private readonly ILibraryXmlService _libraryXmlEditor;
         private readonly IXmlSerializer<LocalLibrary> _xmlSerializer;
         private readonly ILibrarySettingsProvider _librarySettingsProvider;
 
         public FileSystemLibraryService(
             IFileService fileService,
             IDirectoryService directoryService,
-            ILibraryXmlEditor libraryXmlEditor,
+            ILibraryXmlService libraryXmlEditor,
             IXmlSerializer<LocalLibrary> xmlSerializer,
             ILibrarySettingsProvider librarySettingsProvider)
         {

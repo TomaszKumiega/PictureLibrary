@@ -2,7 +2,7 @@
 
 namespace PictureLibrary.Tools.XamlEditor
 {
-    public interface ILibraryXmlEditor
+    public interface ILibraryXmlService
     {
         string UpdateLibraryNode<TLibrary>(string xml, TLibrary library) 
             where TLibrary : Library;
@@ -15,5 +15,7 @@ namespace PictureLibrary.Tools.XamlEditor
         string AddTagNode(string xml, Tag tag);
         string UpdateTagNode(string xml, Tag tag);
         string RemoveTagNode(string xml, Tag tag);
+
+        IEnumerable<TImageFile> GetImageFiles<TImageFile>(string xml);
     }
 }
