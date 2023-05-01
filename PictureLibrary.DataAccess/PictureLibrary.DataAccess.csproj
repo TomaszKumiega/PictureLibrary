@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="UserService\" />
-    <Folder Include="TagService\" />
   </ItemGroup>
 
 </Project>

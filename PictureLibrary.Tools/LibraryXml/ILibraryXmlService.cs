@@ -17,5 +17,6 @@ namespace PictureLibrary.Tools.XamlEditor
         string RemoveTagNode(string xml, Tag tag);
 
         IEnumerable<TImageFile> GetImageFiles<TImageFile>(string xml);
+        IEnumerable<Tag> GetTags(string xml);
     }
 }
