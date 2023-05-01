@@ -1,9 +1,11 @@
 ﻿using PictureLibrary.DataAccess.DataStoreInfos;
 using PictureLibrary.GoogleDrive.MimeType;
 using PictureLibrary.GoogleDrive.QueryBuilder;
+using PictureLibrary.Tools.XamlEditor;
 using PictureLibrary.Tools.XamlSerializer;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Services.GoogleDriveAPIClient;
+using File = Google.Apis.Drive.v3.Data.File;
 
 namespace PictureLibrary.DataAccess.LibraryService
 {
@@ -11,18 +13,21 @@ namespace PictureLibrary.DataAccess.LibraryService
     {
         private static string AppFolder => "PictureLibraryAppFolder\\";
 
+        private readonly ILibraryXmlEditor _libraryXmlEditor;
         private readonly Func<IQueryBuilder> _queryBuilderLocator;
         private readonly IGoogleDriveApiClient _googleDriveApiClient;
         private readonly IDataStoreInfoProvider _dataStoreInfoProvider;
         private readonly IXmlSerializer<GoogleDriveLibrary> _xmlSerializer;
 
         public GoogleDriveLibraryService(
+            ILibraryXmlEditor libraryXmlEditor,
             Func<IQueryBuilder> queryBuilderLocator,
             IGoogleDriveApiClient googleDriveApiClient,
             IDataStoreInfoProvider dataStoreInfoProvider,
             IXmlSerializer<GoogleDriveLibrary> xmlSerializer)
         {
             _xmlSerializer = xmlSerializer;
+            _libraryXmlEditor = libraryXmlEditor;
             _queryBuilderLocator = queryBuilderLocator;
             _googleDriveApiClient = googleDriveApiClient;
             _dataStoreInfoProvider = dataStoreInfoProvider;
@@ -107,14 +112,26 @@ namespace PictureLibrary.DataAccess.LibraryService
         {
             GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId);
 
-            var stream = await SerializeLibraryAsync(library);
-
-            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            var fileMetadata = new File()
             {
                 Name = library.Name,
             };
 
-            await _googleDriveApiClient.UpdateFileAsync(fileMetadata, stream, library.FileId, dataStoreInfo.UserName, MimeTypes.Xml);
+            string libraryXml;
+            using (MemoryStream stream = await _googleDriveApiClient.DownloadFileAsync(library.FileId, dataStoreInfo.UserName))
+            using (StreamReader sr = new(stream))
+            {
+                libraryXml = await sr.ReadToEndAsync();
+            }
+
+            string updatedLibraryXml = _libraryXmlEditor.UpdateLibraryNode(libraryXml, library);
+
+            using MemoryStream updateStream = new();
+            using StreamWriter streamWriter = new(updateStream);
+
+            await streamWriter.WriteAsync(updatedLibraryXml);
+
+            await _googleDriveApiClient.UpdateFileAsync(fileMetadata, updateStream, library.FileId, dataStoreInfo.UserName, MimeTypes.Xml);
         }
 
         private async Task<string> CreateFolderAsync(GoogleDriveDataStoreInfo dataStoreInfo)

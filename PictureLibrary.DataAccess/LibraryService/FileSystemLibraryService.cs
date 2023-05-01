@@ -1,6 +1,7 @@
 ﻿using PictureLibrary.FileSystem.API;
 using PictureLibrary.FileSystem.API.Directories;
 using PictureLibrary.Settings.LibrarySettings;
+using PictureLibrary.Tools.XamlEditor;
 using PictureLibrary.Tools.XamlSerializer;
 using PictureLibraryModel.Model;
 
@@ -10,17 +11,20 @@ namespace PictureLibrary.DataAccess.LibraryService
     {
         private readonly IFileService _fileService;
         private readonly IDirectoryService _directoryService;
+        private readonly ILibraryXmlEditor _libraryXmlEditor;
         private readonly IXmlSerializer<LocalLibrary> _xmlSerializer;
         private readonly ILibrarySettingsProvider _librarySettingsProvider;
 
         public FileSystemLibraryService(
             IFileService fileService,
             IDirectoryService directoryService,
+            ILibraryXmlEditor libraryXmlEditor,
             IXmlSerializer<LocalLibrary> xmlSerializer,
             ILibrarySettingsProvider librarySettingsProvider)
         {
             _fileService = fileService;
             _xmlSerializer = xmlSerializer;
+            _libraryXmlEditor = libraryXmlEditor;
             _directoryService = directoryService;
             _librarySettingsProvider = librarySettingsProvider;    
         }
@@ -118,12 +122,20 @@ namespace PictureLibrary.DataAccess.LibraryService
 
         public async Task UpdateLibraryAsync(LocalLibrary library)
         {
-            string serializedLibrary = await SerializeLibraryAsync(library);
+            string serializedLibrary;
+            using (Stream libraryFileStream = _fileService.Open(library.FilePath))
+            using (StreamReader sr = new(libraryFileStream))
+            {
+                serializedLibrary = await sr.ReadToEndAsync();
+            }    
 
-            using Stream newLibraryFileStream = _fileService.Open(library.FilePath);
-            using StreamWriter streamWriter = new(library.FilePath, append: false);
-                
-            await streamWriter.WriteAsync(serializedLibrary);    
+            string updatedSerializedLibrary = _libraryXmlEditor.UpdateLibraryNode(serializedLibrary, library);   
+
+            using (Stream updatedLibraryFileStream = _fileService.Open(library.FilePath))
+            using (StreamWriter sr = new(updatedLibraryFileStream))
+            {
+                await sr.WriteAsync(updatedSerializedLibrary);
+            }
         }
 
         private async Task<string> SerializeLibraryAsync(LocalLibrary library)
