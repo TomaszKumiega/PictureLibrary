@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ImageFileService\" />
     <Folder Include="UserService\" />
     <Folder Include="TagService\" />
   </ItemGroup>
