@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PictureLibrary.FileSystem.API\PictureLibrary.FileSystem.API.csproj" />
+    <ProjectReference Include="..\PictureLibraryModel\PictureLibraryModel.csproj" />
+  </ItemGroup>
+
+</Project>
