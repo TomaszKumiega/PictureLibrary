@@ -15,10 +15,6 @@ namespace PictureLibraryModel.Model.DataStoreInfo
         public required string RefreshToken { get; set; }
         public required DateTime ExpiryDate { get; set; }
 
-        [JsonIgnore]
-        public DataSourceType DataSourceType
-            => DataSourceType.PictureLibraryAPI;
-
         public void Deserialize(string serializedDataStoreInfo)
         {
             var storeInfo = (APIDataStoreInfo?)JsonConvert.DeserializeObject(serializedDataStoreInfo);

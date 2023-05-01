@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PictureLibrary.Infrastructure\PictureLibrary.Infrastructure.csproj" />
     <ProjectReference Include="..\PictureLibraryModel\PictureLibraryModel.csproj" />
   </ItemGroup>
 

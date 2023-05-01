@@ -10,7 +10,6 @@
     <ProjectReference Include="..\PictureLibrary.APIClient\PictureLibrary.APIClient.csproj" />
     <ProjectReference Include="..\PictureLibrary.FileSystem.API\PictureLibrary.FileSystem.API.csproj" />
     <ProjectReference Include="..\PictureLibrary.GoogleDrive\PictureLibrary.GoogleDrive.csproj" />
-    <ProjectReference Include="..\PictureLibrary.Infrastructure\PictureLibrary.Infrastructure.csproj" />
     <ProjectReference Include="..\PictureLibrary.Settings\PictureLibrary.Settings.csproj" />
     <ProjectReference Include="..\PictureLibrary.Tools\PictureLibrary.Tools.csproj" />
     <ProjectReference Include="..\PictureLibraryModel\PictureLibraryModel.csproj" />

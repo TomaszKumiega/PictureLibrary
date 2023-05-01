@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibraryModel", "PictureLibraryModel\PictureLibraryModel.csproj", "{A9231CC0-7AC2-4BB3-8DCC-40427B004E9B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Infrastructure.UI", "PictureLibrary.Infrastructure.UI\PictureLibrary.Infrastructure.UI.csproj", "{B50B5B1F-175E-4F56-8200-76C06AFB30E2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.DataAccess", "PictureLibrary.DataAccess\PictureLibrary.DataAccess.csproj", "{622749AE-B107-42F8-877C-F21C7E1AFD97}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.GoogleDrive", "PictureLibrary.GoogleDrive\PictureLibrary.GoogleDrive.csproj", "{0C9B5437-68C2-4932-8ECF-D30D237DD065}"
@@ -18,8 +16,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Tools", "PictureLibrary.Tools\PictureLibrary.Tools.csproj", "{5761C5AB-5408-4B44-84D7-E388F953869C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Settings", "PictureLibrary.Settings\PictureLibrary.Settings.csproj", "{AE74F59D-5E40-44A7-935A-3F6CD78A4DE4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Infrastructure", "PictureLibrary.Infrastructure\PictureLibrary.Infrastructure.csproj", "{C563661A-6754-4DA7-B8E6-8503E1ADAF82}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.APIClient", "PictureLibrary.APIClient\PictureLibrary.APIClient.csproj", "{3D9B7EA9-7C40-4ACA-B3EB-67EF023491BF}"
 EndProject
@@ -33,10 +29,6 @@ Global
 		{A9231CC0-7AC2-4BB3-8DCC-40427B004E9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9231CC0-7AC2-4BB3-8DCC-40427B004E9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9231CC0-7AC2-4BB3-8DCC-40427B004E9B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B50B5B1F-175E-4F56-8200-76C06AFB30E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B50B5B1F-175E-4F56-8200-76C06AFB30E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B50B5B1F-175E-4F56-8200-76C06AFB30E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B50B5B1F-175E-4F56-8200-76C06AFB30E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{622749AE-B107-42F8-877C-F21C7E1AFD97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{622749AE-B107-42F8-877C-F21C7E1AFD97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{622749AE-B107-42F8-877C-F21C7E1AFD97}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,10 +55,6 @@ Global
 		{AE74F59D-5E40-44A7-935A-3F6CD78A4DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE74F59D-5E40-44A7-935A-3F6CD78A4DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE74F59D-5E40-44A7-935A-3F6CD78A4DE4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C563661A-6754-4DA7-B8E6-8503E1ADAF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C563661A-6754-4DA7-B8E6-8503E1ADAF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C563661A-6754-4DA7-B8E6-8503E1ADAF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C563661A-6754-4DA7-B8E6-8503E1ADAF82}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3D9B7EA9-7C40-4ACA-B3EB-67EF023491BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3D9B7EA9-7C40-4ACA-B3EB-67EF023491BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D9B7EA9-7C40-4ACA-B3EB-67EF023491BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
