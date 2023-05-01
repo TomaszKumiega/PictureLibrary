@@ -40,10 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PictureLibraryViewModel\PictureLibraryViewModel.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Icons\AddIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
