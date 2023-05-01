@@ -1,5 +1,4 @@
-﻿using PictureLibraryModel.Model.FileSystemModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -42,7 +41,6 @@ namespace PictureLibraryModel.Model
     public abstract class ImageFile : File, IEntity
     {
         public Guid Id { get; set; }
-        public string LibraryFullName { get; set; }
         public List<Tag> Tags { get; set; }
 
         protected ImageFile() : base()

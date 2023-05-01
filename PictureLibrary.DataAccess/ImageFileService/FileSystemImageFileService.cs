@@ -17,6 +17,19 @@ namespace PictureLibrary.DataAccess.ImageFileService
             _libraryXmlService = libraryXmlService;
         }
 
+        public async Task AddImageFileAsync(LocalImageFile localImageFile, Stream imageFileContent, LocalLibrary library)
+        {
+            string libraryXml = await GetLibraryXmlAsync(library);
+            string path = _fileService.GetFileInfo(library.FilePath).DirectoryName! + Path.PathSeparator + "Images" + Path.PathSeparator + $"{localImageFile.Name}.{localImageFile.Extension}";
+
+            using var stream = _fileService.Create(path);
+            await imageFileContent.CopyToAsync(stream);
+
+            string updatedLibraryXml = _libraryXmlService.AddImageFileNode(libraryXml, localImageFile);
+
+            await WriteLibraryXmlAsync(library, updatedLibraryXml);
+        }
+
         public async Task<IEnumerable<LocalImageFile>> GetAllImageFilesAsync(LocalLibrary library)
         {
             string libraryXml = await GetLibraryXmlAsync(library);

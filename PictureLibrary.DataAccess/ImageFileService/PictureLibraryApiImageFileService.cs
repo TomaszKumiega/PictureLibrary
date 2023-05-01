@@ -18,6 +18,17 @@ namespace PictureLibrary.DataAccess.ImageFileService
             _dataStoreInfoProvider = dataStoreInfoProvider;
         }
 
+        public async Task AddImageFileAsync(ApiImageFile imageFile, Stream imageContent, ApiLibrary library)
+        {
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<APIDataStoreInfo>(library.DataStoreInfoId);
+            await _imageFileClient.AddImageFileAsync(dataStoreInfo, imageFile, imageContent, new List<Guid>() { library.Id });
+        }
+
+        public async Task AddImageFileToLibraryAsync(Guid imageFileId, ApiLibrary library)
+        {
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<APIDataStoreInfo>(library.DataStoreInfoId);
+            await _imageFileClient.AddImageFileToLibraryAsync(dataStoreInfo, imageFileId, library.Id);
+        }
 
         public async Task<IEnumerable<ApiImageFile>> GetApiImageFilesAsync(ApiLibrary library)
         {

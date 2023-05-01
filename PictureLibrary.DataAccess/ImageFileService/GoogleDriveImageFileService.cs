@@ -23,6 +23,31 @@ namespace PictureLibrary.DataAccess.ImageFileService
             _dataStoreInfoProvider = dataStoreInfoProvider;
         }
 
+        public async Task AddImageFileAsync(GoogleDriveImageFile imageFile, Stream imageFileContent, GoogleDriveLibrary library)
+        {
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId);
+
+            string serializedLibrary = await GetLibraryFileContentAsync(library);
+
+            var appFolderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, _googleDriveApiClient.AppFolder);
+
+            if (appFolderId == null)
+                return;
+
+            var libraryFolderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, library.Id.ToString(), appFolderId);
+            var imagesFolderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, "Images", libraryFolderId);
+            imagesFolderId ??= await _googleDriveApiClient.CreateFolderAsync("Images", dataStoreInfo.UserName, new List<string>() { libraryFolderId });
+
+            string fileName = $"{imageFile.Name}.{imageFile.Extension}";
+            var file = await _googleDriveApiClient.UploadFileToFolderAsync(imageFileContent, fileName, imagesFolderId, imageFile.GetMimeType(), dataStoreInfo.UserName);
+
+            imageFile.FileId = file.Id;
+
+            string updatedLibraryXml = _libraryXmlService.AddImageFileNode(serializedLibrary, imageFile);
+
+            await WriteLibraryAsync(library, updatedLibraryXml);
+        }
+
         public async Task<IEnumerable<GoogleDriveImageFile>> GetApiImageFilesAsync(GoogleDriveLibrary library)
         {
             string serializedLibrary = await GetLibraryFileContentAsync(library);

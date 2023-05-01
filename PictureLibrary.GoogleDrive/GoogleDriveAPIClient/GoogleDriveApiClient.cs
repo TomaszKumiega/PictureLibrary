@@ -15,6 +15,8 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             _credentialsProvider = credentialsProvider;
         }
 
+        public string AppFolder => "PictureLibraryAppFolder\\";
+
         #region Private methods
         private DriveService GetDriveService(string userName)
         {
@@ -154,9 +156,13 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
             return file.Id; 
         }
 
-        public async Task<string> FolderExistsAsync(string userName, string folderName)
+        public async Task<string> GetFolderIdAsync(string userName, string folderName, string? parentId = null)
         {
-            var files = await SearchFilesAsync(userName, GoogleDriveApiMimeTypes.Folder, "files(id, name)");
+            var query = $"mimeType={GoogleDriveApiMimeTypes.Folder}";
+            if (parentId != null)
+                query += $" and {parentId} in parents";
+
+            var files = await SearchFilesAsync(userName, query, "files(id, name)");
             var file = files.FirstOrDefault(x => x.Name == folderName);
 
             if (file != null)

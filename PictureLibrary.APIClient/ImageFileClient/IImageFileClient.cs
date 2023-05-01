@@ -7,9 +7,10 @@ namespace PictureLibrary.APIClient.ImageFileClient
     {
         Task<IEnumerable<ApiImageFile>> GetAllImageFilesAsync(APIDataStoreInfo dataStoreInfo, Guid libraryId);
         Task<Stream> GetFileAsync(APIDataStoreInfo dataStoreInfo, Guid imageFileId);
-        Task UploadFileAsync(APIDataStoreInfo dataStoreInfo, Stream stream, string fileName, IEnumerable<Guid> libraryIds);
+        Task AddImageFileAsync(APIDataStoreInfo dataStoreInfo, ApiImageFile apiImageFile, Stream stream, IEnumerable<Guid> libraryIds);
         Task<bool> DeleteImageFileAsync(APIDataStoreInfo dataStoreInfo, Guid imageFileId);
         Task UpdateImageFileAsync(APIDataStoreInfo dataStoreInfo, ApiImageFile imageFile);
         Task UpdateFileContentAsync(APIDataStoreInfo dataStoreInfo, ApiImageFile imageFile, Stream contentStream);
+        Task AddImageFileToLibraryAsync(APIDataStoreInfo dataStoreInfo, Guid imageFileId, Guid libraryId);
     }
 }
