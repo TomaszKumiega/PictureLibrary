@@ -1,5 +1,5 @@
 ﻿using PictureLibrary.FileSystem.API;
-using PictureLibrary.Tools.XamlEditor;
+using PictureLibrary.Tools.LibraryXml;
 using PictureLibraryModel.Model;
 
 namespace PictureLibrary.DataAccess.TagService
