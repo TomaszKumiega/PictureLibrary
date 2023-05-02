@@ -6,16 +6,20 @@ namespace PictureLibraryModel.Services.CredentialsProvider
 {
     internal class CredentialsProvider : ICredentialsProvider
     {
+        private readonly IPathFinder _pathFinder;
         private readonly IFileService _fileService;
 
-        public CredentialsProvider(IFileService fileService)
+        public CredentialsProvider(
+            IPathFinder pathFinder,
+            IFileService fileService)
         {
+            _pathFinder = pathFinder;
             _fileService = fileService;
         }
 
         public ClientSecrets GetGoogleDriveAPIClientSecrets()
         {
-            var credentialsFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + Path.DirectorySeparatorChar + "google_drive_api_secret.json";
+            var credentialsFilePath = _pathFinder.AppFolderPath + Path.PathSeparator + "google_drive_api_secret.json";
             Stream fileStream = _fileService.Open(credentialsFilePath);
 
             return GoogleClientSecrets.FromStream(fileStream).Secrets;
