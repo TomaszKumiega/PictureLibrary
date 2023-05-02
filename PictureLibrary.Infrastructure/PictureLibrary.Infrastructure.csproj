@@ -18,12 +18,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Platforms\**" />
+	  <EmbeddedResource Remove="Platforms\**" />
+	  <MauiCss Remove="Platforms\**" />
+	  <MauiXaml Remove="Platforms\**" />
+	  <None Remove="Platforms\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Folder Include="Extensions\" />
-	  <Folder Include="Platforms\Android\" />
-	  <Folder Include="Platforms\iOS\" />
-	  <Folder Include="Platforms\MacCatalyst\" />
-	  <Folder Include="Platforms\Tizen\" />
-	  <Folder Include="Platforms\Windows\" />
 	</ItemGroup>
 
 </Project>

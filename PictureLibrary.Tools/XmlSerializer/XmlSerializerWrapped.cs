@@ -2,10 +2,10 @@
 
 namespace PictureLibrary.Tools.XamlSerializer
 {
-    public class XmlSerializerWrapped<TType> : IXmlSerializer<TType>
-        where TType : class, new()
+    public class XmlSerializerWrapped : IXmlSerializer
     {
-        public TType? DeserializeFromString(string xml)
+        public TType? DeserializeFromString<TType>(string xml)
+            where TType : class, new()
         {
             using StringReader sr = new(xml);
             XmlSerializer xmlSerializer = new(typeof(TType));
@@ -13,7 +13,8 @@ namespace PictureLibrary.Tools.XamlSerializer
             return xmlSerializer.Deserialize(sr) as TType;
         }
 
-        public string SerializeToString(TType obj)
+        public string SerializeToString<TType>(TType obj)
+            where TType : class, new()
         {
             using StringWriter sw = new();
             XmlSerializer xmlSerializer = new(typeof(TType));

@@ -1,9 +1,10 @@
 ﻿using PictureLibrary.DataAccess.DataStoreInfos;
+using PictureLibrary.GoogleDrive;
 using PictureLibrary.GoogleDrive.MimeType;
-using PictureLibrary.GoogleDrive.QueryBuilder;
-using PictureLibrary.Tools.XamlEditor;
+using PictureLibrary.Tools.LibraryXml;
 using PictureLibrary.Tools.XamlSerializer;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.DataStoreInfo;
 using PictureLibraryModel.Services.GoogleDriveAPIClient;
 using File = Google.Apis.Drive.v3.Data.File;
 
@@ -13,18 +14,18 @@ namespace PictureLibrary.DataAccess.LibraryService
     {
         private static string AppFolder => "PictureLibraryAppFolder\\";
 
+        private readonly IXmlSerializer _xmlSerializer;
         private readonly ILibraryXmlService _libraryXmlEditor;
         private readonly Func<IQueryBuilder> _queryBuilderLocator;
         private readonly IGoogleDriveApiClient _googleDriveApiClient;
         private readonly IDataStoreInfoService _dataStoreInfoProvider;
-        private readonly IXmlSerializer<GoogleDriveLibrary> _xmlSerializer;
 
         public GoogleDriveLibraryService(
+            IXmlSerializer xmlSerializer,
             ILibraryXmlService libraryXmlEditor,
             Func<IQueryBuilder> queryBuilderLocator,
             IGoogleDriveApiClient googleDriveApiClient,
-            IDataStoreInfoService dataStoreInfoProvider,
-            IXmlSerializer<GoogleDriveLibrary> xmlSerializer)
+            IDataStoreInfoService dataStoreInfoProvider)
         {
             _xmlSerializer = xmlSerializer;
             _libraryXmlEditor = libraryXmlEditor;
@@ -68,7 +69,7 @@ namespace PictureLibrary.DataAccess.LibraryService
         {
             foreach (var serializedLibraryPair in serializedLibraries)
             {
-                var library = _xmlSerializer.DeserializeFromString(serializedLibraryPair.Value);
+                var library = _xmlSerializer.DeserializeFromString<GoogleDriveLibrary>(serializedLibraryPair.Value);
 
                 if (library != null)
                 {

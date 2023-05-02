@@ -1,7 +1,7 @@
 ﻿using PictureLibrary.FileSystem.API;
 using PictureLibrary.FileSystem.API.Directories;
 using PictureLibrary.Settings.LibrarySettings;
-using PictureLibrary.Tools.XamlEditor;
+using PictureLibrary.Tools.LibraryXml;
 using PictureLibrary.Tools.XamlSerializer;
 using PictureLibraryModel.Model;
 
@@ -10,16 +10,16 @@ namespace PictureLibrary.DataAccess.LibraryService
     public class FileSystemLibraryService : ILibraryService<LocalLibrary>
     {
         private readonly IFileService _fileService;
+        private readonly IXmlSerializer _xmlSerializer;
         private readonly IDirectoryService _directoryService;
         private readonly ILibraryXmlService _libraryXmlEditor;
-        private readonly IXmlSerializer<LocalLibrary> _xmlSerializer;
         private readonly ILibrarySettingsProvider _librarySettingsProvider;
 
         public FileSystemLibraryService(
             IFileService fileService,
+            IXmlSerializer xmlSerializer,
             IDirectoryService directoryService,
             ILibraryXmlService libraryXmlEditor,
-            IXmlSerializer<LocalLibrary> xmlSerializer,
             ILibrarySettingsProvider librarySettingsProvider)
         {
             _fileService = fileService;
@@ -116,7 +116,7 @@ namespace PictureLibrary.DataAccess.LibraryService
 
             string serializedLibrary = await Task.Run(streamReader.ReadToEnd);
 
-            return await Task.Run(() => _xmlSerializer.DeserializeFromString(serializedLibrary));
+            return await Task.Run(() => _xmlSerializer.DeserializeFromString<LocalLibrary>(serializedLibrary));
         }
         #endregion
 
