@@ -3,6 +3,6 @@
     public interface IPathFinder
     {
         string AppFolderPath { get; }
-        string DataStoreInfoFilePath { get; set; }
+        string GetDataStoreInfoFilePath(Type typeOfDataStoreInfo);
     }
 }

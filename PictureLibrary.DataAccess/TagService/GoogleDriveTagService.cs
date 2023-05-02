@@ -1,7 +1,9 @@
 ﻿using PictureLibrary.DataAccess.DataStoreInfos;
+using PictureLibrary.DataAccess.Exceptions;
 using PictureLibrary.GoogleDrive.MimeType;
 using PictureLibrary.Tools.XamlEditor;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.DataStoreInfo;
 using PictureLibraryModel.Services.GoogleDriveAPIClient;
 using File = Google.Apis.Drive.v3.Data.File;
 
@@ -52,7 +54,7 @@ namespace PictureLibrary.DataAccess.TagService
 
         private async Task<string> GetLibraryXmlAsync(GoogleDriveLibrary library)
         {
-            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId);
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
             using var stream = await _googleDriveApiClient.DownloadFileAsync(library.FileId, dataStoreInfo.UserName);
             using var reader = new StreamReader(stream);
 
@@ -66,7 +68,7 @@ namespace PictureLibrary.DataAccess.TagService
                 Name = $"{library.Name}.plib",
             };
 
-            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId);
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
             using var stream = new MemoryStream();
             using var writer = new StreamWriter(stream);
             await writer.WriteAsync(xml);

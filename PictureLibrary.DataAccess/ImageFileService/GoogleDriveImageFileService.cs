@@ -1,7 +1,8 @@
 ﻿using PictureLibrary.DataAccess.DataStoreInfos;
+using PictureLibrary.DataAccess.Exceptions;
 using PictureLibrary.GoogleDrive.MimeType;
-using PictureLibrary.Tools.XamlEditor;
 using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.DataStoreInfo;
 using PictureLibraryModel.Services.GoogleDriveAPIClient;
 using File = Google.Apis.Drive.v3.Data.File;
 
@@ -25,7 +26,7 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
         public async Task AddImageFileAsync(GoogleDriveImageFile imageFile, Stream imageFileContent, GoogleDriveLibrary library)
         {
-            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId);
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             string serializedLibrary = await GetLibraryFileContentAsync(library);
 
@@ -71,13 +72,13 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
         public async Task<Stream> GetFileContentStreamAsync(GoogleDriveImageFile imageFile)
         {
-            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(imageFile.DataStoreInfoId);
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(imageFile.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
             return await _googleDriveApiClient.DownloadFileAsync(imageFile.FileId, dataStoreInfo.UserName);
         }
 
         public async Task UpdateFileContentAsync(GoogleDriveImageFile imageFile, Stream updatedImageFileContentStream)
         {
-            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(imageFile.DataStoreInfoId);
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(imageFile.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             var file = new File()
             {
@@ -89,7 +90,7 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
         private async Task<string> GetLibraryFileContentAsync(GoogleDriveLibrary library)
         {
-            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId);
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             using var stream = await _googleDriveApiClient.DownloadFileAsync(library.FileId, dataStoreInfo.UserName);
             using var streamReader = new StreamReader(stream);
@@ -99,7 +100,7 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
         private async Task<bool> WriteLibraryAsync(GoogleDriveLibrary library, string xml)
         {
-            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId);
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             var file = new File()
             {

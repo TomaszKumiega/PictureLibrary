@@ -1,4 +1,5 @@
 ﻿using PictureLibrary.DataAccess.DataStoreInfos;
+using PictureLibrary.DataAccess.Exceptions;
 using PictureLibrary.GoogleDrive;
 using PictureLibrary.GoogleDrive.MimeType;
 using PictureLibrary.Tools.LibraryXml;
@@ -82,8 +83,8 @@ namespace PictureLibrary.DataAccess.LibraryService
 
         public async Task<GoogleDriveLibrary> AddLibraryAsync(GoogleDriveLibrary library)
         {
-            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId);
-            
+            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
+
             var folderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, AppFolder);
             if (string.IsNullOrEmpty(folderId))
             {
@@ -105,7 +106,7 @@ namespace PictureLibrary.DataAccess.LibraryService
              
         public async Task<bool> DeleteLibraryAsync(GoogleDriveLibrary library)
         {
-            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId);
+            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             await _googleDriveApiClient.RemoveFileAsync(library.FileId, dataStoreInfo.UserName);
 
@@ -114,7 +115,7 @@ namespace PictureLibrary.DataAccess.LibraryService
 
         public async Task UpdateLibraryAsync(GoogleDriveLibrary library)
         {
-            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId);
+            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             var fileMetadata = new File()
             {
