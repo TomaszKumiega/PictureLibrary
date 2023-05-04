@@ -6,8 +6,5 @@ namespace PictureLibraryModel.Model.DataStoreInfo
     {
         Guid Id { get; }
         string Name { get; }
-
-        void Deserialize(string serializedDataStoreInfo);
-        string Serialize();
     }
 }
