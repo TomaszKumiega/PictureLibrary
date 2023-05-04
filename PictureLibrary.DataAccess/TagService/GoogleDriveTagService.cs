@@ -54,6 +54,9 @@ namespace PictureLibrary.DataAccess.TagService
 
         private async Task<string> GetLibraryXmlAsync(GoogleDriveLibrary library)
         {
+            if (library?.FileId == null)
+                throw new ArgumentException(string.Empty, nameof(Library));
+
             var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
             using var stream = await _googleDriveApiClient.DownloadFileAsync(library.FileId, dataStoreInfo.UserName);
             using var reader = new StreamReader(stream);
@@ -63,6 +66,9 @@ namespace PictureLibrary.DataAccess.TagService
 
         private async Task<bool> WriteLibraryXmlAsync(string xml, GoogleDriveLibrary library)
         {
+            if (library?.FileId == null)
+                throw new ArgumentException(string.Empty, nameof(library));
+
             var file = new File()
             {
                 Name = $"{library.Name}.plib",

@@ -73,12 +73,18 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
         public async Task<Stream> GetFileContentStreamAsync(GoogleDriveImageFile imageFile)
         {
+            if (imageFile?.FileId == null)
+                throw new ArgumentException(string.Empty, nameof(imageFile));
+
             var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(imageFile.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
             return await _googleDriveApiClient.DownloadFileAsync(imageFile.FileId, dataStoreInfo.UserName);
         }
 
         public async Task UpdateFileContentAsync(GoogleDriveImageFile imageFile, Stream updatedImageFileContentStream)
         {
+            if (imageFile?.FileId == null)
+                throw new ArgumentException(string.Empty, nameof(imageFile));
+
             var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(imageFile.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             var file = new File()
@@ -91,6 +97,9 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
         private async Task<string> GetLibraryFileContentAsync(GoogleDriveLibrary library)
         {
+            if (library?.FileId == null)
+                throw new ArgumentException(string.Empty, nameof(library));
+
             var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             using var stream = await _googleDriveApiClient.DownloadFileAsync(library.FileId, dataStoreInfo.UserName);
@@ -101,6 +110,9 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
         private async Task<bool> WriteLibraryAsync(GoogleDriveLibrary library, string xml)
         {
+            if (library?.FileId == null)
+                throw new ArgumentException(string.Empty, nameof(library));
+
             var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             var file = new File()

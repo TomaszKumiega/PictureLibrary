@@ -46,6 +46,9 @@ namespace PictureLibrary.DataAccess.TagService
 
         private async Task<string> GetLibraryXml(LocalLibrary library)
         {
+            if (library?.FilePath == null)
+                throw new ArgumentException(string.Empty, nameof(Library));
+
             using var stream = _fileService.Open(library.FilePath);
             using var reader = new StreamReader(stream);
             return await reader.ReadToEndAsync();
@@ -53,6 +56,9 @@ namespace PictureLibrary.DataAccess.TagService
 
         private async Task WriteLibraryXml(LocalLibrary library, string xml)
         {
+            if (library?.FilePath == null)
+                throw new ArgumentException(string.Empty, nameof(Library));
+
             using var stream = _fileService.Open(library.FilePath);
             using var writer = new StreamWriter(stream);
             await writer.WriteAsync(xml);

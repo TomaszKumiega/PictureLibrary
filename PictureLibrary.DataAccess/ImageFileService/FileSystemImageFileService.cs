@@ -19,6 +19,9 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
         public async Task AddImageFileAsync(LocalImageFile localImageFile, Stream imageFileContent, LocalLibrary library)
         {
+            if (library?.FilePath == null) 
+                throw new ArgumentException(string.Empty, nameof(library));
+
             string libraryXml = await GetLibraryXmlAsync(library);
             string path = _fileService.GetFileInfo(library.FilePath).DirectoryName! + Path.PathSeparator + "Images" + Path.PathSeparator + $"{localImageFile.Name}.{localImageFile.Extension}";
 
@@ -57,22 +60,34 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
         public Stream GetFileContentStream(LocalImageFile imageFile)
         {
+            if (imageFile?.Path == null)
+                throw new ArgumentException(string.Empty, nameof(imageFile));
+
             return _fileService.Open(imageFile.Path);
         }
 
         public async Task UpdateFileContent(LocalImageFile imageFile, Stream newFileContentStream)
         {
+            if (imageFile?.Path == null)
+                throw new ArgumentException(string.Empty, nameof(imageFile));
+
             using var stream = _fileService.Open(imageFile.Path);
             await newFileContentStream.CopyToAsync(stream);
         }
 
         public bool DeleteFile(LocalImageFile imageFile)
         {
+            if (imageFile?.Path == null)
+                throw new ArgumentException(string.Empty, nameof(imageFile));
+
             return _fileService.Delete(imageFile.Path);
         }
 
         private async Task<string> GetLibraryXmlAsync(LocalLibrary library)
         {
+            if (library?.FilePath == null)
+                throw new ArgumentException(string.Empty, nameof(library));
+
             using var stream = _fileService.Open(library.FilePath);
             using StreamReader sr = new(stream);
             
@@ -81,6 +96,9 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
         private async Task WriteLibraryXmlAsync(LocalLibrary library, string xml)
         {
+            if (library?.FilePath == null)
+                throw new ArgumentException(string.Empty, nameof(library));
+
             using var stream = _fileService.Open(library.FilePath);
             using StreamWriter sw = new(stream);
             await sw.WriteAsync(xml);

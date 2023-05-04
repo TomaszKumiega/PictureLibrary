@@ -106,6 +106,9 @@ namespace PictureLibrary.DataAccess.LibraryService
              
         public async Task<bool> DeleteLibraryAsync(GoogleDriveLibrary library)
         {
+            if (library?.FileId == null)
+                throw new ArgumentException(string.Empty, nameof(library));
+
             GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             await _googleDriveApiClient.RemoveFileAsync(library.FileId, dataStoreInfo.UserName);
@@ -115,6 +118,9 @@ namespace PictureLibrary.DataAccess.LibraryService
 
         public async Task UpdateLibraryAsync(GoogleDriveLibrary library)
         {
+            if (library?.FileId == null)
+                throw new ArgumentException(string.Empty, nameof(library));
+
             GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             var fileMetadata = new File()

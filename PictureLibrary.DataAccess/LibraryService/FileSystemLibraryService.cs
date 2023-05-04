@@ -68,6 +68,9 @@ namespace PictureLibrary.DataAccess.LibraryService
 
         public async Task<bool> DeleteLibraryAsync(LocalLibrary library)
         {
+            if (library?.FilePath == null)
+                throw new ArgumentException(string.Empty, nameof(library));
+            
             return await Task.Run(() => _fileService.Delete(library.FilePath));
         }
 
@@ -81,10 +84,14 @@ namespace PictureLibrary.DataAccess.LibraryService
 
         private async Task<DirectoryInfo[]> GetSubdirectoriesOfLibrariesMainFolderAsync()
         {
-            string librariesDirectory = _librarySettingsProvider.GetLibrarySettings().LocalLibrariesStoragePath;
+            string? librariesDirectory = _librarySettingsProvider.GetLibrarySettings().LocalLibrariesStoragePath;
+
+            if (librariesDirectory == null)
+                return Array.Empty<DirectoryInfo>();
+
             DirectoryInfo mainDirectoryInfo = _directoryService.GetDirectoryInfo(librariesDirectory);
 
-            return await Task.Run(() => mainDirectoryInfo.GetDirectories());
+            return await Task.Run(mainDirectoryInfo.GetDirectories);
         }
 
         private async Task<IEnumerable<LocalLibrary>> GetLibrariesFromSubdirectoriesAsync(DirectoryInfo[] subDirectories)
@@ -122,6 +129,9 @@ namespace PictureLibrary.DataAccess.LibraryService
 
         public async Task UpdateLibraryAsync(LocalLibrary library)
         {
+            if (library?.FilePath == null)
+                throw new ArgumentException(string.Empty, nameof(library));
+
             string serializedLibrary;
             using (Stream libraryFileStream = _fileService.Open(library.FilePath))
             using (StreamReader sr = new(libraryFileStream))
