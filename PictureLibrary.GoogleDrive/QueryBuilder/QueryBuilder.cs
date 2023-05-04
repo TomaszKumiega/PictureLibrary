@@ -3,8 +3,8 @@
     public class QueryBuilder : IQueryBuilder
     {
         private string? _query;
-        
 
+        #region Public methods
         public IQueryBuilder ContainsText(string text)
         {
             _query += $"fullText='{text}'";
@@ -100,5 +100,6 @@
 
             return this;
         }
+        #endregion
     }
 }

@@ -6,7 +6,9 @@ namespace PictureLibrary.Tools.LibraryXml
 {
     public class LibraryXmlService : ILibraryXmlService
     {
+        #region Private fields
         private readonly IXmlSerializer _xmlSerializer;
+        #endregion
 
         public LibraryXmlService(
             IXmlSerializer xmlSerializer)
@@ -14,6 +16,7 @@ namespace PictureLibrary.Tools.LibraryXml
             _xmlSerializer = xmlSerializer;   
         }
 
+        #region Public methods
         public string AddImageFileNode<TImageFile>(string xml, TImageFile imageFile) 
             where TImageFile : ImageFile, new()
         {
@@ -179,8 +182,9 @@ namespace PictureLibrary.Tools.LibraryXml
             var xmlAfterRemove = RemoveTagNode(xml, tag);
             return AddTagNode(xmlAfterRemove, tag);
         }
+        #endregion
 
-        #region Pomocnicze
+        #region Private methods
         private XmlDocument LoadXmlDocument(string xml)
         {
             XmlDocument xmlDocument = new();

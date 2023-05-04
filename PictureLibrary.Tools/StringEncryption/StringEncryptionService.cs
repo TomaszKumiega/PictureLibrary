@@ -5,24 +5,27 @@ namespace PictureLibrary.Tools.StringEncryption
 {
     public class StringEncryptionService : IStringEncryptionService
     {
-        private Aes AesProvider { get; }
+        #region Private fields
+        private readonly Aes _aesProvider;
+        #endregion
 
         public StringEncryptionService()
         {
             var privateKey = Resources.EncryptionKey;
-            AesProvider = Aes.Create();
+            _aesProvider = Aes.Create();
 
-            AesProvider.BlockSize = 128;
-            AesProvider.KeySize = 256;
-            AesProvider.GenerateIV();
-            AesProvider.Key = Encoding.ASCII.GetBytes(privateKey);
-            AesProvider.Mode = CipherMode.CBC;
-            AesProvider.Padding = PaddingMode.PKCS7;
+            _aesProvider.BlockSize = 128;
+            _aesProvider.KeySize = 256;
+            _aesProvider.GenerateIV();
+            _aesProvider.Key = Encoding.ASCII.GetBytes(privateKey);
+            _aesProvider.Mode = CipherMode.CBC;
+            _aesProvider.Padding = PaddingMode.PKCS7;
         }
 
+        #region Public methods
         public string Encrypt(string text)
         {
-            ICryptoTransform transform = AesProvider.CreateEncryptor();
+            ICryptoTransform transform = _aesProvider.CreateEncryptor();
 
             byte[] bytes = Encoding.ASCII.GetBytes(text);
             byte[] encryptedBytes = transform.TransformFinalBlock(bytes, 0, text.Length);
@@ -34,7 +37,7 @@ namespace PictureLibrary.Tools.StringEncryption
 
         public string Decrypt(string text)
         {
-            ICryptoTransform transform = AesProvider.CreateDecryptor();
+            ICryptoTransform transform = _aesProvider.CreateDecryptor();
 
             byte[] encryptedBytes = Convert.FromBase64String(text);
             byte[] decryptedBytes = transform.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
@@ -43,5 +46,6 @@ namespace PictureLibrary.Tools.StringEncryption
 
             return decryptedString;
         }
+        #endregion
     }
 }

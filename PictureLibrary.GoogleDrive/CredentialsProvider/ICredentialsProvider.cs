@@ -1,9 +1,8 @@
 ﻿using Google.Apis.Auth.OAuth2;
-using System.IO;
 
 namespace PictureLibraryModel.Services.CredentialsProvider
 {
-    public interface ICredentialsProvider
+    internal interface ICredentialsProvider
     {
         ClientSecrets GetGoogleDriveAPIClientSecrets();
     }

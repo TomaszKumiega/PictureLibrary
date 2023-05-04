@@ -4,6 +4,7 @@ namespace PictureLibrary.Tools.XamlSerializer
 {
     public class XmlSerializerWrapped : IXmlSerializer
     {
+        #region Public methods
         public TType? DeserializeFromString<TType>(string xml)
             where TType : class, new()
         {
@@ -23,5 +24,6 @@ namespace PictureLibrary.Tools.XamlSerializer
 
             return sw.ToString();
         }
+        #endregion
     }
 }

@@ -8,37 +8,20 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
 {
     internal class GoogleDriveApiClient : IGoogleDriveApiClient
     {
+        #region Private fields
         private readonly ICredentialsProvider _credentialsProvider;
+        #endregion
 
         public GoogleDriveApiClient(ICredentialsProvider credentialsProvider)
         {
             _credentialsProvider = credentialsProvider;
         }
 
-        public string AppFolder => "PictureLibraryAppFolder\\";
-
-        #region Private methods
-        private DriveService GetDriveService(string userName)
-        {
-            ClientSecrets clientSecrets = _credentialsProvider.GetGoogleDriveAPIClientSecrets();
-            string[] scopes = new[] { DriveService.ScopeConstants.Drive };
-            var fileDataStore = new FileDataStore("UserCredential");
-
-            UserCredential credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                clientSecrets: clientSecrets,
-                scopes: scopes,
-                user: userName,
-                taskCancellationToken: CancellationToken.None,
-                dataStore: fileDataStore).GetAwaiter().GetResult();
-
-            return new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = "Picture library"
-            });
-        }
+        #region Public fields
+        public string GoogleDriveAppFolderName => "PictureLibraryAppFolder\\";
         #endregion
 
+        #region Public methods
         public async Task<MemoryStream> DownloadFileAsync(string fileId, string userName)
         {
             DriveService service = GetDriveService(userName);
@@ -200,5 +183,28 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
         {
             return GetDriveService(userName) != null;
         }
+        #endregion
+
+        #region Private methods
+        private DriveService GetDriveService(string userName)
+        {
+            ClientSecrets clientSecrets = _credentialsProvider.GetGoogleDriveAPIClientSecrets();
+            string[] scopes = new[] { DriveService.ScopeConstants.Drive };
+            var fileDataStore = new FileDataStore("UserCredential");
+
+            UserCredential credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                clientSecrets: clientSecrets,
+                scopes: scopes,
+                user: userName,
+                taskCancellationToken: CancellationToken.None,
+                dataStore: fileDataStore).GetAwaiter().GetResult();
+
+            return new DriveService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "Picture library"
+            });
+        }
+        #endregion
     }
 }

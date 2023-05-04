@@ -36,7 +36,7 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
             string serializedLibrary = await GetLibraryFileContentAsync(library);
 
-            var appFolderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, _googleDriveApiClient.AppFolder);
+            var appFolderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, _googleDriveApiClient.GoogleDriveAppFolderName);
 
             if (appFolderId == null)
                 return;

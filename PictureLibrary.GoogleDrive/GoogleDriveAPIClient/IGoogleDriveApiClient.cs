@@ -4,7 +4,7 @@ namespace PictureLibraryModel.Services.GoogleDriveAPIClient
 {
     public interface IGoogleDriveApiClient
     {
-        string AppFolder { get; }
+        string GoogleDriveAppFolderName { get; }
         Task<MemoryStream> DownloadFileAsync(string fileId, string userName);
         Task<File> UploadFileToFolderAsync(Stream fileStream, string fileName, string folderId, string contentType, string userName);
         Task<string> CreateFolderAsync(string folderName, string userName, List<string>? parentsIds = null);
