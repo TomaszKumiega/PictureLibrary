@@ -7,13 +7,15 @@ using PictureLibraryModel.Model;
 
 namespace PictureLibrary.DataAccess.LibraryService
 {
-    public class FileSystemLibraryService : ILibraryService<LocalLibrary>
+    public class FileSystemLibraryService
     {
+        #region Private fields
         private readonly IFileService _fileService;
         private readonly IXmlSerializer _xmlSerializer;
         private readonly IDirectoryService _directoryService;
         private readonly ILibraryXmlService _libraryXmlEditor;
         private readonly ILibrarySettingsProvider _librarySettingsProvider;
+        #endregion
 
         public FileSystemLibraryService(
             IFileService fileService,
@@ -29,7 +31,7 @@ namespace PictureLibrary.DataAccess.LibraryService
             _librarySettingsProvider = librarySettingsProvider;    
         }
 
-        #region AddLibrary
+        #region Public methods
         public async Task<LocalLibrary> AddLibraryAsync(LocalLibrary library)
         {
             var serializedLibrary = await SerializeLibraryAsync(library);
@@ -42,30 +44,6 @@ namespace PictureLibrary.DataAccess.LibraryService
             return library;
         }
 
-        private async Task<string> CreateLibraryDirectoriesAsync(LocalLibrary library)
-        {
-            var librarySettings = await Task.Run(_librarySettingsProvider.GetLibrarySettings);
-
-            var directoryPath = librarySettings.LocalLibrariesStoragePath + Path.PathSeparator + library.Name;
-
-            await Task.Run(() => _directoryService.Create(directoryPath));
-
-            var imageDirectoryPath = directoryPath + Path.PathSeparator + "Images";
-
-            await Task.Run(() => _directoryService.Create(imageDirectoryPath));
-
-            return directoryPath;
-        }
-
-        private async Task WriteLibraryToFileAsync(string serializedLibrary, string path)
-        {
-            using var stream = _fileService.Create(path);
-            using var streamWriter = new StreamWriter(stream);
-
-            await streamWriter.WriteAsync(serializedLibrary);
-        }
-        #endregion
-
         public async Task<bool> DeleteLibraryAsync(LocalLibrary library)
         {
             if (library?.FilePath == null)
@@ -74,13 +52,38 @@ namespace PictureLibrary.DataAccess.LibraryService
             return await Task.Run(() => _fileService.Delete(library.FilePath));
         }
 
-        #region GetLibraries
         public async Task<IEnumerable<LocalLibrary>> GetAllLibrariesAsync()
         {
             DirectoryInfo[] subDirectories = await GetSubdirectoriesOfLibrariesMainFolderAsync();
 
             return await GetLibrariesFromSubdirectoriesAsync(subDirectories);
         }
+
+        public async Task UpdateLibraryAsync(LocalLibrary library)
+        {
+            if (library?.FilePath == null)
+                throw new ArgumentException(string.Empty, nameof(library));
+
+            string serializedLibrary;
+            using (Stream libraryFileStream = _fileService.Open(library.FilePath))
+            using (StreamReader sr = new(libraryFileStream))
+            {
+                serializedLibrary = await sr.ReadToEndAsync();
+            }    
+
+            string updatedSerializedLibrary = _libraryXmlEditor.UpdateLibraryNode(serializedLibrary, library);   
+
+            using (Stream updatedLibraryFileStream = _fileService.Open(library.FilePath))
+            using (StreamWriter sr = new(updatedLibraryFileStream))
+            {
+                await sr.WriteAsync(updatedSerializedLibrary);
+            }
+        }
+        #endregion
+
+        #region Private methods
+        private async Task<string> SerializeLibraryAsync(LocalLibrary library)
+            => await Task.Run(() => _xmlSerializer.SerializeToString(library));
 
         private async Task<DirectoryInfo[]> GetSubdirectoriesOfLibrariesMainFolderAsync()
         {
@@ -121,34 +124,33 @@ namespace PictureLibrary.DataAccess.LibraryService
             using var libraryFileStream = _fileService.Open(fileInfo.FullName);
             using var streamReader = new StreamReader(libraryFileStream);
 
-            string serializedLibrary = await Task.Run(streamReader.ReadToEnd);
+            string serializedLibrary = await streamReader.ReadToEndAsync();
 
             return await Task.Run(() => _xmlSerializer.DeserializeFromString<LocalLibrary>(serializedLibrary));
         }
-        #endregion
 
-        public async Task UpdateLibraryAsync(LocalLibrary library)
+        private async Task<string> CreateLibraryDirectoriesAsync(LocalLibrary library)
         {
-            if (library?.FilePath == null)
-                throw new ArgumentException(string.Empty, nameof(library));
+            var librarySettings = await Task.Run(_librarySettingsProvider.GetLibrarySettings);
 
-            string serializedLibrary;
-            using (Stream libraryFileStream = _fileService.Open(library.FilePath))
-            using (StreamReader sr = new(libraryFileStream))
-            {
-                serializedLibrary = await sr.ReadToEndAsync();
-            }    
+            var directoryPath = librarySettings.LocalLibrariesStoragePath + Path.PathSeparator + library.Name;
 
-            string updatedSerializedLibrary = _libraryXmlEditor.UpdateLibraryNode(serializedLibrary, library);   
+            await Task.Run(() => _directoryService.Create(directoryPath));
 
-            using (Stream updatedLibraryFileStream = _fileService.Open(library.FilePath))
-            using (StreamWriter sr = new(updatedLibraryFileStream))
-            {
-                await sr.WriteAsync(updatedSerializedLibrary);
-            }
+            var imageDirectoryPath = directoryPath + Path.PathSeparator + "Images";
+
+            await Task.Run(() => _directoryService.Create(imageDirectoryPath));
+
+            return directoryPath;
         }
 
-        private async Task<string> SerializeLibraryAsync(LocalLibrary library)
-            => await Task.Run(() => _xmlSerializer.SerializeToString(library));
+        private async Task WriteLibraryToFileAsync(string serializedLibrary, string path)
+        {
+            using var stream = _fileService.Create(path);
+            using var streamWriter = new StreamWriter(stream);
+
+            await streamWriter.WriteAsync(serializedLibrary);
+        }
+        #endregion
     }
 }

@@ -11,8 +11,9 @@ using File = Google.Apis.Drive.v3.Data.File;
 
 namespace PictureLibrary.DataAccess.LibraryService
 {
-    public class GoogleDriveLibraryService : ILibraryService<GoogleDriveLibrary>
+    public class GoogleDriveLibraryService
     {
+        #region Private fields
         private static string AppFolder => "PictureLibraryAppFolder\\";
 
         private readonly IXmlSerializer _xmlSerializer;
@@ -20,6 +21,7 @@ namespace PictureLibrary.DataAccess.LibraryService
         private readonly Func<IQueryBuilder> _queryBuilderLocator;
         private readonly IGoogleDriveApiClient _googleDriveApiClient;
         private readonly IDataStoreInfoService _dataStoreInfoProvider;
+        #endregion
 
         public GoogleDriveLibraryService(
             IXmlSerializer xmlSerializer,
@@ -35,7 +37,7 @@ namespace PictureLibrary.DataAccess.LibraryService
             _dataStoreInfoProvider = dataStoreInfoProvider;
         }
 
-        #region GetAll
+        #region Public methdods
         public async Task<IEnumerable<GoogleDriveLibrary>> GetAllLibrariesAsync(GoogleDriveDataStoreInfo dataStoreInfo)
         {
             var folderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, AppFolder);
@@ -65,21 +67,6 @@ namespace PictureLibrary.DataAccess.LibraryService
 
             return DeserializeLibraries(serializedLibraries);
         }
-
-        private IEnumerable<GoogleDriveLibrary> DeserializeLibraries(Dictionary<string, string> serializedLibraries)
-        {
-            foreach (var serializedLibraryPair in serializedLibraries)
-            {
-                var library = _xmlSerializer.DeserializeFromString<GoogleDriveLibrary>(serializedLibraryPair.Value);
-
-                if (library != null)
-                {
-                    library.FileId = serializedLibraryPair.Key;
-                    yield return library;
-                }
-            }
-        }
-        #endregion
 
         public async Task<GoogleDriveLibrary> AddLibraryAsync(GoogleDriveLibrary library)
         {
@@ -144,7 +131,9 @@ namespace PictureLibrary.DataAccess.LibraryService
 
             await _googleDriveApiClient.UpdateFileAsync(fileMetadata, updateStream, library.FileId, dataStoreInfo.UserName, MimeTypes.Xml);
         }
+        #endregion
 
+        #region Private methods
         private async Task<string> CreateFolderAsync(GoogleDriveDataStoreInfo dataStoreInfo)
         {
             return await _googleDriveApiClient.CreateFolderAsync(AppFolder, dataStoreInfo.UserName);
@@ -160,5 +149,20 @@ namespace PictureLibrary.DataAccess.LibraryService
 
             return stream;
         }
+
+        private IEnumerable<GoogleDriveLibrary> DeserializeLibraries(Dictionary<string, string> serializedLibraries)
+        {
+            foreach (var serializedLibraryPair in serializedLibraries)
+            {
+                var library = _xmlSerializer.DeserializeFromString<GoogleDriveLibrary>(serializedLibraryPair.Value);
+
+                if (library != null)
+                {
+                    library.FileId = serializedLibraryPair.Key;
+                    yield return library;
+                }
+            }
+        }
+        #endregion
     }
 }

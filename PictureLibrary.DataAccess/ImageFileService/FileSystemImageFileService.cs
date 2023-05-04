@@ -6,8 +6,10 @@ namespace PictureLibrary.DataAccess.ImageFileService
 {
     public class FileSystemImageFileService
     {
+        #region Private fields
         private readonly IFileService _fileService;
         private readonly ILibraryXmlService _libraryXmlService;
+        #endregion
 
         public FileSystemImageFileService(
             IFileService fileService,
@@ -17,13 +19,16 @@ namespace PictureLibrary.DataAccess.ImageFileService
             _libraryXmlService = libraryXmlService;
         }
 
+        #region Public methods
         public async Task AddImageFileAsync(LocalImageFile localImageFile, Stream imageFileContent, LocalLibrary library)
         {
             if (library?.FilePath == null) 
                 throw new ArgumentException(string.Empty, nameof(library));
 
             string libraryXml = await GetLibraryXmlAsync(library);
-            string path = _fileService.GetFileInfo(library.FilePath).DirectoryName! + Path.PathSeparator + "Images" + Path.PathSeparator + $"{localImageFile.Name}.{localImageFile.Extension}";
+            string directoryName = _fileService.GetFileInfo(library.FilePath).DirectoryName ?? throw new ArgumentException("Invalid file path.", nameof(library));
+            
+            string path = directoryName + Path.PathSeparator + "Images" + Path.PathSeparator + $"{localImageFile.Name}.{localImageFile.Extension}";
 
             using var stream = _fileService.Create(path);
             await imageFileContent.CopyToAsync(stream);
@@ -82,7 +87,9 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
             return _fileService.Delete(imageFile.Path);
         }
+        #endregion
 
+        #region Private methods
         private async Task<string> GetLibraryXmlAsync(LocalLibrary library)
         {
             if (library?.FilePath == null)
@@ -103,5 +110,6 @@ namespace PictureLibrary.DataAccess.ImageFileService
             using StreamWriter sw = new(stream);
             await sw.WriteAsync(xml);
         }
+        #endregion
     }
 }

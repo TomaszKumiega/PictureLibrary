@@ -6,10 +6,12 @@ using PictureLibraryModel.Model.DataStoreInfo;
 
 namespace PictureLibrary.DataAccess.LibraryService
 {
-    public class PictureLibraryAPILibraryService : ILibraryService<ApiLibrary>
+    public class PictureLibraryAPILibraryService
     {
+        #region Private fields
         private readonly ILibraryClient _libraryClient;
         private readonly IDataStoreInfoService _dataStoreInfoProvider;
+        #endregion
 
         public PictureLibraryAPILibraryService(
             ILibraryClient libraryClient,
@@ -19,6 +21,7 @@ namespace PictureLibrary.DataAccess.LibraryService
             _dataStoreInfoProvider = dataStoreInfoProvider;
         }
 
+        #region Public methods
         public async Task<ApiLibrary> AddLibraryAsync(ApiLibrary library)
         {
             APIDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<APIDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
@@ -44,5 +47,6 @@ namespace PictureLibrary.DataAccess.LibraryService
 
             await _libraryClient.UpdateLibraryAsync(dataStoreInfo, library);
         }
+        #endregion
     }
 }

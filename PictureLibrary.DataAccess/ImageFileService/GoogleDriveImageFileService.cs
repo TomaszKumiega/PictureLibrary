@@ -11,9 +11,13 @@ namespace PictureLibrary.DataAccess.ImageFileService
 {
     public class GoogleDriveImageFileService
     {
+        private static string _imagesFolderName => "Images";
+
+        #region Private fields
         private readonly ILibraryXmlService _libraryXmlService;
         private readonly IGoogleDriveApiClient _googleDriveApiClient;
         private readonly IDataStoreInfoService _dataStoreInfoProvider;
+        #endregion
 
         public GoogleDriveImageFileService(
             ILibraryXmlService libraryXmlService,
@@ -25,6 +29,7 @@ namespace PictureLibrary.DataAccess.ImageFileService
             _dataStoreInfoProvider = dataStoreInfoProvider;
         }
 
+        #region Public methods
         public async Task AddImageFileAsync(GoogleDriveImageFile imageFile, Stream imageFileContent, GoogleDriveLibrary library)
         {
             var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
@@ -37,8 +42,8 @@ namespace PictureLibrary.DataAccess.ImageFileService
                 return;
 
             var libraryFolderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, library.Id.ToString(), appFolderId);
-            var imagesFolderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, "Images", libraryFolderId);
-            imagesFolderId ??= await _googleDriveApiClient.CreateFolderAsync("Images", dataStoreInfo.UserName, new List<string>() { libraryFolderId });
+            var imagesFolderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, _imagesFolderName, libraryFolderId);
+            imagesFolderId ??= await _googleDriveApiClient.CreateFolderAsync(_imagesFolderName, dataStoreInfo.UserName, new List<string>() { libraryFolderId });
 
             string fileName = $"{imageFile.Name}.{imageFile.Extension}";
             var file = await _googleDriveApiClient.UploadFileToFolderAsync(imageFileContent, fileName, imagesFolderId, imageFile.GetMimeType(), dataStoreInfo.UserName);
@@ -94,7 +99,9 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
             _ = await _googleDriveApiClient.UpdateFileAsync(file, updatedImageFileContentStream, imageFile.FileId, dataStoreInfo.UserName, imageFile.GetMimeType());
         }
+        #endregion
 
+        #region Private methods
         private async Task<string> GetLibraryFileContentAsync(GoogleDriveLibrary library)
         {
             if (library?.FileId == null)
@@ -129,5 +136,6 @@ namespace PictureLibrary.DataAccess.ImageFileService
             
             return !string.IsNullOrEmpty(fileId);
         }
+        #endregion
     }
 }

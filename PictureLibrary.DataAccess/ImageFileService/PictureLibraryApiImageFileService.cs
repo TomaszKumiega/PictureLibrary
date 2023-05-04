@@ -8,8 +8,10 @@ namespace PictureLibrary.DataAccess.ImageFileService
 {
     public class PictureLibraryApiImageFileService
     {
+        #region Private fields
         private readonly IImageFileClient _imageFileClient;
         private readonly IDataStoreInfoService _dataStoreInfoProvider;
+        #endregion
 
         public PictureLibraryApiImageFileService(
             IImageFileClient imageFileClient,
@@ -19,6 +21,7 @@ namespace PictureLibrary.DataAccess.ImageFileService
             _dataStoreInfoProvider = dataStoreInfoProvider;
         }
 
+        #region Public methods
         public async Task AddImageFileAsync(ApiImageFile imageFile, Stream imageContent, ApiLibrary library)
         {
             var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<APIDataStoreInfo>(library.DataStoreInfoId) ?? throw new PictureLibraryApiAccountConfigurationNotFoundException();
@@ -60,5 +63,6 @@ namespace PictureLibrary.DataAccess.ImageFileService
             var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<APIDataStoreInfo>(imageFile.DataStoreInfoId) ?? throw new PictureLibraryApiAccountConfigurationNotFoundException();
             await _imageFileClient.UpdateFileContentAsync(dataStoreInfo, imageFile, updatedImageFileContentStream);
         }
+        #endregion
     }
 }

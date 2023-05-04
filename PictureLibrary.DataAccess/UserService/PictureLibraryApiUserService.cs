@@ -8,8 +8,10 @@ namespace PictureLibrary.DataAccess.UserService
 {
     public class PictureLibraryApiUserService
     {
+        #region Private fields
         private readonly IUserClient _userClient;
         private readonly IDataStoreInfoService _dataStoreInfoProvider;
+        #endregion
 
         public PictureLibraryApiUserService(
             IUserClient userClient,
@@ -19,6 +21,7 @@ namespace PictureLibrary.DataAccess.UserService
             _dataStoreInfoProvider = dataStoreInfoProvider;
         }
 
+        #region Public methods
         public async Task<APIUser> AddUserAsync(APIUser user)
         {
             var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<APIDataStoreInfo>(user.DataStoreInfoId) ?? throw new PictureLibraryApiAccountConfigurationNotFoundException();
@@ -58,5 +61,6 @@ namespace PictureLibrary.DataAccess.UserService
         {
             return await _userClient.RefreshTokens(apiDataStoreInfo, user);
         }
+        #endregion
     }
 }

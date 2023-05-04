@@ -8,11 +8,13 @@ namespace PictureLibrary.DataAccess
 {
     public class DataStoreInfoService : IDataStoreInfoService
     {
+        #region Private fields
         private readonly Dictionary<Type, string?> _encryptedFileContents;
 
         private readonly IPathFinder _pathFinder;
         private readonly IFileService _fileService;
         private readonly IStringEncryptionService _stringEncryptionService;
+        #endregion
 
         public DataStoreInfoService(
             IPathFinder pathFinder,
@@ -25,6 +27,7 @@ namespace PictureLibrary.DataAccess
             _encryptedFileContents = new();
         }
 
+        #region Public methods
         public TDataStoreInfo? GetDataStoreInfo<TDataStoreInfo>(Guid id)
             where TDataStoreInfo : class, IDataStoreInfo
         {
@@ -47,7 +50,9 @@ namespace PictureLibrary.DataAccess
             UpdateEncryptetFileContents(typeof(TDataStoreInfo), encryptedFileContent);
             return SaveUpdatedDataStoreInfo(typeof(TDataStoreInfo), encryptedFileContent);
         }
+        #endregion
 
+        #region Private methods
         private bool SaveUpdatedDataStoreInfo(Type dataStoreInfoType, string encryptedFileContent)
         {
             string path = _pathFinder.GetDataStoreInfoFilePath(dataStoreInfoType);
@@ -128,5 +133,6 @@ namespace PictureLibrary.DataAccess
             using var stream = _fileService.Create(filePath);
             stream.Close();
         }
+        #endregion
     }
 }

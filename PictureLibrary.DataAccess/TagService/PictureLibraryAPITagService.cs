@@ -8,8 +8,10 @@ namespace PictureLibrary.DataAccess.TagService
 {
     public class PictureLibraryAPITagService
     {
+        #region Private fields
         private readonly ITagClient _tagClient;
         private readonly IDataStoreInfoService _dataStoreInfoProvider;
+        #endregion
 
         public PictureLibraryAPITagService(
             ITagClient tagClient,
@@ -19,6 +21,7 @@ namespace PictureLibrary.DataAccess.TagService
             _dataStoreInfoProvider = dataStoreInfoProvider;
         }
 
+        #region Public methods
         public async Task<Tag> AddTagAsync(ApiLibrary library, Tag tag)
         {
             var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<APIDataStoreInfo>(library.DataStoreInfoId) ?? throw new PictureLibraryApiAccountConfigurationNotFoundException();
@@ -42,5 +45,6 @@ namespace PictureLibrary.DataAccess.TagService
             var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<APIDataStoreInfo>(library.DataStoreInfoId) ?? throw new PictureLibraryApiAccountConfigurationNotFoundException();
             return await _tagClient.UpdateTagAsync(dataStoreInfo, tag);
         }
+        #endregion
     }
 }
