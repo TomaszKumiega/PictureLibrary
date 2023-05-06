@@ -1,10 +1,10 @@
 ﻿using PictureLibraryModel.Model;
 
-namespace PictureLibrary.AppSettings.LibrarySettings
+namespace PictureLibrary.AppSettings
 {
     public interface ILibrarySettingsProvider
     {
-        LibrariesSettings GetLibrarySettings();
-        bool SaveLibrariesSettings();
+        LibrariesSettings? GetSettings();
+        bool SaveSettings(LibrariesSettings settings);
     }
 }

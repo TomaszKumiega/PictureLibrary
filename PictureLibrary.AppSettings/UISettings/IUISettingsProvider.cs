@@ -4,7 +4,7 @@ namespace PictureLibrary.AppSettings
 {
     public interface IUISettingsProvider
     {
-        UISettings? GetUISettings();
-        void SaveUISettings();
+        UISettings? GetSettings();
+        bool SaveSettings(UISettings settings);
     }
 }

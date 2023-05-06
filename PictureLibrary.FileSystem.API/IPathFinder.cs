@@ -4,5 +4,6 @@
     {
         string AppFolderPath { get; }
         string GetDataStoreInfoFilePath(Type typeOfDataStoreInfo);
+        string GetSettingsFilePath(Type settingsType);
     }
 }
