@@ -1,6 +1,6 @@
-﻿using PictureLibrary.FileSystem.API;
+﻿using PictureLibrary.AppSettings;
+using PictureLibrary.FileSystem.API;
 using PictureLibrary.FileSystem.API.Directories;
-using PictureLibrary.Settings.LibrarySettings;
 using PictureLibrary.Tools.LibraryXml;
 using PictureLibrary.Tools.XamlSerializer;
 using PictureLibraryModel.Model;
@@ -87,7 +87,7 @@ namespace PictureLibrary.DataAccess.LibraryService
 
         private async Task<DirectoryInfo[]> GetSubdirectoriesOfLibrariesMainFolderAsync()
         {
-            string? librariesDirectory = _librarySettingsProvider.GetLibrarySettings().LocalLibrariesStoragePath;
+            string? librariesDirectory = _librarySettingsProvider.GetSettings()?.LocalLibrariesStoragePath;
 
             if (librariesDirectory == null)
                 return Array.Empty<DirectoryInfo>();
@@ -131,7 +131,7 @@ namespace PictureLibrary.DataAccess.LibraryService
 
         private async Task<string> CreateLibraryDirectoriesAsync(LocalLibrary library)
         {
-            var librarySettings = await Task.Run(_librarySettingsProvider.GetLibrarySettings);
+            var librarySettings = await Task.Run(_librarySettingsProvider.GetSettings);
 
             var directoryPath = librarySettings.LocalLibrariesStoragePath + Path.PathSeparator + library.Name;
 

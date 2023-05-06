@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PictureLibrary.APIClient\PictureLibrary.APIClient.csproj" />
     <ProjectReference Include="..\PictureLibrary.AppSettings\PictureLibrary.AppSettings.csproj" />
     <ProjectReference Include="..\PictureLibrary.FileSystem.API\PictureLibrary.FileSystem.API.csproj" />
     <ProjectReference Include="..\PictureLibrary.GoogleDrive\PictureLibrary.GoogleDrive.csproj" />

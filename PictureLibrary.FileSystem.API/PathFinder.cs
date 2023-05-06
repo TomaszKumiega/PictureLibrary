@@ -8,5 +8,10 @@
         {
             return AppFolderPath + Path.PathSeparator + $"{typeOfDataStoreInfo.Name}.dsi";
         }
+
+        public string GetSettingsFilePath(Type settingsType)
+        {
+            return AppFolderPath + Path.PathSeparator + $"{settingsType.Name}.json";
+        }
     }
 }
