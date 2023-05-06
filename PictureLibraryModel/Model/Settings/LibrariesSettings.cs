@@ -1,4 +1,4 @@
-﻿namespace PictureLibraryModel.Model.Settings
+﻿namespace PictureLibraryModel.Model
 {
     public class LibrariesSettings
     {

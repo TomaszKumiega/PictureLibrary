@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.MAUI", "Pict
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Tools", "PictureLibrary.Tools\PictureLibrary.Tools.csproj", "{5761C5AB-5408-4B44-84D7-E388F953869C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Settings", "PictureLibrary.Settings\PictureLibrary.Settings.csproj", "{AE74F59D-5E40-44A7-935A-3F6CD78A4DE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.AppSettings", "PictureLibrary.Settings\PictureLibrary.AppSettings.csproj", "{AE74F59D-5E40-44A7-935A-3F6CD78A4DE4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.APIClient", "PictureLibrary.APIClient\PictureLibrary.APIClient.csproj", "{3D9B7EA9-7C40-4ACA-B3EB-67EF023491BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibrary.Infrastructure", "PictureLibrary.Infrastructure\PictureLibrary.Infrastructure.csproj", "{E35145A9-FF32-448A-A183-AC7CBCA6E120}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Infrastructure", "PictureLibrary.Infrastructure\PictureLibrary.Infrastructure.csproj", "{E35145A9-FF32-448A-A183-AC7CBCA6E120}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

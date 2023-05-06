@@ -1,6 +1,6 @@
-﻿namespace PictureLibraryModel.Model.Settings
+﻿namespace PictureLibraryModel.Model
 {
-    public class Settings
+    public class UISettings
     {
         public bool LightMode { get; set; }
         public string? AccentColor { get; set; }

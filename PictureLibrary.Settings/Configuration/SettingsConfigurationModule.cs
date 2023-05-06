@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace PictureLibrary.Settings.Configuration
+namespace PictureLibrary.AppSettings.Configuration
 {
     public class SettingsConfigurationModule : Module
     {
