@@ -12,4 +12,19 @@
         ContentTemplate="{DataTemplate local:PictureLibrariesPage}"
         Route="PictureLibrariesPage" />
 
+    <ShellContent
+        Title="Połączone konta"
+        ContentTemplate="{DataTemplate local:ConnectedAccountsPage}"
+        Route="ConnectedAccountsPage"/>
+
+    <ShellContent
+        Title="Zewnętrzne serwery"
+        ContentTemplate="{DataTemplate local:ConnectedServersPage}"
+        Route="ConnectedServersPage"/>
+
+    <ShellContent
+        Title="Settings"
+        ContentTemplate="{DataTemplate local:SettingsPage}"
+        Route="SettingsPage"/>
+
 </Shell>
