@@ -1,4 +1,6 @@
-﻿//using PictureLibrary.APIClient.ImageFileClient;
+﻿//using PictureLibrary.APIClient.ImageFiles;
+//using PictureLibrary.APIClient.Model.Authorization;
+//using PictureLibrary.APIClient.Model.Requests;
 //using PictureLibrary.DataAccess.DataStoreInfos;
 //using PictureLibrary.DataAccess.Exceptions;
 //using PictureLibraryModel.Model;
@@ -22,22 +24,39 @@
 //        }
 
 //        #region Public methods
-//        public async Task AddImageFileAsync(ApiImageFile imageFile, Stream imageContent, ApiLibrary library)
+//        public async Task<Guid?> AddImageFileAsync(ApiImageFile imageFile, Stream imageContent, ApiLibrary library)
 //        {
-//            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<APIDataStoreInfo>(library.DataStoreInfoId) ?? throw new PictureLibraryApiAccountConfigurationNotFoundException();
-//            await _imageFileClient.AddImageFileAsync(dataStoreInfo, imageFile, imageContent, new List<Guid>() { library.Id });
-//        }
+//            if (imageFile?.Name == null)
+//                throw new ArgumentException(string.Empty, nameof(imageFile));
 
-//        public async Task AddImageFileToLibraryAsync(Guid imageFileId, ApiLibrary library)
-//        {
 //            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<APIDataStoreInfo>(library.DataStoreInfoId) ?? throw new PictureLibraryApiAccountConfigurationNotFoundException();
-//            await _imageFileClient.AddImageFileToLibraryAsync(dataStoreInfo, imageFileId, library.Id);
+//            var authorizationData = GetAuthorizationData(dataStoreInfo);
+
+//            var reqeust = new AddImageFileRequest()
+//            {
+//                FileName = imageFile.Name,
+//                Libraries = new List<Guid>() { library.Id },
+//            };
+
+//            return await _imageFileClient.AddImageFileAsync(authorizationData, reqeust, imageContent);
 //        }
 
 //        public async Task<IEnumerable<ApiImageFile>> GetApiImageFilesAsync(ApiLibrary library)
 //        {
 //            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<APIDataStoreInfo>(library.DataStoreInfoId) ?? throw new PictureLibraryApiAccountConfigurationNotFoundException();
-//            return await _imageFileClient.GetAllImageFilesAsync(dataStoreInfo, library.Id);
+
+//            var authorizationData = GetAuthorizationData(dataStoreInfo);
+
+//            var imageFiles = await _imageFileClient.GetAllImageFilesAsync(authorizationData, library.Id);
+
+//            return imageFiles.Select(x => new ApiImageFile()
+//            {
+//                Id = x.Id,
+//                Name = x.Name,
+//                DataStoreInfoId = dataStoreInfo.Id,
+//                Extension = x.Extension,
+//                Tags = 
+//            });
 //        }
 
 //        public async Task<bool> DeleteImageFileAsync(ApiImageFile imageFile)
@@ -64,5 +83,15 @@
 //            await _imageFileClient.UpdateFileContentAsync(dataStoreInfo, imageFile, updatedImageFileContentStream);
 //        }
 //        #endregion
+
+//        private AuthorizationData GetAuthorizationData(APIDataStoreInfo dataStoreInfo)
+//        {
+//            return new AuthorizationData()
+//            {
+//                AccessToken = dataStoreInfo.AccessToken,
+//                RefreshToken = dataStoreInfo.RefreshToken,
+//                ExpiryDate = dataStoreInfo.ExpiryDate,
+//            };
+//        }
 //    }
 //}

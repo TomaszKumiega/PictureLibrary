@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="PictureLibrary.APIClient" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PictureLibrary.AppSettings\PictureLibrary.AppSettings.csproj" />
     <ProjectReference Include="..\PictureLibrary.FileSystem.API\PictureLibrary.FileSystem.API.csproj" />
     <ProjectReference Include="..\PictureLibrary.GoogleDrive\PictureLibrary.GoogleDrive.csproj" />
