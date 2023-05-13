@@ -54,16 +54,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="ConnectedAccountsPage.xaml">
+	  <MauiXaml Update="Pages\ConnectedAccountsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ConnectedServersPage.xaml">
+	  <MauiXaml Update="Pages\ConnectedServersPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="PictureLibrariesPage.xaml">
+	  <MauiXaml Update="Pages\PictureLibrariesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="SettingsPage.xaml">
+	  <MauiXaml Update="Pages\SettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
