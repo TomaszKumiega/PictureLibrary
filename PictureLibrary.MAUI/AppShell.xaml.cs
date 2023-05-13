@@ -6,5 +6,7 @@
         {
             InitializeComponent();
         }
+
+        public string PictureLibraryTitle => "Biblioteka zdjęć";
     }
 }
