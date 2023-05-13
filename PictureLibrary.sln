@@ -11,13 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.GoogleDrive"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.FileSystem.API", "PictureLibrary.FileSystem.API\PictureLibrary.FileSystem.API.csproj", "{21CC8E65-F0F3-4997-A8B4-9C9DAC0E1734}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.MAUI", "PictureLibrary.MAUI\PictureLibrary.MAUI.csproj", "{8A16FCF8-00D0-462E-8990-01E8BDD8B98F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Tools", "PictureLibrary.Tools\PictureLibrary.Tools.csproj", "{5761C5AB-5408-4B44-84D7-E388F953869C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.AppSettings", "PictureLibrary.AppSettings\PictureLibrary.AppSettings.csproj", "{AE74F59D-5E40-44A7-935A-3F6CD78A4DE4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PictureLibrary.Infrastructure", "PictureLibrary.Infrastructure\PictureLibrary.Infrastructure.csproj", "{E35145A9-FF32-448A-A183-AC7CBCA6E120}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLibrary.MAUI", "PictureLibrary.MAUI\PictureLibrary.MAUI.csproj", "{5E29CF03-77F9-4930-951E-C998188E82F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,12 +41,6 @@ Global
 		{21CC8E65-F0F3-4997-A8B4-9C9DAC0E1734}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21CC8E65-F0F3-4997-A8B4-9C9DAC0E1734}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21CC8E65-F0F3-4997-A8B4-9C9DAC0E1734}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A16FCF8-00D0-462E-8990-01E8BDD8B98F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A16FCF8-00D0-462E-8990-01E8BDD8B98F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A16FCF8-00D0-462E-8990-01E8BDD8B98F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{8A16FCF8-00D0-462E-8990-01E8BDD8B98F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A16FCF8-00D0-462E-8990-01E8BDD8B98F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A16FCF8-00D0-462E-8990-01E8BDD8B98F}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{5761C5AB-5408-4B44-84D7-E388F953869C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5761C5AB-5408-4B44-84D7-E388F953869C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5761C5AB-5408-4B44-84D7-E388F953869C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,6 +53,12 @@ Global
 		{E35145A9-FF32-448A-A183-AC7CBCA6E120}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E35145A9-FF32-448A-A183-AC7CBCA6E120}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E35145A9-FF32-448A-A183-AC7CBCA6E120}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E29CF03-77F9-4930-951E-C998188E82F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E29CF03-77F9-4930-951E-C998188E82F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E29CF03-77F9-4930-951E-C998188E82F1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5E29CF03-77F9-4930-951E-C998188E82F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E29CF03-77F9-4930-951E-C998188E82F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E29CF03-77F9-4930-951E-C998188E82F1}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
