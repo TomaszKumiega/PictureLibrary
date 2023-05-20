@@ -3,10 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PictureLibrary.Libraries.UI.MainPage.LibrariesPage"
              Title="LibrariesPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ListView ItemsSource="{Binding Libraries}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <VerticalStackLayout ToolTipProperties.Text="{Binding Library.Description}">
+                    <Image Source="{Binding IconSource}"/>
+                    <Entry Text="{Binding Library.Name}"/>
+                </VerticalStackLayout>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>

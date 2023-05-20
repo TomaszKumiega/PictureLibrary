@@ -24,6 +24,32 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="AsyncAwaitBestPractices" Version="6.0.6" />
+	  <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="6.0.6" />
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\PictureLibrary.DataAccess\PictureLibrary.DataAccess.csproj" />
+	  <ProjectReference Include="..\PictureLibraryModel\PictureLibraryModel.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Properties\Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="MainPage\LibrariesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
