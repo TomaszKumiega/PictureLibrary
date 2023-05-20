@@ -1,8 +1,9 @@
 ﻿using AsyncAwaitBestPractices;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using PictureLibrary.DataAccess.LibrariesProvider;
 using PictureLibrary.Libraries.UI.DataViewModels;
-using PictureLibraryModel.Model;
+using PictureLibrary.Libraries.UI.Pages;
 using System.Collections.ObjectModel;
 
 namespace PictureLibrary.Libraries.UI.ViewModels
@@ -20,6 +21,9 @@ namespace PictureLibrary.Libraries.UI.ViewModels
 
         public ObservableCollection<LibraryViewModel> Libraries { get; private set; }
 
+        [ObservableProperty]
+        private LibraryViewModel _selectedLibrary;
+
         #region Initialization
         [ObservableProperty]
         private bool _initializationInProgress;
@@ -32,6 +36,20 @@ namespace PictureLibrary.Libraries.UI.ViewModels
             Libraries = new ObservableCollection<LibraryViewModel>(libraries.Select(x => new LibraryViewModel(x)));
 
             InitializationInProgress = false;
+        }
+        #endregion
+
+        #region Commands
+
+        private bool CanExecuteOpenLibrary()
+        {
+            return SelectedLibrary != null;
+        }
+
+        [RelayCommand(CanExecute = nameof(CanExecuteOpenLibrary))]
+        public async Task OpenLibrary()
+        {
+            await Shell.Current.GoToAsync(nameof(LibraryContentPage));
         }
         #endregion
     }

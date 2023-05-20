@@ -4,9 +4,12 @@
              x:Class="PictureLibrary.Libraries.UI.MainPage.LibrariesPage"
              Title="LibrariesPage">
     <ListView ItemsSource="{Binding Libraries}">
+        <ListView.GestureRecognizers>
+            <TapGestureRecognizer NumberOfTapsRequired="2" Command="{Binding OpenLibrary}"/>
+        </ListView.GestureRecognizers>
         <ListView.ItemTemplate>
             <DataTemplate>
-                <VerticalStackLayout ToolTipProperties.Text="{Binding Library.Description}">
+                <VerticalStackLayout ToolTipProperties.Text="{Binding Library.Description}" >
                     <Image Source="{Binding IconSource}"/>
                     <Entry Text="{Binding Library.Name}"/>
                 </VerticalStackLayout>
