@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PictureLibrary.MAUI"
     Shell.FlyoutBehavior="Locked"
-    Shell.FlyoutWidth="200">
+    Shell.FlyoutWidth="250">
 
     <ShellContent
         Title="Biblioteki zdjęć"
