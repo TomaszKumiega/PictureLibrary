@@ -5,13 +5,17 @@ namespace PictureLibrary.MAUI
 {
     public partial class AppShell : Shell
     {
-        public AppShell()
+        public LibrariesPage LibrariesPage { get; }
+
+        public AppShell(LibrariesPage librariesPage)
         {
 #if WINDOWS || MACCATALYST
             FlyoutBehavior = FlyoutBehavior.Locked;
 #else
             FlyoutBehavior = FlyoutBehavior.Flyout;
 #endif
+            LibrariesPage = librariesPage;
+            BindingContext = this;
             RegisterRoutes();
             InitializeComponent();
         }

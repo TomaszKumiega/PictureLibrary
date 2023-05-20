@@ -12,6 +12,10 @@ namespace PictureLibrary.DataAccess.Configuration
             builder.RegisterType<DataStoreInfoService>().As<IDataStoreInfoService>().SingleInstance();
             builder.RegisterTypeWithLocator<FileSystemLibraryService, IFileSystemLibraryService>();
             builder.RegisterTypeWithLocator<GoogleDriveLibraryService, IGoogleDriveLibraryService>();
+            builder.Register<Func<IPictureLibraryAPILibraryService>>(ctx =>
+            {
+                return () => null;
+            });
             builder.RegisterType<LibrariesProvider>().As<ILibrariesProvider>().SingleInstance();
         }
     }

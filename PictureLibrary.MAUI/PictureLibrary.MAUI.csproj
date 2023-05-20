@@ -69,4 +69,8 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Configuration\" />
+	</ItemGroup>
+
 </Project>

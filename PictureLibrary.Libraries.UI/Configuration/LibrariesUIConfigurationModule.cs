@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using PictureLibrary.Libraries.UI.MainPage;
 using PictureLibrary.Libraries.UI.ViewModels;
 
 namespace PictureLibrary.Libraries.UI.Configuration
@@ -8,6 +9,7 @@ namespace PictureLibrary.Libraries.UI.Configuration
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<LibrariesPageViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<LibrariesPage>().AsSelf().SingleInstance();
         }
     }
 }

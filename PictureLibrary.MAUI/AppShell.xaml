@@ -4,13 +4,12 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PictureLibrary.MAUI"
-    xmlns:librariesUI="clr-namespace:PictureLibrary.Libraries.UI.MainPage;assembly=PictureLibrary.Libraries.UI"
     Shell.FlyoutWidth="250">
 
     <ShellContent
         Title="Biblioteki zdjęć"
-        ContentTemplate="{DataTemplate librariesUI:LibrariesPage}"
-        Route="PictureLibrariesPage" />
+        Content="{Binding LibrariesPage}"
+        Route="LibrariesPage" />
 
     <ShellContent
         Title="Połączone konta"

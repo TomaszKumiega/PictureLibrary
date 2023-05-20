@@ -1,4 +1,12 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using PictureLibrary.AppSettings.Configuration;
+using PictureLibrary.DataAccess.Configuration;
+using PictureLibrary.FileSystem.API.Configuration;
+using PictureLibrary.GoogleDrive.Configuration;
+using PictureLibrary.Libraries.UI.Configuration;
+using PictureLibrary.Tools.Configuration;
 
 namespace PictureLibrary.MAUI
 {
@@ -18,6 +26,18 @@ namespace PictureLibrary.MAUI
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
+            builder.ConfigureContainer(new AutofacServiceProviderFactory(), autofacBuilder =>
+            {
+                autofacBuilder.RegisterModule<LibrariesUIConfigurationModule>();
+                autofacBuilder.RegisterModule<ToolsConfigurationModule>();
+                autofacBuilder.RegisterModule<DataAccessConfigurationModule>();
+                autofacBuilder.RegisterModule<SettingsConfigurationModule>();
+                autofacBuilder.RegisterModule<FileSystemConfigurationModule>();
+                autofacBuilder.RegisterModule<GoogleDriveConfigurationModule>();
+
+                autofacBuilder.RegisterType<AppShell>().AsSelf().SingleInstance();
+            });
+
 
             return builder.Build();
         }
