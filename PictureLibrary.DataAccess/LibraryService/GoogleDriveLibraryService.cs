@@ -11,7 +11,7 @@ using File = Google.Apis.Drive.v3.Data.File;
 
 namespace PictureLibrary.DataAccess.LibraryService
 {
-    public class GoogleDriveLibraryService
+    public class GoogleDriveLibraryService : IGoogleDriveLibraryService
     {
         #region Private fields
         private static string AppFolder => "PictureLibraryAppFolder\\";
@@ -61,7 +61,7 @@ namespace PictureLibrary.DataAccess.LibraryService
             {
                 var memoryStream = await _googleDriveApiClient.DownloadFileAsync(file.Id, dataStoreInfo.UserName);
                 using var streamReader = new StreamReader(memoryStream);
-                
+
                 serializedLibraries.Add(file.Id, streamReader.ReadToEnd());
             }
 
@@ -77,7 +77,7 @@ namespace PictureLibrary.DataAccess.LibraryService
             {
                 folderId = await CreateFolderAsync(dataStoreInfo);
             }
-            
+
             var libraryFolderId = await _googleDriveApiClient.CreateFolderAsync(library.Id.ToString(), dataStoreInfo.UserName, new List<string> { folderId });
             _ = await _googleDriveApiClient.CreateFolderAsync("Images", dataStoreInfo.UserName, new List<string>() { libraryFolderId });
 
@@ -90,7 +90,7 @@ namespace PictureLibrary.DataAccess.LibraryService
 
             return library;
         }
-             
+
         public async Task<bool> DeleteLibraryAsync(GoogleDriveLibrary library)
         {
             if (library?.FileId == null)

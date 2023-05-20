@@ -7,7 +7,7 @@ using PictureLibraryModel.Model;
 
 namespace PictureLibrary.DataAccess.LibraryService
 {
-    public class FileSystemLibraryService
+    public class FileSystemLibraryService : IFileSystemLibraryService
     {
         #region Private fields
         private readonly IFileService _fileService;
@@ -28,7 +28,7 @@ namespace PictureLibrary.DataAccess.LibraryService
             _xmlSerializer = xmlSerializer;
             _libraryXmlEditor = libraryXmlEditor;
             _directoryService = directoryService;
-            _librarySettingsProvider = librarySettingsProvider;    
+            _librarySettingsProvider = librarySettingsProvider;
         }
 
         #region Public methods
@@ -40,7 +40,7 @@ namespace PictureLibrary.DataAccess.LibraryService
             await WriteLibraryToFileAsync(serializedLibrary, path);
 
             library.FilePath = path;
-            
+
             return library;
         }
 
@@ -48,7 +48,7 @@ namespace PictureLibrary.DataAccess.LibraryService
         {
             if (library?.FilePath == null)
                 throw new ArgumentException(string.Empty, nameof(library));
-            
+
             return await Task.Run(() => _fileService.Delete(library.FilePath));
         }
 
@@ -69,9 +69,9 @@ namespace PictureLibrary.DataAccess.LibraryService
             using (StreamReader sr = new(libraryFileStream))
             {
                 serializedLibrary = await sr.ReadToEndAsync();
-            }    
+            }
 
-            string updatedSerializedLibrary = _libraryXmlEditor.UpdateLibraryNode(serializedLibrary, library);   
+            string updatedSerializedLibrary = _libraryXmlEditor.UpdateLibraryNode(serializedLibrary, library);
 
             using (Stream updatedLibraryFileStream = _fileService.Open(library.FilePath))
             using (StreamWriter sr = new(updatedLibraryFileStream))

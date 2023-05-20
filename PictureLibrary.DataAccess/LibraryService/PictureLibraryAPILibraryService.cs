@@ -6,7 +6,7 @@
 
 //namespace PictureLibrary.DataAccess.LibraryService
 //{
-//    public class PictureLibraryAPILibraryService
+//    public class PictureLibraryAPILibraryService : IPictureLibraryAPILibraryService
 //    {
 //        #region Private fields
 //        private readonly ILibraryClient _libraryClient;
