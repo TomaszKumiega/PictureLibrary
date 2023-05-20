@@ -24,13 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="MainPage\PictureLibrariesPage.xaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="MainPage\PictureLibrariesPage.xaml">
+	  <MauiXaml Update="MainPage\LibrariesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
