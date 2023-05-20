@@ -4,9 +4,13 @@
     {
         public AppShell()
         {
+#if WINDOWS || MACCATALYST
+            FlyoutBehavior = FlyoutBehavior.Locked;
+#else
+            FlyoutBehavior = FlyoutBehavior.Flyout;
+#endif
+
             InitializeComponent();
         }
-
-        public string PictureLibraryTitle => "Biblioteka zdjęć";
     }
 }
