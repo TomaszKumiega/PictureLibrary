@@ -49,7 +49,10 @@ namespace PictureLibrary.Libraries.UI.ViewModels
         [RelayCommand(CanExecute = nameof(CanExecuteOpenLibrary))]
         public async Task OpenLibrary()
         {
-            await Shell.Current.GoToAsync(nameof(LibraryContentPage));
+            await Shell.Current.GoToAsync(nameof(LibraryContentPage), new Dictionary<string, object>
+            {
+                { nameof(LibraryViewModel), SelectedLibrary },
+            });
         }
         #endregion
     }
