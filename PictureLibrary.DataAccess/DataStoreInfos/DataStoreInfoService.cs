@@ -28,6 +28,16 @@ namespace PictureLibrary.DataAccess
         }
 
         #region Public methods
+        public IEnumerable<IDataStoreInfo> GetAllDataStoreInfos()
+        {
+            var dataStoreInfos = new List<IDataStoreInfo>();
+
+            dataStoreInfos.AddRange(GetAllDataStoreInfosOfType<APIDataStoreInfo>());
+            dataStoreInfos.AddRange(GetAllDataStoreInfosOfType<GoogleDriveDataStoreInfo>());
+
+            return dataStoreInfos;
+        }
+
         public TDataStoreInfo? GetDataStoreInfo<TDataStoreInfo>(Guid id)
             where TDataStoreInfo : class, IDataStoreInfo
         {
@@ -125,6 +135,16 @@ namespace PictureLibrary.DataAccess
                 if (dataStoreInfo != null)
                     yield return dataStoreInfo;
             }
+        }
+
+        private IEnumerable<TDataStoreInfo> GetAllDataStoreInfosOfType<TDataStoreInfo>() 
+            where TDataStoreInfo : class, IDataStoreInfo
+        {
+            var fileContent = GetFileContent(typeof(TDataStoreInfo));
+            
+            return fileContent != null
+                ? GetAllDataStoreInfosOfType<TDataStoreInfo>(fileContent)
+                : Enumerable.Empty<TDataStoreInfo>();
         }
 
         private void CreateFileForDataStoreOfType(Type typeOfDataStore)
