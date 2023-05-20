@@ -23,4 +23,16 @@
 	  <Folder Include="Platforms\Tizen\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="MainPage\PictureLibrariesPage.xaml.cs">
+	    <DependentUpon>%(Filename)</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="MainPage\PictureLibrariesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
