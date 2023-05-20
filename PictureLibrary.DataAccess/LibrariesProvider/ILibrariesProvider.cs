@@ -4,6 +4,6 @@ namespace PictureLibrary.DataAccess.LibrariesProvider
 {
     public interface ILibrariesProvider
     {
-        Task<IEnumerable<Library>> GetLibrariesFromAllSourcesAsync(out IEnumerable<string> sourceConnectionErrors);
+        Task<IEnumerable<Library>> GetLibrariesFromAllSourcesAsync();
     }
 }

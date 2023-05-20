@@ -32,7 +32,7 @@ namespace PictureLibrary.Libraries.UI.ViewModels
         {
             InitializationInProgress = true;
 
-            var libraries = await _librariesProvider.GetLibrariesFromAllSourcesAsync(out var connectionErrors);
+            var libraries = await _librariesProvider.GetLibrariesFromAllSourcesAsync();
             Libraries = new ObservableCollection<LibraryViewModel>(libraries.Select(x => new LibraryViewModel(x)));
 
             InitializationInProgress = false;
