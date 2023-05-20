@@ -3,7 +3,7 @@ using PictureLibrary.DataAccess.LibraryService;
 using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.DataStoreInfo;
 
-namespace PictureLibrary.DataAccess.LibrariesProvider
+namespace PictureLibrary.DataAccess
 {
     public class LibrariesProvider : ILibrariesProvider
     {

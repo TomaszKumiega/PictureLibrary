@@ -1,7 +1,7 @@
 ﻿using AsyncAwaitBestPractices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using PictureLibrary.DataAccess.LibrariesProvider;
+using PictureLibrary.DataAccess;
 using PictureLibrary.Libraries.UI.DataViewModels;
 using PictureLibrary.Libraries.UI.Pages;
 using System.Collections.ObjectModel;

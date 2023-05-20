@@ -1,6 +1,6 @@
 ﻿using PictureLibraryModel.Model;
 
-namespace PictureLibrary.DataAccess.LibrariesProvider
+namespace PictureLibrary.DataAccess
 {
     public interface ILibrariesProvider
     {
