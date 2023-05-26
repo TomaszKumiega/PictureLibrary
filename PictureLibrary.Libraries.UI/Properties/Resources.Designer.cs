@@ -89,5 +89,15 @@ namespace PictureLibrary.Libraries.UI.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] RemoveIcon {
+            get {
+                object obj = ResourceManager.GetObject("RemoveIcon", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
