@@ -112,7 +112,7 @@ namespace PictureLibrary.DataAccess.LibraryService
 
             foreach (var subDirectory in subDirectories)
             {
-                FileInfo? libraryFileInfo = subDirectory.GetFiles().FirstOrDefault();
+                FileInfo? libraryFileInfo = subDirectory.GetFiles().FirstOrDefault(x => x.Extension == "plib");
 
                 if (libraryFileInfo != null)
                 {
