@@ -5,6 +5,7 @@ using PictureLibrary.AppSettings.Configuration;
 using PictureLibrary.DataAccess.Configuration;
 using PictureLibrary.FileSystem.API.Configuration;
 using PictureLibrary.GoogleDrive.Configuration;
+using PictureLibrary.Infrastructure.Configuration;
 using PictureLibrary.Libraries.UI.Configuration;
 using PictureLibrary.Tools.Configuration;
 
@@ -34,7 +35,8 @@ namespace PictureLibrary.MAUI
                 autofacBuilder.RegisterModule<SettingsConfigurationModule>();
                 autofacBuilder.RegisterModule<FileSystemConfigurationModule>();
                 autofacBuilder.RegisterModule<GoogleDriveConfigurationModule>();
-                
+                autofacBuilder.RegisterModule<InfrastructureConfigurationModule>();
+
                 autofacBuilder.RegisterType<AppShell>().AsSelf().SingleInstance();
             });
 
