@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 
 namespace PictureLibraryModel.Model.DataStoreInfo
 {
@@ -7,6 +6,7 @@ namespace PictureLibraryModel.Model.DataStoreInfo
     {
         public Guid Id { get; set; }
         public required string Name { get; set; }
+        public DataStoreType Type => DataStoreType.PictureLibraryApi;
 
         public required Guid UserId { get; set; }
         public required Guid TokenId { get; set; }
