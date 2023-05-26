@@ -32,24 +32,30 @@ namespace PictureLibrary.DataAccess.LibraryService
         }
 
         #region Public methods
-        public async Task<LocalLibrary> AddLibraryAsync(LocalLibrary library)
+        public async Task<Library> AddLibraryAsync(Library library)
         {
-            var serializedLibrary = await SerializeLibraryAsync(library);
-            var path = await CreateLibraryDirectoriesAsync(library) + Path.PathSeparator + $"{library.Name}.plib";
+            if (library is not LocalLibrary localLibrary)
+                throw new ArgumentException($"Library must be a type of {nameof(LocalLibrary)}", nameof(library));
+
+            var serializedLibrary = await SerializeLibraryAsync(localLibrary);
+            var path = await CreateLibraryDirectoriesAsync(localLibrary) + Path.PathSeparator + $"{localLibrary.Name}.plib";
 
             await WriteLibraryToFileAsync(serializedLibrary, path);
 
-            library.FilePath = path;
+            localLibrary.FilePath = path;
 
-            return library;
+            return localLibrary;
         }
 
-        public async Task<bool> DeleteLibraryAsync(LocalLibrary library)
+        public async Task<bool> DeleteLibraryAsync(Library library)
         {
-            if (library?.FilePath == null)
-                throw new ArgumentException(string.Empty, nameof(library));
+            if (library is not LocalLibrary localLibrary)
+                throw new ArgumentException($"Library must be a type of {nameof(LocalLibrary)}", nameof(library));
 
-            return await Task.Run(() => _fileService.Delete(library.FilePath));
+            if (localLibrary?.FilePath == null)
+                throw new ArgumentException(string.Empty, nameof(localLibrary));
+
+            return await Task.Run(() => _fileService.Delete(localLibrary.FilePath));
         }
 
         public async Task<IEnumerable<LocalLibrary>> GetAllLibrariesAsync()
@@ -59,21 +65,24 @@ namespace PictureLibrary.DataAccess.LibraryService
             return await GetLibrariesFromSubdirectoriesAsync(subDirectories);
         }
 
-        public async Task UpdateLibraryAsync(LocalLibrary library)
+        public async Task UpdateLibraryAsync(Library library)
         {
-            if (library?.FilePath == null)
-                throw new ArgumentException(string.Empty, nameof(library));
+            if (library is not LocalLibrary localLibrary)
+                throw new ArgumentException($"Library must be a type of {nameof(LocalLibrary)}", nameof(library));
+
+            if (localLibrary?.FilePath == null)
+                throw new ArgumentException(string.Empty, nameof(localLibrary));
 
             string serializedLibrary;
-            using (Stream libraryFileStream = _fileService.Open(library.FilePath))
+            using (Stream libraryFileStream = _fileService.Open(localLibrary.FilePath))
             using (StreamReader sr = new(libraryFileStream))
             {
                 serializedLibrary = await sr.ReadToEndAsync();
             }
 
-            string updatedSerializedLibrary = _libraryXmlEditor.UpdateLibraryNode(serializedLibrary, library);
+            string updatedSerializedLibrary = _libraryXmlEditor.UpdateLibraryNode(serializedLibrary, localLibrary);
 
-            using (Stream updatedLibraryFileStream = _fileService.Open(library.FilePath))
+            using (Stream updatedLibraryFileStream = _fileService.Open(localLibrary.FilePath))
             using (StreamWriter sr = new(updatedLibraryFileStream))
             {
                 await sr.WriteAsync(updatedSerializedLibrary);

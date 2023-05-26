@@ -68,9 +68,12 @@ namespace PictureLibrary.DataAccess.LibraryService
             return DeserializeLibraries(serializedLibraries);
         }
 
-        public async Task<GoogleDriveLibrary> AddLibraryAsync(GoogleDriveLibrary library)
+        public async Task<Library> AddLibraryAsync(Library library)
         {
-            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
+            if (library is not GoogleDriveLibrary googleDriveLibrary)
+                throw new ArgumentException("Library must be a type of GoogleDriveLibrary", nameof(library));
+
+            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(googleDriveLibrary.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             var folderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, AppFolder);
             if (string.IsNullOrEmpty(folderId))
@@ -78,58 +81,61 @@ namespace PictureLibrary.DataAccess.LibraryService
                 folderId = await CreateFolderAsync(dataStoreInfo);
             }
 
-            var libraryFolderId = await _googleDriveApiClient.CreateFolderAsync(library.Id.ToString(), dataStoreInfo.UserName, new List<string> { folderId });
+            var libraryFolderId = await _googleDriveApiClient.CreateFolderAsync(googleDriveLibrary.Id.ToString(), dataStoreInfo.UserName, new List<string> { folderId });
             _ = await _googleDriveApiClient.CreateFolderAsync("Images", dataStoreInfo.UserName, new List<string>() { libraryFolderId });
 
-            var stream = await SerializeLibraryAsync(library);
+            var stream = await SerializeLibraryAsync(googleDriveLibrary);
 
-            string fileName = $"{library.Name}.plib";
+            string fileName = $"{googleDriveLibrary.Name}.plib";
             var file = await _googleDriveApiClient.UploadFileToFolderAsync(stream, fileName, libraryFolderId, MimeTypes.Xml, dataStoreInfo.UserName);
 
-            library.FileId = file.Id;
+            googleDriveLibrary.FileId = file.Id;
 
-            return library;
+            return googleDriveLibrary;
         }
 
-        public async Task<bool> DeleteLibraryAsync(GoogleDriveLibrary library)
+        public async Task<bool> DeleteLibraryAsync(Library library)
         {
-            if (library?.FileId == null)
-                throw new ArgumentException(string.Empty, nameof(library));
+            if (library is not GoogleDriveLibrary googleDriveLibrary)
+                throw new ArgumentException("Library must be a type of GoogleDriveLibrary", nameof(library));
 
-            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
+            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(googleDriveLibrary.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
-            await _googleDriveApiClient.RemoveFileAsync(library.FileId, dataStoreInfo.UserName);
+            await _googleDriveApiClient.RemoveFileAsync(googleDriveLibrary.FileId, dataStoreInfo.UserName);
 
             return true;
         }
 
-        public async Task UpdateLibraryAsync(GoogleDriveLibrary library)
+        public async Task UpdateLibraryAsync(Library library)
         {
-            if (library?.FileId == null)
-                throw new ArgumentException(string.Empty, nameof(library));
+            if (library is not GoogleDriveLibrary googleDriveLibrary)
+                throw new ArgumentException("Library must be a type of GoogleDriveLibrary", nameof(library));
 
-            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
+            if (googleDriveLibrary?.FileId == null)
+                throw new ArgumentException(string.Empty, nameof(googleDriveLibrary));
+
+            GoogleDriveDataStoreInfo dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(googleDriveLibrary.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             var fileMetadata = new File()
             {
-                Name = library.Name,
+                Name = googleDriveLibrary.Name,
             };
 
             string libraryXml;
-            using (MemoryStream stream = await _googleDriveApiClient.DownloadFileAsync(library.FileId, dataStoreInfo.UserName))
+            using (MemoryStream stream = await _googleDriveApiClient.DownloadFileAsync(googleDriveLibrary.FileId, dataStoreInfo.UserName))
             using (StreamReader sr = new(stream))
             {
                 libraryXml = await sr.ReadToEndAsync();
             }
 
-            string updatedLibraryXml = _libraryXmlEditor.UpdateLibraryNode(libraryXml, library);
+            string updatedLibraryXml = _libraryXmlEditor.UpdateLibraryNode(libraryXml, googleDriveLibrary);
 
             using MemoryStream updateStream = new();
             using StreamWriter streamWriter = new(updateStream);
 
             await streamWriter.WriteAsync(updatedLibraryXml);
 
-            await _googleDriveApiClient.UpdateFileAsync(fileMetadata, updateStream, library.FileId, dataStoreInfo.UserName, MimeTypes.Xml);
+            await _googleDriveApiClient.UpdateFileAsync(fileMetadata, updateStream, googleDriveLibrary.FileId, dataStoreInfo.UserName, MimeTypes.Xml);
         }
         #endregion
 
