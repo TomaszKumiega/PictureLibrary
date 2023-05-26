@@ -26,7 +26,7 @@ namespace PictureLibrary.DataAccess
 
         public async Task<IEnumerable<Library>> GetLibrariesFromAllSourcesAsync()
         {
-            var pictureLibraryApiDataStoreInfos = _dataStoreInfoService.GetAllDataStoreInfosOfType<APIDataStoreInfo>();
+            var pictureLibraryApiDataStoreInfos = _dataStoreInfoService.GetAllDataStoreInfosOfType<ApiDataStoreInfo>();
             var googleDriveDataStoreInfos = _dataStoreInfoService.GetAllDataStoreInfosOfType<GoogleDriveDataStoreInfo>();
 
             var libraries = new List<Library>();
@@ -45,7 +45,7 @@ namespace PictureLibrary.DataAccess
             return await fileSystemLibraryService.GetAllLibrariesAsync();
         }
 
-        private async Task<IEnumerable<Library>> GetAllPictureLibraryApiLibrariesAsync(IEnumerable<APIDataStoreInfo> apiDataStoreInfos)
+        private async Task<IEnumerable<Library>> GetAllPictureLibraryApiLibrariesAsync(IEnumerable<ApiDataStoreInfo> apiDataStoreInfos)
         {
             if (apiDataStoreInfos?.Any() == true)
                 return Enumerable.Empty<Library>();
