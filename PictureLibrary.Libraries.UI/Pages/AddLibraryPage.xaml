@@ -21,5 +21,13 @@
                 SelectedItem="{Binding DataStoreInfo}"
                 HorizontalOptions="Center">
         </Picker>
+
+        <Button Text="Dodaj" 
+                Command="{Binding AddCommand}"
+                HorizontalOptions="Center"/>
+        
+        <Button Text="Anuluj"
+                Command="{Binding CancelCommand}"
+                HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>
