@@ -31,6 +31,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\PictureLibrary.DataAccess\PictureLibrary.DataAccess.csproj" />
+	  <ProjectReference Include="..\PictureLibrary.Infrastructure.UI\PictureLibrary.Infrastructure.UI.csproj" />
 	  <ProjectReference Include="..\PictureLibraryModel\PictureLibraryModel.csproj" />
 	</ItemGroup>
 
@@ -44,13 +45,19 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Update="Properties\Resources.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Controls\LibrariesMenu.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MainPage\LibrariesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\AddLibraryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\LibraryContentPage.xaml">

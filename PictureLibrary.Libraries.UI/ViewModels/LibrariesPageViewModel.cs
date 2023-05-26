@@ -54,6 +54,12 @@ namespace PictureLibrary.Libraries.UI.ViewModels
                 { nameof(LibraryViewModel), SelectedLibrary },
             });
         }
+
+        [RelayCommand]
+        public async Task AddLibrary()
+        {
+            await Shell.Current.GoToAsync(nameof(AddLibraryPage));
+        }
         #endregion
     }
 }

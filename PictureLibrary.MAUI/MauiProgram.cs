@@ -34,7 +34,7 @@ namespace PictureLibrary.MAUI
                 autofacBuilder.RegisterModule<SettingsConfigurationModule>();
                 autofacBuilder.RegisterModule<FileSystemConfigurationModule>();
                 autofacBuilder.RegisterModule<GoogleDriveConfigurationModule>();
-
+                
                 autofacBuilder.RegisterType<AppShell>().AsSelf().SingleInstance();
             });
 

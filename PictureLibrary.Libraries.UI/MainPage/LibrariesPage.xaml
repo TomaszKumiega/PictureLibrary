@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resx="clr-namespace:PictureLibrary.Libraries.UI.Properties"
+             xmlns:conv="clr-namespace:PictureLibrary.Infrastructure.UI.Converters;assembly=PictureLibrary.Infrastructure.UI"
              x:Class="PictureLibrary.Libraries.UI.MainPage.LibrariesPage"
-             Title="LibrariesPage">
+             Title="Biblioteka zdjęć">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.ToolbarItems >
+        <ToolbarItem Text="Add library" 
+                     IconImageSource="{Binding Source={x:Static resx:Resources.AddIcon}, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                     Command="{Binding AddLibraryCommand}"/>
+    </ContentPage.ToolbarItems>
+        
     <ListView ItemsSource="{Binding Libraries}">
         <ListView.GestureRecognizers>
             <TapGestureRecognizer NumberOfTapsRequired="2" Command="{Binding OpenLibrary}"/>
