@@ -1,11 +1,12 @@
-using PictureLibrary.FileSystem.API;
+using PictureLibrary.Libraries.UI.ViewModels;
 
 namespace PictureLibrary.Libraries.UI.Pages;
 
 public partial class AddLibraryPage : ContentPage
 {
-	public AddLibraryPage(IPathFinder pathFinder)
+	public AddLibraryPage(AddLibraryPageViewModel addLibraryPageViewModel)
 	{
+		BindingContext = addLibraryPageViewModel;
 		InitializeComponent();
 	}
 }

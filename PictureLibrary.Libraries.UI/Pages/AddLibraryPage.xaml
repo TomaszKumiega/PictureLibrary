@@ -4,9 +4,21 @@
              x:Class="PictureLibrary.Libraries.UI.Pages.AddLibraryPage"
              Title="Dodaj bibliotekę zdjęć">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
+        <Label Text="Nazwa"
+            VerticalOptions="Start" 
             HorizontalOptions="Center" />
+        <Entry Text="{Binding Name}" 
+               HorizontalOptions="Center"/>
+        
+        <Label Text="Opis"
+               HorizontalOptions="Center"/>
+        <Entry Text="{Binding Description}"
+               HorizontalOptions="Center"/>
+
+        <Label Text="Magazyn danych"
+               HorizontalOptions="Center"/>
+        <Picker ItemsSource="{Binding DataStoreInfos}"
+                SelectedItem="{Binding DataStoreInfo}">
+        </Picker>
     </VerticalStackLayout>
 </ContentPage>
