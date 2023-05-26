@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using PictureLibrary.DataAccess.DataStoreInfos;
 using PictureLibrary.DataAccess.LibraryService;
 using PictureLibrary.Infrastructure.ImplementationSelector;
 using PictureLibrary.Infrastructure.UI;
+using PictureLibrary.Libraries.UI.DataViewModels;
 using PictureLibraryModel.Builders;
 using PictureLibraryModel.Model.DataStoreInfo;
 using System.Text;
@@ -12,17 +14,37 @@ namespace PictureLibrary.Libraries.UI.ViewModels
     public partial class AddLibraryPageViewModel : ObservableObject
     {
         private readonly IPopupService _popupService;
+        private readonly IDataStoreInfoService _dataStoreInfoService;
         private readonly Func<ILibraryBuilder> _libraryBuilderLocator;
         private readonly IImplementationSelector<DataStoreType, ILibraryService> _libraryServiceSelector;
 
         public AddLibraryPageViewModel(
             IPopupService popupService,
+            IDataStoreInfoService dataStoreInfoService,
             Func<ILibraryBuilder> libraryBuilderLocator,
             IImplementationSelector<DataStoreType, ILibraryService> libraryServiceSelector)
         {
             _popupService = popupService;
+            _dataStoreInfoService = dataStoreInfoService;
             _libraryBuilderLocator = libraryBuilderLocator;
             _libraryServiceSelector = libraryServiceSelector;
+        }
+
+        public IEnumerable<DataStoreInfoItemViewModel> DataStoreInfos
+        {
+            get
+            {
+                var dataStoreInfos = _dataStoreInfoService.GetAllDataStoreInfos();
+
+                var dataStoreInfoItems = new List<DataStoreInfoItemViewModel>()
+                {
+                    new DataStoreInfoItemViewModel(null),                    
+                };
+
+                dataStoreInfoItems.AddRange(dataStoreInfos.Select(x => new DataStoreInfoItemViewModel(x)));
+
+                return dataStoreInfoItems;
+            }
         }
 
         [ObservableProperty]
@@ -32,7 +54,7 @@ namespace PictureLibrary.Libraries.UI.ViewModels
         private string? _description;
 
         [ObservableProperty]
-        private IDataStoreInfo? _dataStoreInfo;
+        private DataStoreInfoItemViewModel? _dataStoreInfo;
 
         #region Validation
         private IEnumerable<string> GetValidationErrors()
@@ -71,12 +93,12 @@ namespace PictureLibrary.Libraries.UI.ViewModels
             if (!IsValid())
                 return;
 
-            var dataStoreType = DataStoreInfo?.Type ?? DataStoreType.Local;
+            var dataStoreType = DataStoreInfo?.DataStoreInfo?.Type ?? DataStoreType.Local;
 
             var service = _libraryServiceSelector.Select(dataStoreType) ?? throw new InvalidOperationException("Selected data storage is not supported");
 
             var library = _libraryBuilderLocator()
-                .CreateLibrary(DataStoreInfo)
+                .CreateLibrary(DataStoreInfo?.DataStoreInfo)
                 .WithName(Name!)
                 .WithDescription(Description!)
                 .GetLibrary();
