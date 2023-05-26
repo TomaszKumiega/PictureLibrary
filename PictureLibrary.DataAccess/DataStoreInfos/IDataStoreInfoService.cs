@@ -1,4 +1,5 @@
-﻿using PictureLibraryModel.Model.DataStoreInfo;
+﻿using PictureLibraryModel.Model;
+using PictureLibraryModel.Model.DataStoreInfo;
 
 namespace PictureLibrary.DataAccess.DataStoreInfos
 {
@@ -7,6 +8,7 @@ namespace PictureLibrary.DataAccess.DataStoreInfos
         IEnumerable<IDataStoreInfo> GetAllDataStoreInfos();
         IEnumerable<TDataStoreInfo> GetAllDataStoreInfosOfType<TDataStoreInfo>() where TDataStoreInfo : class, IDataStoreInfo;
         TDataStoreInfo? GetDataStoreInfo<TDataStoreInfo>(Guid id) where TDataStoreInfo : class, IDataStoreInfo;
+        IDataStoreInfo? GetDataStoreInfoFromLibrary(Library library);
         bool AddDataStoreInfo<TDataStoreInfo>(TDataStoreInfo dataStoreInfo) where TDataStoreInfo : class, IDataStoreInfo;
     }
 }

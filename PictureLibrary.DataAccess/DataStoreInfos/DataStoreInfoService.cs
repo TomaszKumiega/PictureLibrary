@@ -2,6 +2,7 @@
 using PictureLibrary.DataAccess.DataStoreInfos;
 using PictureLibrary.FileSystem.API;
 using PictureLibrary.Tools.StringEncryption;
+using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.DataStoreInfo;
 
 namespace PictureLibrary.DataAccess
@@ -69,6 +70,13 @@ namespace PictureLibrary.DataAccess
 
             UpdateEncryptetFileContents(typeof(TDataStoreInfo), encryptedFileContent);
             return SaveUpdatedDataStoreInfo(typeof(TDataStoreInfo), encryptedFileContent);
+        }
+
+        public IDataStoreInfo? GetDataStoreInfoFromLibrary(Library library)
+        {
+            return library is RemoteLibrary remoteLibrary
+                ? GetAllDataStoreInfos().FirstOrDefault(x => x.Id == remoteLibrary.Id)
+                : null;
         }
         #endregion
 
