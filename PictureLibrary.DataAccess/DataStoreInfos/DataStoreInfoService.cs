@@ -28,6 +28,16 @@ namespace PictureLibrary.DataAccess
         }
 
         #region Public methods
+        public IEnumerable<IDataStoreInfo> GetAllDataStoreInfos()
+        {
+            var dataStoreInfos = new List<IDataStoreInfo>();
+
+            dataStoreInfos.AddRange(GetAllDataStoreInfosOfType<ApiDataStoreInfo>());
+            dataStoreInfos.AddRange(GetAllDataStoreInfosOfType<GoogleDriveDataStoreInfo>());
+
+            return dataStoreInfos;
+        }
+
         public IEnumerable<TDataStoreInfo> GetAllDataStoreInfosOfType<TDataStoreInfo>()
             where TDataStoreInfo : class, IDataStoreInfo
         {
