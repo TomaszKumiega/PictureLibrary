@@ -12,9 +12,12 @@
     </ContentPage.Resources>
     
     <ContentPage.ToolbarItems >
-        <ToolbarItem Text="Add library" 
+        <ToolbarItem Text="Dodaj bibliotekę" 
                      IconImageSource="{Binding Source={x:Static resx:Resources.AddIcon}, Converter={StaticResource ByteArrayToImageSourceConverter}}"
                      Command="{Binding AddLibraryCommand}"/>
+        <ToolbarItem Text="Usuń bibliotekę"
+                     IconImageSource="{Binding Source={x:Static resx:Resources.RemoveIcon}, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                     Command="{Binding RemoveLibraryCommand}"/>
     </ContentPage.ToolbarItems>
         
     <ListView ItemsSource="{Binding Libraries}">
