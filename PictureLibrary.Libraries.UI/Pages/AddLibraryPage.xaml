@@ -5,7 +5,7 @@
              Title="Dodaj bibliotekę zdjęć">
     <VerticalStackLayout>
         <Label Text="Nazwa"
-            VerticalOptions="Start" 
+            VerticalOptions="CenterAndExpand" 
             HorizontalOptions="Center" />
         <Entry Text="{Binding Name}" 
                HorizontalOptions="Center"/>
@@ -18,7 +18,8 @@
         <Label Text="Magazyn danych"
                HorizontalOptions="Center"/>
         <Picker ItemsSource="{Binding DataStoreInfos}"
-                SelectedItem="{Binding DataStoreInfo}">
+                SelectedItem="{Binding DataStoreInfo}"
+                HorizontalOptions="Center">
         </Picker>
     </VerticalStackLayout>
 </ContentPage>

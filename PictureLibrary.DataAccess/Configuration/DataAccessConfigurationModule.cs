@@ -19,8 +19,8 @@ namespace PictureLibrary.DataAccess.Configuration
                 return () => null;
             });
 
-            builder.RegisterType<FileSystemLibraryService>().As<ILibraryService>().Keyed<DataStoreType>(DataStoreType.Local);
-            builder.RegisterType<GoogleDriveLibraryService>().As<ILibraryService>().Keyed<DataStoreType>(DataStoreType.GoogleDrive);
+            builder.RegisterType<FileSystemLibraryService>().Keyed<ILibraryService>(DataStoreType.Local);
+            builder.RegisterType<GoogleDriveLibraryService>().Keyed<ILibraryService>(DataStoreType.GoogleDrive);
 
             builder.RegisterType<LibrariesProvider>().As<ILibrariesProvider>().SingleInstance();
         }
