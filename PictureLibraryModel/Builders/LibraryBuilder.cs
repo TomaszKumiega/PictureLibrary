@@ -41,7 +41,7 @@ namespace PictureLibraryModel.Builders
             return _library ?? throw new NotSupportedException($"Cannot retrieve library without calling {nameof(CreateLibrary)} method.");
         }
 
-        public ILibraryBuilder WithDescription(string description)
+        public ILibraryBuilder WithDescription(string? description)
         {
             _library!.Description = description;
 
