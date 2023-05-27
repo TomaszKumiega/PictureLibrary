@@ -11,7 +11,11 @@ namespace PictureLibrary.Libraries.UI.DataViewModels
         }
 
         public Library Library { get; }
-        public ImageSource IconSource 
-            => ImageSource.FromResource("LibraryIcon");
+        public ImageSource IconSource => ImageSource.FromStream(
+            () =>
+            {
+                var bytes = Properties.Resources.LibraryIcon;
+                return new MemoryStream(bytes);
+            });
     }
 }
