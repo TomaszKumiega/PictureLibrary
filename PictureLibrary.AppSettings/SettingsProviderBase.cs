@@ -6,7 +6,7 @@ namespace PictureLibrary.AppSettings
     public abstract class SettingsProviderBase<TSettings>
         where TSettings : class
     {
-        private readonly IPathFinder _pathFinder;
+        protected readonly IPathFinder _pathFinder;
         private readonly IFileService _fileService;
 
         public SettingsProviderBase(
@@ -17,19 +17,29 @@ namespace PictureLibrary.AppSettings
             _fileService = fileService;
         }
 
-        public virtual TSettings? GetSettings()
+        protected abstract TSettings CreateDefaultSettings();
+
+        public virtual TSettings GetSettings()
         {
             var path = _pathFinder.GetSettingsFilePath(typeof(TSettings));
 
             if (!_fileService.Exists(path))
-                return null;
+            {
+                using (var newFileStream = _fileService.Create(path))
+                using (var newFileWriter = new StreamWriter(newFileStream))
+                {
+                    var defaultSettings = CreateDefaultSettings();
+                    var defaultSettingsJson = JsonConvert.SerializeObject(defaultSettings);
+                    newFileWriter.Write(defaultSettingsJson);
+                }
+            }
 
             using var stream = _fileService.Open(path);
             using var reader = new StreamReader(stream);
 
             var settingsJson = reader.ReadToEnd();
 
-            return JsonConvert.DeserializeObject<TSettings>(settingsJson);
+            return JsonConvert.DeserializeObject<TSettings>(settingsJson) ?? throw new JsonSerializationException();
         }
 
         public virtual bool SaveSettings(TSettings settings)

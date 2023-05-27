@@ -4,7 +4,7 @@ namespace PictureLibrary.AppSettings
 {
     public interface ILibrarySettingsProvider
     {
-        LibrariesSettings? GetSettings();
+        LibrariesSettings GetSettings();
         bool SaveSettings(LibrariesSettings settings);
     }
 }

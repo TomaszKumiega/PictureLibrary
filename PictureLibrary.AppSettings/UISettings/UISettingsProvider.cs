@@ -1,5 +1,6 @@
 ﻿using PictureLibrary.FileSystem.API;
 using PictureLibraryModel.Model;
+using System.Drawing;
 
 namespace PictureLibrary.AppSettings
 {
@@ -10,6 +11,14 @@ namespace PictureLibrary.AppSettings
             IFileService fileService) 
             : base(pathFinder, fileService)
         {
+        }
+
+        protected override UISettings CreateDefaultSettings()
+        {
+            return new UISettings()
+            {
+                LightMode = false,
+            };
         }
     }
 }

@@ -11,5 +11,13 @@ namespace PictureLibrary.AppSettings
             : base(pathFinder, fileService)
         {
         }
+
+        protected override LibrariesSettings CreateDefaultSettings()
+        {
+            return new LibrariesSettings()
+            {
+                LocalLibrariesStoragePath = _pathFinder.GetDefaultLibrariesFolderPath(),
+            };
+        }
     }
 }
