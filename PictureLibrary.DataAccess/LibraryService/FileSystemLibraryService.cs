@@ -38,7 +38,7 @@ namespace PictureLibrary.DataAccess.LibraryService
                 throw new ArgumentException($"Library must be a type of {nameof(LocalLibrary)}", nameof(library));
 
             var serializedLibrary = await SerializeLibraryAsync(localLibrary);
-            var path = await CreateLibraryDirectoriesAsync(localLibrary) + Path.PathSeparator + $"{localLibrary.Name}.plib";
+            var path = await CreateLibraryDirectoriesAsync(localLibrary) + Path.DirectorySeparatorChar + $"{localLibrary.Name}.plib";
 
             await WriteLibraryToFileAsync(serializedLibrary, path);
 
@@ -96,7 +96,11 @@ namespace PictureLibrary.DataAccess.LibraryService
 
         private async Task<DirectoryInfo[]> GetSubdirectoriesOfLibrariesMainFolderAsync()
         {
-            string? librariesDirectory = _librarySettingsProvider.GetSettings()?.LocalLibrariesStoragePath;
+            var librarySettings = _librarySettingsProvider.GetSettings();
+
+            CreateLibrariesDirectoryIfItDoesntExist(librarySettings);
+
+            string? librariesDirectory = librarySettings.LocalLibrariesStoragePath;
 
             if (librariesDirectory == null)
                 return Array.Empty<DirectoryInfo>();
@@ -142,15 +146,25 @@ namespace PictureLibrary.DataAccess.LibraryService
         {
             var librarySettings = await Task.Run(_librarySettingsProvider.GetSettings);
 
-            var directoryPath = librarySettings.LocalLibrariesStoragePath + Path.PathSeparator + library.Name;
+            CreateLibrariesDirectoryIfItDoesntExist(librarySettings);
+
+            var directoryPath = librarySettings.LocalLibrariesStoragePath + Path.DirectorySeparatorChar + library.Name;
 
             await Task.Run(() => _directoryService.Create(directoryPath));
 
-            var imageDirectoryPath = directoryPath + Path.PathSeparator + "Images";
+            var imageDirectoryPath = directoryPath + Path.DirectorySeparatorChar + "Images";
 
             await Task.Run(() => _directoryService.Create(imageDirectoryPath));
 
             return directoryPath;
+        }
+
+        private void CreateLibrariesDirectoryIfItDoesntExist(LibrariesSettings settings)
+        {
+            if (!_fileService.Exists(settings.LocalLibrariesStoragePath))
+            {
+                _directoryService.Create(settings.LocalLibrariesStoragePath);
+            }
         }
 
         private async Task WriteLibraryToFileAsync(string serializedLibrary, string path)

@@ -157,7 +157,7 @@ namespace PictureLibrary.DataAccess
 
         private void CreateFileForDataStoreOfType(Type typeOfDataStore)
         {
-            string filePath = _pathFinder.AppFolderPath + Path.PathSeparator + $"{typeOfDataStore.Name}.dsi";
+            string filePath = _pathFinder.AppFolderPath + Path.DirectorySeparatorChar + $"{typeOfDataStore.Name}.dsi";
             using var stream = _fileService.Create(filePath);
             stream.Close();
         }

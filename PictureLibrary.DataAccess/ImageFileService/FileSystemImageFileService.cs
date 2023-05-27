@@ -28,7 +28,7 @@ namespace PictureLibrary.DataAccess.ImageFileService
             string libraryXml = await GetLibraryXmlAsync(library);
             string directoryName = _fileService.GetFileInfo(library.FilePath).DirectoryName ?? throw new ArgumentException("Invalid file path.", nameof(library));
             
-            string path = directoryName + Path.PathSeparator + "Images" + Path.PathSeparator + $"{localImageFile.Name}.{localImageFile.Extension}";
+            string path = directoryName + Path.DirectorySeparatorChar + "Images" + Path.DirectorySeparatorChar + $"{localImageFile.Name}.{localImageFile.Extension}";
 
             using var stream = _fileService.Create(path);
             await imageFileContent.CopyToAsync(stream);

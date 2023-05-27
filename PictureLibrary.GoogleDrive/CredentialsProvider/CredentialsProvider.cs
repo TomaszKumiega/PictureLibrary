@@ -21,7 +21,7 @@ namespace PictureLibraryModel.Services.CredentialsProvider
         #region Public methods
         public ClientSecrets GetGoogleDriveAPIClientSecrets()
         {
-            var credentialsFilePath = _pathFinder.AppFolderPath + Path.PathSeparator + "google_drive_api_secret.json";
+            var credentialsFilePath = _pathFinder.AppFolderPath + Path.DirectorySeparatorChar + "google_drive_api_secret.json";
             Stream fileStream = _fileService.Open(credentialsFilePath);
 
             return GoogleClientSecrets.FromStream(fileStream).Secrets;
