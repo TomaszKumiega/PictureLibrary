@@ -8,6 +8,11 @@
             _ = Directory.CreateDirectory(path);
         }
 
+        public void DeleteDirectory(string path)
+        {
+            Directory.Delete(path, true);
+        }
+
         public DirectoryInfo GetDirectoryInfo(string path)
         {
             return new DirectoryInfo(path);

@@ -10,6 +10,7 @@ using PictureLibrary.Libraries.UI.DataViewModels;
 using PictureLibrary.Libraries.UI.Pages;
 using PictureLibraryModel.Model.DataStoreInfo;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace PictureLibrary.Libraries.UI.ViewModels
 {
@@ -34,9 +35,12 @@ namespace PictureLibrary.Libraries.UI.ViewModels
 
             Libraries = new ObservableCollection<LibraryViewModel>();
 
+            PropertyChanged += PropertyChangedHandler;
+
             InitializeViewModelAsync().SafeFireAndForget();
         }
 
+        #region Public Properties
         public ObservableCollection<LibraryViewModel> Libraries { get; }
 
         public Guid NewLibraryId
@@ -54,6 +58,7 @@ namespace PictureLibrary.Libraries.UI.ViewModels
 
         [ObservableProperty]
         private LibraryViewModel _selectedLibrary;
+        #endregion
 
         #region Initialization
         [ObservableProperty]
@@ -76,12 +81,19 @@ namespace PictureLibrary.Libraries.UI.ViewModels
 
         #region Commands
 
-        private bool CanExecuteOpenLibrary()
+        private void NotifyCanExecuteChanged()
+        {
+            OpenLibraryCommand.NotifyCanExecuteChanged();
+            RemoveLibraryCommand.NotifyCanExecuteChanged();
+        }
+
+
+        private bool CanExecuteItemSelected()
         {
             return SelectedLibrary != null;
         }
 
-        [RelayCommand(CanExecute = nameof(CanExecuteOpenLibrary))]
+        [RelayCommand(CanExecute = nameof(CanExecuteItemSelected))]
         public async Task OpenLibrary()
         {
             await Shell.Current.GoToAsync(nameof(LibraryContentPage), new Dictionary<string, object>
@@ -96,7 +108,7 @@ namespace PictureLibrary.Libraries.UI.ViewModels
             await Shell.Current.GoToAsync(nameof(AddLibraryPage));
         }
 
-        [RelayCommand(CanExecute = nameof(CanExecuteOpenLibrary))]
+        [RelayCommand(CanExecute = nameof(CanExecuteItemSelected))]
         public async Task RemoveLibrary()
         {
             var dataStoreInfo = _dataStoreInfoService.GetDataStoreInfoFromLibrary(SelectedLibrary.Library);
@@ -112,6 +124,13 @@ namespace PictureLibrary.Libraries.UI.ViewModels
             }
 
             Libraries.Remove(SelectedLibrary);
+        }
+        #endregion
+
+        #region OnPropertyChanged
+        public void PropertyChangedHandler(object? sender, PropertyChangedEventArgs args)
+        {
+            NotifyCanExecuteChanged();
         }
         #endregion
     }

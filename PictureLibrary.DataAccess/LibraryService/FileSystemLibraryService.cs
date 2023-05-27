@@ -40,10 +40,9 @@ namespace PictureLibrary.DataAccess.LibraryService
             localLibrary.Id = Guid.NewGuid();
             var serializedLibrary = await SerializeLibraryAsync(localLibrary);
             var path = await CreateLibraryDirectoriesAsync(localLibrary) + Path.DirectorySeparatorChar + $"{localLibrary.Name}.plib";
+            localLibrary.FilePath = path;
 
             await WriteLibraryToFileAsync(serializedLibrary, path);
-
-            localLibrary.FilePath = path;
 
             return localLibrary;
         }
@@ -56,7 +55,16 @@ namespace PictureLibrary.DataAccess.LibraryService
             if (localLibrary?.FilePath == null)
                 throw new ArgumentException(string.Empty, nameof(localLibrary));
 
-            return await Task.Run(() => _fileService.Delete(localLibrary.FilePath));
+            var libraryDirectory = _fileService.GetFileInfo(localLibrary.FilePath).DirectoryName;
+
+            bool success = await Task.Run(() => _fileService.Delete(localLibrary.FilePath));
+
+            if (libraryDirectory != null)
+            {
+                _directoryService.DeleteDirectory(libraryDirectory);
+            }
+
+            return success;
         }
 
         public async Task<IEnumerable<LocalLibrary>> GetAllLibrariesAsync()
