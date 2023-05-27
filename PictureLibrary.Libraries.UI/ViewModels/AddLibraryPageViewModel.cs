@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using PictureLibrary.DataAccess;
 using PictureLibrary.DataAccess.DataStoreInfos;
 using PictureLibrary.DataAccess.LibraryService;
 using PictureLibrary.Infrastructure.ImplementationSelector;
@@ -14,17 +15,20 @@ namespace PictureLibrary.Libraries.UI.ViewModels
     public partial class AddLibraryPageViewModel : ObservableObject
     {
         private readonly IPopupService _popupService;
+        private readonly ILibrariesProvider _librariesProvider;
         private readonly IDataStoreInfoService _dataStoreInfoService;
         private readonly Func<ILibraryBuilder> _libraryBuilderLocator;
         private readonly IImplementationSelector<DataStoreType, ILibraryService> _libraryServiceSelector;
 
         public AddLibraryPageViewModel(
             IPopupService popupService,
+            ILibrariesProvider librariesProvider,
             IDataStoreInfoService dataStoreInfoService,
             Func<ILibraryBuilder> libraryBuilderLocator,
             IImplementationSelector<DataStoreType, ILibraryService> libraryServiceSelector)
         {
             _popupService = popupService;
+            _librariesProvider = librariesProvider;
             _dataStoreInfoService = dataStoreInfoService;
             _libraryBuilderLocator = libraryBuilderLocator;
             _libraryServiceSelector = libraryServiceSelector;
@@ -103,9 +107,14 @@ namespace PictureLibrary.Libraries.UI.ViewModels
                 .WithDescription(Description!)
                 .GetLibrary();
 
-            await service.AddLibraryAsync(library);
+            library = await service.AddLibraryAsync(library);
 
-            await Shell.Current.GoToAsync("..");
+            _librariesProvider.AddLibraryToCache(library);
+
+            await Shell.Current.GoToAsync("..", new Dictionary<string, object>()
+            {
+                { nameof(LibrariesPageViewModel.NewLibraryId), library.Id },
+            });
         }
 
         [RelayCommand]

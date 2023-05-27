@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 
 namespace PictureLibrary.Libraries.UI.ViewModels
 {
+    [QueryProperty(nameof(NewLibraryId), nameof(NewLibraryId))]
     public partial class LibrariesPageViewModel : ObservableObject
     {
         private readonly IPopupService _popupService;
@@ -31,10 +32,25 @@ namespace PictureLibrary.Libraries.UI.ViewModels
             _dataStoreInfoService = dataStoreInfoService;
             _libraryServiceSelector = libraryServiceSelector;
 
+            Libraries = new ObservableCollection<LibraryViewModel>();
+
             InitializeViewModelAsync().SafeFireAndForget();
         }
 
-        public ObservableCollection<LibraryViewModel> Libraries { get; private set; }
+        public ObservableCollection<LibraryViewModel> Libraries { get; }
+
+        public Guid NewLibraryId
+        {
+            set
+            {
+                var newLibrary = _librariesProvider.GetLibraryFromCacheById(value);
+                
+                if (newLibrary != null)
+                {
+                    Libraries.Add(new LibraryViewModel(newLibrary));
+                }
+            }
+        }
 
         [ObservableProperty]
         private LibraryViewModel _selectedLibrary;
@@ -48,7 +64,11 @@ namespace PictureLibrary.Libraries.UI.ViewModels
             InitializationInProgress = true;
 
             var libraries = await _librariesProvider.GetLibrariesFromAllSourcesAsync();
-            Libraries = new ObservableCollection<LibraryViewModel>(libraries.Select(x => new LibraryViewModel(x)));
+            
+            foreach (var library in libraries.Select(x => new LibraryViewModel(x)))
+            {
+                Libraries.Add(library);
+            }
 
             InitializationInProgress = false;
         }
