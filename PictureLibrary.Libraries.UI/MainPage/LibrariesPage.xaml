@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:PictureLibrary.Libraries.UI"
+             xmlns:local="clr-namespace:PictureLibrary.Libraries.UI.MainPage"
              xmlns:resx="clr-namespace:PictureLibrary.Libraries.UI.Properties"
              xmlns:conv="clr-namespace:PictureLibrary.Infrastructure.UI.Converters;assembly=PictureLibrary.Infrastructure.UI"
              x:Class="PictureLibrary.Libraries.UI.MainPage.LibrariesPage"
@@ -21,11 +21,7 @@
                      Command="{Binding RemoveLibraryCommand}"/>
     </ContentPage.ToolbarItems>
 
-    <CollectionView ItemsSource="{Binding Libraries, Mode=OneWay}">
-        <CollectionView.GestureRecognizers>
-            <TapGestureRecognizer NumberOfTapsRequired="2" Command="{Binding OpenLibrary}"/>
-        </CollectionView.GestureRecognizers>
-
+    <CollectionView ItemsSource="{Binding Libraries, Mode=OneWay}" SelectedItem="{Binding SelectedLibrary}" SelectionMode="Single">
         <CollectionView.ItemsLayout>
             <GridItemsLayout Span="5" Orientation="Vertical"/>
         </CollectionView.ItemsLayout>
@@ -33,6 +29,9 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <VerticalStackLayout ToolTipProperties.Text="{Binding Library.Description}" >
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
                     <Image Source="{Binding IconSource}" />
                     <Entry Text="{Binding Library.Name}" />
                 </VerticalStackLayout>

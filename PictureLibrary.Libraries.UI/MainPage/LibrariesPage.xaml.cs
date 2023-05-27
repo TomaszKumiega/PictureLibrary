@@ -9,4 +9,9 @@ public partial class LibrariesPage : ContentPage
 		BindingContext = librariesPageViewModel;
 		InitializeComponent();
 	}
+
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+		((LibrariesPageViewModel)BindingContext).OpenLibraryCommand.Execute(null);
+    }
 }
