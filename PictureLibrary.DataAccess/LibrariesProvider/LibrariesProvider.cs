@@ -12,18 +12,23 @@ namespace PictureLibrary.DataAccess
         private readonly Func<IGoogleDriveLibraryService> _googleDriveLibraryServiceLocator;
         private readonly Func<IPictureLibraryAPILibraryService> _pictureLibraryApiLibraryServiceLocator;
 
+        private readonly HashSet<Library> _librariesCache;
+
         public LibrariesProvider(
             IDataStoreInfoService dataStoreInfoService,
             Func<IFileSystemLibraryService> fileSystemLibraryServiceLocator,
             Func<IGoogleDriveLibraryService> googleDriveLibraryServiceLocator,
             Func<IPictureLibraryAPILibraryService> pictureLibraryApiLibraryServiceLocator)
         {
+            _librariesCache = new HashSet<Library>();
+
             _dataStoreInfoService = dataStoreInfoService;
             _fileSystemLibraryServiceLocator = fileSystemLibraryServiceLocator;
             _googleDriveLibraryServiceLocator = googleDriveLibraryServiceLocator;
             _pictureLibraryApiLibraryServiceLocator = pictureLibraryApiLibraryServiceLocator;
         }
 
+        #region GetAllLibraries
         public async Task<IEnumerable<Library>> GetLibrariesFromAllSourcesAsync()
         {
             var pictureLibraryApiDataStoreInfos = _dataStoreInfoService.GetAllDataStoreInfosOfType<ApiDataStoreInfo>();
@@ -91,6 +96,24 @@ namespace PictureLibrary.DataAccess
             }
 
             return libraries;
+        }
+        #endregion
+
+        public void AddLibraryToCache(Library library)
+        {
+            _librariesCache.Add(library);
+        }
+
+        public Library? GetLibraryFromCacheById(Guid id, bool removeFromCache = false)
+        {
+            var library = _librariesCache.FirstOrDefault(x => x.Id == id);
+            
+            if (removeFromCache && library != null)
+            {
+                _librariesCache.Remove(library);
+            }
+
+            return library;
         }
     }
 }
