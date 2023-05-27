@@ -36,7 +36,8 @@ namespace PictureLibrary.DataAccess.LibraryService
         {
             if (library is not LocalLibrary localLibrary)
                 throw new ArgumentException($"Library must be a type of {nameof(LocalLibrary)}", nameof(library));
-
+            
+            localLibrary.Id = Guid.NewGuid();
             var serializedLibrary = await SerializeLibraryAsync(localLibrary);
             var path = await CreateLibraryDirectoriesAsync(localLibrary) + Path.DirectorySeparatorChar + $"{localLibrary.Name}.plib";
 
@@ -116,7 +117,7 @@ namespace PictureLibrary.DataAccess.LibraryService
 
             foreach (var subDirectory in subDirectories)
             {
-                FileInfo? libraryFileInfo = subDirectory.GetFiles().FirstOrDefault(x => x.Extension == "plib");
+                FileInfo? libraryFileInfo = subDirectory.GetFiles().FirstOrDefault(x => x.Extension == ".plib");
 
                 if (libraryFileInfo != null)
                 {
