@@ -13,6 +13,8 @@ namespace PictureLibrary.Libraries.UI.Configuration
             builder.RegisterType<LibrariesPage>().AsSelf().SingleInstance();
             builder.RegisterType<AddLibraryPage>().AsSelf();
             builder.RegisterType<AddLibraryPageViewModel>().AsSelf();
+            builder.RegisterType<LibraryContentPage>().AsSelf();
+            builder.RegisterType<LibraryContentPageViewModel>().AsSelf();
         }
     }
 }

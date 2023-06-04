@@ -1,12 +1,55 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PictureLibrary.Libraries.UI.Pages"
+             xmlns:templates="clr-namespace:PictureLibrary.Libraries.UI.DataTemplates"
              x:Class="PictureLibrary.Libraries.UI.Pages.LibraryContentPage"
-             Title="LibraryContentPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="{Binding Library.Name}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="TagCommandDataTemplate">
+                <Button Text="{Binding CommandName}"
+                        Command="{Binding RelayCommand}"
+                        BackgroundColor="{Binding Color}"
+                        FontSize="13"
+                        BorderWidth="0"/>
+            </DataTemplate>
+            <DataTemplate x:Key="TagDataTemplate">
+                <Label Text="{Binding Name}" 
+                       ToolTipProperties.Text="{Binding Description}"
+                       BackgroundColor="{Binding Color}"
+                       FontSize="13"
+                       VerticalTextAlignment="Center"
+                       MaximumHeightRequest="30"/>
+            </DataTemplate>
+            <templates:TagViewModelDataTemplateSelector x:Key="TagViewModelDataTemplateSelector"
+                                                        TagDataTemplate="{StaticResource TagDataTemplate}"
+                                                        CommandDataTemplate="{StaticResource TagCommandDataTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <HorizontalStackLayout VerticalOptions="Fill"
+                               HorizontalOptions="Fill">
+            <Label Text="Tagi:" VerticalTextAlignment="Center" VerticalOptions="Center" FontSize="13"/>
+            <CollectionView ItemsSource="{Binding Tags}" 
+                            ItemTemplate="{StaticResource TagViewModelDataTemplateSelector}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" 
+                                       SnapPointsAlignment="Start"
+                                       ItemSpacing="5"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </HorizontalStackLayout>
+
+        <Label Grid.Row="1"
+               Text="Tu będą zdjęcia"/>
+    </Grid>
+
 </ContentPage>

@@ -1,9 +1,13 @@
+using PictureLibrary.Libraries.UI.ViewModels;
+
 namespace PictureLibrary.Libraries.UI.Pages;
 
 public partial class LibraryContentPage : ContentPage
 {
-	public LibraryContentPage()
+	public LibraryContentPage(LibraryContentPageViewModel viewModel)
 	{
+		BindingContext = viewModel;
+
 		InitializeComponent();
 	}
 }
