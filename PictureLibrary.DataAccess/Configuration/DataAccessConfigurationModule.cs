@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using PictureLibrary.DataAccess.DataStoreInfos;
 using PictureLibrary.DataAccess.LibraryService;
+using PictureLibrary.DataAccess.TagService;
 using PictureLibrary.Tools.Extensions;
-using PictureLibraryModel.Model;
 using PictureLibraryModel.Model.DataStoreInfo;
 
 namespace PictureLibrary.DataAccess.Configuration
@@ -22,7 +22,12 @@ namespace PictureLibrary.DataAccess.Configuration
             builder.RegisterType<FileSystemLibraryService>().Keyed<ILibraryService>(DataStoreType.Local);
             builder.RegisterType<GoogleDriveLibraryService>().Keyed<ILibraryService>(DataStoreType.GoogleDrive);
 
+            builder.RegisterType<FileSystemTagService>().Keyed<ITagService>(DataStoreType.Local);
+            builder.RegisterType<GoogleDriveTagService>().Keyed<ITagService>(DataStoreType.GoogleDrive);
+
             builder.RegisterType<LibrariesProvider>().As<ILibrariesProvider>().SingleInstance();
+
+            builder.RegisterType<TagsProvider>().As<ITagsProvider>().SingleInstance();
         }
     }
 }

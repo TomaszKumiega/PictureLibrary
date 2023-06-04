@@ -9,7 +9,7 @@ using File = Google.Apis.Drive.v3.Data.File;
 
 namespace PictureLibrary.DataAccess.TagService
 {
-    public class GoogleDriveTagService
+    public class GoogleDriveTagService : ITagService
     {
         #region Private fields
         private readonly ILibraryXmlService _libraryXmlService;
@@ -28,31 +28,43 @@ namespace PictureLibrary.DataAccess.TagService
         }
 
         #region Public methods
-        public async Task AddTagAsync(GoogleDriveLibrary library, Tag tag)
+        public async Task AddTagAsync(Library library, Tag tag)
         {
-            var serializedLibrary = await GetLibraryXmlAsync(library);
+            if (library is not GoogleDriveLibrary googleDriveLibrary)
+                throw new ArgumentException("Invalid library type", nameof(library));
+
+            var serializedLibrary = await GetLibraryXmlAsync(googleDriveLibrary);
             var updatedLibraryXml = _libraryXmlService.AddTagNode(serializedLibrary, tag);
-            await WriteLibraryXmlAsync(updatedLibraryXml, library);
+            await WriteLibraryXmlAsync(updatedLibraryXml, googleDriveLibrary);
         }
 
-        public async Task<IEnumerable<Tag>> GetAllTagsAsync(GoogleDriveLibrary library)
+        public async Task<IEnumerable<Tag>> GetAllTagsAsync(Library library)
         {
-            var serializedLibrary = await GetLibraryXmlAsync(library);
+            if (library is not GoogleDriveLibrary googleDriveLibrary)
+                throw new ArgumentException("Invalid library type", nameof(library));
+
+            var serializedLibrary = await GetLibraryXmlAsync(googleDriveLibrary);
             return _libraryXmlService.GetTags(serializedLibrary);
         }
 
-        public async Task<bool> DeleteTagAsync(GoogleDriveLibrary library, Tag tag)
+        public async Task<bool> DeleteTagAsync(Library library, Tag tag)
         {
-            var serializedLibrary = await GetLibraryXmlAsync(library);
+            if (library is not GoogleDriveLibrary googleDriveLibrary)
+                throw new ArgumentException("Invalid library type", nameof(library));
+
+            var serializedLibrary = await GetLibraryXmlAsync(googleDriveLibrary);
             var updatedLibraryXml = _libraryXmlService.RemoveTagNode(serializedLibrary, tag);
-            return await WriteLibraryXmlAsync(updatedLibraryXml, library);
+            return await WriteLibraryXmlAsync(updatedLibraryXml, googleDriveLibrary);
         }
 
-        public async Task<bool> UpdateTagAsync(GoogleDriveLibrary library, Tag tag)
+        public async Task<bool> UpdateTagAsync(Library library, Tag tag)
         {
-            var serializedLibrary = await GetLibraryXmlAsync(library);
+            if (library is not GoogleDriveLibrary googleDriveLibrary)
+                throw new ArgumentException("Invalid library type", nameof(library));
+
+            var serializedLibrary = await GetLibraryXmlAsync(googleDriveLibrary);
             var updatedLibraryXml = _libraryXmlService.UpdateTagNode(serializedLibrary, tag);
-            return await WriteLibraryXmlAsync(updatedLibraryXml, library);
+            return await WriteLibraryXmlAsync(updatedLibraryXml, googleDriveLibrary);
         }
         #endregion
 

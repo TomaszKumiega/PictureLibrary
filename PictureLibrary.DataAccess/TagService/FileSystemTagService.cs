@@ -4,7 +4,7 @@ using PictureLibraryModel.Model;
 
 namespace PictureLibrary.DataAccess.TagService
 {
-    public class FileSystemTagService
+    public class FileSystemTagService : ITagService
     {
         #region Private fields
         private readonly IFileService _fileService;
@@ -20,31 +20,47 @@ namespace PictureLibrary.DataAccess.TagService
         }
 
         #region Public methods
-        public async Task AddTagAsync(LocalLibrary library, Tag tag)
+        public async Task AddTagAsync(Library library, Tag tag)
         {
-            var serializedLibrary = await GetLibraryXml(library);
+            if (library is not LocalLibrary localLibrary)
+                throw new ArgumentException("Invalid library type", nameof(library));
+
+            var serializedLibrary = await GetLibraryXml(localLibrary);
             var updatedLibraryXml = _libraryXmlService.AddTagNode(serializedLibrary, tag);
-            await WriteLibraryXml(library, updatedLibraryXml);
+            await WriteLibraryXml(localLibrary, updatedLibraryXml);
         }
 
-        public async Task<IEnumerable<Tag>> GetAllTagsAsync(LocalLibrary library)
+        public async Task<IEnumerable<Tag>> GetAllTagsAsync(Library library)
         {
-            var serializedLibrary = await GetLibraryXml(library);
+            if (library is not LocalLibrary localLibrary)
+                throw new ArgumentException("Invalid library type", nameof(library));
+
+            var serializedLibrary = await GetLibraryXml(localLibrary);
             return _libraryXmlService.GetTags(serializedLibrary);
         }
 
-        public async Task DeleteTagAsync(LocalLibrary library, Tag tag)
+        public async Task<bool> DeleteTagAsync(Library library, Tag tag)
         {
-            var serializedLibrary = await GetLibraryXml(library);
+            if (library is not LocalLibrary localLibrary)
+                throw new ArgumentException("Invalid library type", nameof(library));
+
+            var serializedLibrary = await GetLibraryXml(localLibrary);
             var updatedLibraryXml = _libraryXmlService.RemoveTagNode(serializedLibrary, tag);
-            await WriteLibraryXml(library, updatedLibraryXml);
+            await WriteLibraryXml(localLibrary, updatedLibraryXml);
+
+            return true;
         }
 
-        public async Task UpdateTagAsync(LocalLibrary library, Tag tag)
+        public async Task<bool> UpdateTagAsync(Library library, Tag tag)
         {
-            var serializedLibrary = await GetLibraryXml(library);
+            if (library is not LocalLibrary localLibrary)
+                throw new ArgumentException("Invalid library type", nameof(library));
+
+            var serializedLibrary = await GetLibraryXml(localLibrary);
             var updatedLibraryXml = _libraryXmlService.UpdateTagNode(serializedLibrary, tag);
-            await WriteLibraryXml(library, updatedLibraryXml);
+            await WriteLibraryXml(localLibrary, updatedLibraryXml);
+
+            return true;
         }
         #endregion
 
