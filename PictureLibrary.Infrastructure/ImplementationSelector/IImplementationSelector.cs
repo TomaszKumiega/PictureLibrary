@@ -2,6 +2,6 @@
 {
     public interface IImplementationSelector<TKey, TImplementation> where TImplementation : class
     {
-        TImplementation? Select(TKey key);
+        TImplementation Select(TKey key);
     }
 }

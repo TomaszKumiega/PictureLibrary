@@ -12,11 +12,11 @@ namespace PictureLibrary.Infrastructure.ImplementationSelector
             _index = index;
         }
 
-        public TImplementation? Select(TKey key)
+        public TImplementation Select(TKey key)
         {
             return _index.TryGetValue(key, out var implementation)
                 ? implementation
-                : null;
+                : throw new ArgumentException($"Key {key} is not registered and implementation could not be found.");
         }
     }
 }
