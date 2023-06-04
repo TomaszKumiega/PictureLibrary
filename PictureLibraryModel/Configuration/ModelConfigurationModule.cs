@@ -9,6 +9,7 @@ namespace PictureLibraryModel.Configuration
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterWithFuncFactory<LibraryBuilder, ILibraryBuilder>();
+            builder.RegisterWithFuncFactory<TagBuilder, ITagBuilder>();
         }
     }
 }
