@@ -12,7 +12,7 @@ namespace PictureLibrary.DataAccess
         private readonly Func<IGoogleDriveLibraryService> _googleDriveLibraryServiceLocator;
         private readonly Func<IPictureLibraryAPILibraryService> _pictureLibraryApiLibraryServiceLocator;
 
-        private readonly HashSet<Library> _librariesCache;
+        private HashSet<Library> _librariesCache;
 
         public LibrariesProvider(
             IDataStoreInfoService dataStoreInfoService,
@@ -40,6 +40,8 @@ namespace PictureLibrary.DataAccess
             libraries.AddRange(await GetAllLocalLibrariesAsync());
             libraries.AddRange(await GetAllPictureLibraryApiLibrariesAsync(pictureLibraryApiDataStoreInfos));
             libraries.AddRange(await GetAllGoogleDriveLibrariesAsync(googleDriveDataStoreInfos));
+
+            _librariesCache = _librariesCache.Concat(libraries).ToHashSet();
 
             return libraries;
         }
