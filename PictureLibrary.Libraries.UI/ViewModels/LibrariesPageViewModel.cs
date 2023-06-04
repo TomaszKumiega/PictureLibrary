@@ -98,7 +98,7 @@ namespace PictureLibrary.Libraries.UI.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(LibraryContentPage), new Dictionary<string, object>
             {
-                { nameof(LibraryViewModel), SelectedLibrary },
+                { "LibraryId", SelectedLibrary.Library.Id },
             });
         }
 
