@@ -133,6 +133,7 @@ namespace PictureLibrary.DataAccess.LibraryService
 
                     if (library != null)
                     {
+                        library.FilePath = libraryFileInfo.FullName;
                         libraries.Add(library);
                     }
                 }
