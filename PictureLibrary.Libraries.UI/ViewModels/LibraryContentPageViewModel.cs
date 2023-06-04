@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using PictureLibrary.DataAccess;
 using PictureLibrary.Libraries.UI.DataViewModels;
+using PictureLibrary.Libraries.UI.Pages;
 using PictureLibraryModel.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -74,9 +75,12 @@ namespace PictureLibrary.Libraries.UI.ViewModels
         }
 
         [RelayCommand]
-        private Task AddTag()
+        private async Task AddTag()
         {
-            return Task.CompletedTask;
+            await Shell.Current.GoToAsync(nameof(AddTagPage), new Dictionary<string, object>
+            {
+                { nameof(AddTagPageViewModel.LibraryId), Library?.Id ?? Guid.Empty},
+            });
         }
         #endregion
     }

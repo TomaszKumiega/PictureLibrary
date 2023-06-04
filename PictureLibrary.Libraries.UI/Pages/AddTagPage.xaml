@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PictureLibrary.Libraries.UI.Pages.AddTagPage"
+             Title="AddTagPage">
+    <VerticalStackLayout>
+        <Label 
+            Text="Nazwa"
+            VerticalOptions="Start" 
+            HorizontalOptions="Center" />
+        <Entry Text="{Binding Name}"/>
+        <Label 
+            Text="Opis"
+            VerticalOptions="Start" 
+            HorizontalOptions="Center" />
+        <Entry Text="{Binding Description}" />
+        <Label 
+            Text="Kolor"
+            VerticalOptions="Start" 
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

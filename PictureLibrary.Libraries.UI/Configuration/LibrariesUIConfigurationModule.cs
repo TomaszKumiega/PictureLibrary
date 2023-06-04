@@ -15,6 +15,8 @@ namespace PictureLibrary.Libraries.UI.Configuration
             builder.RegisterType<AddLibraryPageViewModel>().AsSelf();
             builder.RegisterType<LibraryContentPage>().AsSelf();
             builder.RegisterType<LibraryContentPageViewModel>().AsSelf();
+            builder.RegisterType<AddTagPage>().AsSelf();
+            builder.RegisterType<AddTagPageViewModel>().AsSelf();
         }
     }
 }
