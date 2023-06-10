@@ -17,7 +17,7 @@ namespace PictureLibrary.DataAccess.LibraryService
         private static string AppFolder => "PictureLibraryAppFolder\\";
 
         private readonly IXmlSerializer _xmlSerializer;
-        private readonly ILibraryXmlService _libraryXmlEditor;
+        private readonly ILibraryXmlService<GoogleDriveLibrary> _libraryXmlEditor;
         private readonly Func<IQueryBuilder> _queryBuilderLocator;
         private readonly IGoogleDriveApiClient _googleDriveApiClient;
         private readonly IDataStoreInfoService _dataStoreInfoProvider;
@@ -25,7 +25,7 @@ namespace PictureLibrary.DataAccess.LibraryService
 
         public GoogleDriveLibraryService(
             IXmlSerializer xmlSerializer,
-            ILibraryXmlService libraryXmlEditor,
+            ILibraryXmlService<GoogleDriveLibrary> libraryXmlEditor,
             Func<IQueryBuilder> queryBuilderLocator,
             IGoogleDriveApiClient googleDriveApiClient,
             IDataStoreInfoService dataStoreInfoProvider)

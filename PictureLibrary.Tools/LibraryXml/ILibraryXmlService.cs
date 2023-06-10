@@ -2,10 +2,10 @@
 
 namespace PictureLibrary.Tools.LibraryXml
 {
-    public interface ILibraryXmlService
+    public interface ILibraryXmlService<TLibrary>
+        where TLibrary : Library, new()
     {
-        string UpdateLibraryNode<TLibrary>(string xml, TLibrary library) 
-            where TLibrary : Library, new();
+        string UpdateLibraryNode(string xml, TLibrary library);
         string UpdateImageFileNode<TImageFile>(string xml, TImageFile imageFile)
             where TImageFile : ImageFile, new();
         string AddImageFileNode<TImageFile>(string xml, TImageFile imageFile)

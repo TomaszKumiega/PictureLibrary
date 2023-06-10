@@ -8,12 +8,12 @@ namespace PictureLibrary.DataAccess.TagService
     {
         #region Private fields
         private readonly IFileService _fileService;
-        private readonly ILibraryXmlService _libraryXmlService;
+        private readonly ILibraryXmlService<LocalLibrary> _libraryXmlService;
         #endregion
 
         public FileSystemTagService(
             IFileService fileService,
-            ILibraryXmlService libraryXmlService)
+            ILibraryXmlService<LocalLibrary> libraryXmlService)
         {
             _fileService = fileService;
             _libraryXmlService = libraryXmlService;

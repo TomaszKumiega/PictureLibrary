@@ -12,13 +12,13 @@ namespace PictureLibrary.DataAccess.TagService
     public class GoogleDriveTagService : ITagService
     {
         #region Private fields
-        private readonly ILibraryXmlService _libraryXmlService;
+        private readonly ILibraryXmlService<GoogleDriveLibrary> _libraryXmlService;
         private readonly IGoogleDriveApiClient _googleDriveApiClient;
         private readonly IDataStoreInfoService _dataStoreInfoProvider;
         #endregion
 
         public GoogleDriveTagService(
-            ILibraryXmlService libraryXmlService,
+            ILibraryXmlService<GoogleDriveLibrary> libraryXmlService,
             IGoogleDriveApiClient googleDriveApiClient,
             IDataStoreInfoService dataStoreInfoProvider)
         {

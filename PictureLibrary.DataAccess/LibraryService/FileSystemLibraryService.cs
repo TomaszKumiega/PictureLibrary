@@ -13,7 +13,7 @@ namespace PictureLibrary.DataAccess.LibraryService
         private readonly IFileService _fileService;
         private readonly IXmlSerializer _xmlSerializer;
         private readonly IDirectoryService _directoryService;
-        private readonly ILibraryXmlService _libraryXmlEditor;
+        private readonly ILibraryXmlService<LocalLibrary> _libraryXmlEditor;
         private readonly ILibrarySettingsProvider _librarySettingsProvider;
         #endregion
 
@@ -21,7 +21,7 @@ namespace PictureLibrary.DataAccess.LibraryService
             IFileService fileService,
             IXmlSerializer xmlSerializer,
             IDirectoryService directoryService,
-            ILibraryXmlService libraryXmlEditor,
+            ILibraryXmlService<LocalLibrary> libraryXmlEditor,
             ILibrarySettingsProvider librarySettingsProvider)
         {
             _fileService = fileService;

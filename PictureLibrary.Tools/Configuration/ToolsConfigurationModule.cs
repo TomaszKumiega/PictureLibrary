@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using PictureLibrary.Tools.LibraryXml;
 
 namespace PictureLibrary.Tools.Configuration
 {
@@ -7,6 +8,8 @@ namespace PictureLibrary.Tools.Configuration
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(GetType().Assembly).AsImplementedInterfaces().SingleInstance();
+
+            builder.RegisterGeneric(typeof(LibraryXmlService<>)).As(typeof(ILibraryXmlService<>));
         }
     }
 }

@@ -4,7 +4,8 @@ using System.Xml;
 
 namespace PictureLibrary.Tools.LibraryXml
 {
-    public class LibraryXmlService : ILibraryXmlService
+    public class LibraryXmlService<TLibrary> : ILibraryXmlService<TLibrary>
+        where TLibrary : Library, new()
     {
         #region Private fields
         private readonly IXmlSerializer _xmlSerializer;
@@ -15,6 +16,8 @@ namespace PictureLibrary.Tools.LibraryXml
         {
             _xmlSerializer = xmlSerializer;   
         }
+
+        private string LibraryTypeName => typeof(TLibrary).Name;
 
         #region Public methods
         public string AddImageFileNode<TImageFile>(string xml, TImageFile imageFile) 
@@ -28,7 +31,7 @@ namespace PictureLibrary.Tools.LibraryXml
             var serializedImageFile = _xmlSerializer.SerializeToString(imageFile);
 
             XmlDocument imageFileXmlDocument = LoadXmlDocument(serializedImageFile);
-            XmlNode imageFileNode = imageFileXmlDocument.SelectSingleNode("imageFile") ?? throw new ArgumentException(nameof(imageFile));
+            XmlNode imageFileNode = imageFileXmlDocument.SelectSingleNode($"/{typeof(TImageFile)}") ?? throw new ArgumentException("Image file could not be serialized.", nameof(imageFile));
 
             _ = AppendNodeToANode(xmlDocument, imageFilesNode, imageFileNode);
 
@@ -45,7 +48,7 @@ namespace PictureLibrary.Tools.LibraryXml
             var serializedTag = _xmlSerializer.SerializeToString(tag);
 
             XmlDocument tagXmlDocument = LoadXmlDocument(serializedTag);
-            XmlNode tagNode = tagXmlDocument.SelectSingleNode("tag") ?? throw new ArgumentException(nameof(tag));
+            XmlNode tagNode = tagXmlDocument.SelectSingleNode($"/{nameof(Tag)}") ?? throw new ArgumentException(nameof(tag));
 
             _ = AppendNodeToANode(xmlDocument, tagsNode, tagNode);
 
@@ -56,7 +59,7 @@ namespace PictureLibrary.Tools.LibraryXml
             where TImageFile : ImageFile, new()
         {
             XmlDocument xmlDocument = LoadXmlDocument(xml);
-            XmlNodeList? imageFileNodes = xmlDocument.SelectNodes("imageFile");
+            XmlNodeList? imageFileNodes = xmlDocument.SelectNodes($"/{typeof(TImageFile).Name}");
 
             if (imageFileNodes == null)
                 return Enumerable.Empty<TImageFile>();
@@ -103,7 +106,7 @@ namespace PictureLibrary.Tools.LibraryXml
             where TImageFile : ImageFile, new()
         {
             XmlDocument xmlDocument = LoadXmlDocument(xml);
-            XmlNodeList? imageFileNodes = xmlDocument.SelectNodes("imageFile");
+            XmlNodeList? imageFileNodes = xmlDocument.SelectNodes($"/{typeof(TImageFile).Name}");
 
             if (imageFileNodes == null)
                 return xml;
@@ -125,7 +128,7 @@ namespace PictureLibrary.Tools.LibraryXml
         public string RemoveTagNode(string xml, Tag tag)
         {
             XmlDocument xmlDocument = LoadXmlDocument(xml);
-            XmlNodeList? tagNodes = xmlDocument.SelectNodes("tag");
+            XmlNodeList? tagNodes = xmlDocument.SelectNodes($"{nameof(Tag)}");
 
             if (tagNodes == null)
                 return xml;
@@ -151,14 +154,13 @@ namespace PictureLibrary.Tools.LibraryXml
             return AddImageFileNode(xmlAfterRemove, imageFile);
         }
 
-        public string UpdateLibraryNode<TLibrary>(string xml, TLibrary library) 
-            where TLibrary : Library, new()
+        public string UpdateLibraryNode(string xml, TLibrary library)
         {
             XmlDocument xmlDocument = LoadXmlDocument(xml);
             XmlDocument updatedlibraryXmlDocument = LoadXmlDocument(_xmlSerializer.SerializeToString(library));
 
-            XmlNode libraryNode = SelectLibraryNode(xmlDocument) ?? throw new ArgumentException(nameof(xml));
-            XmlNode updatedLibraryNode = SelectLibraryNode(updatedlibraryXmlDocument) ?? throw new ArgumentException(nameof(library));
+            XmlNode libraryNode = SelectLibraryNode(xmlDocument) ?? throw new ArgumentException("Invalid xml document.", nameof(xml));
+            XmlNode updatedLibraryNode = SelectLibraryNode(updatedlibraryXmlDocument) ?? throw new ArgumentException("Invalid xml document.", nameof(library));
 
             if (libraryNode.Attributes == null
                 || updatedLibraryNode.Attributes == null
@@ -195,14 +197,15 @@ namespace PictureLibrary.Tools.LibraryXml
 
         private XmlNode? SelectImageFilesNode(XmlDocument xmlDocument)
         {
-            return xmlDocument.SelectSingleNode("/library/imageFiles");
+            return xmlDocument.SelectSingleNode($"/{LibraryTypeName}/imageFiles");
         }
 
         private XmlNode CreateImageFilesNodeIfItDoesntExist(XmlDocument xmlDocument, XmlNode? imageFilesNode)
         {
             if (imageFilesNode == null)
             {
-                XmlNode libraryNode = SelectLibraryNode(xmlDocument) ?? throw new ArgumentException();
+                XmlNode libraryNode = SelectLibraryNode(xmlDocument)
+                    ?? throw new ArgumentException("Invalid xml document.", nameof(xmlDocument));
 
                 imageFilesNode = xmlDocument.CreateElement("imageFiles");
 
@@ -214,7 +217,7 @@ namespace PictureLibrary.Tools.LibraryXml
 
         private XmlNode? SelectLibraryNode(XmlDocument xmlDocument)
         {
-            return xmlDocument.SelectSingleNode("/library");
+            return xmlDocument.SelectSingleNode($"/{LibraryTypeName}");
         }
 
         private XmlNode AppendNodeToANode(XmlDocument xmlDocument, XmlNode baseNode, XmlNode nodeToAppend)
@@ -227,14 +230,15 @@ namespace PictureLibrary.Tools.LibraryXml
 
         private XmlNode? SelectTagsNode(XmlDocument xmlDocument)
         {
-            return xmlDocument.SelectSingleNode("/library/tags");
+            return xmlDocument.SelectSingleNode($"//tags");
         }
 
         private XmlNode CreateTagsNodeIfItDoesntExist(XmlDocument xmlDocument, XmlNode? tagsNode)
         {
             if (tagsNode == null)
             {
-                XmlNode libraryNode = SelectLibraryNode(xmlDocument) ?? throw new ArgumentException();
+                XmlNode libraryNode = SelectLibraryNode(xmlDocument)
+                    ?? throw new ArgumentException("Invalid xml document.", nameof(xmlDocument));
 
                 tagsNode = xmlDocument.CreateElement("tags");
 

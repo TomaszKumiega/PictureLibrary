@@ -18,5 +18,10 @@
             Text="Kolor"
             VerticalOptions="Start" 
             HorizontalOptions="Center" />
+
+        <Button Text="Dodaj"
+                Command="{Binding AddCommand}" />
+        <Button Text="Anuluj"
+                Command="{Binding CancelCommand}"/>
     </VerticalStackLayout>
 </ContentPage>
