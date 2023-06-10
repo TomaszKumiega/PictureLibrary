@@ -48,7 +48,7 @@ namespace PictureLibrary.Tools.LibraryXml
             var serializedTag = _xmlSerializer.SerializeToString(tag);
 
             XmlDocument tagXmlDocument = LoadXmlDocument(serializedTag);
-            XmlNode tagNode = tagXmlDocument.SelectSingleNode($"/{nameof(Tag)}") ?? throw new ArgumentException(nameof(tag));
+            XmlNode tagNode = tagXmlDocument.ChildNodes?[1] ?? throw new ArgumentException(nameof(tag));
 
             _ = AppendNodeToANode(xmlDocument, tagsNode, tagNode);
 
@@ -222,7 +222,7 @@ namespace PictureLibrary.Tools.LibraryXml
 
         private XmlNode AppendNodeToANode(XmlDocument xmlDocument, XmlNode baseNode, XmlNode nodeToAppend)
         {
-            var importedNode = xmlDocument.ImportNode(nodeToAppend, false);
+            var importedNode = xmlDocument.ImportNode(nodeToAppend, true);
             baseNode.AppendChild(importedNode);
 
             return importedNode;
