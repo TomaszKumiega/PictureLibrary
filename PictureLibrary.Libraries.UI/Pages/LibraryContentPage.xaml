@@ -34,18 +34,15 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <HorizontalStackLayout VerticalOptions="Fill"
-                               HorizontalOptions="Fill">
-            <Label Text="Tagi:" VerticalTextAlignment="Center" VerticalOptions="Center" FontSize="13"/>
-            <CollectionView ItemsSource="{Binding Tags}" 
+        <CollectionView ItemsSource="{Binding Tags}" 
                             ItemTemplate="{StaticResource TagViewModelDataTemplateSelector}"
                             SelectionMode="Multiple"
                             ItemSizingStrategy="MeasureAllItems"
                             CanReorderItems="False"
-                            ItemsLayout="HorizontalList">
-            </CollectionView>
-        </HorizontalStackLayout>
+                            ItemsLayout="HorizontalList"
+                            HorizontalScrollBarVisibility="Always"
+                            HorizontalOptions="FillAndExpand">
+        </CollectionView>
 
         <Label Grid.Row="1"
                Text="Tu będą zdjęcia"/>
