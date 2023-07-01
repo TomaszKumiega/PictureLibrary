@@ -34,8 +34,16 @@ namespace PictureLibrary.Libraries.UI.ViewModels
             }
         }
 
-        [ObservableProperty]
         private Library? _library;
+        public Library? Library
+        {
+            get => _library;
+            set
+            {
+                _library = value;
+                OnPropertyChanged(nameof(Library));
+            }
+        }
 
         public ObservableCollection<TagViewModel> Tags { get; }
 
