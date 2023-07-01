@@ -13,15 +13,15 @@
                         Command="{Binding RelayCommand}"
                         BackgroundColor="{Binding Color}"
                         FontSize="13"
-                        BorderWidth="0"/>
+                        BorderWidth="0"
+                        HorizontalOptions="CenterAndExpand"/>
             </DataTemplate>
             <DataTemplate x:Key="TagDataTemplate">
-                <Label Text="{Binding Name}" 
+                <Label HorizontalOptions="CenterAndExpand" Text="{Binding Name}" 
                        ToolTipProperties.Text="{Binding Description}"
                        BackgroundColor="{Binding Color}"
                        FontSize="13"
-                       VerticalTextAlignment="Center"
-                       MaximumHeightRequest="30"/>
+                       VerticalTextAlignment="Center"/>
             </DataTemplate>
             <templates:TagViewModelDataTemplateSelector x:Key="TagViewModelDataTemplateSelector"
                                                         TagDataTemplate="{StaticResource TagDataTemplate}"
@@ -39,12 +39,11 @@
                                HorizontalOptions="Fill">
             <Label Text="Tagi:" VerticalTextAlignment="Center" VerticalOptions="Center" FontSize="13"/>
             <CollectionView ItemsSource="{Binding Tags}" 
-                            ItemTemplate="{StaticResource TagViewModelDataTemplateSelector}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal" 
-                                       SnapPointsAlignment="Start"
-                                       ItemSpacing="5"/>
-                </CollectionView.ItemsLayout>
+                            ItemTemplate="{StaticResource TagViewModelDataTemplateSelector}"
+                            SelectionMode="Multiple"
+                            ItemSizingStrategy="MeasureAllItems"
+                            CanReorderItems="False"
+                            ItemsLayout="HorizontalList">
             </CollectionView>
         </HorizontalStackLayout>
 
