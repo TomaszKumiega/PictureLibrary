@@ -82,9 +82,9 @@ namespace PictureLibrary.Tools.LibraryXml
         public IEnumerable<Tag> GetTags(string xml)
         {
             XmlDocument xmlDocument = LoadXmlDocument(xml);
-            XmlNodeList? tagNodes = xmlDocument.SelectNodes("tag");
+            XmlNodeList? tagNodes = xmlDocument.SelectNodes($"{typeof(TLibrary).Name}/tags/{nameof(Tag)}");
 
-            if (tagNodes == null)
+            if (tagNodes == null || tagNodes.Count == 0)
                 return Enumerable.Empty<Tag>();
 
             var tags = new List<Tag>();
