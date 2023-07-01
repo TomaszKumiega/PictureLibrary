@@ -77,9 +77,12 @@ namespace PictureLibrary.Libraries.UI.ViewModels
 
         #region Commands
         [RelayCommand]
-        private Task ShowAllTags()
+        private async Task ShowAllTags()
         {
-            return Task.CompletedTask;
+            await Shell.Current.GoToAsync(nameof(AllTagsPage), new Dictionary<string, object>
+            {
+                { nameof(AllTagsPageViewModel.LibraryId), Library?.Id ?? Guid.Empty }
+            });
         }
 
         [RelayCommand]
