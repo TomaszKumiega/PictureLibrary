@@ -22,7 +22,6 @@ namespace PictureLibrary.MAUI
 
         private void RegisterRoutes()
         {
-            Routing.RegisterRoute(nameof(LibrariesPage), typeof(LibrariesPage));
             Routing.RegisterRoute(nameof(LibraryContentPage), typeof(LibraryContentPage));
             Routing.RegisterRoute(nameof(AddLibraryPage), typeof(AddLibraryPage));
             Routing.RegisterRoute(nameof(AddTagPage), typeof(AddTagPage));

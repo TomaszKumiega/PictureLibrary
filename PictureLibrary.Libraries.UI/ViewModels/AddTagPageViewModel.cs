@@ -4,6 +4,8 @@ using PictureLibrary.DataAccess;
 using PictureLibrary.DataAccess.DataStoreInfos;
 using PictureLibrary.DataAccess.TagService;
 using PictureLibrary.Infrastructure.ImplementationSelector;
+using PictureLibrary.Libraries.UI.MainPage;
+using PictureLibrary.Libraries.UI.Pages;
 using PictureLibraryModel.Builders;
 using PictureLibraryModel.Model.DataStoreInfo;
 
@@ -57,7 +59,7 @@ namespace PictureLibrary.Libraries.UI.ViewModels
             var library = _librariesProvider.GetLibraryFromCacheById(LibraryId) ?? throw new InvalidOperationException("Library doesn't exist.");
             var dataStoreType = _dataStoreInfoService.GetDataStoreInfoFromLibrary(library)?.Type ?? DataStoreType.Local;
 
-            var tag =_tagBuilderLocator()
+            var tag = _tagBuilderLocator()
                 .CreateTag()
                 .WithName(Name!)
                 .WithDescription(Description)
@@ -68,13 +70,19 @@ namespace PictureLibrary.Libraries.UI.ViewModels
 
             await tagService.AddTagAsync(library, tag);
 
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync($"..", new Dictionary<string, object>
+            {
+                { nameof(LibraryContentPageViewModel.LibraryId), LibraryId }
+            });
         }
 
         [RelayCommand]
         public async Task Cancel()
         {
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("..", new Dictionary<string, object>
+            {
+                { nameof(LibraryContentPageViewModel.LibraryId), LibraryId }
+            });
         }
         #endregion
     }
