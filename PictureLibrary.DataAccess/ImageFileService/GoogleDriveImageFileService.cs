@@ -9,7 +9,7 @@ using File = Google.Apis.Drive.v3.Data.File;
 
 namespace PictureLibrary.DataAccess.ImageFileService
 {
-    public class GoogleDriveImageFileService
+    public class GoogleDriveImageFileService : IImageFileService
     {
         private static string _imagesFolderName => "Images";
 
@@ -30,11 +30,18 @@ namespace PictureLibrary.DataAccess.ImageFileService
         }
 
         #region Public methods
-        public async Task AddImageFileAsync(GoogleDriveImageFile imageFile, Stream imageFileContent, GoogleDriveLibrary library)
+        public async Task AddImageFile(ImageFile imageFile, Stream imageFileContent, Library library)
         {
-            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(library.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
+            if (imageFile is not GoogleDriveImageFile googleDriveImageFile)
+                throw new ArgumentException("Invalid image file type.", nameof(imageFile));
 
-            string serializedLibrary = await GetLibraryFileContentAsync(library);
+            if (library is not GoogleDriveLibrary googleDriveLibrary)
+                throw new ArgumentException("Invalid library type.", nameof(library));
+
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(googleDriveLibrary.DataStoreInfoId) 
+                ?? throw new GoogleDriveAccountConfigurationNotFoundException();
+
+            string serializedLibrary = await GetLibraryFileContentAsync(googleDriveLibrary);
 
             var appFolderId = await _googleDriveApiClient.GetFolderIdAsync(dataStoreInfo.UserName, _googleDriveApiClient.GoogleDriveAppFolderName);
 
@@ -46,58 +53,81 @@ namespace PictureLibrary.DataAccess.ImageFileService
             imagesFolderId ??= await _googleDriveApiClient.CreateFolderAsync(_imagesFolderName, dataStoreInfo.UserName, new List<string>() { libraryFolderId });
 
             string fileName = $"{imageFile.Name}.{imageFile.Extension}";
-            var file = await _googleDriveApiClient.UploadFileToFolderAsync(imageFileContent, fileName, imagesFolderId, imageFile.GetMimeType(), dataStoreInfo.UserName);
+            var file = await _googleDriveApiClient.UploadFileToFolderAsync(imageFileContent, fileName, imagesFolderId, googleDriveImageFile.GetMimeType(), dataStoreInfo.UserName);
 
-            imageFile.FileId = file.Id;
+            googleDriveImageFile.FileId = file.Id;
 
-            string updatedLibraryXml = _libraryXmlService.AddImageFileNode(serializedLibrary, imageFile);
+            string updatedLibraryXml = _libraryXmlService.AddImageFileNode(serializedLibrary, googleDriveImageFile);
 
-            await WriteLibraryAsync(library, updatedLibraryXml);
+            await WriteLibraryAsync(googleDriveLibrary, updatedLibraryXml);
         }
 
-        public async Task<IEnumerable<GoogleDriveImageFile>> GetApiImageFilesAsync(GoogleDriveLibrary library)
+        public async Task<IEnumerable<ImageFile>> GetAllImageFiles(Library library)
         {
-            string serializedLibrary = await GetLibraryFileContentAsync(library);
+            if (library is not GoogleDriveLibrary googleDriveLibrary)
+                throw new ArgumentException("Invalid library type.", nameof(library));
+
+            string serializedLibrary = await GetLibraryFileContentAsync(googleDriveLibrary);
 
             return _libraryXmlService.GetImageFiles<GoogleDriveImageFile>(serializedLibrary);
         }
 
-        public async Task<bool> DeleteImageFileAsync(GoogleDriveImageFile imageFile, GoogleDriveLibrary library)
+        public async Task DeleteImageFile(ImageFile imageFile, Library library)
         {
-            string serializedLibrary = await GetLibraryFileContentAsync(library);
-            string updatedLibraryXml = _libraryXmlService.RemoveImageFileNode(serializedLibrary, imageFile);
-            return await WriteLibraryAsync(library, updatedLibraryXml);
+            if (imageFile is not GoogleDriveImageFile googleDriveImageFile)
+                throw new ArgumentException("Invalid image file type.", nameof(imageFile));
+
+            if (library is not GoogleDriveLibrary googleDriveLibrary)
+                throw new ArgumentException("Invalid library type.", nameof(library));
+
+            string serializedLibrary = await GetLibraryFileContentAsync(googleDriveLibrary);
+            string updatedLibraryXml = _libraryXmlService.RemoveImageFileNode(serializedLibrary, googleDriveImageFile);
+            await WriteLibraryAsync(googleDriveLibrary, updatedLibraryXml);
         }
 
-        public async Task UpdateImageFileAsync(GoogleDriveImageFile imageFile, GoogleDriveLibrary library)
+        public async Task UpdateImageFile(ImageFile imageFile, Library library)
         {
-            string serializedLibrary = await GetLibraryFileContentAsync(library);
-            string updatedLibraryXml = _libraryXmlService.UpdateImageFileNode(serializedLibrary, imageFile);
-            _ = await WriteLibraryAsync(library, updatedLibraryXml);
+            if (imageFile is not GoogleDriveImageFile googleDriveImageFile)
+                throw new ArgumentException("Invalid image file type.", nameof(imageFile));
+
+            if (library is not GoogleDriveLibrary googleDriveLibrary)
+                throw new ArgumentException("Invalid library type.", nameof(library));
+
+            string serializedLibrary = await GetLibraryFileContentAsync(googleDriveLibrary);
+            string updatedLibraryXml = _libraryXmlService.UpdateImageFileNode(serializedLibrary, googleDriveImageFile);
+            _ = await WriteLibraryAsync(googleDriveLibrary, updatedLibraryXml);
         }
 
-        public async Task<Stream> GetFileContentStreamAsync(GoogleDriveImageFile imageFile)
+        public async Task<Stream> GetFileContent(ImageFile imageFile)
         {
-            if (imageFile?.FileId == null)
-                throw new ArgumentException(string.Empty, nameof(imageFile));
+            if (imageFile is not GoogleDriveImageFile googleDriveImageFile
+                || googleDriveImageFile?.FileId == null)
+            {
+                throw new ArgumentException("Invalid image file type.", nameof(imageFile));
+            }
 
-            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(imageFile.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
-            return await _googleDriveApiClient.DownloadFileAsync(imageFile.FileId, dataStoreInfo.UserName);
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(googleDriveImageFile.DataStoreInfoId) 
+                ?? throw new GoogleDriveAccountConfigurationNotFoundException();
+            return await _googleDriveApiClient.DownloadFileAsync(googleDriveImageFile.FileId, dataStoreInfo.UserName);
         }
 
-        public async Task UpdateFileContentAsync(GoogleDriveImageFile imageFile, Stream updatedImageFileContentStream)
+        public async Task UpdateFileContent(ImageFile imageFile, Stream updatedImageFileContentStream)
         {
-            if (imageFile?.FileId == null)
-                throw new ArgumentException(string.Empty, nameof(imageFile));
+            if (imageFile is not GoogleDriveImageFile googleDriveImageFile
+                || googleDriveImageFile?.FileId == null)
+            {
+                throw new ArgumentException("Invalid image file.", nameof(imageFile));
+            }
 
-            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(imageFile.DataStoreInfoId) ?? throw new GoogleDriveAccountConfigurationNotFoundException();
+            var dataStoreInfo = _dataStoreInfoProvider.GetDataStoreInfo<GoogleDriveDataStoreInfo>(googleDriveImageFile.DataStoreInfoId) 
+                ?? throw new GoogleDriveAccountConfigurationNotFoundException();
 
             var file = new File()
             {
-                Name = imageFile.Name
+                Name = googleDriveImageFile.Name
             };
 
-            _ = await _googleDriveApiClient.UpdateFileAsync(file, updatedImageFileContentStream, imageFile.FileId, dataStoreInfo.UserName, imageFile.GetMimeType());
+            _ = await _googleDriveApiClient.UpdateFileAsync(file, updatedImageFileContentStream, googleDriveImageFile.FileId, dataStoreInfo.UserName, googleDriveImageFile.GetMimeType());
         }
         #endregion
 

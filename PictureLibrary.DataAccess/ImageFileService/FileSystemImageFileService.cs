@@ -4,7 +4,7 @@ using PictureLibraryModel.Model;
 
 namespace PictureLibrary.DataAccess.ImageFileService
 {
-    public class FileSystemImageFileService
+    public class FileSystemImageFileService : IImageFileService
     {
         #region Private fields
         private readonly IFileService _fileService;
@@ -20,13 +20,19 @@ namespace PictureLibrary.DataAccess.ImageFileService
         }
 
         #region Public methods
-        public async Task AddImageFileAsync(LocalImageFile localImageFile, Stream imageFileContent, LocalLibrary library)
+        public async Task AddImageFile(ImageFile imageFile, Stream imageFileContent, Library library)
         {
-            if (library?.FilePath == null) 
-                throw new ArgumentException(string.Empty, nameof(library));
+            if (imageFile is not LocalImageFile localImageFile)
+                throw new ArgumentException("Invalid image file type.", nameof(imageFile));
 
-            string libraryXml = await GetLibraryXmlAsync(library);
-            string directoryName = _fileService.GetFileInfo(library.FilePath).DirectoryName ?? throw new ArgumentException("Invalid file path.", nameof(library));
+            if (library is not LocalLibrary localLibrary
+                || localLibrary?.FilePath == null)
+            {
+                throw new ArgumentException("Invalid library type.", nameof(localLibrary));
+            }
+
+            string libraryXml = await GetLibraryXmlAsync(localLibrary);
+            string directoryName = _fileService.GetFileInfo(localLibrary.FilePath).DirectoryName ?? throw new ArgumentException("Invalid file path.", nameof(localLibrary));
             
             string path = directoryName + Path.DirectorySeparatorChar + "Images" + Path.DirectorySeparatorChar + $"{localImageFile.Name}.{localImageFile.Extension}";
 
@@ -35,57 +41,73 @@ namespace PictureLibrary.DataAccess.ImageFileService
 
             string updatedLibraryXml = _libraryXmlService.AddImageFileNode(libraryXml, localImageFile);
 
-            await WriteLibraryXmlAsync(library, updatedLibraryXml);
+            await WriteLibraryXmlAsync(localLibrary, updatedLibraryXml);
         }
 
-        public async Task<IEnumerable<LocalImageFile>> GetAllImageFilesAsync(LocalLibrary library)
+        public async Task<IEnumerable<ImageFile>> GetAllImageFiles(Library library)
         {
-            string libraryXml = await GetLibraryXmlAsync(library);
+            if (library is not LocalLibrary localLibrary)
+                throw new ArgumentException("Invalid library type.", nameof(library));
+
+            string libraryXml = await GetLibraryXmlAsync(localLibrary);
 
             return _libraryXmlService.GetImageFiles<LocalImageFile>(libraryXml);
         }
 
-        public async Task DeleteImageFile(LocalImageFile imageFile, LocalLibrary library)
+        public async Task DeleteImageFile(ImageFile imageFile, Library library)
         {
-            string libraryXml = await GetLibraryXmlAsync(library);
+            if (imageFile is not LocalImageFile localImageFile
+                || localImageFile?.Path == null)
+                throw new ArgumentException("Invalid image file.", nameof(imageFile));
 
-            string updatedLibraryXml = _libraryXmlService.RemoveImageFileNode(libraryXml, imageFile);
+            if (library is not LocalLibrary localLibrary)
+                throw new ArgumentException("Invalid library type.", nameof(library));
 
-            await WriteLibraryXmlAsync(library, updatedLibraryXml);
+            string libraryXml = await GetLibraryXmlAsync(localLibrary);
+
+            string updatedLibraryXml = _libraryXmlService.RemoveImageFileNode(libraryXml, localImageFile);
+
+            await WriteLibraryXmlAsync(localLibrary, updatedLibraryXml);
+
+            await Task.Run(() => _fileService.Delete(localImageFile.Path));
         }
 
-        public async Task UpdateImageFile(LocalImageFile imageFile, LocalLibrary library)
+        public async Task UpdateImageFile(ImageFile imageFile, Library library)
         {
-            string libraryXml = await GetLibraryXmlAsync(library);
+            if (imageFile is not LocalImageFile localImageFile)
+                throw new ArgumentException("Invalid image file type.", nameof(imageFile));
 
-            string updatedLibraryXml = _libraryXmlService.UpdateImageFileNode(libraryXml, imageFile);
+            if (library is not LocalLibrary localLibrary)
+                throw new ArgumentException("Invalid library type.", nameof(library));
 
-            await WriteLibraryXmlAsync(library, updatedLibraryXml);
+            string libraryXml = await GetLibraryXmlAsync(localLibrary);
+
+            string updatedLibraryXml = _libraryXmlService.UpdateImageFileNode(libraryXml, localImageFile);
+
+            await WriteLibraryXmlAsync(localLibrary, updatedLibraryXml);
         }
 
-        public Stream GetFileContentStream(LocalImageFile imageFile)
+        public async Task<Stream> GetFileContent(ImageFile imageFile)
         {
-            if (imageFile?.Path == null)
+            if (imageFile is not LocalImageFile localImageFile
+                || localImageFile?.Path == null)
+            {
                 throw new ArgumentException(string.Empty, nameof(imageFile));
+            }
 
-            return _fileService.Open(imageFile.Path);
+            return await Task.Run(() => _fileService.Open(localImageFile.Path));
         }
 
-        public async Task UpdateFileContent(LocalImageFile imageFile, Stream newFileContentStream)
+        public async Task UpdateFileContent(ImageFile imageFile, Stream newFileContentStream)
         {
-            if (imageFile?.Path == null)
-                throw new ArgumentException(string.Empty, nameof(imageFile));
+            if (imageFile is not LocalImageFile localImageFile
+                || localImageFile?.Path == null)
+            {
+                throw new ArgumentException("Invalid image file.", nameof(localImageFile));
+            }
 
-            using var stream = _fileService.Open(imageFile.Path);
+            using var stream = _fileService.Open(localImageFile.Path);
             await newFileContentStream.CopyToAsync(stream);
-        }
-
-        public bool DeleteFile(LocalImageFile imageFile)
-        {
-            if (imageFile?.Path == null)
-                throw new ArgumentException(string.Empty, nameof(imageFile));
-
-            return _fileService.Delete(imageFile.Path);
         }
         #endregion
 
