@@ -78,6 +78,15 @@ namespace PictureLibrary.DataAccess
                 ? GetAllDataStoreInfos().FirstOrDefault(x => x.Id == remoteLibrary.Id)
                 : null;
         }
+
+        public DataStoreType GetDataStoreTypeFromLibrary(Library library)
+        {
+            IDataStoreInfo? dataStoreInfo = GetDataStoreInfoFromLibrary(library);
+            
+            return dataStoreInfo == null
+                ? DataStoreType.Local
+                : dataStoreInfo.Type;
+        }
         #endregion
 
         #region Private methods
