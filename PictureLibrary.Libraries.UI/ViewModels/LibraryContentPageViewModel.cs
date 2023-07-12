@@ -14,14 +14,19 @@ namespace PictureLibrary.Libraries.UI.ViewModels
     {
         private readonly ITagsProvider _tagsProvider;
         private readonly ILibrariesProvider _librariesProvider;
+        private readonly IImageFilesProvider _imageFilesProvider;
 
         public LibraryContentPageViewModel(
             ITagsProvider tagsProvider,
-            ILibrariesProvider librariesProvider)
+            ILibrariesProvider librariesProvider,
+            IImageFilesProvider imageFilesProvider)
         {
             _tagsProvider = tagsProvider;
             _librariesProvider = librariesProvider;
+            _imageFilesProvider = imageFilesProvider;
+
             Tags = new ObservableCollection<TagViewModel>();
+            ImageFiles = new ObservableCollection<ImageFileViewModel>();
 
             PropertyChanged += LibraryChanged;
         }
@@ -46,6 +51,7 @@ namespace PictureLibrary.Libraries.UI.ViewModels
         }
 
         public ObservableCollection<TagViewModel> Tags { get; }
+        public ObservableCollection<ImageFileViewModel> ImageFiles { get; }
 
         private async void LibraryChanged(object? sender, PropertyChangedEventArgs args)
         {
@@ -53,13 +59,16 @@ namespace PictureLibrary.Libraries.UI.ViewModels
                 return;
 
             await LoadTagsAsync();
+            await LoadImageFilesAsync();
         }
 
         #region Tags initialization
         private async Task LoadTagsAsync()
         {
             if (Library == null)
+            {
                 return;
+            }
 
             Tags.Clear();
 
@@ -72,6 +81,25 @@ namespace PictureLibrary.Libraries.UI.ViewModels
 
             Tags.Add(new TagViewModel(AddTagCommand, "+", Colors.Transparent));
             Tags.Add(new TagViewModel(ShowAllTagsCommand, "Pokaż wszystkie tagi", Colors.Transparent));
+        }
+        #endregion
+
+        #region ImageFiles initialization
+        private async Task LoadImageFilesAsync()
+        {
+            if (Library == null)
+            {
+                return;
+            }
+
+            ImageFiles.Clear();
+
+            var imageFiles = await _imageFilesProvider.GetAllImageFilesFromLibraryAsync(Library);
+
+            foreach (var imageFile in imageFiles.Select(x => new ImageFileViewModel(x)))
+            {
+                ImageFiles.Add(imageFile);
+            }
         }
         #endregion
 

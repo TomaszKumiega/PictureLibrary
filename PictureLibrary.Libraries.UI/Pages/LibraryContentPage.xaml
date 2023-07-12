@@ -44,8 +44,15 @@
                             HorizontalOptions="FillAndExpand">
         </CollectionView>
 
-        <Label Grid.Row="1"
-               Text="Tu będą zdjęcia"/>
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding ImageFiles}"
+                        SelectionMode="Multiple"
+                        ItemSizingStrategy="MeasureAllItems"
+                        CanReorderItems="False"
+                        ItemsLayout="GridLayout"
+                        VerticalScrollBarVisibility="Always"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"/>
     </Grid>
 
 </ContentPage>

@@ -47,6 +47,9 @@ namespace PictureLibrary.Libraries.UI.ViewModels
         {
             set
             {
+                if (Libraries.Any(x => x.Library?.Id == value))
+                    return;
+
                 var newLibrary = _librariesProvider.GetLibraryFromCacheById(value);
                 
                 if (newLibrary != null)
