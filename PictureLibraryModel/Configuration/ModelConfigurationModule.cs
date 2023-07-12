@@ -10,6 +10,7 @@ namespace PictureLibraryModel.Configuration
         {
             builder.RegisterWithFuncFactory<LibraryBuilder, ILibraryBuilder>();
             builder.RegisterWithFuncFactory<TagBuilder, ITagBuilder>();
+            builder.RegisterWithFuncFactory<ImageFileBuilder, IImageFileBuilder>();
         }
     }
 }
