@@ -75,7 +75,7 @@ namespace PictureLibrary.DataAccess
         public IDataStoreInfo? GetDataStoreInfoFromLibrary(Library library)
         {
             return library is RemoteLibrary remoteLibrary
-                ? GetAllDataStoreInfos().FirstOrDefault(x => x.Id == remoteLibrary.Id)
+                ? GetAllDataStoreInfos().FirstOrDefault(x => x.Id == remoteLibrary.DataStoreInfoId)
                 : null;
         }
 
@@ -86,6 +86,22 @@ namespace PictureLibrary.DataAccess
             return dataStoreInfo == null
                 ? DataStoreType.Local
                 : dataStoreInfo.Type;
+        }
+
+        public DataStoreType GetDataStoreTypeFromImageFile(ImageFile imageFile)
+        {
+            IDataStoreInfo? dataStoreInfo = GetDataStoreInfoFromImageFile(imageFile);
+
+            return dataStoreInfo == null
+                ? DataStoreType.Local
+                : dataStoreInfo.Type;
+        }
+
+        private IDataStoreInfo? GetDataStoreInfoFromImageFile(ImageFile imageFile)
+        {
+            return imageFile is RemoteImageFile remoteImageFile
+                ? GetAllDataStoreInfos().FirstOrDefault(x => x.Id == remoteImageFile.DataStoreInfoId)
+                : null;
         }
         #endregion
 

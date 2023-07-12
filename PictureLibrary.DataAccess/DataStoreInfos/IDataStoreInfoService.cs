@@ -10,6 +10,7 @@ namespace PictureLibrary.DataAccess.DataStoreInfos
         TDataStoreInfo? GetDataStoreInfo<TDataStoreInfo>(Guid id) where TDataStoreInfo : class, IDataStoreInfo;
         IDataStoreInfo? GetDataStoreInfoFromLibrary(Library library);
         DataStoreType GetDataStoreTypeFromLibrary(Library library);
+        DataStoreType GetDataStoreTypeFromImageFile(ImageFile imageFile);
         bool AddDataStoreInfo<TDataStoreInfo>(TDataStoreInfo dataStoreInfo) where TDataStoreInfo : class, IDataStoreInfo;
     }
 }
