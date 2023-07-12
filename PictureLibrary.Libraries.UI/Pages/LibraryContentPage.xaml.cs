@@ -10,4 +10,9 @@ public partial class LibraryContentPage : ContentPage
 
 		InitializeComponent();
 	}
+
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+	{
+
+	}
 }

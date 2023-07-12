@@ -55,13 +55,29 @@
 
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding ImageFiles}"
-                        SelectionMode="Multiple"
+                        SelectionMode="Single"
                         ItemSizingStrategy="MeasureAllItems"
                         CanReorderItems="False"
-                        ItemsLayout="GridLayout"
                         VerticalScrollBarVisibility="Always"
                         HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand"/>
+                        VerticalOptions="FillAndExpand">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="5"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout>
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped"/>
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Image Source="{Binding IconUrl}" Aspect="AspectFill" MaximumWidthRequest="50" MaximumHeightRequest="50" />
+                        <Label Text="{Binding Name}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </Grid>
 
 </ContentPage>

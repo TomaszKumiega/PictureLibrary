@@ -9,11 +9,11 @@ namespace PictureLibrary.Libraries.UI.DataViewModels
         {
             Name = imageFile.Name;
             Tags = imageFile.Tags;
-            Icon = ImageSource.FromUri(new Uri(imageFile.IconUrl));
+            IconUrl = imageFile.IconUrl;
         }
 
         public string? Name { get; }
         public List<Tag> Tags { get; }
-        public ImageSource Icon { get; }
+        public string IconUrl { get; }
     }
 }

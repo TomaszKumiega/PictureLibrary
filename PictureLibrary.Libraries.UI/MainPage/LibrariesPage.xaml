@@ -32,8 +32,8 @@
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped"/>
                     </VerticalStackLayout.GestureRecognizers>
-                    <Image Source="{Binding IconSource}" />
-                    <Entry Text="{Binding Library.Name}" />
+                    <Image Source="{Binding IconSource}" Aspect="Fill" MaximumWidthRequest="50" MaximumHeightRequest="50" />
+                    <Label Text="{Binding Library.Name}"/>
                 </VerticalStackLayout>
             </DataTemplate>
         </CollectionView.ItemTemplate>
