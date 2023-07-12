@@ -32,6 +32,8 @@ namespace PictureLibrary.DataAccess.Configuration
             builder.RegisterType<LibrariesProvider>().As<ILibrariesProvider>().SingleInstance();
 
             builder.RegisterType<TagsProvider>().As<ITagsProvider>().SingleInstance();
+
+            builder.RegisterType<ImageFilesProvider>().As<IImageFilesProvider>().SingleInstance();
         }
     }
 }
