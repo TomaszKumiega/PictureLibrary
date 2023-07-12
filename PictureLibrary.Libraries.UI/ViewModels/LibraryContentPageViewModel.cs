@@ -171,6 +171,8 @@ namespace PictureLibrary.Libraries.UI.ViewModels
 
                 await imageFileService.AddImageFile(imageFile, stream, Library);
             }
+
+            await LoadImageFilesAsync();
         }
         #endregion
     }

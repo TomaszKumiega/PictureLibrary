@@ -31,7 +31,7 @@ namespace PictureLibrary.Tools.LibraryXml
             var serializedImageFile = _xmlSerializer.SerializeToString(imageFile);
 
             XmlDocument imageFileXmlDocument = LoadXmlDocument(serializedImageFile);
-            XmlNode imageFileNode = imageFileXmlDocument.SelectSingleNode($"/{typeof(TImageFile)}") ?? throw new ArgumentException("Image file could not be serialized.", nameof(imageFile));
+            XmlNode imageFileNode = imageFileXmlDocument.SelectSingleNode($"/{typeof(TImageFile).Name}") ?? throw new ArgumentException("Image file could not be serialized.", nameof(imageFile));
 
             _ = AppendNodeToANode(xmlDocument, imageFilesNode, imageFileNode);
 
@@ -59,7 +59,7 @@ namespace PictureLibrary.Tools.LibraryXml
             where TImageFile : ImageFile, new()
         {
             XmlDocument xmlDocument = LoadXmlDocument(xml);
-            XmlNodeList? imageFileNodes = xmlDocument.SelectNodes($"/{typeof(TImageFile).Name}");
+            XmlNodeList? imageFileNodes = xmlDocument.SelectNodes($"{typeof(TLibrary).Name}/imageFiles/{typeof(TImageFile).Name}");
 
             if (imageFileNodes == null)
                 return Enumerable.Empty<TImageFile>();
