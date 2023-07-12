@@ -9,6 +9,7 @@ namespace PictureLibraryModel.Model
         public string? Name { get; set; }
         public string? Extension { get; set; }
         public List<Tag> Tags { get; set; }
+        public virtual string IconUrl { get; set; }
 
         protected ImageFile()
         {
