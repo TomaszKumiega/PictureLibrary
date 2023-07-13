@@ -23,7 +23,7 @@
 
     <CollectionView ItemsSource="{Binding Libraries, Mode=OneWay}" SelectedItem="{Binding SelectedLibrary}" SelectionMode="Single">
         <CollectionView.ItemsLayout>
-            <GridItemsLayout Span="5" Orientation="Vertical"/>
+            <GridItemsLayout Span="10" Orientation="Vertical"/>
         </CollectionView.ItemsLayout>
         
         <CollectionView.ItemTemplate>
@@ -33,7 +33,7 @@
                         <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped"/>
                     </VerticalStackLayout.GestureRecognizers>
                     <Image Source="{Binding IconSource}" Aspect="Fill" MaximumWidthRequest="50" MaximumHeightRequest="50" />
-                    <Label Text="{Binding Library.Name}"/>
+                    <Label Text="{Binding Library.Name}" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
             </DataTemplate>
         </CollectionView.ItemTemplate>

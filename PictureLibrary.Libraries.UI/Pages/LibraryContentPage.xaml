@@ -63,7 +63,7 @@
                         VerticalOptions="FillAndExpand">
 
             <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="5"/>
+                <GridItemsLayout Orientation="Vertical" Span="8"/>
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
