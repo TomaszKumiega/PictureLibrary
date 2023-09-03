@@ -27,7 +27,7 @@
 	<ItemGroup>
 	  <PackageReference Include="AsyncAwaitBestPractices" Version="6.0.6" />
 	  <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="6.0.6" />
-	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>
